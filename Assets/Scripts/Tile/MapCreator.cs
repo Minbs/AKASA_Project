@@ -4,14 +4,9 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
-public class MapCreator : MonoBehaviour
+public class MapCreator
 {
     // Start is called before the first frame update
-
-    int tileColumnCount;
-    int tileRowCount;
-
-    GameObject tilePrefab;
 
     
 
@@ -29,7 +24,7 @@ public class MapCreator : MonoBehaviour
     {
         InitTiles();
         ReadTilesInfo();
-        GameManager.instance.isTileSet = true;
+        GameManager.Instance.isTileSet = true;
     }
 
     void InitTiles()
@@ -48,13 +43,8 @@ public class MapCreator : MonoBehaviour
         }
 
 
-     var result = GameManager.tilesList.OrderBy(x=> x.transform.position.z).ThenByDescending(x=> x.transform.position.x);
+     var result = GameManager.tilesList.OrderBy(x=> x.transform.position.z).ThenByDescending(x=> x.transform.position.x); // 타일 위치 기준으로 리스트 정렬
         GameManager.tilesList = result.ToList();
-
-        foreach (var tile in GameManager.tilesList)
-       {
-         //Debug.Log(tile.transform.position);
-        }
     }
 
     void ReadTilesInfo()
@@ -67,11 +57,27 @@ public class MapCreator : MonoBehaviour
         if (lines.Length <= 0)
             return;
 
+        int tileCount = 0;
+
         for(int i = 0; i < lines.Length; i++)
         {
             string[] s = lines[i].Split(' ');
-            //     Debug.Log(GameManager.TilesList.Count);
-            GameManager.tilesList[i].SetTileInfo(s); //pos, isEmpty 설정
+
+            switch(s[0])
+            {
+                case "Size":
+                    GameManager.Instance.sizeX = int.Parse(s[1]);
+                    GameManager.Instance.sizeY = int.Parse(s[2]);
+                    break;
+
+                case "Tile":
+                    GameManager.tilesList[tileCount].SetTileInfo(s); //pos, isEmpty 설정
+                    tileCount++;
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 

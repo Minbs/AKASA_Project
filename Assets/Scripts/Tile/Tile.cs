@@ -5,19 +5,21 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Point pos  = new Point();
+    public Node node  = new Node();
 
     public int height;
 
-    public bool isEmpty;
+    public bool isBlock;
 
     //타일 타입 추가
 
 
     //길찾기 알고리즘
-    public int G; 
-    public int H;
-    public Tile parentTile;
+    
+    public int G { get; set; }
+    public int H { get; set; }
+    public Tile parentTile { get; set; }
+
 
     void Start()
     {
@@ -32,9 +34,9 @@ public class Tile : MonoBehaviour
 
     public void SetTileInfo(string[] s)
     {
-        pos.x = int.Parse(s[0]);
-        pos.y = int.Parse(s[1]);
-        height = int.Parse(s[2]);
-        isEmpty = (s[3] == "O") ? true : false; 
+        node.row = int.Parse(s[1]);
+        node.column = int.Parse(s[2]);
+        height = int.Parse(s[3]);
+        isBlock = (s[4] == "BLOCK") ? true : false; 
     }
 }

@@ -15,11 +15,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.end == true && moveTiles.Count == 0)
+        if (GameManager.Instance.end == true && moveTiles.Count == 0)
         {
-            moveTiles = GameManager.instance.FinalList;
+            moveTiles = GameManager.Instance.FinalList;
         }
-        else if(GameManager.instance.end == true && moveTiles.Count != 0)
+        else if(GameManager.Instance.end == true && moveTiles.Count != 0)
         {
             Move();
         }

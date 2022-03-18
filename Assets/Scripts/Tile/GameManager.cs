@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-
     public static List<Tile> tilesList = new List<Tile>();
 
-    private int sizeX = 7;
-    private int sizeY = 6;
+    public int sizeX;
+    public int sizeY;
 
     List<Tile> OpenList;
     List<Tile> CloseList;
@@ -21,23 +20,21 @@ public class GameManager : MonoBehaviour
 
     public bool isTileSet = false;
 
-    public MapCreator mapCreator;
-
     public bool end = false;
 
-    public static GameManager instance;
-
+    private MapCreator mapCreator;
 
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        instance = this;
 
         OpenList = new List<Tile>();
         CloseList = new List<Tile>();
         FinalList = new List<Tile>();
+
+        mapCreator = new MapCreator();
 
         if (tilesList == null)
             Debug.Log("n");
@@ -98,26 +95,26 @@ public class GameManager : MonoBehaviour
              
             }
 
-            AddOpenList(currentTile.pos.x, currentTile.pos.y + 1);
-            AddOpenList(currentTile.pos.x + 1, currentTile.pos.y);
-            AddOpenList(currentTile.pos.x, currentTile.pos.y - 1);
-            AddOpenList(currentTile.pos.x - 1, currentTile.pos.y);
+            AddOpenList(currentTile.node.row, currentTile.node.column + 1);
+            AddOpenList(currentTile.node.row + 1, currentTile.node.column);
+            AddOpenList(currentTile.node.row, currentTile.node.column - 1);
+            AddOpenList(currentTile.node.row - 1, currentTile.node.column);
         }
     }
 
     void AddOpenList(int x, int y)
     {
         Tile neighborTile = GetTile(x, y); 
-        if(x >= 0 && x < sizeX && y >= 0 && y < sizeY && neighborTile.isEmpty && neighborTile.height == 0 && !CloseList.Contains(neighborTile)) //타일 범위 안, 비어있음, 높이가 0, ClosedList에 없을 때
+        if(x >= 0 && x < sizeX && y >= 0 && y < sizeY && !neighborTile.isBlock && neighborTile.height == 0 && !CloseList.Contains(neighborTile)) //타일 범위 안, 막혀있지 않음, 높이가 0, ClosedList에 없을 때
         {
 
 
-            int Cost = currentTile.G + (currentTile.pos.x - x == 0 || currentTile.pos.y - y == 0 ? 10 : 14); //직선 거리 10, 대각선 14
+            int Cost = currentTile.G + (currentTile.node.row - x == 0 || currentTile.node.column - y == 0 ? 10 : 14); //직선 거리 10, 대각선 14
 
             if(Cost < neighborTile.G || !OpenList.Contains(neighborTile))
             {
                 neighborTile.G = Cost;
-                neighborTile.H = (Mathf.Abs(neighborTile.pos.x - endTile.pos.x) + Mathf.Abs(neighborTile.pos.y - endTile.pos.y)) * 10;
+                neighborTile.H = (Mathf.Abs(neighborTile.node.row - endTile.node.row) + Mathf.Abs(neighborTile.node.column - endTile.node.column)) * 10;
                 neighborTile.parentTile = currentTile;
 
                 OpenList.Add(neighborTile);
@@ -127,10 +124,10 @@ public class GameManager : MonoBehaviour
 
     Tile GetTile(int x, int y)
     {
-        Point p = new Point(x, y);
-        var tile = tilesList.Where(t => t.pos == p);
+        Node n = new Node(x, y);
+        var tile = tilesList.Where(t => t.node == n);
 
-        Tile t = tile.SingleOrDefault(); //1개 데이터만 허용
-        return t; 
+        Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
+        return returnVal; 
     }
 }
