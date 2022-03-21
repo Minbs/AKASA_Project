@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class GameManager : Singleton<GameManager>
+public class BoardManager : Singleton<BoardManager>
 {
-    public static List<Tile> tilesList = new List<Tile>();
+    public List<Tile> tilesList = new List<Tile>();
 
     public int sizeX;
     public int sizeY;
@@ -129,5 +129,13 @@ public class GameManager : Singleton<GameManager>
 
         Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
         return returnVal; 
+    }
+
+    public void CanSetTile()
+    {
+        foreach(var tile in tilesList)
+        {
+            tile.canUnitSetTile();
+        }
     }
 }

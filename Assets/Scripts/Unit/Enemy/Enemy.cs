@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
+    public int mode = 0;
 
     void Start()
     {
@@ -15,11 +16,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.end == true && moveTiles.Count == 0)
+        if (BoardManager.Instance.end == true && moveTiles.Count == 0)
         {
-            moveTiles = GameManager.Instance.FinalList;
+            moveTiles = BoardManager.Instance.FinalList;
         }
-        else if(GameManager.Instance.end == true && moveTiles.Count != 0)
+        else if(BoardManager.Instance.end == true && moveTiles.Count != 0)
         {
             Move();
         }

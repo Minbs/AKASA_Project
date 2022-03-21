@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour
 
     public bool isBlock;
 
+    public bool isOnUnit = false;
     //타일 타입 추가
 
 
@@ -20,16 +21,58 @@ public class Tile : MonoBehaviour
     public int H { get; set; }
     public Tile parentTile { get; set; }
 
-
+    Vector3 center;
+    Vector3 size;
+    Renderer renderer;
+    Color color;
     void Start()
     {
-        
+        renderer = GetComponent<MeshRenderer>();
+         center = renderer.bounds.center;
+         size = renderer.bounds.size;
+
+        color = renderer.material.color;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void canUnitSetTile()
+    {
+        if(!isOnUnit && height != 0 && !isBlock)
+        {
+            foreach(var r in renderer.materials)
+            {
+
+                r.color = Color.Lerp(r.color, new Color(0, 1, 0), 0.3f);
+            }
+        }
+    }
+
+    public void onTile(Transform enemy)
+    {
+        if(enemy.transform.position.x > transform.position.x - size.x / 2 &&
+            enemy.transform.position.x < transform.position.x + size.x / 2 &&
+            enemy.transform.position.z > transform.position.z - size.z / 2 &&
+            enemy.transform.position.z < transform.position.z + size.z / 2)
+        {
+            renderer.material.color = new Color(255, 0, 0);
+        }
+        else
+        {
+            renderer.material.color = color;
+        }
+    }
+
+    public void on(bool b)
+    {
+        if (b)
+            renderer.material.color = new Color(255, 0, 0);
+        else
+        renderer.material.color = color;
     }
 
     public void SetTileInfo(string[] s)

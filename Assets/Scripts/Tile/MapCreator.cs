@@ -24,7 +24,7 @@ public class MapCreator
     {
         InitTiles();
         ReadTilesInfo();
-        GameManager.Instance.isTileSet = true;
+        BoardManager.Instance.isTileSet = true;
     }
 
     void InitTiles()
@@ -38,13 +38,13 @@ public class MapCreator
               tile.AddComponent<Tile>();
             }
 
-            GameManager.tilesList.Add(tile.GetComponent<Tile>());
+            BoardManager.Instance.tilesList.Add(tile.GetComponent<Tile>());
   
         }
 
 
-     var result = GameManager.tilesList.OrderBy(x=> x.transform.position.z).ThenByDescending(x=> x.transform.position.x); // 타일 위치 기준으로 리스트 정렬
-        GameManager.tilesList = result.ToList();
+     var result = BoardManager.Instance.tilesList.OrderBy(x=> x.transform.position.z).ThenByDescending(x=> x.transform.position.x); // 타일 위치 기준으로 리스트 정렬
+        BoardManager.Instance.tilesList = result.ToList();
     }
 
     void ReadTilesInfo()
@@ -66,12 +66,12 @@ public class MapCreator
             switch(s[0])
             {
                 case "Size":
-                    GameManager.Instance.sizeX = int.Parse(s[1]);
-                    GameManager.Instance.sizeY = int.Parse(s[2]);
+                    BoardManager.Instance.sizeX = int.Parse(s[1]);
+                    BoardManager.Instance.sizeY = int.Parse(s[2]);
                     break;
 
                 case "Tile":
-                    GameManager.tilesList[tileCount].SetTileInfo(s); //pos, isEmpty 설정
+                    BoardManager.Instance.tilesList[tileCount].SetTileInfo(s); //pos, isEmpty 설정
                     tileCount++;
                     break;
 
