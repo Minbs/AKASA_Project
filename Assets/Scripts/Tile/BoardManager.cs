@@ -135,7 +135,7 @@ public class BoardManager : Singleton<BoardManager>
     {
         foreach(var tile in tilesList)
         {
-            tile.canUnitSetTile();
+         //   tile.canUnitSetTile();
         }
     }
 }
