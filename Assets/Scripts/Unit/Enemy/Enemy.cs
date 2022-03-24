@@ -37,5 +37,11 @@ public class Enemy : MonoBehaviour
             transform.position = des;
             moveTiles.RemoveAt(0);
         }
+
+        foreach(var t in BoardManager.Instance.tilesList)
+        {
+            if(t.height == 0)
+            t.onTile(transform);
+        }
     }
 }

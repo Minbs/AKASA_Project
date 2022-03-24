@@ -5,6 +5,7 @@ using System.Linq;
 
 public class BoardManager : Singleton<BoardManager>
 {
+    [SerializeField]
     public List<Tile> tilesList = new List<Tile>();
 
     public int sizeX;
@@ -24,6 +25,7 @@ public class BoardManager : Singleton<BoardManager>
 
     private MapCreator mapCreator;
 
+    bool tileSetMode = false;
 
 
     // Start is called before the first frame update
@@ -54,7 +56,7 @@ public class BoardManager : Singleton<BoardManager>
        if(FinalList.Count <= 0 && isTileSet)
        {
            startTile = GetTile(0, 1);
-           endTile = GetTile(6, 4);
+           endTile = GetTile(17, 4);
 
 
            PathFinding();
@@ -128,14 +130,22 @@ public class BoardManager : Singleton<BoardManager>
         var tile = tilesList.Where(t => t.node == n);
 
         Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
+
+
         return returnVal; 
     }
 
     public void CanSetTile()
     {
-        foreach(var tile in tilesList)
+        if (tileSetMode)
+            tileSetMode = false;
+        else
+            tileSetMode = true;
+
+
+        foreach (var tile in tilesList)
         {
-         //   tile.canUnitSetTile();
+            tile.canUnitSetTile(tileSetMode);
         }
     }
 }
