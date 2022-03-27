@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,20 +15,20 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 namespace Spine.Unity.Examples {
 	[SelectionBase]
@@ -46,9 +46,7 @@ namespace Spine.Unity.Examples {
 		#endregion
 
 		float lastShootTime;
-		public event System.Action ShootEvent;  // Lets other scripts know when Spineboy is shooting. Check C# Documentation to learn more about events and delegates.
-		public event System.Action StartAimEvent;   // Lets other scripts know when Spineboy is aiming.
-		public event System.Action StopAimEvent;   // Lets other scripts know when Spineboy is no longer aiming.
+		public event System.Action ShootEvent;	// Lets other scripts know when Spineboy is shooting. Check C# Documentation to learn more about events and delegates.
 
 		#region API
 		public void TryJump () {
@@ -60,16 +58,8 @@ namespace Spine.Unity.Examples {
 
 			if (currentTime - lastShootTime > shootInterval) {
 				lastShootTime = currentTime;
-				if (ShootEvent != null) ShootEvent();   // Fire the "ShootEvent" event.
+				if (ShootEvent != null) ShootEvent();	// Fire the "ShootEvent" event.
 			}
-		}
-
-		public void StartAim () {
-			if (StartAimEvent != null) StartAimEvent();   // Fire the "StartAimEvent" event.
-		}
-
-		public void StopAim () {
-			if (StopAimEvent != null) StopAimEvent();   // Fire the "StopAimEvent" event.
 		}
 
 		public void TryMove (float speed) {
@@ -88,7 +78,7 @@ namespace Spine.Unity.Examples {
 		#endregion
 
 		IEnumerator JumpRoutine () {
-			if (state == SpineBeginnerBodyState.Jumping) yield break;   // Don't jump when already jumping.
+			if (state == SpineBeginnerBodyState.Jumping) yield break;	// Don't jump when already jumping.
 
 			state = SpineBeginnerBodyState.Jumping;
 

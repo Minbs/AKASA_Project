@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,30 +15,28 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#if UNITY_2018_3 || UNITY_2019 || UNITY_2018_3_OR_NEWER
-#define NEW_PREFAB_SYSTEM
-#endif
+using UnityEngine;
+using UnityEditor;
+
+using System.Collections.Generic;
 
 using Spine.Unity;
 using Spine.Unity.Editor;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 
-namespace Spine.Unity.Examples {
-
+namespace Spine.Unity.Modules {
+	
 	[CustomEditor(typeof(SkeletonRenderSeparator))]
 	public class SkeletonRenderSeparatorInspector : UnityEditor.Editor {
 		SkeletonRenderSeparator component;
@@ -64,9 +62,9 @@ namespace Spine.Unity.Examples {
 
 			var partsRenderers = component.partsRenderers;
 			partsRenderers_ = serializedObject.FindProperty("partsRenderers");
-			partsRenderers_.isExpanded = partsRenderersExpanded ||  // last state
-				partsRenderers.Contains(null) ||    // null items found
-				partsRenderers.Count < 1 ||         // no parts renderers
+			partsRenderers_.isExpanded = partsRenderersExpanded ||	// last state
+				partsRenderers.Contains(null) ||	// null items found
+				partsRenderers.Count < 1 ||			// no parts renderers
 				(skeletonRenderer_.objectReferenceValue != null && SkeletonRendererSeparatorCount + 1 > partsRenderers.Count); // not enough parts renderers
 		}
 
@@ -83,18 +81,7 @@ namespace Spine.Unity.Examples {
 
 			// Restore mesh part for undo logic after undo of "Add Parts Renderer".
 			// Triggers regeneration and assignment of the mesh filter's mesh.
-
-			bool isMeshFilterAlwaysNull = false;
-#if UNITY_EDITOR && NEW_PREFAB_SYSTEM
-			// Don't store mesh or material at the prefab, otherwise it will permanently reload
-			var prefabType = UnityEditor.PrefabUtility.GetPrefabAssetType(component);
-			if (UnityEditor.PrefabUtility.IsPartOfPrefabAsset(component) &&
-				(prefabType == UnityEditor.PrefabAssetType.Regular || prefabType == UnityEditor.PrefabAssetType.Variant)) {
-				isMeshFilterAlwaysNull = true;
-			}
-#endif
-
-			if (!isMeshFilterAlwaysNull && component.GetComponent<MeshFilter>() && component.GetComponent<MeshFilter>().sharedMesh == null) {
+			if (component.GetComponent<MeshFilter>() && component.GetComponent<MeshFilter>().sharedMesh == null) {
 				component.OnDisable();
 				component.OnEnable();
 			}
@@ -143,7 +130,7 @@ namespace Spine.Unity.Examples {
 								separatorNamesProp.isExpanded = true;
 							}
 						}
-
+							
 						if (separatorNamesProp != null) {
 							if (skeletonRendererExpanded) {
 								EditorGUI.indentLevel++;
@@ -165,11 +152,11 @@ namespace Spine.Unity.Examples {
 					if (!Application.isPlaying)
 						slotsReapplyRequired = true;
 				}
-
+					
 
 				totalParts = separatorCount + 1;
 				var counterStyle = skeletonRendererExpanded ? EditorStyles.label : EditorStyles.miniLabel;
-				EditorGUILayout.LabelField(string.Format("{0}: separates into {1}.", SpineInspectorUtility.Pluralize(separatorCount, "separator", "separators"), SpineInspectorUtility.Pluralize(totalParts, "part", "parts")), counterStyle);
+				EditorGUILayout.LabelField(string.Format("{0}: separates into {1}.", SpineInspectorUtility.Pluralize(separatorCount, "separator", "separators"), SpineInspectorUtility.Pluralize(totalParts, "part", "parts") ), counterStyle);
 			}
 
 			// Parts renderers
@@ -195,14 +182,14 @@ namespace Spine.Unity.Examples {
 					if (component.enabled && component.SkeletonRenderer != null && extraRenderersNeeded > 0) {
 						EditorGUILayout.HelpBox(string.Format("Insufficient parts renderers. Some parts will not be rendered."), MessageType.Warning);
 						string addMissingLabel = string.Format("Add the missing renderer{1} ({0}) ", extraRenderersNeeded, SpineInspectorUtility.PluralThenS(extraRenderersNeeded));
-						if (GUILayout.Button(addMissingLabel, GUILayout.Height(30f))) {
+						if (GUILayout.Button(addMissingLabel, GUILayout.Height(40f))) {
 							AddPartsRenderer(extraRenderersNeeded);
 							DetectOrphanedPartsRenderers(component);
 							partsRendererInitRequired = true;
 						}
 					}
 				}
-
+					
 				if (partsRenderers_.isExpanded != partsRenderersExpanded) partsRenderersExpanded = partsRenderers_.isExpanded;
 				if (partsRenderers_.isExpanded) {
 					using (new EditorGUILayout.HorizontalScope()) {
@@ -211,7 +198,7 @@ namespace Spine.Unity.Examples {
 							if (GUILayout.Button("Clear Parts Renderers")) {
 								// Do you really want to destroy all?
 								Undo.RegisterCompleteObjectUndo(component, "Clear Parts Renderers");
-								if (EditorUtility.DisplayDialog("Destroy Renderers", "Do you really want to destroy all the Parts Renderer GameObjects in the list?", "Destroy", "Cancel")) {
+								if (EditorUtility.DisplayDialog("Destroy Renderers", "Do you really want to destroy all the Parts Renderer GameObjects in the list?", "Destroy", "Cancel")) {						
 									foreach (var r in componentRenderers) {
 										if (r != null)
 											Undo.DestroyObjectImmediate(r.gameObject);
@@ -299,7 +286,7 @@ namespace Spine.Unity.Examples {
 		}
 
 		#region SkeletonRenderer Context Menu Item
-		[MenuItem("CONTEXT/SkeletonRenderer/Add Skeleton Render Separator")]
+		[MenuItem ("CONTEXT/SkeletonRenderer/Add Skeleton Render Separator")]
 		static void AddRenderSeparatorComponent (MenuCommand cmd) {
 			var skeletonRenderer = cmd.context as SkeletonRenderer;
 			var newComponent = skeletonRenderer.gameObject.AddComponent<SkeletonRenderSeparator>();
@@ -308,7 +295,7 @@ namespace Spine.Unity.Examples {
 		}
 
 		// Validate
-		[MenuItem("CONTEXT/SkeletonRenderer/Add Skeleton Render Separator", true)]
+		[MenuItem ("CONTEXT/SkeletonRenderer/Add Skeleton Render Separator", true)]
 		static bool ValidateAddRenderSeparatorComponent (MenuCommand cmd) {
 			var skeletonRenderer = cmd.context as SkeletonRenderer;
 			var separator = skeletonRenderer.GetComponent<SkeletonRenderSeparator>();

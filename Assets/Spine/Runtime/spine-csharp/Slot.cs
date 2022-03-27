@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,16 +15,16 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using System;
@@ -32,7 +32,7 @@ using System;
 namespace Spine {
 
 	/// <summary>
-	/// Stores a slot's current pose. Slots organize attachments for <see cref="Skeleton.DrawOrder"/> purposes and provide a place to store
+	/// Stores a slot's current pose. Slots organize attachments for {@link Skeleton#drawOrder} purposes and provide a place to store
 	/// state for an attachment.State cannot be stored in an attachment itself because attachments are stateless and may be shared
 	/// across multiple skeletons.
 	/// </summary>
@@ -44,8 +44,7 @@ namespace Spine {
 		internal bool hasSecondColor;
 		internal Attachment attachment;
 		internal float attachmentTime;
-		internal ExposedList<float> deform = new ExposedList<float>();
-		internal int attachmentState;
+		internal ExposedList<float> attachmentVertices = new ExposedList<float>();
 
 		public Slot (SlotData data, Bone bone) {
 			if (data == null) throw new ArgumentNullException("data", "data cannot be null.");
@@ -62,7 +61,7 @@ namespace Spine {
 		}
 
 		/// <summary>Copy constructor.</summary>
-		public Slot (Slot slot, Bone bone) {
+		public Slot(Slot slot, Bone bone) {
 			if (slot == null) throw new ArgumentNullException("slot", "slot cannot be null.");
 			if (bone == null) throw new ArgumentNullException("bone", "bone cannot be null.");
 			data = slot.data;
@@ -84,7 +83,6 @@ namespace Spine {
 
 			attachment = slot.attachment;
 			attachmentTime = slot.attachmentTime;
-			deform.AddRange(slot.deform);
 		}
 
 		/// <summary>The slot's setup pose data.</summary>
@@ -106,13 +104,6 @@ namespace Spine {
 		/// color tinting.</summary>
 		public float A { get { return a; } set { a = value; } }
 
-		public void ClampColor () {
-			r = MathUtils.Clamp(r, 0, 1);
-			g = MathUtils.Clamp(g, 0, 1);
-			b = MathUtils.Clamp(b, 0, 1);
-			a = MathUtils.Clamp(a, 0, 1);
-		}
-
 		/// <summary>The dark color used to tint the slot's attachment for two color tinting, ignored if two color tinting is not used.</summary>
 		/// <seealso cref="HasSecondColor"/>
 		public float R2 { get { return r2; } set { r2 = value; } }
@@ -125,28 +116,18 @@ namespace Spine {
 		/// <summary>Whether R2 G2 B2 are used to tint the slot's attachment for two color tinting. False if two color tinting is not used.</summary>
 		public bool HasSecondColor { get { return data.hasSecondColor; } set { data.hasSecondColor = value; } }
 
-		public void ClampSecondColor () {
-			r2 = MathUtils.Clamp(r2, 0, 1);
-			g2 = MathUtils.Clamp(g2, 0, 1);
-			b2 = MathUtils.Clamp(b2, 0, 1);
-		}
-
 		public Attachment Attachment {
 			/// <summary>The current attachment for the slot, or null if the slot has no attachment.</summary>
 			get { return attachment; }
 			/// <summary>
-			/// Sets the slot's attachment and, if the attachment changed, resets <see cref="AttachmentTime"/> and clears the <see cref="Deform"/>.
-			/// The deform is not cleared if the old attachment has the same <see cref="VertexAttachment.DeformAttachment"/> as the specified
-			/// attachment.</summary>
+			/// Sets the slot's attachment and, if the attachment changed, resets <see cref="AttachmentTime"/> and clears
+			/// <see cref="AttachmentVertices">.</summary>
 			/// <param name="value">May be null.</param>
 			set {
 				if (attachment == value) return;
-				if (!(value is VertexAttachment) || !(this.attachment is VertexAttachment)
-					|| ((VertexAttachment)value).DeformAttachment != ((VertexAttachment)this.attachment).DeformAttachment) {
-					deform.Clear();
-				}
-				this.attachment = value;
+				attachment = value;
 				attachmentTime = bone.skeleton.time;
+				attachmentVertices.Clear(false);
 			}
 		}
 
@@ -161,13 +142,13 @@ namespace Spine {
 		/// weighted mesh, the entries are an offset for each vertex which will be added to the mesh's local vertex positions.
 		/// <para />
 		/// See <see cref="VertexAttachment.ComputeWorldVertices(Slot, int, int, float[], int, int)"/> and <see cref="DeformTimeline"/>.</summary>
-		public ExposedList<float> Deform {
+		public ExposedList<float> AttachmentVertices {
 			get {
-				return deform;
+				return attachmentVertices;
 			}
 			set {
-				if (deform == null) throw new ArgumentNullException("deform", "deform cannot be null.");
-				deform = value;
+				if (attachmentVertices == null) throw new ArgumentNullException("attachmentVertices", "attachmentVertices cannot be null.");
+				attachmentVertices = value;
 			}
 		}
 
