@@ -16,8 +16,8 @@ public class BoardManager : Singleton<BoardManager>
     public List<Tile> FinalList;
 
     Tile currentTile;
-    Tile startTile;
-    Tile endTile;
+    public Tile startTile;
+    public Tile endTile;
 
     public bool isTileSet = false;
 
@@ -124,7 +124,7 @@ public class BoardManager : Singleton<BoardManager>
         }
     }
 
-    Tile GetTile(int x, int y)
+    public Tile GetTile(int x, int y)
     {
         Node n = new Node(x, y);
         var tile = tilesList.Where(t => t.node == n);

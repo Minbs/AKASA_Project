@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,21 +9,23 @@ public class Enemy : MonoBehaviour
     List<Tile> moveTiles = new List<Tile>();
     public int mode = 0;
 
+    public string poolItemName = "Enemy1";
+
     void Start()
     {
-        
+        moveTiles = BoardManager.Instance.FinalList.ToList();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (BoardManager.Instance.end == true && moveTiles.Count == 0)
-        {
-            moveTiles = BoardManager.Instance.FinalList;
-        }
-        else if(BoardManager.Instance.end == true && moveTiles.Count != 0)
+        if(BoardManager.Instance.end == true && moveTiles.Count != 0)
         {
             Move();
+        }
+        else if (BoardManager.Instance.end == true && moveTiles.Count == 0)
+        {
+            ObjectPool.Instance.PushToPool(poolItemName, gameObject);
         }
     }
 
@@ -36,12 +39,6 @@ public class Enemy : MonoBehaviour
         {
             transform.position = des;
             moveTiles.RemoveAt(0);
-        }
-
-        foreach(var t in BoardManager.Instance.tilesList)
-        {
-            if(t.height == 0)
-            t.onTile(transform);
         }
     }
 }
