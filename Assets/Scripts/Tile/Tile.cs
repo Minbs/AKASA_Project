@@ -41,8 +41,17 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     
     }
+
+    public bool IsCanSetUnit()
+    {
+        if (!isBlock && !isOnUnit && height != 0)
+            return true;
+        else
+            return false;
+    }
+
 
     public void canUnitSetTile(bool b)
     {

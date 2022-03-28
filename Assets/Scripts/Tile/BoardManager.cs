@@ -25,7 +25,7 @@ public class BoardManager : Singleton<BoardManager>
 
     private MapCreator mapCreator;
 
-    bool tileSetMode = false;
+
 
 
     // Start is called before the first frame update
@@ -135,17 +135,14 @@ public class BoardManager : Singleton<BoardManager>
         return returnVal; 
     }
 
-    public void CanSetTile()
+    public Tile GetTile(Node node)
     {
-        if (tileSetMode)
-            tileSetMode = false;
-        else
-            tileSetMode = true;
+        Node n = node;
+        var tile = tilesList.Where(t => t.node == n);
+
+        Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
 
 
-        foreach (var tile in tilesList)
-        {
-            tile.canUnitSetTile(tileSetMode);
-        }
+        return returnVal;
     }
 }
