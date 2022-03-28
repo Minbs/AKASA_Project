@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 [Serializable]
 public enum State
@@ -39,15 +40,7 @@ public class GameManager : Singleton<GameManager>
     {
         state = State.WAIT;
 
-        Node node = new Node();
-        node = new Node(0, 0);
-        attackRangeTiles.Add(node);
 
-        node = new Node(-1, 0);
-        attackRangeTiles.Add(node);
-
-        node = new Node(-2, 0);
-        attackRangeTiles.Add(node);
 
     }
 
@@ -79,7 +72,6 @@ public class GameManager : Singleton<GameManager>
             {
                 if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                 {
-                    Debug.Log("h");
                     tileSetMode = false;
                     if (attackRangeTileImages.Count > 0)
                     {
@@ -179,6 +171,8 @@ public class GameManager : Singleton<GameManager>
             tileSetMode = false;
         else
             tileSetMode = true;
+
+        attackRangeTiles = hero1.GetComponent<Hero>().attackRangeNodes.ToList();
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {

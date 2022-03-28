@@ -2,21 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction
+public class Hero : Unit
 {
-    LEFT,
-    UP,
-    RIGHT,
-    DOWN
-}
-
-public class Unit : MonoBehaviour
-{
-    public int hp;
-
-    public string poolItemName;
-
-    public Direction direction;
+    // Start is called before the first frame update
+    public List<Node> attackRangeNodes = new List<Node>();
 
     void Start()
     {
@@ -28,4 +17,6 @@ public class Unit : MonoBehaviour
     {
         
     }
+
+
 }

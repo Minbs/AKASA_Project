@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
-    public int mode = 0;
 
-    public string poolItemName = "Enemy1";
+
+     
 
     void Start()
     {
         moveTiles = BoardManager.Instance.FinalList.ToList();
+
+        poolItemName = "Enemy1";
     }
 
     // Update is called once per frame

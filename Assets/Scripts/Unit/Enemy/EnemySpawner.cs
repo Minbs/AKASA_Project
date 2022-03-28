@@ -57,7 +57,6 @@ public class EnemySpawner : MonoBehaviour
 
 	public IEnumerator Spawn()
     {
-		Debug.Log("s");
 
 		if (GameManager.Instance.state == State.BATTLE)
 		{
@@ -68,7 +67,6 @@ public class EnemySpawner : MonoBehaviour
 
 				if (enemySpawnDatas[0].time <= timer)
 				{
-					Debug.Log(timer);
 
 					GameObject enemy = ObjectPool.Instance.PopFromPool("Enemy1");
 					Vector3 pos = BoardManager.Instance.startTile.transform.position;
