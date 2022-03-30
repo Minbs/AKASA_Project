@@ -43,8 +43,10 @@ public class MapCreator
         }
 
 
-     var result = BoardManager.Instance.tilesList.OrderBy(x=> x.transform.position.z).ThenByDescending(x=> x.transform.position.x); // 타일 위치 기준으로 리스트 정렬
+     var result = BoardManager.Instance.tilesList.OrderBy(x=> Mathf.Ceil( x.transform.position.z) / 100).ThenByDescending(x=> x.transform.position.x); // 타일 위치 기준으로 리스트 정렬
         BoardManager.Instance.tilesList = result.ToList();
+
+        
     }
 
     void ReadTilesInfo()

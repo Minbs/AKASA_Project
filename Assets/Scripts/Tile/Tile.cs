@@ -24,14 +24,18 @@ public class Tile : MonoBehaviour
     Vector3 center;
     Vector3 size;
     Renderer renderer;
-    Color color;
+    List<Color> colors = new List<Color>();
     void Start()
     {
         renderer = GetComponent<MeshRenderer>();
          center = renderer.bounds.center;
          size = renderer.bounds.size;
 
-        color = renderer.material.color;
+        for(int i = 0; i < renderer.materials.Length; i++)
+        {
+            colors.Add(renderer.materials[i].color);
+        }
+
     }
 
     // Update is called once per frame
@@ -40,14 +44,17 @@ public class Tile : MonoBehaviour
         
     }
 
-    public void canUnitSetTile()
+    public void canUnitSetTile(bool b)
     {
         if(!isOnUnit && height != 0 && !isBlock)
         {
-            foreach(var r in renderer.materials)
-            {
 
-                r.color = Color.Lerp(r.color, new Color(0, 1, 0), 0.3f);
+                for (int i = 0; i < renderer.materials.Length; i++)
+                {
+                    if(b)
+                    renderer.materials[i].color = Color.Lerp(colors[i], new Color(0, 1, 0), 0.3f);
+                    else
+                    renderer.materials[i].color = colors[i];
             }
         }
     }
@@ -63,7 +70,11 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            renderer.material.color = color;
+            for (int i = 0; i < renderer.materials.Length; i++)
+            {
+                renderer.materials[i].color = colors[i];
+            }
+
         }
     }
 
@@ -72,7 +83,12 @@ public class Tile : MonoBehaviour
         if (b)
             renderer.material.color = new Color(255, 0, 0);
         else
-        renderer.material.color = color;
+        {
+            for (int i = 0; i < renderer.materials.Length; i++)
+            {
+                renderer.materials[i].color = colors[i];
+            }
+        }
     }
 
     public void SetTileInfo(string[] s)
