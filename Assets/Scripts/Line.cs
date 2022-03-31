@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Line : MonoBehaviour
 {
     public LineRenderer line;
-    public Transform pos1;
-    public Transform pos2;
 
-    float timer;
+    float time;
     float waitingTime;
 
     List<Tile> lineTile = new List<Tile>();
@@ -17,7 +16,7 @@ public class Line : MonoBehaviour
     void Start()
     {
         line.positionCount = 2;
-        timer = 0.0f;
+        time = 0;
         waitingTime = 0.5f;
         Debug.Log(BoardManager.Instance.FinalList);
     }
@@ -27,34 +26,45 @@ public class Line : MonoBehaviour
     {
         if (BoardManager.Instance.end == true && lineTile.Count == 0)
         {
-            lineTile = BoardManager.Instance.FinalList;
+            lineTile = BoardManager.Instance.FinalList.ToList();
         }
         else if (BoardManager.Instance.end == true && lineTile.Count != 0)
         {
-            //Invoke("CreateLine", 2.0f);
+            //Invoke("CreateLine", 1.0f);
+
+            
             CreateLine();
         }
     }
 
     void CreateLine()
     {
+        if (lineTile.Count <= 0)
+        {
+            return;
+        }
+
         Vector3 vec = lineTile[0].transform.position;
         vec.y = 0.2f;
 
-        line.SetPosition(0, vec);
-        line.SetPosition(1, lineTile[1].transform.position);
-        lineTile.RemoveAt(0);
+        time += Time.deltaTime;
 
-        foreach (var t in BoardManager.Instance.tilesList)
+        if (time >= waitingTime)
         {
-            timer += Time.deltaTime;
+            line.SetPosition(0, vec);
 
-            if (timer > waitingTime)
+            if (lineTile.Count > 1)
             {
-                if (t.height == 0)
-                    t.onTile(transform);
-                timer = 0;
+                line.SetPosition(1, lineTile[1].transform.position);
             }
+            lineTile.RemoveAt(0);
+
+            time = 0;
         }
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1.5f);
     }
 }

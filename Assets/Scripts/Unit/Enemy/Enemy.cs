@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Enemy : MonoBehaviour
     {
         if (BoardManager.Instance.end == true && moveTiles.Count == 0)
         {
-            moveTiles = BoardManager.Instance.FinalList;
+            moveTiles = BoardManager.Instance.FinalList.ToList();
         }
         else if(BoardManager.Instance.end == true && moveTiles.Count != 0)
         {
