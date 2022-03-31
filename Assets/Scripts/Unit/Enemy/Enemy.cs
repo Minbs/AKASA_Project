@@ -21,15 +21,8 @@ public class Enemy : Unit
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-        if (BoardManager.Instance.end == true && moveTiles.Count == 0)
-        {
-            moveTiles = BoardManager.Instance.FinalList.ToList();
-        }
-        else if(BoardManager.Instance.end == true && moveTiles.Count != 0)
-=======
+
         if(BoardManager.Instance.end == true && moveTiles.Count != 0)
->>>>>>> Min
         {
             Move();
         }
