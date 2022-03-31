@@ -38,6 +38,11 @@ public class MapCreator
               tile.AddComponent<Tile>();
             }
 
+            if (tile.GetComponent<BoxCollider>() == null)
+            {
+                tile.AddComponent<BoxCollider>();
+            }
+
             BoardManager.Instance.tilesList.Add(tile.GetComponent<Tile>());
   
         }

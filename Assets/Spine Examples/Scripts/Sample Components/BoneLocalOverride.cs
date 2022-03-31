@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,23 +15,23 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
+using UnityEngine;
 using Spine;
 using Spine.Unity;
-using UnityEngine;
 
-namespace Spine.Unity.Examples {
+namespace Spine.Unity.Examples {	
 	public class BoneLocalOverride : MonoBehaviour {
 		[SpineBone]
 		public string boneName;
@@ -50,22 +50,22 @@ namespace Spine.Unity.Examples {
 		ISkeletonAnimation spineComponent;
 		Bone bone;
 
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		void OnValidate () {
 			if (Application.isPlaying) return;
-			if (spineComponent == null) spineComponent = GetComponent<ISkeletonAnimation>();
-			if (spineComponent.IsNullOrDestroyed()) return;
+			spineComponent = spineComponent ?? GetComponent<ISkeletonAnimation>();
+			if (spineComponent == null) return;
 			if (bone != null) bone.SetToSetupPose();
 			OverrideLocal(spineComponent);
 		}
-#endif
+		#endif
 
 		void Awake () {
 			spineComponent = GetComponent<ISkeletonAnimation>();
 			if (spineComponent == null) { this.enabled = false; return; }
 			spineComponent.UpdateLocal += OverrideLocal;
 
-			if (bone == null) { this.enabled = false; return; }
+			if (bone == null) {	this.enabled = false; return; }
 		}
 
 		void OverrideLocal (ISkeletonAnimation animated) {

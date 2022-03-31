@@ -2,9 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Direction
+{
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN
+}
+
 public class Unit : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public int hp;
+
+    public string poolItemName;
+
+    public Direction direction;
+
     void Start()
     {
         

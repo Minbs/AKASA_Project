@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated January 1, 2020. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2020, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,16 +15,16 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using System;
@@ -76,15 +76,29 @@ namespace Spine {
 		}
 
 		public void UpdateOffset () {
-			float regionScaleX = width / regionOriginalWidth * scaleX;
-			float regionScaleY = height / regionOriginalHeight * scaleY;
-			float localX = -width / 2 * scaleX + regionOffsetX * regionScaleX;
-			float localY = -height / 2 * scaleY + regionOffsetY * regionScaleY;
-			float localX2 = localX + regionWidth * regionScaleX;
-			float localY2 = localY + regionHeight * regionScaleY;
-			float cos = MathUtils.CosDeg(this.rotation);
-			float sin = MathUtils.SinDeg(this.rotation);
-			float x = this.x, y = this.y;
+			float width = this.width;
+			float height = this.height;
+			float localX2 = width * 0.5f;
+			float localY2 = height * 0.5f;
+			float localX = -localX2;
+			float localY = -localY2;
+			if (regionOriginalWidth != 0) { // if (region != null)
+				localX += regionOffsetX / regionOriginalWidth * width;
+				localY += regionOffsetY / regionOriginalHeight * height;
+				localX2 -= (regionOriginalWidth - regionOffsetX - regionWidth) / regionOriginalWidth * width;
+				localY2 -= (regionOriginalHeight - regionOffsetY - regionHeight) / regionOriginalHeight * height;
+			}
+			float scaleX = this.scaleX;
+			float scaleY = this.scaleY;
+			localX *= scaleX;
+			localY *= scaleY;
+			localX2 *= scaleX;
+			localY2 *= scaleY;
+			float rotation = this.rotation;
+			float cos = MathUtils.CosDeg(rotation);
+			float sin = MathUtils.SinDeg(rotation);
+			float x = this.x;
+			float y = this.y;
 			float localXCos = localX * cos + x;
 			float localXSin = localX * sin;
 			float localYCos = localY * cos + y;
@@ -104,10 +118,10 @@ namespace Spine {
 			offset[BRY] = localYCos + localX2Sin;
 		}
 
-		public void SetUVs (float u, float v, float u2, float v2, int degrees) {
+		public void SetUVs (float u, float v, float u2, float v2, bool rotate) {
 			float[] uvs = this.uvs;
-			// UV values differ from spine-libgdx.
-			if (degrees == 90) {
+			// UV values differ from RegionAttachment.java
+			if (rotate) {
 				uvs[URX] = u;
 				uvs[URY] = v2;
 				uvs[BRX] = u;
@@ -163,32 +177,6 @@ namespace Spine {
 			worldVertices[offset] = offsetX * a + offsetY * b + bwx; // br
 			worldVertices[offset + 1] = offsetX * c + offsetY * d + bwy;
 			//offset += stride;
-		}
-
-		public override Attachment Copy () {
-			RegionAttachment copy = new RegionAttachment(this.Name);
-			copy.RendererObject = RendererObject;
-			copy.regionOffsetX = regionOffsetX;
-			copy.regionOffsetY = regionOffsetY;
-			copy.regionWidth = regionWidth;
-			copy.regionHeight = regionHeight;
-			copy.regionOriginalWidth = regionOriginalWidth;
-			copy.regionOriginalHeight = regionOriginalHeight;
-			copy.Path = Path;
-			copy.x = x;
-			copy.y = y;
-			copy.scaleX = scaleX;
-			copy.scaleY = scaleY;
-			copy.rotation = rotation;
-			copy.width = width;
-			copy.height = height;
-			Array.Copy(uvs, 0, copy.uvs, 0, 8);
-			Array.Copy(offset, 0, copy.offset, 0, 8);
-			copy.r = r;
-			copy.g = g;
-			copy.b = b;
-			copy.a = a;
-			return copy;
 		}
 	}
 }

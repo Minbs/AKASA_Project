@@ -3,27 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
-    public int mode = 0;
+
+
+     
 
     void Start()
     {
-        
+        moveTiles = BoardManager.Instance.FinalList.ToList();
+
+        poolItemName = "Enemy1";
     }
 
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         if (BoardManager.Instance.end == true && moveTiles.Count == 0)
         {
             moveTiles = BoardManager.Instance.FinalList.ToList();
         }
         else if(BoardManager.Instance.end == true && moveTiles.Count != 0)
+=======
+        if(BoardManager.Instance.end == true && moveTiles.Count != 0)
+>>>>>>> Min
         {
             Move();
+        }
+        else if (BoardManager.Instance.end == true && moveTiles.Count == 0)
+        {
+            ObjectPool.Instance.PushToPool(poolItemName, gameObject);
         }
     }
 
@@ -37,12 +49,6 @@ public class Enemy : MonoBehaviour
         {
             transform.position = des;
             moveTiles.RemoveAt(0);
-        }
-
-        foreach(var t in BoardManager.Instance.tilesList)
-        {
-            if(t.height == 0)
-            t.onTile(transform);
         }
     }
 }
