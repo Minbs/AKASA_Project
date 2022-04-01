@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated May 1, 2019. Replaces all prior versions.
+ * Last updated January 1, 2020. Replaces all prior versions.
  *
- * Copyright (c) 2013-2019, Esoteric Software LLC
+ * Copyright (c) 2013-2020, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,16 +15,16 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
- * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
+ * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 // Contributed by: Mitch Thompson
@@ -35,6 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Spine;
+using System.Linq;
 
 namespace Spine.Unity.Editor {
 	public struct SpineDrawerValuePair {
@@ -74,7 +75,7 @@ namespace Spine.Unity.Editor {
 			}
 
 			// Handle multi-editing when instances don't use the same SkeletonDataAsset.
-			if (!SpineInspectorUtility.TargetsUseSameData(property.serializedObject)) { 
+			if (!SpineInspectorUtility.TargetsUseSameData(property.serializedObject)) {
 				EditorGUI.DelayedTextField(position, property, label);
 				return;
 			}
@@ -118,7 +119,7 @@ namespace Spine.Unity.Editor {
 				skeletonDataAsset = property.serializedObject.targetObject as SkeletonDataAsset;
 				if (skeletonDataAsset == null) return;
 			}
-				
+
 			position = EditorGUI.PrefixLabel(position, label);
 
 			Texture2D image = Icon;
@@ -136,7 +137,7 @@ namespace Spine.Unity.Editor {
 					return skeletonComponent;
 			} else {
 				var component = property.serializedObject.targetObject as Component;
-				if (component != null)					
+				if (component != null)
 					return component.GetComponentInChildren(typeof(ISkeletonComponent)) as ISkeletonComponent;
 			}
 
@@ -177,19 +178,21 @@ namespace Spine.Unity.Editor {
 			if (TargetAttribute.includeNone)
 				menu.AddItem(new GUIContent(NoneString), !property.hasMultipleDifferentValues && string.IsNullOrEmpty(property.stringValue), HandleSelect, new SpineDrawerValuePair(string.Empty, property));
 
-			for (int i = 0; i < data.Slots.Count; i++) {
-				string name = data.Slots.Items[i].Name;
+			IEnumerable<SlotData> orderedSlots = data.Slots.Items.OrderBy(slotData => slotData.Name);
+			foreach (SlotData slotData in orderedSlots) {
+				int slotIndex = slotData.Index;
+				string name = slotData.Name;
 				if (name.StartsWith(targetAttribute.startsWith, StringComparison.Ordinal)) {
 
 					if (targetAttribute.containsBoundingBoxes) {
-						int slotIndex = i;
-						var attachments = new List<Attachment>();
-						foreach (var skin in data.Skins)
-							skin.FindAttachmentsForSlot(slotIndex, attachments);
+						var skinEntries = new List<Skin.SkinEntry>();
+						foreach (var skin in data.Skins) {
+							skin.GetAttachments(slotIndex, skinEntries);
+						}
 
 						bool hasBoundingBox = false;
-						foreach (var attachment in attachments) {
-							var bbAttachment = attachment as BoundingBoxAttachment;
+						foreach (var entry in skinEntries) {
+							var bbAttachment = entry.Attachment as BoundingBoxAttachment;
 							if (bbAttachment != null) {
 								string menuLabel = bbAttachment.IsWeighted() ? name + " (!)" : name;
 								menu.AddItem(new GUIContent(menuLabel), !property.hasMultipleDifferentValues && name == property.stringValue, HandleSelect, new SpineDrawerValuePair(name, property));
@@ -255,8 +258,8 @@ namespace Spine.Unity.Editor {
 					string choiceValue = TargetAttribute.defaultAsEmptyString && isDefault ? string.Empty : name;
 					menu.AddItem(new GUIContent(name), !property.hasMultipleDifferentValues && choiceValue == property.stringValue, HandleSelect, new SpineDrawerValuePair(choiceValue, property));
 				}
-					
-			}			
+
+			}
 		}
 
 	}
@@ -342,7 +345,7 @@ namespace Spine.Unity.Editor {
 						menu.AddItem(new GUIContent(name), !property.hasMultipleDifferentValues && name == property.stringValue, HandleSelect, new SpineDrawerValuePair(name, property));
 					}
 				}
-					
+
 			}
 		}
 
@@ -470,10 +473,21 @@ namespace Spine.Unity.Editor {
 					attachmentNames.Clear();
 					placeholderNames.Clear();
 
-					skin.FindNamesForSlot(i, attachmentNames);
+					var skinEntries = new List<Skin.SkinEntry>();
+					skin.GetAttachments(i, skinEntries);
+					foreach (var entry in skinEntries) {
+						attachmentNames.Add(entry.Name);
+					}
+
 					if (skin != defaultSkin) {
-						defaultSkin.FindNamesForSlot(i, attachmentNames);
-						skin.FindNamesForSlot(i, placeholderNames);
+						foreach (var entry in skinEntries) {
+							placeholderNames.Add(entry.Name);
+						}
+						skinEntries.Clear();
+						defaultSkin.GetAttachments(i, skinEntries);
+						foreach (var entry in skinEntries) {
+							attachmentNames.Add(entry.Name);
+						}
 					}
 
 					for (int a = 0; a < attachmentNames.Count; a++) {
@@ -510,9 +524,17 @@ namespace Spine.Unity.Editor {
 				menu.AddItem(new GUIContent(NoneString), !property.hasMultipleDifferentValues && string.IsNullOrEmpty(property.stringValue), HandleSelect, new SpineDrawerValuePair(string.Empty, property));
 
 			for (int i = 0; i < data.Bones.Count; i++) {
-				string name = data.Bones.Items[i].Name;
-				if (name.StartsWith(targetAttribute.startsWith, StringComparison.Ordinal))
-					menu.AddItem(new GUIContent(name), !property.hasMultipleDifferentValues && name == property.stringValue, HandleSelect, new SpineDrawerValuePair(name, property));
+				var bone = data.Bones.Items[i];
+				string name = bone.Name;
+				if (name.StartsWith(targetAttribute.startsWith, StringComparison.Ordinal)) {
+					// jointName = "root/hip/bone" to show a hierarchial tree.
+					string jointName = name;
+					var iterator = bone;
+					while ((iterator = iterator.Parent) != null)
+						jointName = string.Format("{0}/{1}", iterator.Name, jointName);
+
+					menu.AddItem(new GUIContent(jointName), !property.hasMultipleDifferentValues && name == property.stringValue, HandleSelect, new SpineDrawerValuePair(name, property));
+				}
 			}
 		}
 

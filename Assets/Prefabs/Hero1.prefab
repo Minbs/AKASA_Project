@@ -67,7 +67,9 @@ MonoBehaviour:
     column: -1
   - row: -2
     column: -1
+  attackRangeTiles: []
   skeletonData: {fileID: 11400000, guid: af38a3de26ed9b84abc2fe7c7f3b209d, type: 2}
+  target: {fileID: 0}
 --- !u!1 &6208362257474094919
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +81,7 @@ GameObject:
   - component: {fileID: 6208362257474094912}
   - component: {fileID: 6208362257474094915}
   - component: {fileID: 6208362257474094914}
-  - component: {fileID: 6208362257474094913}
+  - component: {fileID: 4694265334365025233}
   m_Layer: 9
   m_Name: Spine GameObject (spi_ani_test_character)
   m_TagString: Untagged
@@ -152,7 +154,7 @@ MeshRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6208362257474094913
+--- !u!114 &4694265334365025233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,6 +170,7 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -176,6 +179,7 @@ MonoBehaviour:
   clearStateOnDisable: 0
   tintBlack: 0
   singleSubmesh: 0
+  fixDrawOrder: 0
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
