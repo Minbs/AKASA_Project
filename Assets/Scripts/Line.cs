@@ -15,10 +15,9 @@ public class Line : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        line.positionCount = 2;
+        line.positionCount = 3;
         time = 0;
-        waitingTime = 0.5f;
-        Debug.Log(BoardManager.Instance.FinalList);
+        waitingTime = 0.175f;
     }
 
     // Update is called once per frame
@@ -31,8 +30,6 @@ public class Line : MonoBehaviour
         else if (BoardManager.Instance.end == true && lineTile.Count != 0)
         {
             //Invoke("CreateLine", 1.0f);
-
-            
             CreateLine();
         }
     }
@@ -44,27 +41,32 @@ public class Line : MonoBehaviour
             return;
         }
 
-        Vector3 vec = lineTile[0].transform.position;
-        vec.y = 0.2f;
-
         time += Time.deltaTime;
 
         if (time >= waitingTime)
         {
-            line.SetPosition(0, vec);
-
-            if (lineTile.Count > 1)
+            if (lineTile.Count > 2)
             {
-                line.SetPosition(1, lineTile[1].transform.position);
+                Vector3 vec = lineTile[0].transform.position;
+                vec.y = 0.2f;
+                Vector3 vec1 = lineTile[1].transform.position;
+                vec1.y = 0.2f;
+                Vector3 vec2 = lineTile[2].transform.position;
+                vec2.y = 0.2f;
+
+                line.SetPosition(0, vec);
+                line.SetPosition(1, vec1);
+                line.SetPosition(2, vec2);
+
+                //Vector3 lineVec = Vector3.Lerp(vec, vec1, waitingTime * Time.deltaTime);
+                //Vector3 lineVec1 = Vector3.Lerp(vec1, vec1, waitingTime * Time.deltaTime);
+
+                //line.SetPosition(0, lineVec);
+                //line.SetPosition(1, lineVec1);
             }
             lineTile.RemoveAt(0);
 
             time = 0;
         }
-    }
-
-    IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(1.5f);
     }
 }
