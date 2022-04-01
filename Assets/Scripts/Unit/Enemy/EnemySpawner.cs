@@ -69,6 +69,7 @@ public class EnemySpawner : MonoBehaviour
 				{
 
 					GameObject enemy = ObjectPool.Instance.PopFromPool("Enemy1");
+					GameManager.Instance.enemiesList.Add(enemy);
 					Vector3 pos = BoardManager.Instance.startTile.transform.position;
 					pos.y = 0.2f;
 					enemy.transform.position = pos;

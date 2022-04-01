@@ -27,21 +27,21 @@ public class GameManager : Singleton<GameManager>
     public Camera tileCamera;
     public Camera characterCamera;
 
-    public List<Node> attackRangeTiles = new List<Node>();
-    public List<GameObject> attackRangeTileImages = new List<GameObject>();
+
 
     Node rayNode = new Node();
 
     Ray ray;
 
-    public GameObject hero1;
+    public GameObject hero;
+
+    public Vector3 heroSetPosition;
+
+    public List<GameObject> enemiesList = new List<GameObject>();
 
     void Start()
     {
         state = State.WAIT;
-
-
-
     }
 
     void Update()
@@ -73,95 +73,46 @@ public class GameManager : Singleton<GameManager>
                 if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                 {
                     tileSetMode = false;
-                    if (attackRangeTileImages.Count > 0)
-                    {
 
-                        foreach (var r in attackRangeTileImages)
-                        {
-                            ObjectPool.Instance.PushToPool("AttackRangeTile", r);
-
-                        }
-
-                        attackRangeTileImages.Clear();
-
-                    }
 
                     Vector3 pos = raycastHit.collider.transform.position;
-                    pos.y += 0.16f;
-                    pos.z += 0.2f;
-                    hero1.transform.position = pos;
-                    hero1.SetActive(true);
+                    raycastHit.collider.GetComponent<Tile>().isOnUnit = true;
+                    pos += heroSetPosition;
+                    hero.transform.position = pos;
+                    tileSetMode = false;
+                    
+
+                    foreach (var tile in hero.GetComponent<Hero>().GetAttackRangeNodesList(Direction.LEFT))
+                    {
+                        if(BoardManager.Instance.GetTile(raycastHit.collider.GetComponent<Tile>().node + tile) != null)
+                        hero.GetComponent<Hero>().attackRangeTiles.Add(BoardManager.Instance.GetTile(  raycastHit.collider.GetComponent<Tile>().node + tile));
+                    }
+
+                    foreach (var tile in BoardManager.Instance.tilesList)
+                    {
+                        tile.canUnitSetTile(tileSetMode);
+                    }
+                    UIManager.Instance.ShowAttackRangeTiles(false);
+                    hero.SetActive(true);
                 }
 
 
                 if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                 {
-                    if (attackRangeTileImages.Count > 0)
-                    {
-
-                        foreach (var r in attackRangeTileImages)
-                        {
-                            ObjectPool.Instance.PushToPool("AttackRangeTile", r);
-
-                        }
-
-                        attackRangeTileImages.Clear();
-                    }
-
-                    foreach (var t in attackRangeTiles)
-                    {
-
-                        Tile tile = BoardManager.Instance.GetTile(t + raycastHit.collider.GetComponent<Tile>().node);
-
-                        if (tile != null)
-                        {
-                            Vector3 pos = tile.gameObject.transform.position;
-
-                            GameObject attackTile = ObjectPool.Instance.PopFromPool("AttackRangeTile");
-                            pos.y += 0.151f;
-                            attackTile.transform.position = pos;
-                            attackTile.SetActive(true);
-                            attackRangeTileImages.Add(attackTile);
-                        }
-
-                    }
-
-
-
-                 
+                    UIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
                 }
-                else if(!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                 {
-
-                if (attackRangeTileImages.Count > 0)
-                {
-
-                    foreach (var r in attackRangeTileImages)
-                    {
-                        ObjectPool.Instance.PushToPool("AttackRangeTile", r);
-
-                    }
-
-                    attackRangeTileImages.Clear();
+                    UIManager.Instance.ShowAttackRangeTiles(false);
                 }
-                }
-
-                rayNode = raycastHit.collider.GetComponent<Tile>().node;
             }
-            else
-            {
-                if (attackRangeTileImages.Count > 0)
-                {
+           
 
-                    foreach (var r in attackRangeTileImages)
-                    {
-                        ObjectPool.Instance.PushToPool("AttackRangeTile", r);
-
-                    }
-
-                    attackRangeTileImages.Clear();
-                }
-            }    
+            rayNode = raycastHit.collider.GetComponent<Tile>().node;
+        }
+        else
+        {
+            UIManager.Instance.ShowAttackRangeTiles(false);
         }
     }
 
@@ -172,13 +123,11 @@ public class GameManager : Singleton<GameManager>
         else
             tileSetMode = true;
 
-        attackRangeTiles = hero1.GetComponent<Hero>().attackRangeNodes.ToList();
-
         foreach (var tile in BoardManager.Instance.tilesList)
         {
             tile.canUnitSetTile(tileSetMode);
         }
 
-
     }
 }
+

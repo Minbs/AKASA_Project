@@ -14,13 +14,41 @@ public class ObjectPool : Singleton<ObjectPool>
         }
     }
 
+    public void CreatePoolObject(string itemName, GameObject item, int count,Transform parent = null)
+    {
+        PooledObject poolObject = new PooledObject();
+
+        poolObject.poolCount = count;
+        poolObject.poolItemName = itemName;
+        poolObject.prefab = item;
+
+        for (int i = 0; i < count; i++)
+        {
+            GameObject poolItem = Object.Instantiate(item) as GameObject;
+            poolItem.name = itemName;
+            poolItem.SetActive(false);
+            poolItem.transform.SetParent(parent);
+            poolObject.poolList.Add(poolItem);
+        }
+
+        objectPool.Add(poolObject);
+    }
+
     public bool PushToPool(string itemName, GameObject item, Transform parent = null)
     {
         PooledObject pool = GetPoolItem(itemName);
+
         if (pool == null)
+        {
             return false;
+        }
+
+
 
         pool.PushToPool(item, parent == null ? transform : parent);
+
+
+
         return true;
     }
 

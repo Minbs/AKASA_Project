@@ -9,7 +9,7 @@ public class PooledObject
     public GameObject prefab = null;
     public int poolCount = 0;
     [SerializeField]
-    private List<GameObject> poolList = new List<GameObject>();
+    public List<GameObject> poolList = new List<GameObject>();
 
     public void Initialize(Transform parent = null)
     {

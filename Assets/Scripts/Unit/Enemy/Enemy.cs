@@ -28,6 +28,7 @@ public class Enemy : Unit
         }
         else if (BoardManager.Instance.end == true && moveTiles.Count == 0)
         {
+            GameManager.Instance.enemiesList.Remove(gameObject);
             ObjectPool.Instance.PushToPool(poolItemName, gameObject);
         }
     }
