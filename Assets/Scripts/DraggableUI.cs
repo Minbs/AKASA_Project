@@ -5,40 +5,34 @@ using UnityEngine.EventSystems;
 
 public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private Transform canvas;
-    private Transform previousParent;
-    private RectTransform rect;
-    private CanvasGroup canvasGroup;
+    private Transform root;
 
-    private void Awake()
+    void Start()
     {
-        canvas = FindObjectOfType<Canvas>().transform;
-        rect = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
+        root = transform.root;
+    }
+
+    void Update()
+    {
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        previousParent = transform.parent;
-        transform.SetParent(canvas);
-        transform.SetAsLastSibling();
-        canvasGroup.alpha = 0.6f;
-        canvasGroup.blocksRaycasts = false;
+        root.BroadcastMessage("BeginDrag", transform, SendMessageOptions.DontRequireReceiver);
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rect.position = eventData.position;
+        //canvas의 Render Mode를 overlay가 아닌 camera로 하면 오류남
+        transform.position = eventData.position;
+
+        root.BroadcastMessage("Drag", transform, SendMessageOptions.DontRequireReceiver);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (transform.parent == canvas)
-        {
-            transform.SetParent(previousParent);
-            rect.position = previousParent.GetComponent<RectTransform>().position;
-        }
-        canvasGroup.alpha = 1.0f;
-        canvasGroup.blocksRaycasts = true;
+        root.BroadcastMessage("EndDrag", transform, SendMessageOptions.DontRequireReceiver);
     }
 }

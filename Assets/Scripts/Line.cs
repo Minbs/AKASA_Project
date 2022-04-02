@@ -5,31 +5,31 @@ using System.Linq;
 
 public class Line : MonoBehaviour
 {
-    public LineRenderer line;
+    [SerializeField]
+    private LineRenderer line;
 
-    float time;
-    float waitingTime;
+    public float time = 0;
+    public float waitingTime = 0.175f;
 
     List<Tile> lineTile = new List<Tile>();
 
     // Start is called before the first frame update
     void Start()
     {
+        //길 표시선의 개수
         line.positionCount = 3;
-        time = 0;
-        waitingTime = 0.175f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //
         if (BoardManager.Instance.end == true && lineTile.Count == 0)
         {
             lineTile = BoardManager.Instance.FinalList.ToList();
         }
         else if (BoardManager.Instance.end == true && lineTile.Count != 0)
         {
-            //Invoke("CreateLine", 1.0f);
             CreateLine();
         }
     }
@@ -57,12 +57,6 @@ public class Line : MonoBehaviour
                 line.SetPosition(0, vec);
                 line.SetPosition(1, vec1);
                 line.SetPosition(2, vec2);
-
-                //Vector3 lineVec = Vector3.Lerp(vec, vec1, waitingTime * Time.deltaTime);
-                //Vector3 lineVec1 = Vector3.Lerp(vec1, vec1, waitingTime * Time.deltaTime);
-
-                //line.SetPosition(0, lineVec);
-                //line.SetPosition(1, lineVec1);
             }
             lineTile.RemoveAt(0);
 
