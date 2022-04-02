@@ -309,71 +309,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189676874}
   m_CullTransparentMesh: 1
---- !u!1001 &219101327
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6208362256301881235, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_Name
-      value: Hero1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881235, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.49999937
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.6000021
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5000044
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362256301881260, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6208362257474094915, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
 --- !u!1 &285796144
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,9 +344,9 @@ MonoBehaviour:
   spawner: {fileID: 1367259471}
   tileCamera: {fileID: 638336736}
   characterCamera: {fileID: 532741028}
-  hero: {fileID: 2015318968}
   heroSetPosition: {x: 0, y: 0, z: 0}
   enemiesList: []
+  heroesListIndex: 0
 --- !u!4 &285796146
 Transform:
   m_ObjectHideFlags: 0
@@ -1013,21 +948,29 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: c1539104ef375f7448f152a83402beb4, type: 2}
-  initialSkinName: 
-  initialFlipX: 1
+  skeletonDataAsset: {fileID: 11400000, guid: 744b2de8f91da5f4287a3b317207f0bd, type: 2}
+  initialSkinName: main
+  initialFlipX: 0
   initialFlipY: 0
   startingAnimation: 
   startingLoop: 0
   timeScale: 1
   freeze: 0
+  updateWhenInvisible: 3
   unscaledTime: 0
+  allowMultipleCanvasRenderers: 0
+  canvasRenderers: []
+  separatorSlotNames: []
+  enableSeparatorSlots: 0
+  separatorParts: []
+  updateSeparatorPartLocation: 1
   meshGenerator:
     settings:
       useClipping: 1
       zSpacing: 0
       pmaVertexColors: 1
       tintBlack: 0
+      canvasGroupTintBlack: 0
       calculateTangents: 0
       addNormals: 0
       immutableTriangles: 0
@@ -1047,8 +990,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874987118}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 394176755}
@@ -1056,7 +999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
+  m_AnchoredPosition: {x: 960, y: 638}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &963194225
@@ -1832,11 +1775,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2015318968 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6208362256301881235, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-  m_PrefabInstance: {fileID: 219101327}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2025873266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,6 +1810,7 @@ MonoBehaviour:
   worldCanvas: {fileID: 1559733140}
   settingCharacter: {fileID: 874987118}
   skeletonDataAsset: {fileID: 11400000, guid: c1539104ef375f7448f152a83402beb4, type: 2}
+  isSettingCharacterOn: 0
 --- !u!4 &2025873268
 Transform:
   m_ObjectHideFlags: 0

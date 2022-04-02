@@ -14,6 +14,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject settingCharacter;
     public SkeletonDataAsset skeletonDataAsset;
 
+    public bool isSettingCharacterOn = false;
+
     void Start()
     {
         ObjectPool.Instance.CreatePoolObject("AttackRangeTile", attackRangeTileImage, 20, worldCanvas.transform);

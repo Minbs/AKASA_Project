@@ -33,11 +33,13 @@ public class GameManager : Singleton<GameManager>
 
     Ray ray;
 
-    public GameObject hero;
+  //  public GameObject hero;
 
     public Vector3 heroSetPosition;
 
     public List<GameObject> enemiesList = new List<GameObject>();
+
+    public int heroesListIndex = 0;
 
     void Start()
     {
@@ -78,8 +80,11 @@ public class GameManager : Singleton<GameManager>
                     Vector3 pos = raycastHit.collider.transform.position;
                     raycastHit.collider.GetComponent<Tile>().isOnUnit = true;
                     pos += heroSetPosition;
+
+                    GameObject hero = Instantiate(HeroManager.Instance.heroPrefabs[heroesListIndex]);
                     hero.transform.position = pos;
                     tileSetMode = false;
+                    UIManager.Instance.settingCharacter.SetActive(false);
                     
 
                     foreach (var tile in hero.GetComponent<Hero>().GetAttackRangeNodesList(Direction.LEFT))

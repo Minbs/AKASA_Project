@@ -31,7 +31,11 @@ public class HeroButton : MonoBehaviour, IPointerDownHandler
         UIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
 
         UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = hero.skeletonData;
+        UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
-        UIManager.Instance.settingCharacter.SetActive(true);
+
+       UIManager.Instance.settingCharacter.SetActive(true);
+        GameManager.Instance.heroesListIndex = index;
+       // GameManager.Instance.hero = HeroManager.Instance.heroPrefabs[index];
     }
 }

@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943b449dcb3eefb40a30d3cc2b20145a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 3
+  hp: 40
   poolItemName: Enemy1
+  direction: 0
 --- !u!1 &6299139124783264950
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +148,7 @@ MonoBehaviour:
   initialSkinName: White
   initialFlipX: 0
   initialFlipY: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -155,6 +157,7 @@ MonoBehaviour:
   clearStateOnDisable: 0
   tintBlack: 0
   singleSubmesh: 0
+  fixDrawOrder: 0
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0

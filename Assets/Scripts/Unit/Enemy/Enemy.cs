@@ -11,8 +11,10 @@ public class Enemy : Unit
 
      
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         moveTiles = BoardManager.Instance.FinalList.ToList();
 
         poolItemName = "Enemy1";

@@ -3,34 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Spine.Unity;
-
 public class Hero : Unit
 {
     // Start is called before the first frame update
     public List<Node> attackRangeNodes = new List<Node>();
     public List<Tile> attackRangeTiles = new List<Tile>();
-    public SkeletonDataAsset skeletonData;
 
-    public GameObject target;
 
-    void Start()
+
+    
+
+    private float attackTimer = 0;
+    public float attackSpeed;
+
+
+
+    protected override void Start()
     {
+        base.Start();
+        attackTimer = attackSpeed;
     }
+
+    
+
 
     // Update is called once per frame
     void Update()
     {
+        attackTimer += Time.deltaTime;
+
         AimTarget();
         AttackTarget();
     }
 
     public void AimTarget()
     {
-        if(target == null)
+        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
+        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
+        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
+
+
+
+
+        if (target == null)
         {
-          
-
-
             foreach (var enemy in GameManager.Instance.enemiesList)
             {
                 foreach (var t in attackRangeTiles)
@@ -57,7 +73,7 @@ public class Hero : Unit
                     }
                 }
 
-            if (isOut)
+            if (isOut && normalizedTime >= 1)
                 target = null;
             }
         
@@ -65,23 +81,23 @@ public class Hero : Unit
 
     public void AttackTarget()
     {
-        if(target != null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != "shoot")
+
+        if (target != null && attackTimer >= attackSpeed )
         {
-            transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "shoot", false);
+  
+            spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
+            attackTimer = 0;
         }
 
-        if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != "idle")
+        if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")
         {
-            transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "idle", true);
+            spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
 
     public List<Node> GetAttackRangeNodesList(Direction direction)
     {
         List<Node> tiles = attackRangeNodes.ToList();
-
-        int x = 1;
-        int y = 1;
 
         int max = tiles.Count;
         for(int count = 0; count < max; count++)
