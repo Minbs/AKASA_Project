@@ -54,7 +54,24 @@ public class Unit : MonoBehaviour
         
     }
 
+    public void SetDirection(Direction direction)
+    {
+        Vector3 scale = transform.localScale;
+        this.direction = direction;
 
+        if(direction == Direction.LEFT)
+        {
+            if (scale.x < 0)
+                scale.x *= -1;
+        }
+        else if(direction == Direction.RIGHT)
+        {
+            if (scale.x > 0)
+                scale.x *= -1;
+        }
+
+        transform.localScale = scale;
+    }
 
 
 }

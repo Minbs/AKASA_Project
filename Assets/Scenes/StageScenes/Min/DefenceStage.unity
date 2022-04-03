@@ -340,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 20
   waitTimer: 1
+  battleTime: 180
   state: 0
   spawner: {fileID: 1367259471}
   tileCamera: {fileID: 638336736}
@@ -347,6 +348,7 @@ MonoBehaviour:
   heroSetPosition: {x: 0, y: 0, z: 0}
   enemiesList: []
   heroesListIndex: 0
+  unitSetMode: 0
 --- !u!4 &285796146
 Transform:
   m_ObjectHideFlags: 0
@@ -589,6 +591,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   line: {fileID: 532741031}
+  time: 0
+  waitingTime: 0.175
 --- !u!120 &532741031
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1810,7 +1814,7 @@ MonoBehaviour:
   worldCanvas: {fileID: 1559733140}
   settingCharacter: {fileID: 874987118}
   skeletonDataAsset: {fileID: 11400000, guid: c1539104ef375f7448f152a83402beb4, type: 2}
-  isSettingCharacterOn: 0
+  isSettingCharacterOn: 1
 --- !u!4 &2025873268
 Transform:
   m_ObjectHideFlags: 0

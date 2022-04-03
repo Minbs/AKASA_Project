@@ -12,10 +12,6 @@ public class Hero : Unit
     public List<Node> attackRangeNodes = new List<Node>();
     public List<Tile> attackRangeTiles = new List<Tile>();
 
-
-
-    
-
     private float attackTimer = 0;
     public float attackSpeed;
 
@@ -46,8 +42,6 @@ public class Hero : Unit
     // Update is called once per frame
     void Update()
     {
-
-
         attackTimer += Time.deltaTime;
 
         AimTarget();
@@ -73,7 +67,6 @@ public class Hero : Unit
                     if(t.onTile(enemy.transform))
                     {
                         target = enemy;
-                        Debug.Log("Æ÷Âø");
                         return;
                     }
                 }
@@ -114,30 +107,5 @@ public class Hero : Unit
     }
 
 
-    public List<Node> GetAttackRangeNodesList(Direction direction)
-    {
-        List<Node> tiles = attackRangeNodes.ToList();
-
-        int max = tiles.Count;
-        for(int count = 0; count < max; count++)
-        {
-            switch(direction)
-            {
-                case Direction.LEFT:
-                    tiles[count] = new Node(tiles[count].row  , tiles[count].column);
-                    break;
-                case Direction.UP:
-                    tiles[count] = new Node(tiles[count].column, tiles[count].row);
-                    break;
-                case Direction.RIGHT:
-                    tiles[count] = new Node(tiles[count].row * -1, tiles[count].column);
-                    break;
-                case Direction.DOWN:
-                    tiles[count] = new Node(tiles[count].column, tiles[count].row * -1);
-                    break;
-            }
-        }
-
-        return tiles;
-    }
+  
 }
