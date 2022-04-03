@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.UI;
 public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
+    public Image healthBar;
 
 
-     
 
     protected override void Start()
     {
@@ -23,8 +23,9 @@ public class Enemy : Unit
     // Update is called once per frame
     void Update()
     {
+        healthBar.fillAmount = (float)currentHp / maxHp;
 
-        if(BoardManager.Instance.end == true && moveTiles.Count != 0)
+        if (BoardManager.Instance.end == true && moveTiles.Count != 0)
         {
             Move();
         }

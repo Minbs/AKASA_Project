@@ -26,6 +26,7 @@ public class Hero : Unit
         base.Start();
         attackTimer = attackSpeed;
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+
     }
 
     private void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -38,13 +39,15 @@ public class Hero : Unit
 
     public void Deal()
     {
-        target.GetComponent<Unit>().hp -= 10;
+        target.GetComponent<Unit>().currentHp -= 10;
     }
 
 
     // Update is called once per frame
     void Update()
     {
+
+
         attackTimer += Time.deltaTime;
 
         AimTarget();

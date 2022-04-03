@@ -14,7 +14,8 @@ public enum Direction
 
 public class Unit : MonoBehaviour
 {
-    public int hp;
+    public int maxHp;
+    public int currentHp;
 
     public string poolItemName;
 
@@ -44,6 +45,7 @@ public class Unit : MonoBehaviour
         //  UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+        currentHp = maxHp;
     }
 
     // Update is called once per frame
