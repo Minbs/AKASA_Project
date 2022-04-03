@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
 
     public float waitTimer = 20; // 대기 시간
 
+    public float battleTime = 180; //전투 시간
+
     public State state;
 
     public EnemySpawner spawner;
@@ -63,6 +65,11 @@ public class GameManager : Singleton<GameManager>
         if (tileSetMode)
         {
             ShowAttackRangeTiles();
+        }
+
+        if(battleTime <= 0 && state == State.BATTLE)
+        {
+            battleTime -= Time.deltaTime;
         }
     }
 

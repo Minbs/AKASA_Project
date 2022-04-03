@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Spine.Unity;
+using Spine;
+using Event = Spine.Event;
+
 public class Hero : Unit
 {
     // Start is called before the first frame update
@@ -22,9 +25,21 @@ public class Hero : Unit
     {
         base.Start();
         attackTimer = attackSpeed;
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
     }
 
-    
+    private void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
+    {
+        if (e.Data.Name == "shoot")
+        {
+            Deal();
+        }
+    }
+
+    public void Deal()
+    {
+        target.GetComponent<Unit>().hp -= 10;
+    }
 
 
     // Update is called once per frame
@@ -94,6 +109,7 @@ public class Hero : Unit
             spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
+
 
     public List<Node> GetAttackRangeNodesList(Direction direction)
     {

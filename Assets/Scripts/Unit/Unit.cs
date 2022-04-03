@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-using Spine;
-using Event = Spine.Event;
+
 
 public enum Direction
 {
@@ -37,7 +36,7 @@ public class Unit : MonoBehaviour
 
         spineAnimation = transform.GetChild(0).GetComponent<SpineAnimation>();
 
-        transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+
 
         skeletonData = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         
@@ -53,16 +52,7 @@ public class Unit : MonoBehaviour
         
     }
 
-    private void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
-    {
-        if (e.Data.Name == "shoot")
-        {
-            Deal();
-        }
-    }
 
-    public void Deal()
-    {
-        target.GetComponent<Unit>().hp -= 10;
-    }
+
+
 }
