@@ -16,16 +16,16 @@ public class Line : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //길 표시선의 개수
-        line.positionCount = 3;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //
         if (BoardManager.Instance.end == true && lineTile.Count == 0)
         {
+            //길 표시선의 개수
+            line.positionCount = 3;
             lineTile = BoardManager.Instance.FinalList.ToList();
         }
         else if (BoardManager.Instance.end == true && lineTile.Count != 0)
@@ -57,6 +57,14 @@ public class Line : MonoBehaviour
                 line.SetPosition(0, vec);
                 line.SetPosition(1, vec1);
                 line.SetPosition(2, vec2);
+            }
+            else
+            {
+                if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
+                {
+                    line.positionCount = 0;
+                    return;
+                }
             }
             lineTile.RemoveAt(0);
 
