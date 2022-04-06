@@ -8,8 +8,8 @@ public class Line : MonoBehaviour
     [SerializeField]
     private LineRenderer line;
 
-    public float time = 0;
-    public float waitingTime = 0.175f;
+    [SerializeField]
+    float time = 0, waitingTime = 0.175f;
 
     List<Tile> lineTile = new List<Tile>();
 
