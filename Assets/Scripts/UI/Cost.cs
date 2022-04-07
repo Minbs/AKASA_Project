@@ -10,7 +10,10 @@ public class Cost : MonoBehaviour
     [SerializeField]
     int cost = 21, regenTime = 3, raceCost = 5, latelyCost = 7, ereMediumCost = 9;
 
-    float time = 0, waitingTime = 3;
+    float time = 0;
+
+    [SerializeField]
+    float waitingTime = 3;
 
     public TextMeshProUGUI costText;
 
@@ -35,6 +38,7 @@ public class Cost : MonoBehaviour
         {
             if (cost >= maxCost)
             {
+                costText.text = cost.ToString() + '+'.ToString();
                 return;
             }
 
