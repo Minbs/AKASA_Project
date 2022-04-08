@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using Spine.Unity;
 using System.Linq;
 
-public class HeroButton : MonoBehaviour, IPointerDownHandler
+public class HeroButton : Singleton<HeroButton>, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;

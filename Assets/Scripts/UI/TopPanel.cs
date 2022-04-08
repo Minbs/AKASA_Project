@@ -10,9 +10,13 @@ public class TopPanel : MonoBehaviour
 
     public TextMeshProUGUI[] timeText;
 
+    [SerializeField]
     float time = 180;
-    int min, sec;
-    int maxEnemyCount, currentEnemyCount;
+
+    [SerializeField]
+    int maxEnemyCount = 3;
+
+    int min, sec, currentEnemyCount = 0;
 
     // Start is called before the first frame update
     void Start()

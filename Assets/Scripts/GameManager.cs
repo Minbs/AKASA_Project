@@ -135,6 +135,30 @@ public class GameManager : Singleton<GameManager>
 
             if (Input.GetMouseButtonDown(0))
             {
+                if (Cost.Instance.cost >= 0)
+                {
+                    if (heroesListIndex == 0 && Cost.Instance.cost < Cost.Instance.verityCost)
+                    {
+                        return;
+                    }
+                    else if (heroesListIndex == 0 && Cost.Instance.cost >= Cost.Instance.verityCost)
+                    {
+                        Cost.Instance.useCost();
+                    }
+                    if (heroesListIndex == 1 && Cost.Instance.cost < Cost.Instance.isabellaCost)
+                    {
+                        return;
+                    }
+                    else if (heroesListIndex == 1 && Cost.Instance.cost >= Cost.Instance.isabellaCost)
+                    {
+                        Cost.Instance.useCost();
+                    }
+                }
+                else
+                {
+                    return;
+                }
+                
                 GameObject hero = Instantiate(HeroManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;
