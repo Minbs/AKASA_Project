@@ -29,7 +29,10 @@ public class Cost : Singleton<Cost>
     // Update is called once per frame
     void Update()
     {
-        regenCost();
+        if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
+        {
+            regenCost();
+        }
     }
 
     /// <summary>
