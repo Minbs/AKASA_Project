@@ -6,7 +6,7 @@ using Spine.Unity;
 using Spine;
 using Event = Spine.Event;
 
-public class Hero : Unit
+public class Minion : Unit
 {
     // Start is called before the first frame update
     public List<Node> attackRangeNodes = new List<Node>();

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
 using System.Linq;
-public class UIManager : Singleton<UIManager>
+public class BattleUIManager : Singleton<BattleUIManager>
 {
     public List<Node> attackRangeNodes = new List<Node>();
     public List<GameObject> attackRangeTileImages = new List<GameObject>();

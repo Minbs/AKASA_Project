@@ -42,7 +42,7 @@ public class Unit : MonoBehaviour
         skeletonData = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         
         transform.GetChild(0).GetComponent<SkeletonAnimation>().Initialize(true);
-        //  UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
+        //  BattleBattleBattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         currentHp = maxHp;

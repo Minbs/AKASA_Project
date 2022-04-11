@@ -5,7 +5,7 @@ using Spine.Unity;
 using System;
 
 [Serializable]
-public class HeroInfo
+public class MinionInfo
 {
     public List<Node> attackRangeNodesList;
     public SkeletonDataAsset skeletonData;
