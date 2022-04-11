@@ -35,30 +35,26 @@
 #define NEW_PREFERENCES_SETTINGS_PROVIDER
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#define HAS_ON_POSTPROCESS_PREFAB
-#endif
-
-using System.Threading;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using System.Threading;
 
 namespace Spine.Unity.Editor {
 
 	public class SpinePreferences : ScriptableObject {
 
-#if NEW_PREFERENCES_SETTINGS_PROVIDER
+		#if NEW_PREFERENCES_SETTINGS_PROVIDER
 		static int wasPreferencesDirCreated = 0;
 		static int wasPreferencesAssetCreated = 0;
-#endif
+		#endif
 
 		public const string SPINE_SETTINGS_ASSET_PATH = "Assets/Editor/SpineSettings.asset";
 
-#if SPINE_TK2D
+		#if SPINE_TK2D
 		internal const float DEFAULT_DEFAULT_SCALE = 1f;
-#else
+		#else
 		internal const float DEFAULT_DEFAULT_SCALE = 0.01f;
-#endif
+		#endif
 		public float defaultScale = DEFAULT_DEFAULT_SCALE;
 
 		internal const float DEFAULT_DEFAULT_MIX = 0.2f;
@@ -82,17 +78,12 @@ namespace Spine.Unity.Editor {
 		internal const string DEFAULT_TEXTURE_SETTINGS_REFERENCE = "";
 		public string textureSettingsReference = DEFAULT_TEXTURE_SETTINGS_REFERENCE;
 
-#if HAS_ON_POSTPROCESS_PREFAB
-		internal const bool DEFAULT_FIX_PREFAB_OVERRIDE_VIA_MESH_FILTER = false;
-		public bool fixPrefabOverrideViaMeshFilter = DEFAULT_FIX_PREFAB_OVERRIDE_VIA_MESH_FILTER;
-#endif
-
 		public bool UsesPMAWorkflow {
 			get {
 				return IsPMAWorkflow(textureSettingsReference);
 			}
 		}
-		public static bool IsPMAWorkflow (string textureSettingsReference) {
+		public static bool IsPMAWorkflow(string textureSettingsReference) {
 			if (textureSettingsReference == null)
 				return true;
 			string settingsReference = textureSettingsReference.ToLower();
@@ -186,7 +177,8 @@ namespace Spine.Unity.Editor {
 			settings = AssetDatabase.LoadAssetAtPath<SpinePreferences>(SPINE_SETTINGS_ASSET_PATH);
 			if (settings == null)
 				settings = FindSpinePreferences();
-			if (settings == null) {
+			if (settings == null)
+			{
 				settings = ScriptableObject.CreateInstance<SpinePreferences>();
 				SpineEditorUtilities.OldPreferences.CopyOldToNewPreferences(ref settings);
 				// Multiple threads may be calling this method during import, creating the folder
@@ -197,10 +189,6 @@ namespace Spine.Unity.Editor {
 				if (Interlocked.Exchange(ref wasPreferencesAssetCreated, 1) == 0)
 					AssetDatabase.CreateAsset(settings, SPINE_SETTINGS_ASSET_PATH);
 			}
-
-#if HAS_ON_POSTPROCESS_PREFAB
-			SkeletonRenderer.fixPrefabOverrideViaMeshFilterGlobal = settings.fixPrefabOverrideViaMeshFilter;
-#endif
 			return settings;
 		}
 
@@ -214,24 +202,6 @@ namespace Spine.Unity.Editor {
 					return preferences;
 			}
 			return null;
-		}
-
-		private static void ShowBlendModeMaterialProperty (SerializedProperty blendModeMaterialProperty,
-			string blendType, bool isTexturePresetPMA) {
-
-			EditorGUILayout.PropertyField(blendModeMaterialProperty, new GUIContent(blendType + " Material", blendType + " blend mode Material template."));
-			var material = blendModeMaterialProperty.objectReferenceValue as Material;
-			if (material == null)
-				return;
-
-			bool isMaterialPMA = MaterialChecks.IsPMATextureMaterial(material);
-			if (!isTexturePresetPMA && isMaterialPMA) {
-				EditorGUILayout.HelpBox(string.Format("'{0} Material' uses PMA but 'Atlas Texture Settings' uses Straight Alpha. " +
-					"You might want to assign 'SkeletonStraight{0}' instead.", blendType), MessageType.Warning);
-			} else if (isTexturePresetPMA && !isMaterialPMA) {
-				EditorGUILayout.HelpBox(string.Format("'{0} Material' uses Straight Alpha but 'Atlas Texture Settings' uses PMA. " +
-					"You might want to assign 'SkeletonPMA{0}' instead.", blendType), MessageType.Warning);
-			}
 		}
 
 		public static void HandlePreferencesGUI (SerializedObject settings) {
@@ -250,7 +220,7 @@ namespace Spine.Unity.Editor {
 #endif
 				}
 
-				EditorGUILayout.PropertyField(settings.FindProperty("autoReloadSceneSkeletons"), new GUIContent("Auto-reload scene components", "Reloads Skeleton components in the scene whenever their SkeletonDataAsset is modified. This makes it so changes in the SkeletonData asset inspector are immediately reflected. This may be slow when your scenes have large numbers of SkeletonRenderers or SkeletonGraphic."));
+				EditorGUILayout.PropertyField(settings.FindProperty("autoReloadSceneSkeletons"), new GUIContent("Auto-reload scene components", "Reloads Skeleton components in the scene whenever their SkeletonDataAsset is modified. This makes it so changes in the SkeletonDataAsset inspector are immediately reflected. This may be slow when your scenes have large numbers of SkeletonRenderers or SkeletonGraphic."));
 
 				EditorGUILayout.Separator();
 				EditorGUILayout.LabelField("Auto-Import Settings", EditorStyles.boldLabel);
@@ -272,13 +242,9 @@ namespace Spine.Unity.Editor {
 						}
 					}
 
-					SerializedProperty blendModeMaterialAdditive = settings.FindProperty("blendModeMaterialAdditive");
-					SerializedProperty blendModeMaterialMultiply = settings.FindProperty("blendModeMaterialMultiply");
-					SerializedProperty blendModeMaterialScreen = settings.FindProperty("blendModeMaterialScreen");
-					bool isTexturePresetPMA = IsPMAWorkflow(textureSettingsRef.stringValue);
-					ShowBlendModeMaterialProperty(blendModeMaterialAdditive, "Additive", isTexturePresetPMA);
-					ShowBlendModeMaterialProperty(blendModeMaterialMultiply, "Multiply", isTexturePresetPMA);
-					ShowBlendModeMaterialProperty(blendModeMaterialScreen, "Screen", isTexturePresetPMA);
+					EditorGUILayout.PropertyField(settings.FindProperty("blendModeMaterialAdditive"), new GUIContent("Additive Material", "Additive blend mode Material template."));
+					EditorGUILayout.PropertyField(settings.FindProperty("blendModeMaterialMultiply"), new GUIContent("Multiply Material", "Multiply blend mode Material template."));
+					EditorGUILayout.PropertyField(settings.FindProperty("blendModeMaterialScreen"), new GUIContent("Screen Material", "Screen blend mode Material template."));
 				}
 
 				EditorGUILayout.Space();
@@ -314,20 +280,11 @@ namespace Spine.Unity.Editor {
 					}
 				}
 
-#if HAS_ON_POSTPROCESS_PREFAB
-				EditorGUILayout.Space();
-				EditorGUILayout.LabelField("Prefabs", EditorStyles.boldLabel);
-				{
-					EditorGUILayout.PropertyField(settings.FindProperty("fixPrefabOverrideViaMeshFilter"), new GUIContent("Fix Prefab Overr. MeshFilter", "Fixes the prefab always being marked as changed (sets the MeshFilter's hide flags to DontSaveInEditor), but at the cost of references to the MeshFilter by other components being lost. This is a global setting that can be overwritten on each SkeletonRenderer"));
-					SkeletonRenderer.fixPrefabOverrideViaMeshFilterGlobal = settings.FindProperty("fixPrefabOverrideViaMeshFilter").boolValue;
-				}
-#endif
-
-#if SPINE_TK2D_DEFINE
+				#if SPINE_TK2D_DEFINE
 				bool isTK2DDefineSet = true;
-#else
+				#else
 				bool isTK2DDefineSet = false;
-#endif
+				#endif
 				bool isTK2DAllowed = SpineEditorUtilities.SpineTK2DEditorUtility.IsTK2DAllowed;
 				if (SpineEditorUtilities.SpineTK2DEditorUtility.IsTK2DInstalled() || isTK2DDefineSet) {
 					GUILayout.Space(20);
@@ -339,12 +296,12 @@ namespace Spine.Unity.Editor {
 						if (GUILayout.Button("Disable", GUILayout.Width(64)))
 							SpineEditorUtilities.SpineTK2DEditorUtility.DisableTK2D();
 					}
-#if !SPINE_TK2D_DEFINE
+					#if !SPINE_TK2D_DEFINE
 					if (!isTK2DAllowed) {
 						EditorGUILayout.LabelField("To allow TK2D support, please modify line 67 in", EditorStyles.boldLabel);
 						EditorGUILayout.LabelField("Spine/Editor/spine-unity/Editor/Util./BuildSettings.cs", EditorStyles.boldLabel);
 					}
-#endif
+					#endif
 				}
 
 				GUILayout.Space(20);

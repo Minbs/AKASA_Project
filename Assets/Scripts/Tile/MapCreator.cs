@@ -38,6 +38,11 @@ public class MapCreator
               tile.AddComponent<Tile>();
             }
 
+            if (tile.GetComponent<BoxCollider>() == null)
+            {
+                tile.AddComponent<BoxCollider>();
+            }
+
             BoardManager.Instance.tilesList.Add(tile.GetComponent<Tile>());
   
         }
@@ -52,7 +57,8 @@ public class MapCreator
     void ReadTilesInfo()
     {
         string path = Application.dataPath;
-        path += "/stage1.txt";
+        Debug.Log(path);
+        path += "/Resources/Datas/TileInfo_Stage1.txt";
 
         string[] lines = System.IO.File.ReadAllLines(path);
 

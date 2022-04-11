@@ -41,12 +41,26 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     
     }
+
+    public bool IsCanSetUnit()
+    {
+        if (!isBlock && !isOnUnit && height != 0)
+            return true;
+        else
+            return false;
+    }
+
 
     public void canUnitSetTile(bool b)
     {
-        if(!isOnUnit && height != 0 && !isBlock)
+        for (int i = 0; i < renderer.materials.Length; i++)
+        {
+            renderer.materials[i].color = colors[i];
+        }
+
+        if (!isOnUnit && height != 0 && !isBlock)
         {
 
                 for (int i = 0; i < renderer.materials.Length; i++)
@@ -57,23 +71,23 @@ public class Tile : MonoBehaviour
                     renderer.materials[i].color = colors[i];
             }
         }
+
+
     }
 
-    public void onTile(Transform enemy)
+    public bool onTile(Transform enemy)
     {
         if(enemy.transform.position.x > transform.position.x - size.x / 2 &&
             enemy.transform.position.x < transform.position.x + size.x / 2 &&
             enemy.transform.position.z > transform.position.z - size.z / 2 &&
             enemy.transform.position.z < transform.position.z + size.z / 2)
         {
-            renderer.material.color = new Color(255, 0, 0);
+            //renderer.material.color = new Color(255, 0, 0);
+            return true;
         }
         else
         {
-            for (int i = 0; i < renderer.materials.Length; i++)
-            {
-                renderer.materials[i].color = colors[i];
-            }
+            return false;
 
         }
     }

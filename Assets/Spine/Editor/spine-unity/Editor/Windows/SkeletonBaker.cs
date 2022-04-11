@@ -33,11 +33,15 @@
 
 #define SPINE_SKELETONMECANIM
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using UnityEditorInternal;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.IO;
+using Spine;
 
 namespace Spine.Unity.Editor {
 
@@ -68,7 +72,7 @@ namespace Spine.Unity.Editor {
 	public static class SkeletonBaker {
 
 		#region SkeletonMecanim's Mecanim Clips
-#if SPINE_SKELETONMECANIM
+		#if SPINE_SKELETONMECANIM
 		public static void UpdateMecanimClips (SkeletonDataAsset skeletonDataAsset) {
 			if (skeletonDataAsset.controller == null)
 				return;
@@ -166,7 +170,7 @@ namespace Spine.Unity.Editor {
 		static bool HasFlag (this UnityEngine.Object o, HideFlags flagToCheck) {
 			return (o.hideFlags & flagToCheck) == flagToCheck;
 		}
-#endif
+		#endif
 		#endregion
 
 		#region Prefab and AnimationClip Baking
@@ -177,7 +181,7 @@ namespace Spine.Unity.Editor {
 
 		public static void BakeToPrefab (SkeletonDataAsset skeletonDataAsset, ExposedList<Skin> skins, string outputPath = "", bool bakeAnimations = true, bool bakeIK = true, SendMessageOptions eventOptions = SendMessageOptions.DontRequireReceiver) {
 			if (skeletonDataAsset == null || skeletonDataAsset.GetSkeletonData(true) == null) {
-				Debug.LogError("Could not export Spine Skeleton because SkeletonData Asset is null or invalid!");
+				Debug.LogError("Could not export Spine Skeleton because SkeletonDataAsset is null or invalid!");
 				return;
 			}
 
@@ -275,13 +279,13 @@ namespace Spine.Unity.Editor {
 				Object prefab = AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameObject));
 
 				if (prefab == null) {
-#if NEW_PREFAB_SYSTEM
+					#if NEW_PREFAB_SYSTEM
 					GameObject emptyGameObject = new GameObject();
 					prefab = PrefabUtility.SaveAsPrefabAssetAndConnect(emptyGameObject, prefabPath, InteractionMode.AutomatedAction);
 					GameObject.DestroyImmediate(emptyGameObject);
-#else
+					#else
 					prefab = PrefabUtility.CreateEmptyPrefab(prefabPath);
-#endif
+					#endif
 					newPrefab = true;
 				}
 
@@ -428,22 +432,22 @@ namespace Spine.Unity.Editor {
 				}
 
 				if (newPrefab) {
-#if NEW_PREFAB_SYSTEM
+					#if NEW_PREFAB_SYSTEM
 					PrefabUtility.SaveAsPrefabAssetAndConnect(prefabRoot, prefabPath, InteractionMode.AutomatedAction);
-#else
+					#else
 					PrefabUtility.ReplacePrefab(prefabRoot, prefab, ReplacePrefabOptions.ConnectToPrefab);
-#endif
+					#endif
 				} else {
 
 					foreach (string str in unusedMeshNames) {
 						Mesh.DestroyImmediate(meshTable[str], true);
 					}
 
-#if NEW_PREFAB_SYSTEM
+					#if NEW_PREFAB_SYSTEM
 					PrefabUtility.SaveAsPrefabAssetAndConnect(prefabRoot, prefabPath, InteractionMode.AutomatedAction);
-#else
+					#else
 					PrefabUtility.ReplacePrefab(prefabRoot, prefab, ReplacePrefabOptions.ReplaceNameBased);
-#endif
+					#endif
 				}
 
 
@@ -528,7 +532,7 @@ namespace Spine.Unity.Editor {
 			mesh.vertices = verts;
 			mesh.uv = uvs;
 			mesh.triangles = triangles;
-			mesh.colors = new[] { color, color, color, color };
+			mesh.colors = new [] { color, color, color, color };
 			mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
 			mesh.name = name;
@@ -736,9 +740,9 @@ namespace Spine.Unity.Editor {
 
 			return arr;
 		}
-		#endregion
+#endregion
 
-		#region Animation Baking
+#region Animation Baking
 		static AnimationClip ExtractAnimation (string name, SkeletonData skeletonData, Dictionary<int, List<string>> slotLookup, bool bakeIK, SendMessageOptions eventOptions, AnimationClip clip = null) {
 			var animation = skeletonData.FindAnimation(name);
 
@@ -760,7 +764,8 @@ namespace Spine.Unity.Editor {
 			if (bakeIK) {
 				foreach (IkConstraint i in skeleton.IkConstraints) {
 					foreach (Bone b in i.Bones) {
-						ignoreRotateTimelineIndexes.Add(b.Data.Index);
+						int index = skeleton.FindBoneIndex(b.Data.Name);
+						ignoreRotateTimelineIndexes.Add(index);
 						BakeBoneConstraints(b, animation, clip);
 					}
 				}
@@ -768,7 +773,8 @@ namespace Spine.Unity.Editor {
 
 			foreach (Bone b in skeleton.Bones) {
 				if (!b.Data.TransformMode.InheritsRotation()) {
-					int index = b.Data.Index;
+					int index = skeleton.FindBoneIndex(b.Data.Name);
+
 					if (ignoreRotateTimelineIndexes.Contains(index) == false) {
 						ignoreRotateTimelineIndexes.Add(index);
 						BakeBoneConstraints(b, animation, clip);
@@ -808,11 +814,20 @@ namespace Spine.Unity.Editor {
 			return clip;
 		}
 
-		internal static int Search (float[] frames, float time) {
-			int n = frames.Length;
-			for (int i = 1; i < n; i++)
-				if (frames[i] > time) return i - 1;
-			return n - 1;
+		static int BinarySearch (float[] values, float target) {
+			int low = 0;
+			int high = values.Length - 2;
+			if (high == 0) return 1;
+			int current = (int)((uint)high >> 1);
+			while (true) {
+				if (values[(current + 1)] <= target)
+					low = current + 1;
+				else
+					high = current;
+
+				if (low == high) return (low + 1);
+				current = (int)((uint)(low + high) >> 1);
+			}
 		}
 
 		static void BakeBoneConstraints (Bone bone, Spine.Animation animation, AnimationClip clip) {
@@ -968,7 +983,8 @@ namespace Spine.Unity.Editor {
 
 					lastTime = time;
 					listIndex++;
-				} else {
+				} else if (curveType == 2) {
+
 					//bezier
 					Keyframe px = xKeys[pIndex];
 					Keyframe py = yKeys[pIndex];
@@ -1048,6 +1064,7 @@ namespace Spine.Unity.Editor {
 			while (currentTime < endTime) {
 				int pIndex = listIndex - 1;
 				float curveType = timeline.GetCurveType(frameIndex - 1);
+
 				if (curveType == 0) {
 					//linear
 					Keyframe px = xKeys[pIndex];
@@ -1102,7 +1119,7 @@ namespace Spine.Unity.Editor {
 
 					lastTime = time;
 					listIndex++;
-				} else {
+				} else if (curveType == 2) {
 					//bezier
 					Keyframe px = xKeys[pIndex];
 					Keyframe py = yKeys[pIndex];
@@ -1229,7 +1246,7 @@ namespace Spine.Unity.Editor {
 
 					lastTime = time;
 					listIndex++;
-				} else {
+				} else if (curveType == 2) {
 					//bezier
 					Keyframe pk = keys[pIndex];
 
@@ -1354,7 +1371,7 @@ namespace Spine.Unity.Editor {
 			while (currentTime < endTime) {
 				float time = frames[f];
 
-				int frameIndex = Search(frames, time);
+				int frameIndex = (time >= frames[frames.Length - 1] ? frames.Length : BinarySearch(frames, time)) - 1;
 
 				string name = timeline.AttachmentNames[frameIndex];
 				foreach (var pair in curveTable) {
@@ -1399,10 +1416,10 @@ namespace Spine.Unity.Editor {
 
 			return angle;
 		}
-		#endregion
-		#endregion
+#endregion
+#endregion
 
-		#region Region Baking
+#region Region Baking
 		public static GameObject BakeRegion (SpineAtlasAsset atlasAsset, AtlasRegion region, bool autoSave = true) {
 			atlasAsset.GetAtlas(); // Initializes atlasAsset.
 
@@ -1421,11 +1438,11 @@ namespace Spine.Unity.Editor {
 
 			if (prefab == null) {
 				root = EditorInstantiation.NewGameObject("temp", true, typeof(MeshFilter), typeof(MeshRenderer));
-#if NEW_PREFAB_SYSTEM
+				#if NEW_PREFAB_SYSTEM
 				prefab = PrefabUtility.SaveAsPrefabAsset(root, bakedPrefabPath);
-#else
+				#else
 				prefab = PrefabUtility.CreatePrefab(bakedPrefabPath, root);
-#endif
+				#endif
 
 				isNewPrefab = true;
 				Object.DestroyImmediate(root);
@@ -1452,7 +1469,7 @@ namespace Spine.Unity.Editor {
 
 			return prefab;
 		}
-		#endregion
+#endregion
 
 		static string GetPath (BoneData b) {
 			return GetPathRecurse(b).Substring(1);
