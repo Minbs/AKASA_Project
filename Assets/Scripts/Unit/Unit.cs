@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-
+using Spine;
+using Event = Spine.Event;
 
 public enum Direction
 {
@@ -11,6 +12,8 @@ public enum Direction
     RIGHT,
     DOWN
 }
+
+
 
 public class Unit : MonoBehaviour
 {
@@ -42,9 +45,11 @@ public class Unit : MonoBehaviour
         skeletonData = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         
         transform.GetChild(0).GetComponent<SkeletonAnimation>().Initialize(true);
-        //  BattleBattleBattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+
         currentHp = maxHp;
     }
 
@@ -73,5 +78,16 @@ public class Unit : MonoBehaviour
         transform.localScale = scale;
     }
 
+    public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
+    {
+        if (e.Data.Name == "shoot")
+        {
+            Deal();
+        }
+    }
 
+    public void Deal()
+    {
+        target.GetComponent<Unit>().currentHp -= 10;
+    }
 }

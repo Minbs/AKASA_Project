@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Spine.Unity;
-using Spine;
-using Event = Spine.Event;
 
+public enum MinionClass
+{
+    Buster,
+    Paladin,
+    Guardian,
+    Assassin,
+    Chaser,
+    Mage,
+    TacticalSupport
+}
 public class Minion : Unit
 {
-    // Start is called before the first frame update
+    public MinionClass minionClass;
+
     public List<Node> attackRangeNodes = new List<Node>();
     public List<Tile> attackRangeTiles = new List<Tile>();
 
@@ -21,22 +30,11 @@ public class Minion : Unit
     {
         base.Start();
         attackTimer = attackSpeed;
-        transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+
 
     }
 
-    private void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
-    {
-        if (e.Data.Name == "shoot")
-        {
-            Deal();
-        }
-    }
-
-    public void Deal()
-    {
-        target.GetComponent<Unit>().currentHp -= 10;
-    }
+   
 
 
     // Update is called once per frame

@@ -36,6 +36,5 @@ public class HeroButton : Singleton<HeroButton>, IPointerDownHandler
 
         BattleUIManager.Instance.settingCharacter.SetActive(true);
         GameManager.Instance.heroesListIndex = index;
-       // GameManager.Instance.hero = HeroManager.Instance.heroPrefabs[index];
     }
 }
