@@ -78,7 +78,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         else
         {
             RemoveAttackRangeTiles();
-        
+
         }
     }
 
