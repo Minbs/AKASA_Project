@@ -10,7 +10,7 @@ public class HeroButton : Singleton<HeroButton>, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
-    public Hero hero;
+    public Minion hero;
 
     void Start()
     {
@@ -20,21 +20,21 @@ public class HeroButton : Singleton<HeroButton>, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        if(HeroManager.Instance.heroQueue.Count != 0)
-        hero = HeroManager.Instance.heroQueue[index];
+        if(MinionManager.Instance.heroQueue.Count != 0)
+        hero = MinionManager.Instance.heroQueue[index];
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         GameManager.Instance.CanSetTile();
 
-        UIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
+        BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
 
-        UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = hero.skeletonData;
-        UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
-        UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = hero.skeletonData;
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
-       UIManager.Instance.settingCharacter.SetActive(true);
+        BattleUIManager.Instance.settingCharacter.SetActive(true);
         GameManager.Instance.heroesListIndex = index;
        // GameManager.Instance.hero = HeroManager.Instance.heroPrefabs[index];
     }
