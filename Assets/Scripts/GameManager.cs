@@ -135,23 +135,23 @@ public class GameManager : Singleton<GameManager>
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (Cost.Instance.cost >= 0)
+                if (BattleUIManager.Instance.cost >= 0)
                 {
-                    if (heroesListIndex == 0 && Cost.Instance.cost < Cost.Instance.verityCost)
+                    if (heroesListIndex == 0 && BattleUIManager.Instance.cost < BattleUIManager.Instance.verityCost)
                     {
                         return;
                     }
-                    else if (heroesListIndex == 0 && Cost.Instance.cost >= Cost.Instance.verityCost)
+                    else if (heroesListIndex == 0 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.verityCost)
                     {
-                        Cost.Instance.useCost();
+                        BattleUIManager.Instance.useCost();
                     }
-                    if (heroesListIndex == 1 && Cost.Instance.cost < Cost.Instance.isabellaCost)
+                    if (heroesListIndex == 1 && BattleUIManager.Instance.cost < BattleUIManager.Instance.isabellaCost)
                     {
                         return;
                     }
-                    else if (heroesListIndex == 1 && Cost.Instance.cost >= Cost.Instance.isabellaCost)
+                    else if (heroesListIndex == 1 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.isabellaCost)
                     {
-                        Cost.Instance.useCost();
+                        BattleUIManager.Instance.useCost();
                     }
                 }
                 else

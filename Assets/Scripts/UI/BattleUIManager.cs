@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Spine.Unity;
 using System.Linq;
+using TMPro;
+
 public class BattleUIManager : Singleton<BattleUIManager>
 {
     public List<Node> attackRangeNodes = new List<Node>();
@@ -17,22 +19,72 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public bool isSettingCharacterOn = true;
 
+    //
+    const int maxCost = 99;
+    List<GameObject> enemiesList = new List<GameObject>();
+
+    public TextMeshProUGUI[] text;
+    public Image[] phase;
+    public TextMeshProUGUI wave;
+    public TextMeshProUGUI costText;
+
+    public int cost = 21;
+    public int verityCost = 7, isabellaCost = 5;
+
+    [SerializeField]
+    float readyWaitingTime = 1.0f, battleWaitingTime = 1.0f;
+    [SerializeField]
+    int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
+
+    float time = 0, waitingTime;
+    int min, sec, currentEnemyCount = 0;
+    //
+
     void Start()
     {
         ObjectPool.Instance.CreatePoolObject("AttackRangeTile", attackRangeTileImage, 20, worldCanvas.transform);
+
+        text[3].text = currentEnemyCount.ToString();
+        text[4].text = maxEnemyCount.ToString();
+        enemiesList = GameManager.Instance.enemiesList;
+
+        time = 0;
+        costText.text = cost.ToString();
+
+        for (int i = 0; i < 3; i++)
+            if (text[i].gameObject.activeSelf)
+                text[i].gameObject.SetActive(false);
+        for (int j = 0; j < 2; j++)
+            if (phase[j].gameObject.activeSelf)
+                phase[j].gameObject.SetActive(false);
+        if (wave.gameObject.activeSelf)
+            wave.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if(isSettingCharacterOn)
+        if (isSettingCharacterOn)
             SetSettingCharacterMousePosition();
+
+        if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
+        {
+            Active(1);
+            BattleTime();
+            regenCost();
+            EnemeyCount();
+            //UnitCount();
+        }
+        else if (GameManager.Instance.state == State.WAIT)
+        {
+            Active(0);
+            WaitTime();
+        }
     }
 
-   public void SetSettingCharacterMousePosition()
+    public void SetSettingCharacterMousePosition()
     {
         settingCharacter.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
     }
-
 
     public void RemoveAttackRangeTiles()
     {
@@ -108,4 +160,126 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         return tiles;
     }
+
+    //
+    void BattleTime()
+    {
+        for (int i = 0; i < 3; i++)
+            text[i].gameObject.SetActive(false);
+
+        wave.gameObject.SetActive(true);
+        wave.text = "Wave ".ToString() + waveCount.ToString();
+    }
+
+    void WaitTime()
+    {
+        for (int i = 0; i < 3; i++)
+            text[i].gameObject.SetActive(true);
+
+        float time = GameManager.Instance.waitTimer;
+        min = (int)time / 60;
+        sec = ((int)time - min * 60) % 60;
+
+        if (min <= 0 && sec <= 0)
+        {
+            text[0].text = 0.ToString();
+            text[2].text = 0.ToString();
+        }
+        else
+        {
+            if (sec >= 60)
+            {
+                min += 1;
+                sec -= 60;
+            }
+            else
+            {
+                text[0].text = min.ToString();
+                text[2].text = sec.ToString();
+            }
+        }
+    }
+
+    void EnemeyCount()
+    {
+        currentEnemyCount = enemiesList.Count;
+        if (currentEnemyCount >= 0)
+            text[3].text = currentEnemyCount.ToString();
+    }
+
+    void UnitCount()
+    {
+
+    }
+
+    /// <summary>
+    /// 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 (전투 대비 : 0, 전투 시작 : 1)
+    /// </summary>
+    /// <param name="index"></param>
+    void Active(int index)
+    {
+        if (index == 0)
+        {
+            readyWaitingTime -= Time.deltaTime;
+            waitingTime = readyWaitingTime;
+        }
+        else if (index == 1)
+        {
+            battleWaitingTime -= Time.deltaTime;
+            waitingTime = battleWaitingTime;
+        }
+        else
+            return;
+
+        if (waitingTime >= 0)
+            phase[index].gameObject.SetActive(true);
+        else
+            phase[index].gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 코스트 리젠
+    /// </summary>
+    void regenCost()
+    {
+        time += Time.deltaTime;
+
+        //regenTime마다 실행
+        if (time >= regenTime)
+        {
+            if (cost >= maxCost)
+            {
+                costText.text = cost.ToString() + '+'.ToString();
+                return;
+            }
+
+            cost++;
+            costText.text = cost.ToString();
+
+            time = 0;
+        }
+    }
+
+    /// <summary>
+    /// 캐릭터 배치후 코스트 소모
+    /// </summary>
+    public void useCost()
+    {
+        if (GameManager.Instance.heroesListIndex == 0)
+        {
+            cost -= verityCost;
+            costText.text = cost.ToString();
+        }
+        else if (GameManager.Instance.heroesListIndex == 1)
+        {
+            cost -= isabellaCost;
+            costText.text = cost.ToString();
+        }
+        else
+        {
+            Debug.Log("check");
+        }
+    }
+    //
+
 }
