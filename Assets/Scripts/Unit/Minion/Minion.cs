@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Spine.Unity;
-
+using Spine;
+using Event = Spine.Event;
 public enum MinionClass
 {
     Buster,
@@ -14,6 +15,12 @@ public enum MinionClass
     Mage,
     TacticalSupport
 }
+
+public enum AttackType
+{
+    Bullet
+}
+
 public class Minion : Unit
 {
     public MinionClass minionClass;
@@ -24,17 +31,42 @@ public class Minion : Unit
     private float attackTimer = 0;
     public float attackSpeed;
 
-
+    public AttackType attackType;
+    public Sprite bulletSprite;
 
     protected override void Start()
     {
         base.Start();
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
         attackTimer = attackSpeed;
-
-
     }
 
-   
+    public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
+    {
+        if (e.Data.Name == "shoot")
+        {
+            switch(attackType)
+            {
+                case AttackType.Bullet:
+                 BulletAttack();
+                    break;
+            }
+        }
+    }
+
+    public void BulletAttack()
+    {
+        Vector3 pos = transform.position;
+
+        GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
+        bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
+        bulletObject.transform.position = pos;
+        bulletObject.GetComponent<Bullet>().Init(atk, target);
+
+        bulletObject.SetActive(true);
+
+      //  target.GetComponent<Unit>().currentHp -= 10;
+    }
 
 
     // Update is called once per frame

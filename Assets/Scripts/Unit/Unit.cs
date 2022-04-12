@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-using Spine;
-using Event = Spine.Event;
+
 
 public enum Direction
 {
@@ -20,6 +19,8 @@ public class Unit : MonoBehaviour
     public int maxHp;
     public int currentHp;
 
+    public int atk;
+
     public string poolItemName;
 
     public Direction direction;
@@ -31,6 +32,8 @@ public class Unit : MonoBehaviour
     public SkeletonDataAsset skeletonData;
 
     public string skinName;
+
+    
     protected virtual void Start()
     {
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null)
@@ -48,7 +51,7 @@ public class Unit : MonoBehaviour
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
 
-        transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+
 
         currentHp = maxHp;
     }
@@ -78,16 +81,5 @@ public class Unit : MonoBehaviour
         transform.localScale = scale;
     }
 
-    public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
-    {
-        if (e.Data.Name == "shoot")
-        {
-            Deal();
-        }
-    }
 
-    public void Deal()
-    {
-        target.GetComponent<Unit>().currentHp -= 10;
-    }
 }
