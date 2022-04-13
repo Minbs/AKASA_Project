@@ -53,7 +53,7 @@ public class EditList : Singleton<EditList>
     {
         foreach (Unitportrait minions in myList)
         {
-            if (minions.pro_UnitName == up.pro_UnitName)    // 추후 일련번호로 수정
+            if (minions.pro_Minion_k_Name == up.pro_Minion_k_Name)    // 추후 일련번호로 수정
                 return false;               // Panel 띄워주기
         }
         return true;

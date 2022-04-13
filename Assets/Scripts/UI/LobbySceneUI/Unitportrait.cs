@@ -4,65 +4,136 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Unitportrait : MonoBehaviour
 {
-    public Sprite UnitImage;
-    public string UnitName;
-    public int UnitLv;
-    public int UnitRank; // enum이 존재할 경우 enum으로 변경
+    [SerializeField]
+    private Sprite UnitSprite;
+    [SerializeField] private int Minion_num;
+    [Header("이름")]
+    [SerializeField]  private string Minion_k_Name;
+    [SerializeField] private string Minion_e_Name;
+    [Space (10f)]
+    [Header("클래스")]
+    [SerializeField] private string Minion_ClassName;
+    [Space (10f)]
+    [Header("레벨")]
+    [SerializeField]  private int Minioun_Lv;
+    [Space(10f)]
+    [Header("등급")]
+    [SerializeField] private int MInion_Rank; // enum이 존재할 경우 enum으로 변경
+    [Space(10f)]
+    [Header("코스트")]
+    [SerializeField] private int Cost;
+    [Space(10f)]
+    [Header("타이머")]
+    [SerializeField] private float ReturnTimer;     // 캐릭터 반환시 받는 타이머
+    [SerializeField] private float RelocationTimer;
+
+    [Space(10f)]
+    [Header("스테이터스")]
+    [SerializeField] private float Hp;
+    [SerializeField] private float AtSpeed;
+    [SerializeField] private float Atk;
+    [SerializeField] private float Def;
+    [SerializeField] private float Critical;
     public int getCount; // 획득 날짜.
 
 
     // 임시로 값을 설정
     private void Start()
     {
-        UnitImage = this.gameObject.GetComponent<Image>().sprite;
+        
+        UnitSprite = this.gameObject.GetComponent<Image>().sprite;
 
     }
 
-    public Sprite pro_UnitImage
+    public void GetData(ref Unitportrait p)
+    {
+        //Unitportrait p = new Unitportrait();
+        p.pro_Atk = pro_Atk;
+        p.pro_AtSpeed = pro_AtSpeed;
+        p.pro_Critical = pro_Critical;
+        p.pro_Cost = pro_Cost;
+        p.pro_Def = pro_Def;
+        p.pro_getCount = pro_getCount;
+        p.pro_Hp = pro_Hp;
+        p.pro_MinionLv = pro_MinionLv;
+        p.pro_Minion_ClassName = pro_Minion_ClassName;
+        p.pro_Minion_e_Name = pro_Minion_e_Name;
+        p.pro_Minion_k_Name = pro_Minion_k_Name;
+        p.pro_RelocationTimer = pro_RelocationTimer;
+        p.pro_ReturnTimer = pro_ReturnTimer;
+        p.pro_UnitRank = pro_UnitRank;
+        p.GetComponent<Image>().sprite = pro_MinionSprite;
+
+    }
+    public Sprite pro_MinionSprite
     {
         get
         {
-            return UnitImage;
+            return UnitSprite;
         }
         set
         {
-            UnitImage = value;
-            gameObject.GetComponent<Image>().sprite = UnitImage;
+            UnitSprite = value;
+            gameObject.GetComponent<Image>().sprite = UnitSprite;
         }
     }
-    public string pro_UnitName
+    public string pro_Minion_k_Name
     {
         get
         {
-            return UnitName;
+            return Minion_k_Name;
         }
         set
         {
-            UnitName = value;
+            Minion_k_Name = value;
         }
 
     }
-    public int pro_UnitLv
+    public string pro_Minion_e_Name
     {
         get
         {
-            return UnitLv;
+            return Minion_e_Name;
         }
         set
         {
-            UnitLv = value ;
+            Minion_e_Name = value;
+        }
+    }
+
+    public string pro_Minion_ClassName
+    {
+        get
+        {
+            return Minion_ClassName;
+        }
+        set
+        {
+            Minion_ClassName = value;
+        }
+    }
+
+    public int pro_MinionLv
+    {
+        get
+        {
+            return Minioun_Lv;
+        }
+        set
+        {
+            Minioun_Lv = value ;
         }
     }
     public int pro_UnitRank
     {
         get
         {
-            return UnitRank;
+            return MInion_Rank;
         }
 
         set
         {
-            UnitRank = value;
+            MInion_Rank = value;
         }
     }
     public int pro_getCount
@@ -77,6 +148,100 @@ public class Unitportrait : MonoBehaviour
             getCount = value;
         }
     }
+
+    public int pro_Cost
+    {
+        get
+        {
+            return Cost;
+        }
+
+        set
+        {
+            Cost = value;
+        }
+    }
+
+    public float pro_ReturnTimer
+    {
+        get
+        {
+            return ReturnTimer;
+        }
+        set
+        {
+            ReturnTimer = value;
+        }
+    }
+    
+    public float pro_RelocationTimer
+    {
+        get
+        {
+            return RelocationTimer;
+        }
+        set
+        {
+            RelocationTimer = value;
+        }
+    }
+
+    public float pro_Hp
+    {
+        get
+        {
+            return Hp;
+        }
+        set
+        {
+            Hp = value;
+        }
+    }
+
+    public float pro_AtSpeed
+    {
+        get
+        {
+            return AtSpeed;
+        }
+        set
+        {
+            AtSpeed = value;
+        }
+    }
+
+    public float pro_Atk
+    {
+        get
+        {
+            return Atk;
+        }
+        set
+        {
+            Atk = value;
+        }
+    }
+    public float pro_Def
+    {
+        get
+        {
+            return Def;
+        }
+        set { Def = value; }
+    }
+
+    public float pro_Critical
+    {
+        get
+        {
+            return Critical;
+        }
+        set
+        {
+            Critical = value;
+        }
+    }
+
 
 
 

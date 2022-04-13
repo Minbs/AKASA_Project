@@ -11,19 +11,27 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 {
     public GameObject showPanel;
     bool m_bPanelOn = false;
-    public GameObject ClearPanel;
-    public GameObject SavePanel;
-    public GameObject ExitPanel;
+    //public GameObject ClearPanel;
+    //public GameObject SavePanel;
+    //public GameObject ExitPanel;
+    public GameObject SamplePanel;
+    public Text Title_text;
+    public Text Content_text;
+    public Button ConfirmBtn;
+    public Button cancelBtn;
+    delegate void FunctionPointer();
 
     private void Start()
     {
-        if(ClearPanel != null)
-            ClearPanel.SetActive(false);
-        if(SavePanel != null)
-            SavePanel.SetActive(false);
-        if (ExitPanel != null)
-            ExitPanel.SetActive(false);
-
+        //if(ClearPanel != null)
+        //    ClearPanel.SetActive(false);
+        //if(SavePanel != null)
+        //    SavePanel.SetActive(false);
+        //if (ExitPanel != null)
+        //    ExitPanel.SetActive(false);
+        if (SamplePanel != null)
+            SamplePanel.SetActive(false);
+        //btn.onClick.AddListener(SaveConfirm);     // 버튼 적용 법
     }
 
     private void Update()
@@ -64,12 +72,21 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     {
         if (m_bPanelOn == false)
             StartCoroutine(PanelPlay());
-        //NotHaveFunc_Panel.GetComponent<Animator>().SetTrigger("");
     }
 
     public void ClearEditList()
     {
-        ClearPanel.SetActive(true);
+        SamplePanel.SetActive(true);
+        PanelEdit("초기화", "정말 초기화 하시겠습니까?");
+        ConfirmBtn.onClick.AddListener(ClearConfirm);
+        cancelBtn.onClick.AddListener(PanelCancel);
+    }
+
+
+    void PanelEdit(string m_title, string m_contents)
+    {
+        Title_text.text = m_title;
+        Content_text.text = m_contents;
     }
     public void ClearConfirm()
     {
@@ -79,7 +96,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void SaveEditList()
     {
-        SavePanel.SetActive(true);
+        SamplePanel.SetActive(true);
+        PanelEdit("저장", "저장 하시겠습니까?");
+        ConfirmBtn.onClick.AddListener(SaveConfirm);
+        cancelBtn.onClick.AddListener(PanelCancel);
     }
     public void SaveConfirm()
     {
@@ -89,7 +109,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void ExitContainer()
     {
-        ExitPanel.SetActive(true);
+        SamplePanel.SetActive(true);
+        PanelEdit("나가기", "나가시겠습니까?");
+        ConfirmBtn.onClick.AddListener(ExitConfirm);
+        cancelBtn.onClick.AddListener(PanelCancel);
     }
     public void ExitConfirm()
     {
@@ -101,17 +124,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void PanelCancel()
     {
-        ClearPanel.SetActive(false);
-        SavePanel.SetActive(false);
-        ExitPanel.SetActive(false);
+        SamplePanel.SetActive(false);
     }
-
-
-
-    //public void Save_btn()
-    //{
-    //    SavePanel.SetActive(true);
-    //}
 
     void CreateSaveDirectory()
     {

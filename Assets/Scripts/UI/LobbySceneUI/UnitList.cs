@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 // 본 클래스는 캐릭터를 추가, 삭제, 정렬하는 클래스임을 명시. 
-public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IEndDragHandler,IDragHandler
+public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private bool SelectUnit = false;
     private GameObject Dummy;
     private Vector2 MousePos;
     private RaycastHit hit;
     private GraphicRaycaster gr;
+    [SerializeField] private List<Unitportrait> MinionList;
     Canvas myCanves;
     Camera myCamera;
     private void Start()
@@ -27,19 +28,23 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IE
 
     public void SetEditting(Unitportrait up)
     {
-        if (EditList.Instance.ListCheck(Dummy.GetComponent<Unitportrait>()))
+        try
         {
-            up.pro_UnitName = Dummy.GetComponent<Unitportrait>().pro_UnitName;
-            up.pro_UnitLv = 10;
-            up.pro_UnitRank = 10;
-            up.pro_getCount = 10;
-            up.pro_UnitImage = Dummy.GetComponent<Image>().sprite;
+            if (EditList.Instance.ListCheck(Dummy.GetComponent<Unitportrait>()))
+            {
+                Dummy.GetComponent<Unitportrait>().GetData(ref up);
+            }
+            else
+            {
+                Debug.Log("같은 캐릭터를 추가할 수 없습니다.");
+            }
         }
-        else
+        catch
         {
-            Debug.Log("같은 캐릭터를 추가할 수 없습니다.");
+            Debug.Log("Editor Setting Error");
         }
     }
+
     public void CreateDummy(Collider2D other)
     {
         Debug.Log("활성화");
@@ -52,6 +57,7 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IE
             Dummy.transform.parent = myCanves.transform;
         }
     }
+
     private void DestroyDummy()
     {
         Debug.Log("비활성화");
@@ -67,13 +73,11 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IE
         try
         {
             Debug.Log("포인터다운");
-
         }
         catch(System.NotImplementedException e)
         {
             Debug.Log(e.Message);
         }
-        //throw new System.NotImplementedException();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -113,16 +117,13 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IE
             if (results.Count <= 0) return;
             if (results[0].gameObject.tag == "Minions_EditList")
             {
-                //CreateDummy(results[0].gameObject.GetComponent<Collider2D>());
                 SetEditting(results[0].gameObject.GetComponent<Unitportrait>());
-                //Debug.Log("cost");
             }
         }
         catch (System.NotImplementedException e)
         {
             Debug.Log(e.Message);
         }
-        //throw new System.NotImplementedException();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -130,14 +131,11 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IE
         try
         {
             Debug.Log("드래그");
-            //if(Input.MouseDra)
             if (SelectUnit)
             {
                 MousePos = Input.mousePosition;
-                //MousePos = camera.ScreenToWorldPoint(MousePos);
 
                 Dummy.transform.position = MousePos;
-                //Debug.Log("활성화");
             }
         }
         catch (System.NotImplementedException e)
@@ -146,4 +144,7 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler,IE
         }
         //throw new System.NotImplementedException();
     }
+
+    // 정렬 Sort
+
 }
