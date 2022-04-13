@@ -30,13 +30,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public int cost = 21;
     public int verityCost = 7, isabellaCost = 5;
+    public float veritWaitingTime = 50.0f, isabellaWaitingTime = 60.0f;
 
     [SerializeField]
     float readyWaitingTime = 1.0f, battleWaitingTime = 1.0f;
     [SerializeField]
     int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
 
-    float time = 0, waitingTime;
+    float time = 0, waitingTime, MinionWaitingTime;
     int min, sec, currentEnemyCount = 0;
     //
 
@@ -71,7 +72,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             Active(1);
             BattleTime();
-            regenCost();
+            RegenCost();
             EnemeyCount();
             //UnitCount();
         }
@@ -242,7 +243,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary>
     /// 코스트 리젠
     /// </summary>
-    void regenCost()
+    void RegenCost()
     {
         time += Time.deltaTime;
 
@@ -265,7 +266,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary>
     /// 캐릭터 배치후 코스트 소모
     /// </summary>
-    public void useCost(int index)
+    public void UseCost(int index)
     {
         if (index == 0)
         {
@@ -282,4 +283,31 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
     //
 
+    public float MinionWaitTime(int index)
+    {
+        if (index == 0)
+        {
+            veritWaitingTime -= Time.deltaTime;
+            MinionWaitingTime = veritWaitingTime;
+        }
+        else if (index == 1)
+        {
+            isabellaWaitingTime -= Time.deltaTime;
+            MinionWaitingTime = isabellaWaitingTime;
+        }
+
+        if (index == 0 && MinionWaitingTime <= 0)
+        {
+            veritWaitingTime = 50.0f;
+            return -1;
+        }
+        else if (index == 1 && MinionWaitingTime <= 0)
+        {
+            isabellaWaitingTime = 60.0f;
+            return -1;
+        }
+
+        Debug.Log(MinionWaitingTime);
+        return MinionWaitingTime;
+    }
 }

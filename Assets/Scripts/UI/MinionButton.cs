@@ -5,16 +5,28 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Spine.Unity;
 using System.Linq;
+using TMPro;
 
-public class MinionButton : MonoBehaviour, IPointerDownHandler
+public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
     public Minion hero;
+    public GameObject minionBtnTranslucentBG;
+    List<GameObject> tBG = new List<GameObject>();
+    List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    public bool isCheck = false;
 
     void Start()
     {
-      
+        for (int i = 0; i < 12; i++)
+        {
+            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
+            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
+
+            if (tBG[i].activeSelf)
+                tBG[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -22,6 +34,9 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     {
         if(MinionManager.Instance.heroQueue.Count != 0)
         hero = MinionManager.Instance.heroQueue[index];
+
+        if (isCheck == true)
+            waitTimer(index);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -34,7 +49,9 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
             }
             else if (index == 0 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.verityCost)
             {
-                BattleUIManager.Instance.useCost(index);
+                BattleUIManager.Instance.UseCost(index);
+                isCheck = true;
+                //waitTimer(index);           
             }
             if (index == 1 && BattleUIManager.Instance.cost < BattleUIManager.Instance.isabellaCost)
             {
@@ -42,7 +59,9 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
             }
             else if (index == 1 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.isabellaCost)
             {
-                BattleUIManager.Instance.useCost(index);
+                BattleUIManager.Instance.UseCost(index);
+                isCheck = true;
+                //waitTimer(index);  
             }
         }
         else
@@ -61,6 +80,28 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
         BattleUIManager.Instance.settingCharacter.SetActive(true);
         GameManager.Instance.heroesListIndex = index;
-       // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
+        // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
+
+
+    }
+
+    public void waitTimer(int index)
+    {
+        Debug.Log("check");
+
+        if (!tBG[index].activeSelf)
+        {
+            tBG[index].SetActive(true);
+        }
+
+        tBG[index].transform.position = transform.position;
+
+        wTime[index].text = BattleUIManager.Instance.MinionWaitTime(index).ToString("F1") + "s".ToString();
+
+        if (BattleUIManager.Instance.MinionWaitTime(index) <= 0)
+        {
+            tBG[index].SetActive(false);
+            isCheck = false;
+        }
     }
 }
