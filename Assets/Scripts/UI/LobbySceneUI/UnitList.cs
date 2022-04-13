@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 // 본 클래스는 캐릭터를 추가, 삭제, 정렬하는 클래스임을 명시. 
-public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private bool SelectUnit = false;
     private GameObject Dummy;
@@ -13,10 +14,13 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private RaycastHit hit;
     private GraphicRaycaster gr;
     [SerializeField] private List<Unitportrait> MinionList;
+    [SerializeField] private List<Unitportrait> temp = new List<Unitportrait>();
+    [SerializeField] private bool SortType;         // true == 오름차순, false == 내림차순
     Canvas myCanves;
     Camera myCamera;
     private void Start()
     {
+        SortType = false;
         myCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         myCanves = GameObject.Find("Canvas").GetComponent<Canvas>();
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
@@ -55,6 +59,8 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             Dummy = Instantiate<GameObject>(a, Input.mousePosition, Quaternion.identity);
             Dummy.GetComponent<RectTransform>().sizeDelta = new Vector2(125, 125);
             Dummy.transform.parent = myCanves.transform;
+
+            // 원본의 알파값 변경
         }
     }
 
@@ -65,6 +71,8 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             Destroy(Dummy);
             SelectUnit = false;
+
+            // 원본의 alpha 값 변경
         }
     }
 
@@ -145,6 +153,88 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         //throw new System.NotImplementedException();
     }
 
+
+    public void SortReverse()
+    {
+        if (SortType)
+            MinionList.Reverse();
+    }
     // 정렬 Sort
+    public void SortingName()       // 이름으로 정렬
+    {
+        try
+        {
+            MinionList.Sort((MinionA, MinionB) => MinionA.pro_Minion_e_Name.CompareTo(MinionB.pro_Minion_e_Name));   // 이름 순?
+            SortReverse();
+        }
+        catch
+        {
+            Debug.Log("Sorting Error : Name");
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Unitportrait g = Instantiate<Unitportrait>(MinionList[i]);
+
+            temp.Add(g);
+
+            g.transform.parent = this.transform;
+
+        }
+
+        for(int i = 0; i < MinionList.Count; i++)
+        {
+            Destroy(MinionList[i].gameObject);
+        }
+
+
+        MinionList = temp;
+
+        temp = new List<Unitportrait>() ;
+
+    }
+
+    public void SortingLv()         // 레벨로 정렬
+    {
+        try
+        {
+            MinionList.Sort((MinionA, MinionB) => MinionA.pro_MinionLv.CompareTo(MinionB.pro_MinionLv));
+            SortReverse();
+        }
+        catch
+        {
+            Debug.Log("Sorting Error : Lv");
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Unitportrait g = Instantiate<Unitportrait>(MinionList[i]);
+
+            temp.Add(g);
+
+            g.transform.parent = this.transform;
+
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Destroy(MinionList[i].gameObject);
+        }
+
+
+        MinionList = temp;
+
+        temp = new List<Unitportrait>();
+    }
+
+    public void SortingRank()       // 등급으로 정렬
+    {
+
+    }
+
+    public void SortingGetTime()    // 입수일로 정렬
+    {
+
+    }
 
 }

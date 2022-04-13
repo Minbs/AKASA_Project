@@ -40,9 +40,7 @@ public class Unitportrait : MonoBehaviour
     // 임시로 값을 설정
     private void Start()
     {
-        
         UnitSprite = this.gameObject.GetComponent<Image>().sprite;
-
     }
 
     public void GetData(ref Unitportrait p)
