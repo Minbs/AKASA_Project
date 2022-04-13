@@ -68,7 +68,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     Vector3 pos = tile1.gameObject.transform.position;
 
                     GameObject attackTile = ObjectPool.Instance.PopFromPool("AttackRangeTile");
-                    pos.y += 0.151f;
+                    Vector3 size = tile1.gameObject.GetComponent<Renderer>().bounds.size;
+                    pos.y += size.y + 0.005f;
                     attackTile.GetComponent<RectTransform>().position = pos;
                     attackTile.SetActive(true);
                     attackRangeTileImages.Add(attackTile);

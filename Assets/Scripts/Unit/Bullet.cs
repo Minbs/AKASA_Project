@@ -33,20 +33,20 @@ public class Bullet : MonoBehaviour
 
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         Quaternion qt = Quaternion.AngleAxis(rot_z, Vector3.forward);
-        Debug.Log(qt.eulerAngles);
+    
         transform.eulerAngles = qt.eulerAngles;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x + 116.438f, transform.eulerAngles.y, transform.eulerAngles.z + 90);
     }
-    // Update is called once per frame
+
     void Update()
     {
-     
-
         Vector3 des = target.transform.position;
-        
-       // des.y = transform.position.y;
         transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
 
-       
+        if(Vector3.Distance(transform.position, target.transform.position) <= 0.01f)
+        {
+            ObjectPool.Instance.PushToPool("Bullet", gameObject);
+            target.GetComponent<Unit>().currentHp -= damage;
+        }
     }
 }

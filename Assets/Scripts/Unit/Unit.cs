@@ -81,5 +81,10 @@ public class Unit : MonoBehaviour
         transform.localScale = scale;
     }
 
+    public IEnumerator ChangeUnitColor(Color color, float time)
+    {
+        return null;
+    }
+
 
 }

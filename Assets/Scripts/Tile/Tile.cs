@@ -41,7 +41,6 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public bool IsCanSetUnit(MinionClass minionClass)
@@ -88,7 +87,7 @@ public class Tile : MonoBehaviour
         for (int i = 0; i < renderer.materials.Length; i++)
         {
             if (IsCanSetUnit(minionClass))
-                renderer.materials[i].color = Color.Lerp(colors[i], new Color(0, 0, 1), 0.7f);
+                renderer.materials[i].color = Color.Lerp(colors[i], new Color(0, 1, 0), 0.3f);
             else
                 renderer.materials[i].color = colors[i];
         }
