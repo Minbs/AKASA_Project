@@ -26,6 +26,31 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (BattleUIManager.Instance.cost >= 0)
+        {
+            if (index == 0 && BattleUIManager.Instance.cost < BattleUIManager.Instance.verityCost)
+            {
+                return;
+            }
+            else if (index == 0 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.verityCost)
+            {
+                BattleUIManager.Instance.useCost(index);
+            }
+            if (index == 1 && BattleUIManager.Instance.cost < BattleUIManager.Instance.isabellaCost)
+            {
+                return;
+            }
+            else if (index == 1 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.isabellaCost)
+            {
+                BattleUIManager.Instance.useCost(index);
+            }
+        }
+        else
+        {
+            return;
+        }
+
+
         GameManager.Instance.CanSetTile();
 
         BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();

@@ -66,6 +66,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (isSettingCharacterOn)
             SetSettingCharacterMousePosition();
 
+        //
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
             Active(1);
@@ -79,6 +80,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             Active(0);
             WaitTime();
         }
+        //
     }
 
     public void SetSettingCharacterMousePosition()
@@ -263,22 +265,20 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary>
     /// 캐릭터 배치후 코스트 소모
     /// </summary>
-    public void useCost()
+    public void useCost(int index)
     {
-        if (GameManager.Instance.heroesListIndex == 0)
+        if (index == 0)
         {
             cost -= verityCost;
             costText.text = cost.ToString();
         }
-        else if (GameManager.Instance.heroesListIndex == 1)
+        else if (index == 1)
         {
             cost -= isabellaCost;
             costText.text = cost.ToString();
         }
         else
-        {
-            Debug.Log("check");
-        }
+            return;
     }
     //
 

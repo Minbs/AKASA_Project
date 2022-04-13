@@ -81,7 +81,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
-        
+
 
 
         if (unitSetMode)
@@ -131,34 +131,8 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
             }
 
-
-
             if (Input.GetMouseButtonDown(0))
-            {
-                if (BattleUIManager.Instance.cost >= 0)
-                {
-                    if (heroesListIndex == 0 && BattleUIManager.Instance.cost < BattleUIManager.Instance.verityCost)
-                    {
-                        return;
-                    }
-                    else if (heroesListIndex == 0 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.verityCost)
-                    {
-                        BattleUIManager.Instance.useCost();
-                    }
-                    if (heroesListIndex == 1 && BattleUIManager.Instance.cost < BattleUIManager.Instance.isabellaCost)
-                    {
-                        return;
-                    }
-                    else if (heroesListIndex == 1 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.isabellaCost)
-                    {
-                        BattleUIManager.Instance.useCost();
-                    }
-                }
-                else
-                {
-                    return;
-                }
-                
+            {              
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;
