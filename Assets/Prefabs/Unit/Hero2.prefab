@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 0
   currentHp: 0
-  atk: 0
+  speed: 0
+  atk: 10
   poolItemName: 
   direction: 0
   spineAnimation: {fileID: 0}
@@ -59,6 +60,8 @@ MonoBehaviour:
   - row: 0
     column: 0
   - row: -1
+    column: 0
+  - row: -2
     column: 0
   - row: -3
     column: 0
@@ -94,14 +97,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208362257474094919}
-  m_LocalRotation: {x: -0.4730121, y: 0, z: 0, w: 0.88105595}
+  m_LocalRotation: {x: -0.60876137, y: 0, z: 0, w: 0.7933534}
   m_LocalPosition: {x: 0, y: 0, z: 0.15}
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6208362256301881260}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -56.46, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -75, y: 0, z: 0}
 --- !u!33 &6208362257474094915
 MeshFilter:
   m_ObjectHideFlags: 0

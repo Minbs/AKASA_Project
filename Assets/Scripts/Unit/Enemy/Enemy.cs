@@ -40,7 +40,7 @@ public class Enemy : Unit
     {
         Vector3 des = moveTiles[0].transform.position;
         des.y = transform.position.y;
-        transform.position = Vector3.MoveTowards(transform.position, des, 1 * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
 
         if(Vector3.Distance(transform.position, des) < 0.01f)
         {

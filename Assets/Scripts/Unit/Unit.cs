@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
+    public float speed;
 
     public int atk;
 
@@ -79,6 +80,11 @@ public class Unit : MonoBehaviour
         }
 
         transform.localScale = scale;
+    }
+
+    public IEnumerator ChangeUnitColor(Color color, float time)
+    {
+        return null;
     }
 
 
