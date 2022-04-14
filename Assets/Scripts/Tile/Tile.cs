@@ -57,7 +57,7 @@ public class Tile : MonoBehaviour
                 else
                     return false;
             }
-            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport)
+            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport || minionClass == MinionClass.Rescue)
             {
                 if (height != 0)
                     return true;

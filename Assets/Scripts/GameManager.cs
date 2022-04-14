@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>
     public Vector3 heroSetPosition;
 
     public List<GameObject> enemiesList = new List<GameObject>();
+    public List<GameObject> minionsList = new List<GameObject>();
 
     public int heroesListIndex = 0;
 
@@ -151,10 +152,11 @@ public class GameManager : Singleton<GameManager>
 
                 foreach (var tile in BoardManager.Instance.tilesList)
                 {
-                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, true);
+                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, false);
                 }
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
+                minionsList.Add(hero);
                 hero.SetActive(true);
             }
           

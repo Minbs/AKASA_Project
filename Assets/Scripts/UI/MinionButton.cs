@@ -19,6 +19,8 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 
     void Start()
     {
+
+
         /*
         for (int i = 0; i < 12; i++)
         {
@@ -73,6 +75,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
         }
         */
 
+        GameManager.Instance.heroesListIndex = index;
         GameManager.Instance.CanSetTile();
 
         BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
@@ -82,7 +85,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         BattleUIManager.Instance.settingCharacter.SetActive(true);
-        GameManager.Instance.heroesListIndex = index;
+
         // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
 
 

@@ -21,6 +21,6 @@ public class EffectManager : Singleton<EffectManager>
     {
         GameObject effect = Instantiate(attackEffect);
         effect.transform.position = pos;
-        Destroy(effect, 5);
+        Destroy(effect, 3);
     }
 }

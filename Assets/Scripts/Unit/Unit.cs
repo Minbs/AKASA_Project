@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
-
+using UnityEngine.UI;
 
 public enum Direction
 {
@@ -18,9 +18,10 @@ public class Unit : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
-
+    public Image healthBar;
 
     public int atk;
+    public int def;
 
     public string poolItemName{ get; set; }
 
@@ -55,18 +56,31 @@ public class Unit : MonoBehaviour
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
         currentHp = maxHp;
+        UpdateHealthbar();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Deal(int damage)
     {
         currentHp -= damage;
+        Mathf.Clamp(currentHp, 0, maxHp);
+
+
+        if (damage < 0) //heal
+        {
+            StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
+        }
+        else
+        {
         StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
+        }
+
+        UpdateHealthbar();
+    }
+
+    public void UpdateHealthbar()
+    {
+        healthBar.fillAmount = (float)currentHp / maxHp;
     }
 
     public void SetDirection(Direction direction)
