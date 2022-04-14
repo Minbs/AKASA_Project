@@ -366,6 +366,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 1
   hero: {fileID: 0}
+  minionBtnTranslucentBG: {fileID: 0}
+  isCheck: 0
 --- !u!114 &189676877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,8 +517,6 @@ GameObject:
   m_Component:
   - component: {fileID: 285796146}
   - component: {fileID: 285796145}
-  - component: {fileID: 285796147}
-  - component: {fileID: 285796148}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -543,7 +543,6 @@ MonoBehaviour:
   spawner: {fileID: 1367259471}
   tileCamera: {fileID: 638336736}
   characterCamera: {fileID: 532741028}
-  gameSpeed: 1
   heroSetPosition: {x: 0, y: 0, z: 0}
   enemiesList: []
   heroesListIndex: 0
@@ -563,52 +562,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &285796147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285796144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f43cd0ac6870d046b305a7421c0e9a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemiesList: []
-  timeText:
-  - {fileID: 3336188061648257156}
-  - {fileID: 3336188062477720714}
-  - {fileID: 3336188060929808057}
-  - {fileID: 3336188061227867715}
-  - {fileID: 3336188061384420546}
-  phase:
-  - {fileID: 843192420}
-  - {fileID: 2015381824}
-  wave: {fileID: 1680120378}
-  time: 180
-  readyWaitingTime: 1
-  battleWaitingTime: 1
-  maxEnemyCount: 0
-  waveCount: 1
---- !u!114 &285796148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285796144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b883cc24aa1dd9d4cae87b19b14c1595, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cost: 21
-  verityCost: 7
-  isabellaCost: 5
-  waitingTime: 3
-  regenTime: 3
-  costText: {fileID: 1824468214}
 --- !u!1 &318545078
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 2
   hero: {fileID: 0}
+  minionBtnTranslucentBG: {fileID: 0}
+  isCheck: 0
 --- !u!114 &318545081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -911,6 +866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 3
   hero: {fileID: 0}
+  minionBtnTranslucentBG: {fileID: 0}
+  isCheck: 0
 --- !u!114 &470527587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2272,6 +2229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   hero: {fileID: 0}
+  minionBtnTranslucentBG: {fileID: 0}
+  isCheck: 0
 --- !u!1 &1076172205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3296,6 +3255,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 4
   hero: {fileID: 0}
+  minionBtnTranslucentBG: {fileID: 0}
+  isCheck: 0
 --- !u!114 &1951271901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3490,6 +3451,22 @@ MonoBehaviour:
   settingCharacter: {fileID: 874987118}
   skeletonDataAsset: {fileID: 0}
   isSettingCharacterOn: 1
+  text:
+  - {fileID: 3336188061648257156}
+  - {fileID: 3336188062477720714}
+  - {fileID: 3336188060929808057}
+  - {fileID: 3336188061227867715}
+  - {fileID: 3336188061384420546}
+  phase:
+  - {fileID: 843192420}
+  - {fileID: 2015381824}
+  wave: {fileID: 1680120378}
+  costText: {fileID: 1309259108}
+  readyWaitingTime: 1
+  battleWaitingTime: 1
+  maxEnemyCount: 3
+  waveCount: 1
+  regenTime: 3
 --- !u!4 &2025873268
 Transform:
   m_ObjectHideFlags: 0

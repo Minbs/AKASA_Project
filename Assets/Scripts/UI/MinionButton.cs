@@ -19,6 +19,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 
     void Start()
     {
+        /*
         for (int i = 0; i < 12; i++)
         {
             tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
@@ -27,6 +28,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
             if (tBG[i].activeSelf)
                 tBG[i].SetActive(false);
         }
+        */
     }
 
     // Update is called once per frame
@@ -41,6 +43,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        /*
         if (BattleUIManager.Instance.cost >= 0)
         {
             if (index == 0 && BattleUIManager.Instance.cost < BattleUIManager.Instance.verityCost)
@@ -68,13 +71,13 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
         {
             return;
         }
-
+        */
 
         GameManager.Instance.CanSetTile();
 
         BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
 
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = hero.skeletonData;
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = MinionManager.Instance.heroPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 

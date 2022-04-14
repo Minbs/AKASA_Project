@@ -151,7 +151,7 @@ public class GameManager : Singleton<GameManager>
 
                 foreach (var tile in BoardManager.Instance.tilesList)
                 {
-                    tile.canUnitSetTile(tileSetMode);
+                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, true);
                 }
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
@@ -168,7 +168,7 @@ public class GameManager : Singleton<GameManager>
 
                 if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
                 {
-                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
                         //  tileSetMode = false;
                         unitSetMode = true;
@@ -179,11 +179,11 @@ public class GameManager : Singleton<GameManager>
 
 
 
-                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
                     }
-                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(false);
                     }
@@ -211,7 +211,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {
-            tile.canUnitSetTile(tileSetMode);
+            tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, true);
         }
 
     }

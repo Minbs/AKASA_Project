@@ -275,6 +275,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public float MinionWaitTime(int index)
     {
+        /*
         if (index == 0)
         {
             veritWaitingTime -= Time.deltaTime;
@@ -298,6 +299,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             MinionButton.Instance.isCheck = false;
             return -1;
         }
+        */
 
         Debug.Log(MinionWaitingTime);
         return MinionWaitingTime;
