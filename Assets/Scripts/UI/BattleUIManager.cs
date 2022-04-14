@@ -28,10 +28,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
 
-    public int cost = 21;
-    public int verityCost = 7, isabellaCost = 5;
-    public float veritWaitingTime = 50.0f, isabellaWaitingTime = 60.0f;
-
     [SerializeField]
     float readyWaitingTime = 1.0f, battleWaitingTime = 1.0f;
     [SerializeField]
@@ -50,7 +46,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         enemiesList = GameManager.Instance.enemiesList;
 
         time = 0;
-        costText.text = cost.ToString();
+        costText.text = GameManager.Instance.cost.ToString();
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf)
@@ -250,14 +246,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
         //regenTime마다 실행
         if (time >= regenTime)
         {
-            if (cost >= maxCost)
+            if (GameManager.Instance.cost >= maxCost)
             {
-                costText.text = cost.ToString() + '+'.ToString();
+                costText.text = GameManager.Instance.cost.ToString() + '+'.ToString();
                 return;
             }
 
-            cost++;
-            costText.text = cost.ToString();
+            GameManager.Instance.cost++;
+            costText.text = GameManager.Instance.cost.ToString();
 
             time = 0;
         }
@@ -268,18 +264,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-        if (index == 0)
-        {
-            cost -= verityCost;
-            costText.text = cost.ToString();
-        }
-        else if (index == 1)
-        {
-            cost -= isabellaCost;
-            costText.text = cost.ToString();
-        }
-        else
+        if (MinionManager.Instance.heroPrefabs.Count <= index)
             return;
+
+        GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
+        costText.text = GameManager.Instance.cost.ToString();
     }
     //
 
@@ -299,11 +288,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (index == 0 && MinionWaitingTime <= 0)
         {
             veritWaitingTime = 50.0f;
+            MinionButton.Instance.isCheck = false;
             return -1;
         }
         else if (index == 1 && MinionWaitingTime <= 0)
         {
             isabellaWaitingTime = 60.0f;
+            MinionButton.Instance.isCheck = false;
             return -1;
         }
 
