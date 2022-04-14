@@ -18,23 +18,23 @@ public class Unit : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
-    public float speed;
+
 
     public int atk;
 
-    public string poolItemName;
+    public string poolItemName{ get; set; }
 
-    public Direction direction;
+    public Direction direction { get; set; }
 
-    public SpineAnimation spineAnimation;
+    public SpineAnimation spineAnimation { get; set; }
 
-    public GameObject target;
+    public GameObject target { get; set; }
 
-    public SkeletonDataAsset skeletonData;
+    public SkeletonDataAsset skeletonData { get; set; }
 
-    public string skinName;
+    public string skinName { get; set; }
 
-    
+
     protected virtual void Start()
     {
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null)

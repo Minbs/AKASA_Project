@@ -18,7 +18,8 @@ public enum MinionClass
 
 public enum AttackType
 {
-    Bullet
+    Bullet,
+    Melee
 }
 
 public class Minion : Unit
@@ -26,19 +27,25 @@ public class Minion : Unit
     public MinionClass minionClass;
 
     public List<Node> attackRangeNodes = new List<Node>();
-    public List<Tile> attackRangeTiles = new List<Tile>();
+    public List<Tile> attackRangeTiles { get; set; }
 
-    private float attackTimer = 0;
-    public float attackSpeed;
+   // private float attackTimer = 0;
+    //public float attackSpeed;
 
     public AttackType attackType;
     public Sprite bulletSprite;
+
+    private void Awake()
+    {
+        attackRangeTiles = new List<Tile>();
+    }
 
     protected override void Start()
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-        attackTimer = attackSpeed;
+    
+//        attackTimer = attackSpeed;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -72,7 +79,7 @@ public class Minion : Unit
     // Update is called once per frame
     void Update()
     {
-        attackTimer += Time.deltaTime;
+    //    attackTimer += Time.deltaTime;
 
         AimTarget();
         AttackTarget();
@@ -122,12 +129,15 @@ public class Minion : Unit
 
     public void AttackTarget()
     {
+        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
+        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
+        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
 
-        if (target != null && attackTimer >= attackSpeed )
+        if (target != null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1))
         {
   
             spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
-            attackTimer = 0;
+            //attackTimer = 0;
         }
 
         if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")
