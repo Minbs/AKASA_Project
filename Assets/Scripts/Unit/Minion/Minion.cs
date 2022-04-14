@@ -48,8 +48,6 @@ public class Minion : Unit
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-
-        //        attackTimer = attackSpeed;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
