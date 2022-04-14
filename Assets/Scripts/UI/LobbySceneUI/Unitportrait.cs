@@ -2,10 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum RANK
+{
+    RANK_RARE,
+    RANK_EPIC,
+    RANK_LEGEND
+}
 public class Unitportrait : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite UnitSprite;
+    [Header("Text")]
+    [SerializeField] private Sprite UnitSprite;
+    [SerializeField] private Text CampText;
+    [SerializeField] private Text ClassText;
+    [SerializeField] private Text MinionName;
+    [SerializeField] private Text LevelText;
+
+    [Header("Rank Sprite")]
+    [SerializeField] private List<Sprite> Level_frame;
+    [SerializeField] private List<Sprite> RankStar;
+
+    [Header("Unit Class")]
+    [SerializeField] private List<Sprite> ClassSprite;
+
+
     [SerializeField] private int Minion_num;
     [Header("이름")]
     [SerializeField]  private string Minion_k_Name;
@@ -18,7 +38,7 @@ public class Unitportrait : MonoBehaviour
     [SerializeField]  private int Minioun_Lv;
     [Space(10f)]
     [Header("등급")]
-    [SerializeField] private int MInion_Rank; // enum이 존재할 경우 enum으로 변경
+    [SerializeField] private RANK MInion_Rank; // enum이 존재할 경우 enum으로 변경
     [Space(10f)]
     [Header("코스트")]
     [SerializeField] private int Cost;
@@ -34,6 +54,7 @@ public class Unitportrait : MonoBehaviour
     [SerializeField] private float Atk;
     [SerializeField] private float Def;
     [SerializeField] private float Critical;
+
     public int getCount; // 획득 날짜.
 
 
@@ -124,7 +145,7 @@ public class Unitportrait : MonoBehaviour
             Minioun_Lv = value ;
         }
     }
-    public int pro_UnitRank
+    public RANK pro_UnitRank
     {
         get
         {

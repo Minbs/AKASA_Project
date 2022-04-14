@@ -28,6 +28,7 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void SetEditting(Unitportrait up)
     {
+
         try
         {
             if (EditList.Instance.ListCheck(Dummy.GetComponent<Unitportrait>()))
@@ -43,6 +44,7 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             Debug.Log("Editor Setting Error");
         }
+
     }
 
     public void CreateDummy(Collider2D other)
@@ -100,7 +102,7 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             Debug.Log(e.Message);
         }
-        //throw new System.NotImplementedException();
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -142,9 +144,8 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         {
             Debug.Log(e.Message);
         }
-        //throw new System.NotImplementedException();
     }
 
-    // Á¤·Ä Sort
+
 
 }
