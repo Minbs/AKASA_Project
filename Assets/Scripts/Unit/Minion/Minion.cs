@@ -33,7 +33,8 @@ public class Minion : Unit
     public Sprite bulletSprite;
 
     public int cost;
-    public float waitingTime;
+    public float minionWaitingTime;
+    public float minionStandbyTime;
 
     private void Awake()
     {
@@ -44,8 +45,8 @@ public class Minion : Unit
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-    
-//        attackTimer = attackSpeed;
+
+        //        attackTimer = attackSpeed;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)

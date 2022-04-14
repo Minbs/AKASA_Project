@@ -275,33 +275,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public float MinionWaitTime(int index)
     {
-        /*
-        if (index == 0)
-        {
-            veritWaitingTime -= Time.deltaTime;
-            MinionWaitingTime = veritWaitingTime;
-        }
-        else if (index == 1)
-        {
-            isabellaWaitingTime -= Time.deltaTime;
-            MinionWaitingTime = isabellaWaitingTime;
-        }
+        MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
 
-        if (index == 0 && MinionWaitingTime <= 0)
+        if (MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime <= 0)
         {
-            veritWaitingTime = 50.0f;
             MinionButton.Instance.isCheck = false;
             return -1;
         }
-        else if (index == 1 && MinionWaitingTime <= 0)
-        {
-            isabellaWaitingTime = 60.0f;
-            MinionButton.Instance.isCheck = false;
-            return -1;
-        }
-        */
 
-        Debug.Log(MinionWaitingTime);
-        return MinionWaitingTime;
+        Debug.Log(MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime);
+        return MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime;
     }
 }

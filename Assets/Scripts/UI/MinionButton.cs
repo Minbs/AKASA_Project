@@ -16,10 +16,10 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
     List<GameObject> tBG = new List<GameObject>();
     List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
+    public float time;
 
     void Start()
     {
-        /*
         for (int i = 0; i < 12; i++)
         {
             tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
@@ -28,7 +28,6 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
             if (tBG[i].activeSelf)
                 tBG[i].SetActive(false);
         }
-        */
     }
 
     // Update is called once per frame
@@ -36,6 +35,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
     {
         if(MinionManager.Instance.heroQueue.Count != 0)
         hero = MinionManager.Instance.heroQueue[index];
+        time = MinionManager.Instance.heroTime[index];
 
         if (isCheck == true)
             waitTimer(index);
@@ -43,24 +43,23 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        /*
-        if (BattleUIManager.Instance.cost >= 0)
+        if (GameManager.Instance.cost >= 0)
         {
-            if (index == 0 && BattleUIManager.Instance.cost < BattleUIManager.Instance.verityCost)
+            if (index == 0 && GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
                 return;
             }
-            else if (index == 0 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.verityCost)
+            else if (index == 0 && GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
                 BattleUIManager.Instance.UseCost(index);
                 isCheck = true;
                 //waitTimer(index);           
             }
-            if (index == 1 && BattleUIManager.Instance.cost < BattleUIManager.Instance.isabellaCost)
+            if (index == 1 && GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
                 return;
             }
-            else if (index == 1 && BattleUIManager.Instance.cost >= BattleUIManager.Instance.isabellaCost)
+            else if (index == 1 && GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
                 BattleUIManager.Instance.UseCost(index);
                 isCheck = true;
@@ -71,8 +70,8 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
         {
             return;
         }
-        */
-
+        
+        GameManager.Instance.heroesListIndex = index;
         GameManager.Instance.CanSetTile();
 
         BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
@@ -82,7 +81,7 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         BattleUIManager.Instance.settingCharacter.SetActive(true);
-        GameManager.Instance.heroesListIndex = index;
+
         // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
 
 

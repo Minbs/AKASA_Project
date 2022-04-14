@@ -151,7 +151,7 @@ public class GameManager : Singleton<GameManager>
 
                 foreach (var tile in BoardManager.Instance.tilesList)
                 {
-                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, true);
+                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, false);
                 }
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
