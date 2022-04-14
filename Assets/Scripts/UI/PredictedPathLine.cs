@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Line : MonoBehaviour
+public class PredictedPathLine : MonoBehaviour
 {
     [SerializeField]
     private LineRenderer line;

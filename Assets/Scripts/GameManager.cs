@@ -29,12 +29,13 @@ public class GameManager : Singleton<GameManager>
     public Camera tileCamera;
     public Camera characterCamera;
 
-    public float gameSpeed = 1;
+
 
     Node rayNode = new Node();
 
     Ray ray;
 
+  //  public GameObject hero;
 
     public Vector3 heroSetPosition;
 
@@ -70,10 +71,6 @@ public class GameManager : Singleton<GameManager>
         if (tileSetMode)
         {
             ShowAttackRangeTiles();
-            foreach (var tile in BoardManager.Instance.tilesList)
-            {
-                tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, tileSetMode);
-            }
         }
 
         if(battleTime <= 0 && state == State.BATTLE)
@@ -84,12 +81,16 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
+
+
+
         if (unitSetMode)
         {
             Vector3 pos = unitSetTile.transform.position;
             pos += heroSetPosition;
             BattleUIManager.Instance.isSettingCharacterOn = false;
             BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
+            //    Debug.Log("mouse : " + Input.mousePosition.normalized + ", tile : " + unitSetCameraPos.normalized);
             Vector2 vec = Input.mousePosition - unitSetCameraPos;
             
             float dot = Vector2.Dot(vec.normalized,new Vector2(0, 1)); //앞뒤 판별
@@ -130,34 +131,8 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
             }
 
-
-
             if (Input.GetMouseButtonDown(0))
-            {
-                if (Cost.Instance.cost >= 0)
-                {
-                    if (heroesListIndex == 0 && Cost.Instance.cost < Cost.Instance.verityCost)
-                    {
-                        return;
-                    }
-                    else if (heroesListIndex == 0 && Cost.Instance.cost >= Cost.Instance.verityCost)
-                    {
-                        Cost.Instance.useCost();
-                    }
-                    if (heroesListIndex == 1 && Cost.Instance.cost < Cost.Instance.isabellaCost)
-                    {
-                        return;
-                    }
-                    else if (heroesListIndex == 1 && Cost.Instance.cost >= Cost.Instance.isabellaCost)
-                    {
-                        Cost.Instance.useCost();
-                    }
-                }
-                else
-                {
-                    return;
-                }
-                
+            {              
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;
@@ -176,7 +151,7 @@ public class GameManager : Singleton<GameManager>
 
                 foreach (var tile in BoardManager.Instance.tilesList)
                 {
-                    tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, tileSetMode);
+                    tile.canUnitSetTile(tileSetMode);
                 }
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
@@ -189,11 +164,11 @@ public class GameManager : Singleton<GameManager>
         {
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
-               
+
 
                 if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
                 {
-                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
+                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                     {
                         //  tileSetMode = false;
                         unitSetMode = true;
@@ -204,11 +179,11 @@ public class GameManager : Singleton<GameManager>
 
 
 
-                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
+                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
                     }
-                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
+                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(false);
                     }
@@ -232,9 +207,12 @@ public class GameManager : Singleton<GameManager>
 
     public void CanSetTile()
     {
-        tileSetMode = true;
+            tileSetMode = true;
 
-       
+        foreach (var tile in BoardManager.Instance.tilesList)
+        {
+            tile.canUnitSetTile(tileSetMode);
+        }
 
     }
 }
