@@ -98,10 +98,11 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 
         wTime[index].text = BattleUIManager.Instance.MinionWaitTime(index).ToString("F1") + "s".ToString();
 
-        if (BattleUIManager.Instance.MinionWaitTime(index) <= 0)
+        if (BattleUIManager.Instance.MinionWaitTime(index) <= 0 && isCheck == true)
         {
             tBG[index].SetActive(false);
             isCheck = false;
         }
     }
 }
+
