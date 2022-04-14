@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour
     public bool isBlock;
 
     public bool isOnUnit = false;
+
+    public bool ImpossibleUnitSetTile = false;
     //타일 타입 추가
 
 
@@ -46,7 +48,7 @@ public class Tile : MonoBehaviour
     public bool IsCanSetUnit(MinionClass minionClass)
     {
 
-        if (!isBlock && !isOnUnit)
+        if (!isBlock && !isOnUnit && !ImpossibleUnitSetTile)
         {
             if (minionClass == MinionClass.Buster || minionClass == MinionClass.Paladin || minionClass == MinionClass.Guardian || minionClass == MinionClass.Assassin)
             {

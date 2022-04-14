@@ -36,6 +36,5 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
         BattleUIManager.Instance.settingCharacter.SetActive(true);
         GameManager.Instance.heroesListIndex = index;
-       // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
     }
 }

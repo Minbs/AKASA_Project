@@ -29,11 +29,11 @@ public class Minion : Unit
     public List<Node> attackRangeNodes = new List<Node>();
     public List<Tile> attackRangeTiles { get; set; }
 
-   // private float attackTimer = 0;
-    //public float attackSpeed;
-
     public AttackType attackType;
     public Sprite bulletSprite;
+
+    public int cost;
+    public float waitingTime;
 
     private void Awake()
     {
@@ -57,8 +57,16 @@ public class Minion : Unit
                 case AttackType.Bullet:
                  BulletAttack();
                     break;
+                case AttackType.Melee:
+                    MeleeAttack();
+                    break;
             }
         }
+    }
+
+    public void MeleeAttack()
+    {
+        target.GetComponent<Unit>().Deal(atk);
     }
 
     public void BulletAttack()
@@ -71,8 +79,6 @@ public class Minion : Unit
         bulletObject.GetComponent<Bullet>().Init(atk, target);
 
         bulletObject.SetActive(true);
-
-      //  target.GetComponent<Unit>().currentHp -= 10;
     }
 
 
@@ -135,9 +141,7 @@ public class Minion : Unit
 
         if (target != null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1))
         {
-  
             spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
-            //attackTimer = 0;
         }
 
         if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")

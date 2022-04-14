@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758246430292652753}
-  m_LocalRotation: {x: -0.60876137, y: 0, z: 0, w: 0.7933534}
+  m_LocalRotation: {x: -0.4730121, y: 0, z: 0, w: 0.88105595}
   m_LocalPosition: {x: 0, y: 0, z: 0.15}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6208362256301881260}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -56.46, y: 0, z: 0}
 --- !u!33 &7038330258952526154
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4be166bb37b474843a68e69dc657216c, type: 2}
+  - {fileID: 2100000, guid: ca7212d9459532d448003383101c4f4e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 744b2de8f91da5f4287a3b317207f0bd, type: 2}
-  initialSkinName: main
+  skeletonDataAsset: {fileID: 11400000, guid: 437a98c47d4c3034496b80734881c902, type: 2}
+  initialSkinName: wraith
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -118,8 +118,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: main/attack
-  loop: 0
+  _animationName: wraith/idle
+  loop: 1
   timeScale: 1
 --- !u!1 &6208362256301881235
 GameObject:
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
   m_Layer: 9
-  m_Name: Minion1
+  m_Name: wraith
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,35 +168,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 0
   currentHp: 0
-  speed: 0
-  atk: 5
-  poolItemName: 
-  direction: 0
-  spineAnimation: {fileID: 0}
-  target: {fileID: 0}
-  skeletonData: {fileID: 11400000, guid: 744b2de8f91da5f4287a3b317207f0bd, type: 2}
-  skinName: 
-  minionClass: 4
+  atk: 20
+  minionClass: 0
   attackRangeNodes:
   - row: 0
     column: 0
   - row: -1
     column: 0
-  - row: -2
-    column: 0
-  - row: 0
-    column: 1
-  - row: -1
-    column: 1
-  - row: -2
-    column: 1
-  - row: 0
-    column: -1
-  - row: -1
-    column: -1
-  - row: -2
-    column: -1
-  attackRangeTiles: []
-  attackSpeed: 2
-  attackType: 0
+  attackType: 1
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}

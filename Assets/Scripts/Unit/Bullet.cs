@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
         if(Vector3.Distance(transform.position, target.transform.position) <= 0.01f)
         {
             ObjectPool.Instance.PushToPool("Bullet", gameObject);
-            target.GetComponent<Unit>().currentHp -= damage;
+            target.GetComponent<Unit>().Deal(damage);
             EffectManager.Instance.InstantiateAttackEffect(transform.position);
         }
     }

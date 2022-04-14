@@ -34,7 +34,7 @@ public class Unit : MonoBehaviour
 
     public string skinName { get; set; }
 
-
+    private Color initSkeletonColor;
     protected virtual void Start()
     {
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null)
@@ -52,7 +52,7 @@ public class Unit : MonoBehaviour
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
 
-
+        initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
         currentHp = maxHp;
     }
@@ -61,6 +61,12 @@ public class Unit : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Deal(int damage)
+    {
+        currentHp -= damage;
+        StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
     }
 
     public void SetDirection(Direction direction)
@@ -82,9 +88,21 @@ public class Unit : MonoBehaviour
         transform.localScale = scale;
     }
 
-    public IEnumerator ChangeUnitColor(Color color, float time)
+    public IEnumerator ChangeUnitColor(Color color, float duration)
     {
-        return null;
+        float timer = 0f;
+    
+
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
+
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(initSkeletonColor);
     }
 
 

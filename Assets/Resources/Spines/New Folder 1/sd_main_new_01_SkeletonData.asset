@@ -13,22 +13,21 @@ MonoBehaviour:
   m_Name: sd_main_new_01_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 9bf8ad3126eead24fbce2d0b9cd89c9f, type: 2}
+  - {fileID: 11400000, guid: 7bace1593ee3cf54fb206afcc1fb4674, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: ef2f701b01ffb2e4fac0207f52f1d6a4, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: da690edcd816544458aa72647aa0f317, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
-    requiresBlendModeMaterials: 0
+    requiresBlendModeMaterials: 1
     applyAdditiveMaterial: 1
-    additiveMaterials: []
+    additiveMaterials:
+    - pageName: sd_main_new_01.png
+      material: {fileID: 2100000, guid: 5ef2e9d6188cf7940b29d000a4201803, type: 2}
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
-  fromAnimation:
-  - main/idle
-  toAnimation:
-  - main/attack
-  duration:
-  - 0
+  fromAnimation: []
+  toAnimation: []
+  duration: []
   defaultMix: 0.2
   controller: {fileID: 0}
