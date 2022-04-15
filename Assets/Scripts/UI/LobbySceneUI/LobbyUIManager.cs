@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEditor;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class LobbyUIManager : Singleton<LobbyUIManager>
 {
@@ -15,10 +16,11 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     //public GameObject SavePanel;
     //public GameObject ExitPanel;
     public GameObject SamplePanel;
-    public Text Title_text;
-    public Text Content_text;
+    public TextMeshProUGUI Title_text;
+    public TextMeshProUGUI Content_text;
     public Button ConfirmBtn;
     public Button cancelBtn;
+    public GameObject MinionStand;
     delegate void FunctionPointer();
 
     private void Start()
@@ -77,7 +79,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void ClearEditList()
     {
         SamplePanel.SetActive(true);
-        PanelEdit("초기화", "정말 초기화 하시겠습니까?");
+        PanelEdit("Reset", "Are you sure you want to reset it?");
         ConfirmBtn.onClick.AddListener(ClearConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
     }
@@ -97,7 +99,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void SaveEditList()
     {
         SamplePanel.SetActive(true);
-        PanelEdit("저장", "저장 하시겠습니까?");
+        PanelEdit("Save", "Are you sure you want to save?");
         ConfirmBtn.onClick.AddListener(SaveConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
     }
@@ -110,7 +112,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void ExitContainer()
     {
         SamplePanel.SetActive(true);
-        PanelEdit("나가기", "나가시겠습니까?");
+        PanelEdit("Exit", "Are you sure you want to get out of UnitContainer?");
         ConfirmBtn.onClick.AddListener(ExitConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
     }

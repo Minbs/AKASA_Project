@@ -13,6 +13,9 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private RaycastHit hit;
     private GraphicRaycaster gr;
     [SerializeField] private List<Unitportrait> MinionList;
+    [SerializeField] private Unitportrait Prefab;
+    [SerializeField] public List<Sprite> Minions_Illust;
+    [SerializeField] public List<Sprite> Minions_Standing;
     Canvas myCanves;
     Camera myCamera;
     private void Start()
@@ -20,7 +23,64 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         myCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         myCanves = GameObject.Find("Canvas").GetComponent<Canvas>();
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
+        LoadList();
     }
+
+    // 리스트 불러오기
+    private void LoadList()
+    {
+        // 임시로 10개 받아오기
+        for(int i = 0; i < 10; i++)
+        {
+            
+            Unitportrait up = Instantiate<Unitportrait>(Prefab);
+
+            int a = Random.Range(0, Minions_Illust.Count);
+            switch (a)
+            {
+                case 0:
+                    up.RandInit("eremedium", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 1:
+                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+
+                    break;
+                case 2:
+                    up.RandInit("verity", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 3:
+                    up.RandInit("wraith", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 4:
+                    up.RandInit("zippo", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 5:
+                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 6:
+                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 7:
+                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 8:
+                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                default:
+                    break;
+            }
+
+            MinionList.Add(up);
+
+            up.transform.parent = this.transform;
+            
+        }
+    }
+
     private void Update()
     {
 
@@ -93,9 +153,13 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             gr.Raycast(ped, results);
 
             if (results.Count <= 0) return;
-            if (results[0].gameObject.tag == "Minions_Inventory")
+            for(int i = 0; i  < results.Count; i++)
             {
-                CreateDummy(results[0].gameObject.GetComponent<Collider2D>());
+                if (results[i].gameObject.tag == "Minions_Inventory")
+                {
+                    CreateDummy(results[i].gameObject.GetComponent<Collider2D>());
+                    break;
+                }
             }
         }
         catch (System.NotImplementedException e)

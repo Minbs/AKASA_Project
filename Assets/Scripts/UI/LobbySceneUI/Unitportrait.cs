@@ -22,18 +22,23 @@ public enum MINION_CLASS
 
 public class Unitportrait : MonoBehaviour
 {
-    [Header("Text")]
+    
     [SerializeField] private Sprite Minions_List_BG;        // 유닛 리스트 뒷배경
     [SerializeField] private Sprite EditBGSprite;           // 편집창 뒷배경
-    [SerializeField] private Sprite ShowStanding;           // 스탠딩 뒷배경
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI CampText;
     [SerializeField] private TextMeshProUGUI ClassText;
     [SerializeField] private TextMeshProUGUI MinionName;
+    [Header("미니언 일러스트")]
+    [SerializeField] private Sprite Illust;
+    [SerializeField] private Sprite Standing;
+    [SerializeField] private Image ShowIllust;
+    [Header("레벨 text")]
     [SerializeField] private TextMeshProUGUI LevelText;
     [SerializeField] private Image ClassFrame;
     [SerializeField] private Image LevelFrame;
     [SerializeField] private Image StarImage;
-
+    
     [Header("Rank Sprite")]
     [SerializeField] private List<Sprite> Level_Standing;
     [SerializeField] private List<Sprite> Level_Sprite;
@@ -74,10 +79,8 @@ public class Unitportrait : MonoBehaviour
     [Space(10f)]
     [Header("스테이터스")]
     [SerializeField] private float Hp;
-    [SerializeField] private float AtSpeed;
     [SerializeField] private float Atk;
     [SerializeField] private float Def;
-    [SerializeField] private float Critical;
 
     public int getCount; // 획득 날짜.
 
@@ -90,12 +93,29 @@ public class Unitportrait : MonoBehaviour
 
     }
 
+    public void RandInit(string name, Sprite _illust, Sprite _stand)
+    {
+        Illust = _illust;
+        Standing = _stand;
+        ShowIllust.sprite = _illust;
+        int rand = Random.Range(0, ClassSprite.Count);
+        pro_Minion_e_Name = name;
+        pro_Minion_k_Name = name;
+        ClassFrame.sprite = ClassSprite[rand];
+
+        rand = Random.Range(0, Level_Inventory.Count);
+        MInion_Rank = (RANK)rand;
+        this.gameObject.GetComponent<Image>().sprite = Level_Inventory[rand];
+
+        LevelText.text = "Lv." + Random.Range(1, 100).ToString();
+
+
+    }
+
     public void UpdateUI(ref Unitportrait p)
     {
-        //if(Minions_List_BG != null)
-        //{
-        //    this.gameObject.GetComponent<Image>().sprite = Minions_List_BG;
-        //}
+
+
         if (p.CampText != null)
         {
             p.CampText.text = pro_e_Camp ;
@@ -119,9 +139,13 @@ public class Unitportrait : MonoBehaviour
             {
                 case "Minions_Inventory":
                     p.gameObject.GetComponent<Image>().sprite = Level_Inventory[(int)pro_UnitRank];
+                    p.ShowIllust.sprite = Illust;
                     break;
                 case "Minions_EditList":
                     p.gameObject.GetComponent<Image>().sprite = EditBGSprite;
+                    p.ShowIllust.gameObject.SetActive(true);
+                    p.ShowIllust.sprite = Illust;
+                    //p.ShowIllust.sprite = 
                     break;
                 case "Minions_Standing":
                     //p.gameObject.GetComponent<Image>().sprite = Level_Standing[(int)pro_UnitRank];
@@ -175,8 +199,8 @@ public class Unitportrait : MonoBehaviour
     {
         //Unitportrait p = new Unitportrait();
         p.pro_Atk = pro_Atk;
-        p.pro_AtSpeed = pro_AtSpeed;
-        p.pro_Critical = pro_Critical;
+        //p.pro_AtSpeed = pro_AtSpeed;
+        //p.pro_Critical = pro_Critical;
         p.pro_Cost = pro_Cost;
         p.pro_Def = pro_Def;
         p.pro_getCount = pro_getCount;
@@ -189,21 +213,21 @@ public class Unitportrait : MonoBehaviour
         p.pro_ReturnTimer = pro_ReturnTimer;
         p.pro_UnitRank = pro_UnitRank;
         UpdateUI(ref p);
-        //p.GetComponent<Image>().sprite = pro_MinionSprite;
+        //p.GetComponent<Image>().sprite = Illust;
 
     }
-    //public Sprite pro_MinionSprite
-    //{
-    //    get
-    //    {
-    //        return UnitSprite;
-    //    }
-    //    set
-    //    {
-    //        UnitSprite = value;
-    //        gameObject.GetComponent<Image>().sprite = UnitSprite;
-    //    }
-    //}
+    public Sprite pro_MinionSprite
+    {
+        get
+        {
+            return Illust;
+        }
+        set
+        {
+            Illust = value;
+            gameObject.GetComponent<Image>().sprite = Illust;
+        }
+    }
 
     public string pro_Minion_k_Name
     {
@@ -337,17 +361,17 @@ public class Unitportrait : MonoBehaviour
         }
     }
 
-    public float pro_AtSpeed
-    {
-        get
-        {
-            return AtSpeed;
-        }
-        set
-        {
-            AtSpeed = value;
-        }
-    }
+    //public float pro_AtSpeed
+    //{
+    //    get
+    //    {
+    //        return AtSpeed;
+    //    }
+    //    set
+    //    {
+    //        AtSpeed = value;
+    //    }
+    //}
 
     public float pro_Atk
     {
@@ -369,17 +393,17 @@ public class Unitportrait : MonoBehaviour
         set { Def = value; }
     }
 
-    public float pro_Critical
-    {
-        get
-        {
-            return Critical;
-        }
-        set
-        {
-            Critical = value;
-        }
-    }
+    //public float pro_Critical
+    //{
+    //    get
+    //    {
+    //        return Critical;
+    //    }
+    //    set
+    //    {
+    //        Critical = value;
+    //    }
+    //}
 
 
 
