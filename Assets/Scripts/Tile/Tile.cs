@@ -43,6 +43,10 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(node.column == 2 && node.row == 2)
+        {
+            Debug.Log(transform.name);
+        }
     }
 
     public bool IsCanSetUnit(MinionClass minionClass)
