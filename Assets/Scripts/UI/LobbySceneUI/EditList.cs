@@ -9,6 +9,7 @@ public class EditList : Singleton<EditList>
     // GraphicRaycaster gr;
     // 이 곳은 파티 편집기에 등록한 파티를 저장하고 초기화하는 기능
     public List<Unitportrait> myList = new List<Unitportrait>();
+    
     public int EditMax = 10;
     public Unitportrait EditPanelPrefab;
     // Start is called before the first frame update
