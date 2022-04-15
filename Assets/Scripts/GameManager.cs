@@ -81,8 +81,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
-
-
+        BattleUIManager.Instance.DeploymentMinion(MinionButton.Instance.index);
 
         if (unitSetMode)
         {

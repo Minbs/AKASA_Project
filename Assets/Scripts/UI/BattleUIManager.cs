@@ -21,6 +21,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     //
     const int maxCost = 99;
+    const int maxMinionCount = 12;
     List<GameObject> enemiesList = new List<GameObject>();
 
     public TextMeshProUGUI[] text;
@@ -33,9 +34,37 @@ public class BattleUIManager : Singleton<BattleUIManager>
     [SerializeField]
     int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
 
-    float time = 0, waitingTime, MinionWaitingTime;
+    float time = 0, waitingTime;
     int min, sec, currentEnemyCount = 0;
+    //int index = 0;
+
+    public GameObject minionBtnTranslucentBG;
+    public List<GameObject> tBG = new List<GameObject>();
+    List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    public bool isCheck = false;
+    public float times;
     //
+
+    private void Awake()
+    {
+        for (int i = 0; i < maxMinionCount; i++)
+        {
+            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
+            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
+
+            if (tBG[i].activeSelf)
+                tBG[i].SetActive(false);
+        }
+        
+        for (int i = 0; i < 3; i++)
+            if (text[i].gameObject.activeSelf)
+                text[i].gameObject.SetActive(false);
+        for (int i = 0; i < 2; i++)
+            if (phase[i].gameObject.activeSelf)
+                phase[i].gameObject.SetActive(false);
+        if (wave.gameObject.activeSelf)
+            wave.gameObject.SetActive(false);
+    }
 
     void Start()
     {
@@ -47,15 +76,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         time = 0;
         costText.text = GameManager.Instance.cost.ToString();
-
-        for (int i = 0; i < 3; i++)
-            if (text[i].gameObject.activeSelf)
-                text[i].gameObject.SetActive(false);
-        for (int j = 0; j < 2; j++)
-            if (phase[j].gameObject.activeSelf)
-                phase[j].gameObject.SetActive(false);
-        if (wave.gameObject.activeSelf)
-            wave.gameObject.SetActive(false);
     }
 
     void Update()
@@ -70,6 +90,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
             BattleTime();
             RegenCost();
             EnemeyCount();
+
+            if (isCheck == true)
+                MinionWaitTimer(MinionButton.Instance.index);
+
             //UnitCount();
         }
         else if (GameManager.Instance.state == State.WAIT)
@@ -238,13 +262,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     /// <summary>
-    /// 코스트 리젠
+    /// 코스트 리젠 (regenTime마다 실행)
     /// </summary>
     void RegenCost()
     {
         time += Time.deltaTime;
 
-        //regenTime마다 실행
         if (time >= regenTime)
         {
             if (GameManager.Instance.cost >= maxCost)
@@ -271,19 +294,64 @@ public class BattleUIManager : Singleton<BattleUIManager>
         GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
-    //
 
-    public float MinionWaitTime(int index)
+    public void DeploymentMinion(int index)
+    {
+        if (GameManager.Instance.cost >= 0)
+        {
+            if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
+            {
+                UseCost(index);
+                MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime =
+                    MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionWaitingTime;
+                isCheck = true;
+                //waitTimer(index);           
+            }
+            else if (GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public float MinionStanbyTimer(int index)
     {
         MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
 
         if (MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime <= 0)
         {
-            MinionButton.Instance.isCheck = false;
-            return -1;
+            isCheck = false;
+
+            if (tBG[index].activeSelf)
+                tBG[index].SetActive(false);
         }
 
         Debug.Log(MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime);
         return MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime;
     }
+
+    public void MinionWaitTimer(int index)
+    {
+        Debug.Log("check");
+
+        if (!tBG[index].activeSelf)
+        {
+            tBG[index].SetActive(true);
+        }
+
+        MinionButton.Instance.MBtnTBGPosition();
+
+        wTime[index].text = MinionStanbyTimer(index).ToString("F1") + "s".ToString();
+
+        if (MinionStanbyTimer(index) <= 0 && isCheck == true)
+        {
+            tBG[index].SetActive(false);
+            isCheck = false;
+        }
+    }
+    //
 }
