@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class JsonScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public static List<T> FromJson<T> (string json)
     {
-        
+
+        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+        return wrapper.items;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public static string ToJson<T> (List<T> list)
     {
-        
+        Wrapper<T> wrapper = new Wrapper<T>();
+        wrapper.items = list;
+        return JsonUtility.ToJson(wrapper);
+    }
+
+    public class Wrapper<T>
+    {
+        public List<T> items;
     }
 }

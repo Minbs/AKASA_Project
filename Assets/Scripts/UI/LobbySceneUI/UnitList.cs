@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 // 본 클래스는 캐릭터를 추가, 삭제, 정렬하는 클래스임을 명시. 
-public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private bool SelectUnit = false;
     private GameObject Dummy;
@@ -23,63 +23,62 @@ public class UnitList : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         myCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         myCanves = GameObject.Find("Canvas").GetComponent<Canvas>();
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-        LoadList();
+        //LoadList();
     }
 
-    // 리스트 불러오기
-    private void LoadList()
-    {
-        // 임시로 10개 받아오기
-        for(int i = 0; i < 10; i++)
-        {
+    // 리스트 랜덤 불러오기
+    //private void LoadList()
+    //{
+    //    // 임시로 10개 받아오기
+    //    for(int i = 0; i < 10; i++)
+    //    {
+    //        Unitportrait up = Instantiate<Unitportrait>(Prefab);
+
+    //        int a = Random.Range(0, Minions_Illust.Count);
+    //        switch (a)
+    //        {
+    //            case 0:
+    //                up.RandInit("eremedium", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 1:
+    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+
+    //                break;
+    //            case 2:
+    //                up.RandInit("verity", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 3:
+    //                up.RandInit("wraith", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 4:
+    //                up.RandInit("zippo", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 5:
+    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 6:
+    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 7:
+    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 8:
+    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
+    //                break;
+    //            case 9:
+    //                break;
+    //            case 10:
+    //                break;
+    //            default:
+    //                break;
+    //        }
+
+    //        MinionList.Add(up);
+
+    //        up.transform.parent = this.transform;
             
-            Unitportrait up = Instantiate<Unitportrait>(Prefab);
-
-            int a = Random.Range(0, Minions_Illust.Count);
-            switch (a)
-            {
-                case 0:
-                    up.RandInit("eremedium", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 1:
-                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-
-                    break;
-                case 2:
-                    up.RandInit("verity", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 3:
-                    up.RandInit("wraith", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 4:
-                    up.RandInit("zippo", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 5:
-                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 6:
-                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 7:
-                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 8:
-                    up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    break;
-                default:
-                    break;
-            }
-
-            MinionList.Add(up);
-
-            up.transform.parent = this.transform;
-            
-        }
-    }
+    //    }
+    //}
 
     private void Update()
     {

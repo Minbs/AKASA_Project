@@ -118,6 +118,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void SaveConfirm()
     {
         Debug.Log("ÀúÀå!");
+        EditList.Instance.Save();
         PanelCancel();
     }
 

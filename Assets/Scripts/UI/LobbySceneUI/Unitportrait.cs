@@ -18,6 +18,18 @@ public enum MINION_CLASS
     CLASS_BUSTER = 3,
     CLASS_CHASER = 4 ,
     CLASS_PALADIN = 5,
+    CLASS_TACSUP = 6,
+    CLASS_ASSASIN = 7
+}
+
+public enum UnitName
+{
+    NAME_VARIETY = 0,
+    NAME_REMEDIUM = 1,
+    NAME_WRAITH,
+    NAME_HWASEON,
+    NAME_ZIPPO,
+    NAME_ISABELLA,
 }
 
 public class Unitportrait : MonoBehaviour
@@ -38,6 +50,11 @@ public class Unitportrait : MonoBehaviour
     [SerializeField] private Image ClassFrame;
     [SerializeField] private Image LevelFrame;
     [SerializeField] private Image StarImage;
+
+    [Header("Ilusts")]
+    [SerializeField] private List<Sprite> portraitList;
+    [SerializeField] private List<Sprite> editIllustList;
+    [SerializeField] private List<Sprite> StandingList;
     
     [Header("Rank Sprite")]
     [SerializeField] private List<Sprite> Level_Standing;
@@ -55,6 +72,7 @@ public class Unitportrait : MonoBehaviour
     [Header("ÀÌ¸§")]
     [SerializeField]  private string Minion_k_Name;
     [SerializeField] private string Minion_e_Name;
+    [SerializeField] private UnitName nameTag;
     [Space(10f)]
     [Header("Áø¿µ")]
     [SerializeField] private string e_camp;
@@ -82,6 +100,8 @@ public class Unitportrait : MonoBehaviour
     [SerializeField] private float Atk;
     [SerializeField] private float Def;
 
+    //[Space(10f)]
+
     public int getCount; // È¹µæ ³¯Â¥.
 
 
@@ -89,7 +109,6 @@ public class Unitportrait : MonoBehaviour
     private void Start()
     {
         
-        //UnitSprite = this.gameObject.GetComponent<Image>().sprite;
 
     }
 
@@ -114,8 +133,6 @@ public class Unitportrait : MonoBehaviour
 
     public void UpdateUI(ref Unitportrait p)
     {
-
-
         if (p.CampText != null)
         {
             p.CampText.text = pro_e_Camp ;
@@ -178,6 +195,12 @@ public class Unitportrait : MonoBehaviour
                 case "Paladin":
                     p.ClassFrame.sprite = ClassSprite[(int)MINION_CLASS.CLASS_PALADIN];
                     break;
+                case "Tactical_Supporter":
+                    p.ClassFrame.sprite = ClassSprite[(int)MINION_CLASS.CLASS_TACSUP];
+                    break;
+                case "Assasin":
+                    p.ClassFrame.sprite = ClassSprite[(int)MINION_CLASS.CLASS_ASSASIN];
+                    break;
                 default:
                     break;
             }
@@ -212,10 +235,13 @@ public class Unitportrait : MonoBehaviour
         p.pro_RelocationTimer = pro_RelocationTimer;
         p.pro_ReturnTimer = pro_ReturnTimer;
         p.pro_UnitRank = pro_UnitRank;
+        p.pro_NameTag = pro_NameTag;
         UpdateUI(ref p);
         //p.GetComponent<Image>().sprite = Illust;
 
     }
+
+    
     public Sprite pro_MinionSprite
     {
         get
@@ -226,6 +252,18 @@ public class Unitportrait : MonoBehaviour
         {
             Illust = value;
             gameObject.GetComponent<Image>().sprite = Illust;
+        }
+    }
+
+    public int pro_Minion_num
+    {
+        get
+        {
+            return Minion_num;
+        }
+        set
+        {
+            Minion_num = value;
         }
     }
 
@@ -250,6 +288,18 @@ public class Unitportrait : MonoBehaviour
         set
         {
             Minion_e_Name = value;
+        }
+    }
+
+    public UnitName pro_NameTag
+    {
+        get
+        {
+            return nameTag;
+        }
+        set
+        {
+            nameTag = value;
         }
     }
     
@@ -299,6 +349,18 @@ public class Unitportrait : MonoBehaviour
             MInion_Rank = value;
         }
     }
+    public MINION_CLASS pro_ClassSimbol
+    {
+        get
+        {
+            return MinionClass;
+        }
+        set
+        {
+            MinionClass = value;
+        }
+    }
+
     public int pro_getCount
     {
         get
