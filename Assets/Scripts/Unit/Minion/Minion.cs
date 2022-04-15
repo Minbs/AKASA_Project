@@ -35,6 +35,7 @@ public class Minion : Unit
     public Sprite bulletSprite;
 
     public int stopCount; // ÀúÁö ¼ö
+    public int currentStopCount { get; set; }
 
     public int cost;
     public float waitingTime;

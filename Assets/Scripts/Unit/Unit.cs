@@ -85,7 +85,7 @@ public class Unit : MonoBehaviour
 
     public void SetDirection(Direction direction)
     {
-        Vector3 scale = transform.localScale;
+        Vector3 scale = transform.GetChild(0).localScale;
         this.direction = direction;
 
         if(direction == Direction.LEFT)
@@ -99,7 +99,7 @@ public class Unit : MonoBehaviour
                 scale.x *= -1;
         }
 
-        transform.localScale = scale;
+        transform.GetChild(0).localScale = scale;
     }
 
     public IEnumerator ChangeUnitColor(Color color, float duration)

@@ -49,9 +49,10 @@ MonoBehaviour:
   maxHp: 80
   currentHp: 0
   healthBar: {fileID: 6831602217341417594}
-  atk: 0
+  atk: 10
   def: 0
   speed: 0.3
+  attackType: 1
 --- !u!1 &6299139124783264950
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 437a98c47d4c3034496b80734881c902, type: 2}
   initialSkinName: shot_ernemy
-  initialFlipX: 0
+  initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
