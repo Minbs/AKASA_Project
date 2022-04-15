@@ -10,29 +10,40 @@ using TMPro;
 
 public class LobbyUIManager : Singleton<LobbyUIManager>
 {
+    [Space(10f)]
+    [Header("잠깐 보여주는 Panel")]
     public GameObject showPanel;
     bool m_bPanelOn = false;
+
     //public GameObject ClearPanel;
     //public GameObject SavePanel;
     //public GameObject ExitPanel;
+    [Space(10f)]
+    [Header("Popup Panel")]
     public GameObject SamplePanel;
     public TextMeshProUGUI Title_text;
     public TextMeshProUGUI Content_text;
     public Button ConfirmBtn;
     public Button cancelBtn;
-    public GameObject MinionStand;
+
+    [Space(10f)]
+    [Header("Stage_Info")]
+    public GameObject StageInfo_Screen;
+    public TextMeshProUGUI StageName_Text;
+
+
+
+    //public GameObject MinionStand;
+
     delegate void FunctionPointer();
 
     private void Start()
     {
-        //if(ClearPanel != null)
-        //    ClearPanel.SetActive(false);
-        //if(SavePanel != null)
-        //    SavePanel.SetActive(false);
-        //if (ExitPanel != null)
-        //    ExitPanel.SetActive(false);
         if (SamplePanel != null)
             SamplePanel.SetActive(false);
+        if (StageInfo_Screen != null)
+            StageInfo_Screen.SetActive(false);  
+
         //btn.onClick.AddListener(SaveConfirm);     // 버튼 적용 법
     }
 
@@ -66,6 +77,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadStageSelectScene()
     {
+        SceneManager.LoadScene("StageSelectScene");
         Debug.Log("스테이지 선택 씬 보여주기");
 
     }
@@ -151,6 +163,18 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         yield return new WaitForSeconds(1.0f);
         showPanel.SetActive(false);
         m_bPanelOn = false;
+    }
+
+
+
+    public void ShowStageInfo(string stageName)
+    {
+        StageInfo_Screen.SetActive(true);
+        StageName_Text.text = stageName;
+    }
+    public void HideStageInfo()
+    {
+        StageInfo_Screen.SetActive(false);
     }
 
 }
