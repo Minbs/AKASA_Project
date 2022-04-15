@@ -88,7 +88,9 @@ public class GameManager : Singleton<GameManager>
         if (unitSetMode)
         {
             Vector3 pos = unitSetTile.transform.position;
+            Debug.Log(pos.y);
             pos += heroSetPosition;
+          
             BattleUIManager.Instance.isSettingCharacterOn = false;
             BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
             //    Debug.Log("mouse : " + Input.mousePosition.normalized + ", tile : " + unitSetCameraPos.normalized);

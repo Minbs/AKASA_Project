@@ -12,6 +12,7 @@ public class Enemy : Unit
     List<Tile> moveTiles = new List<Tile>();
     public float speed;
     public AttackType attackType;
+    public float attackRangeDistance;
 
     protected override void Start()
     {
@@ -23,9 +24,21 @@ public class Enemy : Unit
         poolItemName = "Enemy1";
     }
 
+    private void OnDestroy()
+    {
+        if(GameManager.Instance != null)
+        GameManager.Instance.enemiesList.Remove(gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if(currentHp <= 0)
+        {
+            StartCoroutine(Die());
+            return;
+        }
+
         AimTarget();
 
         if (BoardManager.Instance.end == true && moveTiles.Count != 0)
@@ -56,7 +69,7 @@ public class Enemy : Unit
 
 
         Vector3 des = moveTiles[0].transform.position;
-        des.y = transform.position.y;
+        //des.y = transform.position.y;
         transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, des) < 0.01f)
@@ -93,9 +106,10 @@ public class Enemy : Unit
         {
             foreach (var minion in GameManager.Instance.minionsList)
             {
-                if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < 0.5f)
+                if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance)
                 {
                     target = minion;
+
                     break;
                 }
             }
@@ -110,7 +124,7 @@ public class Enemy : Unit
 
         if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1)))
         {
-            Vector3 scale = transform.GetChild(0).localScale;
+            Vector3 scale = Vector3.one;
             if (target.transform.position.x - transform.position.x >= -0.001)
             {
                 scale.x = 1;
@@ -120,7 +134,7 @@ public class Enemy : Unit
                 scale.x = -1;
             }
 
-            transform.GetChild(0).localScale = new Vector3(transform.GetChild(0).localScale.x * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
+            transform.GetChild(0).localScale = new Vector3(Mathf.Abs( transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
 
             spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
         }

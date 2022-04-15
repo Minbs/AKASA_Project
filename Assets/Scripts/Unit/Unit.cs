@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
-
+using Spine;
+using Event = Spine.Event;
 public enum Direction
 {
     LEFT,
@@ -85,21 +87,19 @@ public class Unit : MonoBehaviour
 
     public void SetDirection(Direction direction)
     {
-        Vector3 scale = transform.GetChild(0).localScale;
+        Vector3 scale = Vector3.one;
         this.direction = direction;
 
         if(direction == Direction.LEFT)
         {
-            if (scale.x < 0)
-                scale.x *= -1;
+                scale.x = 1;
         }
         else if(direction == Direction.RIGHT)
         {
-            if (scale.x > 0)
-                scale.x *= -1;
+                scale.x = -1;
         }
 
-        transform.GetChild(0).localScale = scale;
+        transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
     }
 
     public IEnumerator ChangeUnitColor(Color color, float duration)
@@ -119,5 +119,22 @@ public class Unit : MonoBehaviour
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(initSkeletonColor);
     }
 
+    public IEnumerator Die()
+    {
+        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
+        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
+        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
 
+        if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/knockdown")
+        {
+            spineAnimation.PlayAnimation(skinName + "/knockdown", false, 1);
+        }
+
+        if(transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/knockdown" && normalizedTime >= 1)
+        {
+            Destroy(gameObject);
+        }
+
+        yield return null;
+    }
 }

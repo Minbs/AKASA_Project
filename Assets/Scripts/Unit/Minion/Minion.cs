@@ -125,7 +125,7 @@ public class Minion : Unit
                     foreach (var t in attackRangeTiles)
                     {
 
-                        if (t.onTile(enemy.transform) && enemy.GetComponent<Unit>().currentHp > 0)
+                        if ((t.onTile(enemy.transform) || enemy.GetComponent<Unit>().target == gameObject) && enemy.GetComponent<Unit>().currentHp > 0)
                         {
                             target = enemy;
 
@@ -146,7 +146,7 @@ public class Minion : Unit
                     }
                 }
 
-                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
+                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 && target.GetComponent<Unit>().target != gameObject)
                     target = null;
             }
         }
@@ -187,7 +187,7 @@ public class Minion : Unit
 
         if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1)))
         {
-            Vector3 scale = transform.localScale;
+            Vector3 scale = Vector3.one;
             if (target.transform.position.x - transform.position.x >= -0.001)
             {
                 scale.x = 1;
@@ -197,7 +197,7 @@ public class Minion : Unit
                 scale.x = -1;
             }
 
-            transform.localScale = scale;
+            transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
 
             spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
 
