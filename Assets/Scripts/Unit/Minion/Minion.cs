@@ -152,7 +152,7 @@ public class Minion : Unit
         else
         {
             if(target != null)
-            if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp && target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
+            if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
             {            
                 target = null;
             }

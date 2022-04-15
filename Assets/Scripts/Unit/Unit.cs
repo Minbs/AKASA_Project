@@ -63,7 +63,7 @@ public class Unit : MonoBehaviour
     public void Deal(int damage)
     {
         currentHp -= damage;
-        Mathf.Clamp(currentHp, 0, maxHp);
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
 
         if (damage < 0) //heal
