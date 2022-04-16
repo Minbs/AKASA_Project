@@ -29,8 +29,6 @@ public class GameManager : Singleton<GameManager>
     public Camera tileCamera;
     public Camera characterCamera;
 
-
-
     Node rayNode = new Node();
 
     Ray ray;
@@ -81,15 +79,14 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
-        
 
 
         if (unitSetMode)
         {
             Vector3 pos = unitSetTile.transform.position;
             pos += heroSetPosition;
-            UIManager.Instance.isSettingCharacterOn = false;
-            UIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
+            BattleUIManager.Instance.isSettingCharacterOn = false;
+            BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
             //    Debug.Log("mouse : " + Input.mousePosition.normalized + ", tile : " + unitSetCameraPos.normalized);
             Vector2 vec = Input.mousePosition - unitSetCameraPos;
             
@@ -99,63 +96,65 @@ public class GameManager : Singleton<GameManager>
             List<Node> temp = new List<Node>();
             Direction direction = Direction.LEFT;
 
-            Vector3 scale = UIManager.Instance.settingCharacter.transform.localScale;
+            Vector3 scale = BattleUIManager.Instance.settingCharacter.transform.localScale;
             if (dot > 0 && cross.z < 0.5f && cross.z > -0.5f)
             {
-                temp = UIManager.Instance.GetAttackRangeNodesList(Direction.UP).ToList();
+                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.UP).ToList();
                 direction = Direction.UP;
-                UIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
+                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
             }
             if (dot < 0 && cross.z < 0.5f && cross.z > -0.5f)
             {
-                temp = UIManager.Instance.GetAttackRangeNodesList(Direction.DOWN).ToList();
+                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.DOWN).ToList();
                 direction = Direction.DOWN;
-                UIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
+                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
             }
             if (cross.z > 0 && dot < 0.5f && dot > -0.5f)
             {
-                temp = UIManager.Instance.GetAttackRangeNodesList(Direction.RIGHT).ToList();
+                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.RIGHT).ToList();
                 direction = Direction.RIGHT;
-                UIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
+                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
 
                 scale.x = -Mathf.Abs(scale.x);
-                UIManager.Instance.settingCharacter.transform.localScale = scale;
+                BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
             }
             if (cross.z < 0 && dot < 0.5f && dot > -0.5f)
             {
-                temp = UIManager.Instance.GetAttackRangeNodesList(Direction.LEFT).ToList();
+                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.LEFT).ToList();
                 direction = Direction.LEFT;
-                UIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
+                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
 
                 scale.x = Mathf.Abs(scale.x);
-                UIManager.Instance.settingCharacter.transform.localScale = scale;
+                BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
             }
-
-
 
             if (Input.GetMouseButtonDown(0))
             {
-                GameObject hero = Instantiate(HeroManager.Instance.heroPrefabs[heroesListIndex]);
+                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index].GetComponent<Minion>().minionStandbyTime =
+                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index].GetComponent<Minion>().minionWaitingTime;
+                BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
+
+                GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;
                 unitSetMode = false;
                 tileSetMode = false;
-                UIManager.Instance.settingCharacter.SetActive(false);
-                UIManager.Instance.isSettingCharacterOn = true;
+                BattleUIManager.Instance.settingCharacter.SetActive(false);
+                BattleUIManager.Instance.isSettingCharacterOn = true;
                 hero.GetComponent<Unit>().SetDirection(direction);
                 scale.x = Mathf.Abs(scale.x);
-                UIManager.Instance.settingCharacter.transform.localScale = scale;
+                BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
                 foreach (var tile in temp)
                 {
                     if (BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile) != null)
-                        hero.GetComponent<Hero>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
+                        hero.GetComponent<Minion>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
                 }
 
                 foreach (var tile in BoardManager.Instance.tilesList)
                 {
-                    tile.canUnitSetTile(tileSetMode);
+                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, false);
                 }
-                UIManager.Instance.ShowAttackRangeTiles(false);
+                BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
                 hero.SetActive(true);
             }
@@ -170,7 +169,7 @@ public class GameManager : Singleton<GameManager>
 
                 if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
                 {
-                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
                         //  tileSetMode = false;
                         unitSetMode = true;
@@ -181,13 +180,13 @@ public class GameManager : Singleton<GameManager>
 
 
 
-                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
-                        UIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
+                        BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
                     }
-                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit())
+                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
-                        UIManager.Instance.ShowAttackRangeTiles(false);
+                        BattleUIManager.Instance.ShowAttackRangeTiles(false);
                     }
                 }
 
@@ -196,24 +195,18 @@ public class GameManager : Singleton<GameManager>
             }
             else
             {
-                UIManager.Instance.ShowAttackRangeTiles(false);
+                BattleUIManager.Instance.ShowAttackRangeTiles(false);
             }
         }
-
-
-
-
-
-
     }
 
     public void CanSetTile()
     {
-            tileSetMode = true;
+        tileSetMode = true;
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {
-            tile.canUnitSetTile(tileSetMode);
+            tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, true);
         }
 
     }

@@ -8,7 +8,7 @@ public class Enemy : Unit
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
     public Image healthBar;
-
+    public float speed;
 
 
     protected override void Start()
@@ -40,7 +40,7 @@ public class Enemy : Unit
     {
         Vector3 des = moveTiles[0].transform.position;
         des.y = transform.position.y;
-        transform.position = Vector3.MoveTowards(transform.position, des, 1 * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
 
         if(Vector3.Distance(transform.position, des) < 0.01f)
         {

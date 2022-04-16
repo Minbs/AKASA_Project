@@ -12,22 +12,29 @@ public enum Direction
     DOWN
 }
 
+
+
 public class Unit : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
 
-    public string poolItemName;
 
-    public Direction direction;
+    public int atk;
 
-    public SpineAnimation spineAnimation;
+    public string poolItemName{ get; set; }
 
-    public GameObject target;
+    public Direction direction { get; set; }
 
-    public SkeletonDataAsset skeletonData;
+    public SpineAnimation spineAnimation { get; set; }
 
-    public string skinName;
+    public GameObject target { get; set; }
+
+    public SkeletonDataAsset skeletonData { get; set; }
+
+    public string skinName { get; set; }
+
+    private Color initSkeletonColor;
     protected virtual void Start()
     {
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null)
@@ -42,9 +49,11 @@ public class Unit : MonoBehaviour
         skeletonData = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         
         transform.GetChild(0).GetComponent<SkeletonAnimation>().Initialize(true);
-        //  UIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+
+        initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
+
         currentHp = maxHp;
     }
 
@@ -52,6 +61,12 @@ public class Unit : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Deal(int damage)
+    {
+        currentHp -= damage;
+        StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
     }
 
     public void SetDirection(Direction direction)
@@ -71,6 +86,23 @@ public class Unit : MonoBehaviour
         }
 
         transform.localScale = scale;
+    }
+
+    public IEnumerator ChangeUnitColor(Color color, float duration)
+    {
+        float timer = 0f;
+    
+
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
+
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(initSkeletonColor);
     }
 
 
