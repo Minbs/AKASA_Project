@@ -29,8 +29,6 @@ public class GameManager : Singleton<GameManager>
     public Camera tileCamera;
     public Camera characterCamera;
 
-
-
     Node rayNode = new Node();
 
     Ray ray;
@@ -81,7 +79,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
-        BattleUIManager.Instance.DeploymentMinion(MinionButton.Instance.index);
+
 
         if (unitSetMode)
         {
@@ -131,7 +129,11 @@ public class GameManager : Singleton<GameManager>
             }
 
             if (Input.GetMouseButtonDown(0))
-            {              
+            {
+                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index].GetComponent<Minion>().minionStandbyTime =
+                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index].GetComponent<Minion>().minionWaitingTime;
+                BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
+
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;
@@ -196,17 +198,11 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
             }
         }
-
-
-
-
-
-
     }
 
     public void CanSetTile()
     {
-            tileSetMode = true;
+        tileSetMode = true;
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {

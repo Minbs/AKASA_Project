@@ -34,37 +34,21 @@ public class BattleUIManager : Singleton<BattleUIManager>
     [SerializeField]
     int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
 
-    float time = 0, waitingTime;
+    float time = 0, phaseWaitingTime, waitingTime;
     int min, sec, currentEnemyCount = 0;
-    //int index = 0;
+    int buttonIndex;
 
     public GameObject minionBtnTranslucentBG;
     public List<GameObject> tBG = new List<GameObject>();
     List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
-    public float times;
+
+    public GameObject wBG;
+    public List<MinionButton> mBtn;
+
+    //public GameObject WBG;
+    //public List<MinionButton> mBtn;
     //
-
-    private void Awake()
-    {
-        for (int i = 0; i < maxMinionCount; i++)
-        {
-            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
-            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
-
-            if (tBG[i].activeSelf)
-                tBG[i].SetActive(false);
-        }
-        
-        for (int i = 0; i < 3; i++)
-            if (text[i].gameObject.activeSelf)
-                text[i].gameObject.SetActive(false);
-        for (int i = 0; i < 2; i++)
-            if (phase[i].gameObject.activeSelf)
-                phase[i].gameObject.SetActive(false);
-        if (wave.gameObject.activeSelf)
-            wave.gameObject.SetActive(false);
-    }
 
     void Start()
     {
@@ -76,6 +60,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         time = 0;
         costText.text = GameManager.Instance.cost.ToString();
+
+        Init();
     }
 
     void Update()
@@ -92,7 +78,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
             EnemeyCount();
 
             if (isCheck == true)
-                MinionWaitTimer(MinionButton.Instance.index);
+            {
+                Debug.Log("check");
+                MinionStanbyTimer(buttonIndex);
+            }
+
+            //if (isCheck == true)
+            //    MinionWaitTimer(GameManager.Instance.heroesListIndex);
 
             //UnitCount();
         }
@@ -186,6 +178,32 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     //
+    void Init()
+    {
+        for (int i = 0; i < wBG.transform.childCount - 1; i++)
+        {
+            mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+        }
+
+        for (int i = 0; i < maxMinionCount; i++)
+        {
+            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
+            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
+
+            if (tBG[i].activeSelf)
+                tBG[i].SetActive(false);
+        }
+
+        for (int i = 0; i < 3; i++)
+            if (text[i].gameObject.activeSelf)
+                text[i].gameObject.SetActive(false);
+        for (int i = 0; i < 2; i++)
+            if (phase[i].gameObject.activeSelf)
+                phase[i].gameObject.SetActive(false);
+        if (wave.gameObject.activeSelf)
+            wave.gameObject.SetActive(false);
+    }
+
     void BattleTime()
     {
         for (int i = 0; i < 3; i++)
@@ -245,17 +263,17 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (index == 0)
         {
             readyWaitingTime -= Time.deltaTime;
-            waitingTime = readyWaitingTime;
+            phaseWaitingTime = readyWaitingTime;
         }
         else if (index == 1)
         {
             battleWaitingTime -= Time.deltaTime;
-            waitingTime = battleWaitingTime;
+            phaseWaitingTime = battleWaitingTime;
         }
         else
             return;
 
-        if (waitingTime >= 0)
+        if (phaseWaitingTime >= 0)
             phase[index].gameObject.SetActive(true);
         else
             phase[index].gameObject.SetActive(false);
@@ -297,19 +315,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public void DeploymentMinion(int index)
     {
+        buttonIndex = index;
+
         if (GameManager.Instance.cost >= 0)
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
                 UseCost(index);
-                MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime =
-                    MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionWaitingTime;
-                isCheck = true;
-                //waitTimer(index);           
-            }
-            else if (GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
-            {
-                return;
+                if (!tBG[index].activeSelf)
+                {
+                    tBG[index].SetActive(true);
+                    mBtn[index].MBtnTBGPosition();
+                    isCheck = true;
+                }
             }
         }
         else
@@ -318,7 +336,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public float MinionStanbyTimer(int index)
+    public void MinionStanbyTimer(int index)
     {
         MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
 
@@ -330,28 +348,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 tBG[index].SetActive(false);
         }
 
-        Debug.Log(MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime);
-        return MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime;
+        wTime[index].text = MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime.ToString("F1") + "s".ToString();
     }
-
-    public void MinionWaitTimer(int index)
-    {
-        Debug.Log("check");
-
-        if (!tBG[index].activeSelf)
-        {
-            tBG[index].SetActive(true);
-        }
-
-        MinionButton.Instance.MBtnTBGPosition();
-
-        wTime[index].text = MinionStanbyTimer(index).ToString("F1") + "s".ToString();
-
-        if (MinionStanbyTimer(index) <= 0 && isCheck == true)
-        {
-            tBG[index].SetActive(false);
-            isCheck = false;
-        }
-    }
-    //
 }

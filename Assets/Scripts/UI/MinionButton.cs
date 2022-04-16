@@ -7,7 +7,7 @@ using Spine.Unity;
 using System.Linq;
 using TMPro;
 
-public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
+public class MinionButton : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
@@ -26,7 +26,10 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {     
+    {
+        if (GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
+            return;
+
         GameManager.Instance.heroesListIndex = index;
         GameManager.Instance.CanSetTile();
 
