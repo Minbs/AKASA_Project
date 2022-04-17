@@ -302,13 +302,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public void DeploymentMinion(int index)
     {
-        buttonIndex = index;
-
         if (GameManager.Instance.cost >= 0)
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
-                Debug.Log("check");
                 UseCost(index);
 
                 if (!tBG[index].activeSelf)
@@ -325,5 +322,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-
+    public void OnPauseButton()
+    {
+        if (Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
 }
