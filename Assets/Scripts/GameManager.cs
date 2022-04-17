@@ -48,6 +48,7 @@ public class GameManager : Singleton<GameManager>
 
     private Vector3 unitSetCameraPos;
 
+
     void Start()
     {
         state = State.WAIT;

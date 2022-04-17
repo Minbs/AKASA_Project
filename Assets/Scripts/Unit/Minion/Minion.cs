@@ -44,7 +44,8 @@ public class Minion : Unit
     public int currentStopCount { get; set; }
 
     public int cost;
-    public float waitingTime;
+    public float minionStandbyTime;
+    public float minionWaitingTime;
 
     public float currentSkillGauge;
     public int maxSkillGauge;
