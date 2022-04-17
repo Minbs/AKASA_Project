@@ -56,7 +56,7 @@ public class BoardManager : Singleton<BoardManager>
        if(FinalList.Count <= 0 && isTileSet)
        {
            startTile = GetTile(0, 1);
-           endTile = GetTile(17, 4);
+           endTile = GetTile(8, 1);
 
 
            PathFinding();

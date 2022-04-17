@@ -5,44 +5,81 @@ using System.Linq;
 using Spine.Unity;
 using Spine;
 using Event = Spine.Event;
+public enum MinionClass
+{
+    Buster,
+    Paladin,
+    Guardian,
+    Assassin,
+    Chaser,
+    Mage,
+    TacticalSupport
+}
+
+public enum AttackType
+{
+    Bullet,
+    Melee
+}
 
 public class Minion : Unit
 {
-    // Start is called before the first frame update
+    public MinionClass minionClass;
+
     public List<Node> attackRangeNodes = new List<Node>();
-    public List<Tile> attackRangeTiles = new List<Tile>();
+    public List<Tile> attackRangeTiles { get; set; }
 
-    private float attackTimer = 0;
-    public float attackSpeed;
+   // private float attackTimer = 0;
+    //public float attackSpeed;
 
+    public AttackType attackType;
+    public Sprite bulletSprite;
 
+    private void Awake()
+    {
+        attackRangeTiles = new List<Tile>();
+    }
 
     protected override void Start()
     {
         base.Start();
-        attackTimer = attackSpeed;
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-
+    
+//        attackTimer = attackSpeed;
     }
 
-    private void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
+    public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
         if (e.Data.Name == "shoot")
         {
-            Deal();
+            switch(attackType)
+            {
+                case AttackType.Bullet:
+                 BulletAttack();
+                    break;
+            }
         }
     }
 
-    public void Deal()
+    public void BulletAttack()
     {
-        target.GetComponent<Unit>().currentHp -= 10;
+        Vector3 pos = transform.position;
+
+        GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
+        bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
+        bulletObject.transform.position = pos;
+        bulletObject.GetComponent<Bullet>().Init(atk, target);
+
+        bulletObject.SetActive(true);
+
+      //  target.GetComponent<Unit>().currentHp -= 10;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        attackTimer += Time.deltaTime;
+    //    attackTimer += Time.deltaTime;
 
         AimTarget();
         AttackTarget();
@@ -92,12 +129,15 @@ public class Minion : Unit
 
     public void AttackTarget()
     {
+        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
+        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
+        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
 
-        if (target != null && attackTimer >= attackSpeed )
+        if (target != null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1))
         {
   
             spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
-            attackTimer = 0;
+            //attackTimer = 0;
         }
 
         if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")

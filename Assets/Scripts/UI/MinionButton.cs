@@ -30,7 +30,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
         BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
 
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = hero.skeletonData;
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = MinionManager.Instance.heroPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 

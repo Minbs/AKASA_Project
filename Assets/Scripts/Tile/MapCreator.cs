@@ -57,7 +57,6 @@ public class MapCreator
     void ReadTilesInfo()
     {
         string path = Application.dataPath;
-        Debug.Log(path);
         path += "/Resources/Datas/TileInfo_Stage1.txt";
 
         string[] lines = System.IO.File.ReadAllLines(path);

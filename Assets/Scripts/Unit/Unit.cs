@@ -12,22 +12,29 @@ public enum Direction
     DOWN
 }
 
+
+
 public class Unit : MonoBehaviour
 {
     public int maxHp;
     public int currentHp;
 
-    public string poolItemName;
 
-    public Direction direction;
+    public int atk;
 
-    public SpineAnimation spineAnimation;
+    public string poolItemName{ get; set; }
 
-    public GameObject target;
+    public Direction direction { get; set; }
 
-    public SkeletonDataAsset skeletonData;
+    public SpineAnimation spineAnimation { get; set; }
 
-    public string skinName;
+    public GameObject target { get; set; }
+
+    public SkeletonDataAsset skeletonData { get; set; }
+
+    public string skinName { get; set; }
+
+
     protected virtual void Start()
     {
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null)
@@ -42,9 +49,11 @@ public class Unit : MonoBehaviour
         skeletonData = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
         
         transform.GetChild(0).GetComponent<SkeletonAnimation>().Initialize(true);
-        //  BattleBattleBattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+
+
+
         currentHp = maxHp;
     }
 
@@ -71,6 +80,11 @@ public class Unit : MonoBehaviour
         }
 
         transform.localScale = scale;
+    }
+
+    public IEnumerator ChangeUnitColor(Color color, float time)
+    {
+        return null;
     }
 
 
