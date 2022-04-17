@@ -25,6 +25,8 @@ public class Unit : MonoBehaviour
     public int atk;
     public int def;
 
+    public float attackSpeed = 1;
+
     public string poolItemName{ get; set; }
 
     public Direction direction { get; set; }

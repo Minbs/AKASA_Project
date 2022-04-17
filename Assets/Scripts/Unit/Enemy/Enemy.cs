@@ -102,7 +102,7 @@ public class Enemy : Unit
     void AimTarget()
     {
 
-        if (target == null)
+        if (target == null && GameManager.Instance.minionsList.Count > 0)
         {
             foreach (var minion in GameManager.Instance.minionsList)
             {

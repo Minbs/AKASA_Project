@@ -88,7 +88,6 @@ public class GameManager : Singleton<GameManager>
         if (unitSetMode)
         {
             Vector3 pos = unitSetTile.transform.position;
-            Debug.Log(pos.y);
             pos += heroSetPosition;
           
             BattleUIManager.Instance.isSettingCharacterOn = false;
@@ -144,6 +143,7 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.settingCharacter.SetActive(false);
                 BattleUIManager.Instance.isSettingCharacterOn = true;
                 hero.GetComponent<Unit>().SetDirection(direction);
+              //  hero.GetComponent<Minion>().onTile.no
                 scale.x = Mathf.Abs(scale.x);
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
                 foreach (var tile in temp)

@@ -19,18 +19,6 @@ public class MinionButton : Singleton<MinionButton>, IPointerDownHandler
 
     void Start()
     {
-
-
-        /*
-        for (int i = 0; i < 12; i++)
-        {
-            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
-            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
-
-            if (tBG[i].activeSelf)
-                tBG[i].SetActive(false);
-        }
-        */
     }
 
     // Update is called once per frame

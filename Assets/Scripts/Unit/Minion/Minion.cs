@@ -24,6 +24,12 @@ public enum AttackType
     SingleHeal
 }
 
+public enum ActiveSkillType
+{
+    Auto,
+    Manual
+}
+
 public class Minion : Unit
 {
     public MinionClass minionClass;
@@ -40,20 +46,37 @@ public class Minion : Unit
     public int cost;
     public float waitingTime;
 
+    public float currentSkillGauge;
+    public int maxSkillGauge;
+
+    public Tile onTileNode { get; set; }
+
+    public List<SkillAbility> activeSkillAbilities = new List<SkillAbility>();
+    public ActiveSkillType activeSkillType;
+
     private void Awake()
     {
         attackRangeTiles = new List<Tile>();
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.minionsList.Remove(gameObject);
+        }
     }
 
     protected override void Start()
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+        currentSkillGauge = maxSkillGauge;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
-        if (e.Data.Name == "shoot")
+        if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
         {
             switch (attackType)
             {
@@ -70,6 +93,7 @@ public class Minion : Unit
         }
     }
 
+    #region BaseAttack
     public void SingleHeal()
     {
         Vector3 pos = transform.position;
@@ -95,15 +119,6 @@ public class Minion : Unit
         bulletObject.GetComponent<Bullet>().Init(atk, target);
 
         bulletObject.SetActive(true);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        AimTarget();
-        AttackTarget();
-
     }
 
     public void AimTarget()
@@ -152,11 +167,11 @@ public class Minion : Unit
         }
         else
         {
-            if(target != null)
-            if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
-            {            
-                target = null;
-            }
+            if (target != null)
+                if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
+                {
+                    target = null;
+                }
 
 
 
@@ -185,8 +200,18 @@ public class Minion : Unit
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
         float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
 
-        if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1)))
+        
+        if(transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill" 
+            && normalizedTime < 1)
         {
+            return;
+        }
+        
+        if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || ((transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" )
+            && normalizedTime >= 1)))
+        {
+            Debug.Log("attack");
+
             Vector3 scale = Vector3.one;
             if (target.transform.position.x - transform.position.x >= -0.001)
             {
@@ -199,7 +224,7 @@ public class Minion : Unit
 
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
 
-            spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
+            spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
 
 
 
@@ -210,6 +235,106 @@ public class Minion : Unit
             spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
+    #endregion
+
+    #region Skill
+    void UseSkill()
+    {
+        currentSkillGauge = 0;
+
+        if (activeSkillAbilities.Count <= 0)
+            return;
+
+        for (int i = 0; i < activeSkillAbilities.Count; i++)
+        {
+            StartCoroutine(PerformSkill(activeSkillAbilities[i]));
+        }
+
+        spineAnimation.PlayAnimation(skinName + "/skill", false, 1);
+    }
+
+    IEnumerator PerformSkill(SkillAbility skillAbility)
+    {
+        List<GameObject> targets = new List<GameObject>();
+
+        if (skillAbility.abilityType.rangeType == Ranges.Self)
+        {
+            targets.Add(gameObject);
+        }
+
+
+        if (skillAbility.abilityType.note == Notes.StatChange)
+        {
+            foreach (var t in targets)
+            {
+                StartCoroutine(ChangeStat(skillAbility, t.GetComponent<Unit>()));
+            }
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator ChangeStat(SkillAbility skillAbility, Unit target)
+    {
+        float timer = 0f;
+        float duration = skillAbility.duration;
+        float value = 0;
+
+        switch (skillAbility.statType)
+        {
+            case StatType.AttackSpeed:
+                value = skillAbility.power / 100;
+                target.attackSpeed += value;
+                break;
+        }
+
+
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+
+        switch (skillAbility.statType)
+        {
+            case StatType.AttackSpeed:
+                target.attackSpeed -= value;
+                break;
+        }
+    }
+
+    #endregion
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (currentHp <= 0)
+        {
+            StartCoroutine(Die());
+            return;
+        }
+
+        currentSkillGauge += Time.deltaTime;
+
+        if (currentSkillGauge >= maxSkillGauge)
+        {
+            currentSkillGauge = maxSkillGauge;
+
+            if (activeSkillType == ActiveSkillType.Auto)
+            {
+                UseSkill();
+                return;
+            }
+        }
+
+        AimTarget();
+        AttackTarget();
+
+    }
+
+
 
 
 
