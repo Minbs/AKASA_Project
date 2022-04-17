@@ -23,6 +23,11 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     {
         if(MinionManager.Instance.heroQueue.Count != 0)
         hero = MinionManager.Instance.heroQueue[index];
+
+        if (BattleUIManager.Instance.isCheck == true)
+        {
+            MinionStanbyTimer(index);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -47,6 +52,20 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     public void MBtnTBGPosition()
     {
         BattleUIManager.Instance.tBG[index].transform.position = transform.position;
+    }
+
+    public void MinionStanbyTimer(int index)
+    {
+        MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
+
+        if (MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime <= 0)
+        {
+            BattleUIManager.Instance.isCheck = false;
+            if (BattleUIManager.Instance.tBG[index].activeSelf)
+                BattleUIManager.Instance.tBG[index].SetActive(false);
+        }
+
+        BattleUIManager.Instance.wTime[index].text = MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime.ToString("F1") + "s".ToString();
     }
 }
 

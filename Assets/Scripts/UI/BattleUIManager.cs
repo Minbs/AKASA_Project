@@ -40,15 +40,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public GameObject minionBtnTranslucentBG;
     public List<GameObject> tBG = new List<GameObject>();
-    List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
-
-    //public GameObject WBG;
-    //public List<MinionButton> mBtn;
-    //
 
     void Start()
     {
@@ -76,15 +72,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
             BattleTime();
             RegenCost();
             EnemeyCount();
-
-            if (isCheck == true)
-            {
-                Debug.Log("check");
-                MinionStanbyTimer(buttonIndex);
-            }
-
-            //if (isCheck == true)
-            //    MinionWaitTimer(GameManager.Instance.heroesListIndex);
 
             //UnitCount();
         }
@@ -321,7 +308,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
+                Debug.Log("check");
                 UseCost(index);
+
                 if (!tBG[index].activeSelf)
                 {
                     tBG[index].SetActive(true);
@@ -336,18 +325,5 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void MinionStanbyTimer(int index)
-    {
-        MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
 
-        if (MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime <= 0)
-        {
-            isCheck = false;
-
-            if (tBG[index].activeSelf)
-                tBG[index].SetActive(false);
-        }
-
-        wTime[index].text = MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime.ToString("F1") + "s".ToString();
-    }
 }

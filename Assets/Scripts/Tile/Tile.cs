@@ -134,10 +134,10 @@ public class Tile : MonoBehaviour
         node.column = int.Parse(s[2]);
         height = int.Parse(s[3]);
 
-        foreach(var a in s[4])
-        {
-            Debug.Log(a);
-        }
+        //foreach(var a in s[4])
+        //{
+        //    //Debug.Log(a);
+        //}
 
         isBlock = (s[4] == "BLOCK") ? true : false;
     }
