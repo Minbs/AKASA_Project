@@ -6,6 +6,13 @@ using Spine.Unity;
 using System.Linq;
 using TMPro;
 
+public enum Phase
+{
+    Ready,  //전투 대비
+    Wave1,  //전투 시작(웨이브 1)
+    Wave2   //전투 시작(웨이브 2)
+}
+
 public class BattleUIManager : Singleton<BattleUIManager>
 {
     public List<Node> attackRangeNodes = new List<Node>();
@@ -24,6 +31,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     const int maxMinionCount = 12;
     List<GameObject> enemiesList = new List<GameObject>();
 
+    ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax
     public TextMeshProUGUI[] text;
     public Image[] phase;
     public TextMeshProUGUI wave;
@@ -50,12 +58,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         ObjectPool.Instance.CreatePoolObject("AttackRangeTile", attackRangeTileImage, 20, worldCanvas.transform);
 
-        text[3].text = currentEnemyCount.ToString();
-        text[4].text = maxEnemyCount.ToString();
-        enemiesList = GameManager.Instance.enemiesList;
 
-        time = 0;
-        costText.text = GameManager.Instance.cost.ToString();
+ 
 
         Init();
     }
@@ -66,19 +70,26 @@ public class BattleUIManager : Singleton<BattleUIManager>
             SetSettingCharacterMousePosition();
 
         //
+        if (GameManager.Instance.state == State.WAIT)
+        {
+            if (readyWaitingTime >= 0)
+                Active((int)Phase.Ready);
+            WaitTime();
+        }
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
-            Active(1);
+            if (battleWaitingTime >= 0)
+                Active((int)Phase.Wave1);
+            
             BattleTime();
             RegenCost();
             EnemeyCount();
 
             //UnitCount();
         }
-        else if (GameManager.Instance.state == State.WAIT)
+        else 
         {
-            Active(0);
-            WaitTime();
+
         }
         //
     }
@@ -184,11 +195,17 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf)
                 text[i].gameObject.SetActive(false);
+        text[3].text = currentEnemyCount.ToString();
+        text[4].text = maxEnemyCount.ToString();
         for (int i = 0; i < 2; i++)
             if (phase[i].gameObject.activeSelf)
                 phase[i].gameObject.SetActive(false);
         if (wave.gameObject.activeSelf)
             wave.gameObject.SetActive(false);
+
+        time = 0;
+        enemiesList = GameManager.Instance.enemiesList;
+        costText.text = GameManager.Instance.cost.ToString();
     }
 
     void BattleTime()
@@ -258,12 +275,18 @@ public class BattleUIManager : Singleton<BattleUIManager>
             phaseWaitingTime = battleWaitingTime;
         }
         else
+        {
             return;
+        }
 
         if (phaseWaitingTime >= 0)
+        {
             phase[index].gameObject.SetActive(true);
-        else
+        }
+        else if (phaseWaitingTime < 0)
+        {
             phase[index].gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -312,7 +335,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 {
                     tBG[index].SetActive(true);
                     mBtn[index].MBtnTBGPosition();
-                    isCheck = true;
+                    //isCheck = true;
                 }
             }
         }
