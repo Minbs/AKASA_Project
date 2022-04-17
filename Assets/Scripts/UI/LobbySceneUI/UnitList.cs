@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using System.IO;
 // 본 클래스는 캐릭터를 추가, 삭제, 정렬하는 클래스임을 명시. 
 public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private bool SelectUnit = false;
+    private string UnitListFile = "myUnits";    // 불러올 파일 이름
+    private List<string> myUnits = new List<string>();
     private GameObject Dummy;
     private Vector2 MousePos;
     private RaycastHit hit;
     private GraphicRaycaster gr;
     [SerializeField] private List<Unitportrait> MinionList;
     [SerializeField] private Unitportrait Prefab;
+    [SerializeField] private List<Unitportrait> temp;
     [SerializeField] public List<Sprite> Minions_Illust;
     [SerializeField] public List<Sprite> Minions_Standing;
     Canvas myCanves;
@@ -23,7 +26,37 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         myCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         myCanves = GameObject.Find("Canvas").GetComponent<Canvas>();
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
+
+        ListSave();
+        //DontDestroyOnLoad(this.gameObject);
+        //ListLoad();
         //LoadList();
+    }
+    public void ListLoad()
+    {
+
+    }
+
+    public void ListSave()
+    {
+        string path;
+        string filename;
+        string json;
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            filename = MinionList[i].pro_Minion_e_Name;
+            path = Application.dataPath + "/" + filename + ".Json";
+
+            json = JsonUtility.ToJson(MinionList[i]);
+
+            File.WriteAllText(path, json);
+            Debug.Log(filename + "생성");
+            myUnits.Add(filename);
+        }
+        path = Application.dataPath + "/" + UnitListFile + ".Json";
+        string[] a = myUnits.ToArray();
+        json = JsonUtility.ToJson(a);
+        File.WriteAllText(path, json);
     }
 
     // 리스트 랜덤 불러오기
@@ -93,6 +126,10 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
             if (EditList.Instance.ListCheck(Dummy.GetComponent<Unitportrait>()))
             {
                 Dummy.GetComponent<Unitportrait>().GetData(ref up);
+                //EditList.Instance.e_NameList.Add(up.pro_Minion_e_Name);
+                Unitportrait dummy = up;
+                //up.GetData(ref dummy);
+                EditList.Instance.objList.Add(dummy);
             }
             else
             {
@@ -209,6 +246,90 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         }
     }
 
+
+    [SerializeField] private bool SortType;         // true == 오름차순, false == 내림차순
+    public void SortReverse()
+    {
+        if (SortType)
+            MinionList.Reverse();
+    }
+    // 정렬 Sort
+    public void SortingName()       // 이름으로 정렬
+    {
+        try
+        {
+            MinionList.Sort((MinionA, MinionB) => MinionA.pro_Minion_e_Name.CompareTo(MinionB.pro_Minion_e_Name));   // 이름 순?
+            SortReverse();
+        }
+        catch
+        {
+            Debug.Log("Sorting Error : Name");
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Unitportrait g = Instantiate<Unitportrait>(MinionList[i]);
+
+            temp.Add(g);
+
+            g.transform.parent = this.transform;
+
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Destroy(MinionList[i].gameObject);
+        }
+
+
+        MinionList = temp;
+
+        temp = new List<Unitportrait>();
+
+    }
+
+    public void SortingLv()         // 레벨로 정렬
+    {
+        try
+        {
+            MinionList.Sort((MinionA, MinionB) => MinionA.pro_MinionLv.CompareTo(MinionB.pro_MinionLv));
+            SortReverse();
+        }
+        catch
+        {
+            Debug.Log("Sorting Error : Lv");
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Unitportrait g = Instantiate<Unitportrait>(MinionList[i]);
+
+            temp.Add(g);
+
+            g.transform.parent = this.transform;
+
+        }
+
+        for (int i = 0; i < MinionList.Count; i++)
+        {
+            Destroy(MinionList[i].gameObject);
+        }
+
+
+        MinionList = temp;
+
+        temp = new List<Unitportrait>();
+    }
+
+    public void SortingRank()       // 등급으로 정렬
+    {
+
+    }
+
+    public void SortingGetTime()    // 입수일로 정렬
+    {
+
+    }
 
 
 }

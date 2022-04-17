@@ -11,6 +11,13 @@ using TMPro;
 public class LobbyUIManager : Singleton<LobbyUIManager>
 {
     [Space(10f)]
+    [Header("title")]
+    public TextMeshProUGUI BlinkTextUI;
+    public Image TitleImage;
+    public List<Sprite> TitleSprite;
+    public float BG_Change_Time;
+
+    [Space(10f)]
     [Header("잠깐 보여주는 Panel")]
     public GameObject showPanel;
     bool m_bPanelOn = false;
@@ -30,7 +37,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     [Header("Stage_Info")]
     public GameObject StageInfo_Screen;
     public TextMeshProUGUI StageName_Text;
-
+    public GameObject EditPanel;
+    public TextMeshProUGUI BestLvText;
 
 
     //public GameObject MinionStand;
@@ -39,12 +47,92 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     private void Start()
     {
+        //DontDestroyOnLoad(gameObject);
+        if (BlinkTextUI != null && TitleImage != null)
+        {
+            BG_Change_Time = 10f;
+            StartCoroutine(BlinkText());
+            StartCoroutine(ChangeBG());
+        }
+
         if (SamplePanel != null)
             SamplePanel.SetActive(false);
         if (StageInfo_Screen != null)
-            StageInfo_Screen.SetActive(false);  
+            StageInfo_Screen.SetActive(false);
+        if (EditPanel != null)
+            EditPanel.SetActive(false); 
 
         //btn.onClick.AddListener(SaveConfirm);     // 버튼 적용 법
+    }
+
+    #region Titlefunc
+
+    IEnumerator ChangeBG()
+    {
+        int BgCount = 0;
+        float bgAlpha = TitleImage.color.a;
+        while (true)
+        {
+            BgCount = Random.Range(0, TitleSprite.Count);
+            for (; bgAlpha > 0.0f; bgAlpha -= .01f)
+            {
+                BGAlphaChange(bgAlpha);
+                yield return new WaitForSeconds(0.01f);
+            }
+            TitleImage.sprite = TitleSprite[BgCount];
+
+            for (; bgAlpha < 1.0f; bgAlpha += .01f)
+            {
+                BGAlphaChange(bgAlpha);
+                yield return new WaitForSeconds(.01f);
+            }
+            yield return new WaitForSeconds(BG_Change_Time);
+        }
+    }
+
+
+    IEnumerator BlinkText()
+    {
+        float TextAlpha = BlinkTextUI.color.a;
+
+        while (BlinkTextUI == true)
+        {
+            for (; TextAlpha > 0.0f; TextAlpha -= .1f)
+            {
+                ColorAlphaChange(TextAlpha);
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            for (; TextAlpha < 1.0f; TextAlpha += .1f)
+            {
+                ColorAlphaChange(TextAlpha);
+                yield return new WaitForSeconds(.1f);
+            }
+        }
+    }
+
+    void ColorAlphaChange(float TextAlpha)
+    {
+        Color c_Dummy = BlinkTextUI.color;
+        c_Dummy.a = (float)TextAlpha;
+        BlinkTextUI.color = c_Dummy;
+    }
+
+    void BGAlphaChange(float Alpha )
+    {
+        Color c_Dummy = TitleImage.color;
+        c_Dummy.a = (float)Alpha;
+        TitleImage.color = c_Dummy;
+    }
+
+
+    #endregion
+
+
+    public void LoadScene(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
+        Debug.Log(SceneName + "씬으로 이동");
     }
 
     private void Update()
@@ -112,13 +200,15 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     {
         SamplePanel.SetActive(true);
         PanelEdit("Save", "Are you sure you want to save?");
+
+
         ConfirmBtn.onClick.AddListener(SaveConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
     }
     public void SaveConfirm()
     {
         Debug.Log("저장!");
-        EditList.Instance.Save();
+        EditList.Instance.SaveJsonFile();
         PanelCancel();
     }
 
@@ -135,10 +225,18 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         PanelCancel();
         LoadMainScene();
     }
-
-
+    public void ShowPanel(GameObject obj)
+    {
+        obj.SetActive(true);
+    }
+    public void HidePanel(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
     public void PanelCancel()
     {
+        ConfirmBtn.onClick.RemoveAllListeners();
+        cancelBtn.onClick.RemoveAllListeners();
         SamplePanel.SetActive(false);
     }
 
@@ -166,15 +264,16 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         m_bPanelOn = false;
     }
 
-
-
-    public void ShowStageInfo(string stageName)
+    public void ShowStageInfo(GameObject obj)
     {
         StageInfo_Screen.SetActive(true);
-        StageName_Text.text = stageName;
+        StageManager.Instance.SetTargetStage(obj);
+        StageName_Text.text = obj.GetComponent<StageInfo>().pro_stagename;
+        BestLvText.text = "Best Lv: " + obj.GetComponent<StageInfo>().pro_BestLv.ToString();
     }
     public void HideStageInfo()
     {
+        StageManager.Instance.PopTargetStage();
         StageInfo_Screen.SetActive(false);
     }
 

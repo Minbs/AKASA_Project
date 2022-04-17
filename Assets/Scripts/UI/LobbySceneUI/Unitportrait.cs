@@ -108,7 +108,7 @@ public class Unitportrait : MonoBehaviour
     // 임시로 값을 설정
     private void Start()
     {
-        
+        //DontDestroyOnLoad(gameObject);
 
     }
 
@@ -222,6 +222,7 @@ public class Unitportrait : MonoBehaviour
     {
         //Unitportrait p = new Unitportrait();
         p.pro_Atk = pro_Atk;
+        p.pro_Minion_num = pro_Minion_num;
         //p.pro_AtSpeed = pro_AtSpeed;
         //p.pro_Critical = pro_Critical;
         p.pro_Cost = pro_Cost;
