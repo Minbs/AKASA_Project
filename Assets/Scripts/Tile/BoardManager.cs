@@ -56,8 +56,9 @@ public class BoardManager : Singleton<BoardManager>
        if(FinalList.Count <= 0 && isTileSet)
        {
            startTile = GetTile(0, 1);
+
             startTile.ImpossibleUnitSetTile = true;
-           endTile = GetTile(8, 3);
+            endTile = GetTile(8, 1);
             endTile.ImpossibleUnitSetTile = true;
 
             PathFinding();

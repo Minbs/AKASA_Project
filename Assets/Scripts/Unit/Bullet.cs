@@ -47,7 +47,11 @@ public class Bullet : MonoBehaviour
         {
             ObjectPool.Instance.PushToPool("Bullet", gameObject);
             target.GetComponent<Unit>().Deal(damage);
-            EffectManager.Instance.InstantiateAttackEffect(transform.position);
+
+            if(damage > 0)
+            EffectManager.Instance.InstantiateAttackEffect("hit", transform.position);
+            else
+                EffectManager.Instance.InstantiateAttackEffect("heal", transform.position);
         }
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using System.Linq;
 
 public class EnemySpawner : MonoBehaviour
 {
-	struct EnemySpawnData
+
+	public struct EnemySpawnData
     {
 		public string name;
 		public string start;
@@ -41,6 +43,8 @@ public class EnemySpawner : MonoBehaviour
 
 			enemySpawnDatas.Add(enemyData);
 		}
+
+		enemySpawnDatas.OrderBy(e => e.time);
 	}
 
     // Start is called before the first frame update
@@ -57,7 +61,6 @@ public class EnemySpawner : MonoBehaviour
 
 	public IEnumerator Spawn()
     {
-
 		if (GameManager.Instance.state == State.BATTLE)
 		{
 			while (enemySpawnDatas.Count > 0)
@@ -71,7 +74,7 @@ public class EnemySpawner : MonoBehaviour
 					GameObject enemy = ObjectPool.Instance.PopFromPool("Enemy1");
 					GameManager.Instance.enemiesList.Add(enemy);
 					Vector3 pos = BoardManager.Instance.startTile.transform.position;
-					pos.y = 0.2f;
+					//pos.y = 0.2f;
 					enemy.transform.position = pos;
 					enemy.SetActive(true);
 					enemySpawnDatas.RemoveAt(0);

@@ -13,13 +13,21 @@ public enum MinionClass
     Assassin,
     Chaser,
     Mage,
+    Rescue,
     TacticalSupport
 }
 
 public enum AttackType
 {
     Bullet,
-    Melee
+    Melee,
+    SingleHeal
+}
+
+public enum ActiveSkillType
+{
+    Auto,
+    Manual
 }
 
 public class Minion : Unit
@@ -32,37 +40,69 @@ public class Minion : Unit
     public AttackType attackType;
     public Sprite bulletSprite;
 
+    public int stopCount; // ÀúÁö ¼ö
+    public int currentStopCount { get; set; }
+
     public int cost;
-    public float minionWaitingTime;
-    public float minionStandbyTime;
+    public float waitingTime;
+
+    public float currentSkillGauge;
+    public int maxSkillGauge;
+
+    public Tile onTileNode { get; set; }
+
+    public List<SkillAbility> activeSkillAbilities = new List<SkillAbility>();
+    public ActiveSkillType activeSkillType;
 
     private void Awake()
     {
         attackRangeTiles = new List<Tile>();
     }
 
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.minionsList.Remove(gameObject);
+        }
+    }
+
     protected override void Start()
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-
-        //        attackTimer = attackSpeed;
+        currentSkillGauge = maxSkillGauge;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
-        if (e.Data.Name == "shoot")
+        if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
         {
-            switch(attackType)
+            switch (attackType)
             {
                 case AttackType.Bullet:
-                 BulletAttack();
+                    BulletAttack();
                     break;
                 case AttackType.Melee:
                     MeleeAttack();
                     break;
+                case AttackType.SingleHeal:
+                    SingleHeal();
+                    break;
             }
         }
+    }
+
+    #region BaseAttack
+    public void SingleHeal()
+    {
+        Vector3 pos = transform.position;
+        GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
+        bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
+        bulletObject.transform.position = pos;
+        bulletObject.GetComponent<Bullet>().Init(-atk, target);
+
+        bulletObject.SetActive(true);
     }
 
     public void MeleeAttack()
@@ -73,7 +113,6 @@ public class Minion : Unit
     public void BulletAttack()
     {
         Vector3 pos = transform.position;
-
         GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
         bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
         bulletObject.transform.position = pos;
@@ -82,56 +121,77 @@ public class Minion : Unit
         bulletObject.SetActive(true);
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-    //    attackTimer += Time.deltaTime;
-
-        AimTarget();
-        AttackTarget();
-    }
-
     public void AimTarget()
     {
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
         float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
 
+        var result = GameManager.Instance.minionsList.OrderBy(minion => minion.GetComponent<Unit>().currentHp);
+        GameManager.Instance.minionsList = result.ToList();
 
-
-
-        if (target == null)
+        if (minionClass != MinionClass.Rescue)
         {
-            foreach (var enemy in GameManager.Instance.enemiesList)
-            {
-                foreach (var t in attackRangeTiles)
-                {
 
-                    if(t.onTile(enemy.transform))
+            if (target == null)
+            {
+                foreach (var enemy in GameManager.Instance.enemiesList)
+                {
+                    foreach (var t in attackRangeTiles)
                     {
-                        target = enemy;
-                        return;
+
+                        if ((t.onTile(enemy.transform) || enemy.GetComponent<Unit>().target == gameObject) && enemy.GetComponent<Unit>().currentHp > 0)
+                        {
+                            target = enemy;
+
+                            return;
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            bool isOut = true;
+            else
+            {
+                bool isOut = true;
                 foreach (var t in attackRangeTiles)
                 {
 
                     if (t.onTile(target.transform))
                     {
-                    isOut = false;
+                        isOut = false;
                     }
                 }
 
-            if (isOut && normalizedTime >= 1)
-                target = null;
+                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 && target.GetComponent<Unit>().target != gameObject)
+                    target = null;
             }
-        
+        }
+        else
+        {
+            if (target != null)
+                if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
+                {
+                    target = null;
+                }
+
+
+
+            foreach (var minion in GameManager.Instance.minionsList)
+            {
+                foreach (var t in attackRangeTiles)
+                {
+
+                    if (t.onTile(minion.transform) && minion.GetComponent<Unit>().currentHp < minion.GetComponent<Unit>().maxHp)
+                    {
+                        target = minion;
+
+                        return;
+                    }
+                }
+            }
+
+
+        }
+
     }
 
     public void AttackTarget()
@@ -140,9 +200,34 @@ public class Minion : Unit
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
         float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
 
-        if (target != null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1))
+        
+        if(transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill" 
+            && normalizedTime < 1)
         {
-            spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
+            return;
+        }
+        
+        if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || ((transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" )
+            && normalizedTime >= 1)))
+        {
+            Debug.Log("attack");
+
+            Vector3 scale = Vector3.one;
+            if (target.transform.position.x - transform.position.x >= -0.001)
+            {
+                scale.x = 1;
+            }
+            else
+            {
+                scale.x = -1;
+            }
+
+            transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
+
+            spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
+
+
+
         }
 
         if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")
@@ -150,7 +235,107 @@ public class Minion : Unit
             spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
+    #endregion
+
+    #region Skill
+    void UseSkill()
+    {
+        currentSkillGauge = 0;
+
+        if (activeSkillAbilities.Count <= 0)
+            return;
+
+        for (int i = 0; i < activeSkillAbilities.Count; i++)
+        {
+            StartCoroutine(PerformSkill(activeSkillAbilities[i]));
+        }
+
+        spineAnimation.PlayAnimation(skinName + "/skill", false, 1);
+    }
+
+    IEnumerator PerformSkill(SkillAbility skillAbility)
+    {
+        List<GameObject> targets = new List<GameObject>();
+
+        if (skillAbility.abilityType.rangeType == Ranges.Self)
+        {
+            targets.Add(gameObject);
+        }
 
 
-  
+        if (skillAbility.abilityType.note == Notes.StatChange)
+        {
+            foreach (var t in targets)
+            {
+                StartCoroutine(ChangeStat(skillAbility, t.GetComponent<Unit>()));
+            }
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator ChangeStat(SkillAbility skillAbility, Unit target)
+    {
+        float timer = 0f;
+        float duration = skillAbility.duration;
+        float value = 0;
+
+        switch (skillAbility.statType)
+        {
+            case StatType.AttackSpeed:
+                value = skillAbility.power / 100;
+                target.attackSpeed += value;
+                break;
+        }
+
+
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+
+        switch (skillAbility.statType)
+        {
+            case StatType.AttackSpeed:
+                target.attackSpeed -= value;
+                break;
+        }
+    }
+
+    #endregion
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (currentHp <= 0)
+        {
+            StartCoroutine(Die());
+            return;
+        }
+
+        currentSkillGauge += Time.deltaTime;
+
+        if (currentSkillGauge >= maxSkillGauge)
+        {
+            currentSkillGauge = maxSkillGauge;
+
+            if (activeSkillType == ActiveSkillType.Auto)
+            {
+                UseSkill();
+                return;
+            }
+        }
+
+        AimTarget();
+        AttackTarget();
+
+    }
+
+
+
+
+
 }

@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
     public Vector3 heroSetPosition;
 
     public List<GameObject> enemiesList = new List<GameObject>();
+    public List<GameObject> minionsList = new List<GameObject>();
 
     public int heroesListIndex = 0;
 
@@ -85,6 +86,7 @@ public class GameManager : Singleton<GameManager>
         {
             Vector3 pos = unitSetTile.transform.position;
             pos += heroSetPosition;
+          
             BattleUIManager.Instance.isSettingCharacterOn = false;
             BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
             //    Debug.Log("mouse : " + Input.mousePosition.normalized + ", tile : " + unitSetCameraPos.normalized);
@@ -142,6 +144,7 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.settingCharacter.SetActive(false);
                 BattleUIManager.Instance.isSettingCharacterOn = true;
                 hero.GetComponent<Unit>().SetDirection(direction);
+              //  hero.GetComponent<Minion>().onTile.no
                 scale.x = Mathf.Abs(scale.x);
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
                 foreach (var tile in temp)
@@ -156,6 +159,7 @@ public class GameManager : Singleton<GameManager>
                 }
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
+                minionsList.Add(hero);
                 hero.SetActive(true);
             }
           

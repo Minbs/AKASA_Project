@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EffectManager : Singleton<EffectManager>
 {
-    public GameObject attackEffect;
+    public List<GameObject> effectsList;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +17,21 @@ public class EffectManager : Singleton<EffectManager>
         
     }
 
-    public void InstantiateAttackEffect(Vector3 pos)
+    public void InstantiateAttackEffect(string effectName,Vector3 pos)
     {
+        GameObject attackEffect = null;
+        foreach (var e in effectsList)
+        {
+            if(e.name == effectName)
+            {
+                attackEffect = e;
+                break;
+            }
+        }
+
+        
         GameObject effect = Instantiate(attackEffect);
         effect.transform.position = pos;
-        Destroy(effect, 5);
+        Destroy(effect, 3);
     }
 }

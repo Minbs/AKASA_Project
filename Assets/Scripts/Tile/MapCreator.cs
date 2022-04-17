@@ -56,21 +56,23 @@ public class MapCreator
 
     void ReadTilesInfo()
     {
-        string path = Application.dataPath;
-        path += "/Resources/Datas/TileInfo_Stage1.txt";
+        string textFile = Resources.Load<TextAsset>("Datas/TileInfo_Stage1") .text;
+        //   StringReader stringReader = new StringReader(textFile.text);
 
-        string[] lines = System.IO.File.ReadAllLines(path);
-
-        if (lines.Length <= 0)
-            return;
+        //    Debug.Log(stringReader.ReadToEnd());
+        StringReader stringReader = new StringReader(textFile);
 
         int tileCount = 0;
-
-        for(int i = 0; i < lines.Length; i++)
+        while (stringReader != null)
         {
-            string[] s = lines[i].Split(' ');
+            string line = stringReader.ReadLine();
 
-            switch(s[0])
+            if (line == null)
+                break;
+
+            string[] s = line.Split(' ');
+
+            switch (s[0])
             {
                 case "Size":
                     BoardManager.Instance.sizeX = int.Parse(s[1]);
@@ -86,6 +88,10 @@ public class MapCreator
                     break;
             }
         }
+
+        // Close Text File
+        stringReader.Close();
+
     }
 
 

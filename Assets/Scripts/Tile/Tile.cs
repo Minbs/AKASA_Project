@@ -57,7 +57,7 @@ public class Tile : MonoBehaviour
                 else
                     return false;
             }
-            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport)
+            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport || minionClass == MinionClass.Rescue)
             {
                 if (height != 0)
                     return true;
@@ -133,6 +133,12 @@ public class Tile : MonoBehaviour
         node.row = int.Parse(s[1]);
         node.column = int.Parse(s[2]);
         height = int.Parse(s[3]);
+
+        foreach(var a in s[4])
+        {
+            Debug.Log(a);
+        }
+
         isBlock = (s[4] == "BLOCK") ? true : false;
     }
 }
