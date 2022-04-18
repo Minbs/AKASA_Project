@@ -25,6 +25,12 @@ public enum AttackType
     HitScan
 }
 
+public enum SkillType
+{
+    Buff,
+    EnhanceNextAttack
+}
+
 public enum ActiveSkillType
 {
     Auto,
@@ -58,6 +64,8 @@ public class Minion : Unit
 
     private float healAmountRate = 100;
 
+    public bool isNextBaseAttackEnhanced = false;
+
     private void Awake()
     {
         attackRangeTiles = new List<Tile>();
@@ -81,6 +89,22 @@ public class Minion : Unit
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
         if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
+        {
+            switch (attackType)
+            {
+                case AttackType.Bullet:
+                    BulletAttack();
+                    break;
+                case AttackType.Melee:
+                    MeleeAttack();
+                    break;
+                case AttackType.SingleHeal:
+                    SingleHeal();
+                    break;
+            }
+        }
+
+        if (e.Data.Name == "" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
         {
             switch (attackType)
             {
@@ -227,7 +251,17 @@ public class Minion : Unit
 
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
 
-            spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
+            if(isNextBaseAttackEnhanced)
+            {
+                isNextBaseAttackEnhanced = false;
+                spineAnimation.PlayAnimation(skinName + "/skill", false, 1 * attackSpeed);
+            }
+            else
+            {
+                spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
+            }
+
+        
 
 
 
@@ -274,7 +308,39 @@ public class Minion : Unit
             }
         }
 
+        if (skillAbility.abilityType.note == Notes.EnhanceNextBaseAttack)
+        {
+            foreach (var t in targets)
+            {
+                StartCoroutine(EnhanceNextAttack(skillAbility));
+            
+            }
+        }
+
         yield return null;
+    }
+
+    public IEnumerator EnhanceNextAttack(SkillAbility skillAbility)
+    {
+        int initAtk = atk;
+
+        if (skillAbility.statType == StatType.ATK)
+        {
+            isNextBaseAttackEnhanced = true;
+            atk *= (int)(skillAbility.power / 100);
+        }
+
+
+        while (isNextBaseAttackEnhanced)
+        {
+            yield return null;
+        }
+
+        if (skillAbility.statType == StatType.ATK)
+        {
+            isNextBaseAttackEnhanced = true;
+            atk = initAtk;
+        }
     }
 
     public IEnumerator ChangeStat(SkillAbility skillAbility, Unit target)
@@ -293,6 +359,7 @@ public class Minion : Unit
                 value = skillAbility.power;
                 target.GetComponent<Minion>().healAmountRate = value;
                 break;
+           
         }
 
 
