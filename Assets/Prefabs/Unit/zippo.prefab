@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolItemName: 
   maxHp: 100
   currentHp: 0
   healthBar: {fileID: 8795824034042409041}
@@ -185,14 +186,24 @@ MonoBehaviour:
     column: 0
   attackType: 1
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
-  stopCount: 0
+  stopCount: 2
   cost: 10
   minionStandbyTime: 0
   minionWaitingTime: 70
   currentSkillGauge: 0
-  maxSkillGauge: 205
-  activeSkillAbilities: []
+  maxSkillGauge: 5
+  activeSkillAbilities:
+  - abilityType: {fileID: 11400000, guid: 6f19fb0c08553de44971f58971280327, type: 2}
+    power: 160
+    duration: 0
+    statType: 1
+    rangeNodes: []
+    excludeSelf: 0
   activeSkillType: 0
+  skillType: 1
+  healAmountRate: 100
+  isNextBaseAttackEnhanced: 0
+  isEnhanced: 0
 --- !u!1001 &840925948386307030
 PrefabInstance:
   m_ObjectHideFlags: 0

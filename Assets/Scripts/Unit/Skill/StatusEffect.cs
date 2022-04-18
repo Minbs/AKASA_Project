@@ -9,7 +9,8 @@ public class StatusEffect
 	public enum StatusEffects //상태이상
     {
 		None,
-		Poison
+		Poison,
+		Heal
     }
 
 	public StatusEffects statusEffect;

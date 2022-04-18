@@ -28,7 +28,7 @@ public class Unit : MonoBehaviour
 
     public float attackSpeed = 1;
 
-
+    private bool isPoisoned = false;
 
     public Direction direction { get; set; }
 
@@ -62,6 +62,40 @@ public class Unit : MonoBehaviour
 
         currentHp = maxHp;
         UpdateHealthbar();
+    }
+
+    public void Poison(SkillAbility skillAbility, int damage, float duration)
+    {
+        if(isPoisoned == false)
+        StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
+    }
+    public IEnumerator PoisionCorutine(SkillAbility skillAbility, int damage, float duration)
+    {
+        float timer = 0f;
+
+        float damageTimer = 0;
+        float damageDelay = 1;
+
+        isPoisoned = true;
+
+
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            Debug.Log(damageTimer);
+            damageTimer += Time.deltaTime;
+            if (damageTimer >= damageDelay)
+            {
+                damageTimer = 0;
+                currentHp -= (int)(damage);
+                UpdateHealthbar();
+            }
+
+            yield return null;
+        }
+
+        isPoisoned = false;
     }
 
 
