@@ -65,6 +65,11 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
+            if (waitTimer < 0 && state == State.BATTLE)
+            {
+                return;
+            }
+
             waitTimer -= Time.deltaTime;
         }
 

@@ -40,29 +40,23 @@ public class Tile : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public bool IsCanSetUnit(MinionClass minionClass)
     {
-
         if (!isBlock && !isOnUnit && !ImpossibleUnitSetTile)
         {
-            if (minionClass == MinionClass.Buster || minionClass == MinionClass.Paladin || minionClass == MinionClass.Guardian || minionClass == MinionClass.Assassin)
+            if (minionClass == MinionClass.Buster ||
+                minionClass == MinionClass.Paladin ||
+                minionClass == MinionClass.Guardian ||
+                minionClass == MinionClass.Assassin)
             {
-                if (height == 0)
-                    return true;
-                else
-                    return false;
+                return (height == 0);
             }
-            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport || minionClass == MinionClass.Rescue)
+            else if (minionClass == MinionClass.Chaser||
+                minionClass == MinionClass.Mage ||
+                minionClass == MinionClass.TacticalSupport ||
+                minionClass == MinionClass.Rescue)
             {
-                if (height != 0)
-                    return true;
-                else
-                    return false;
+                return (height != 0);
             }
             else
             {
