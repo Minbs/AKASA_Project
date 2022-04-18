@@ -57,7 +57,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> tBG = new List<GameObject>();
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
-    bool isSoundCheck = false;
+    bool isSoundCheck = true;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
@@ -85,6 +85,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
+            if (isSoundCheck == true)
+            {
+                audioSource.Play();
+                isSoundCheck = false;
+            }
+
             if (WaitingTime[(int)Phase.Start] >= 0)
             {
                 Active((int)Phase.Start);
