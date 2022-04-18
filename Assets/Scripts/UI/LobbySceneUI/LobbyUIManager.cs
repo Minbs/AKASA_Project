@@ -193,7 +193,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void ClearEditList()
     {
         SamplePanel.SetActive(true);
-        PanelEdit("Reset", "Are you sure you want to reset it?");
+        PanelEdit("초기화", "정말 초기화하시겠습니까?");
         ConfirmBtn.onClick.AddListener(ClearConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
     }
@@ -213,7 +213,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void SaveEditList()
     {
         SamplePanel.SetActive(true);
-        PanelEdit("Save", "Are you sure you want to save?");
+        PanelEdit("저장", "정말로 저장하시겠습니까?");
 
 
         ConfirmBtn.onClick.AddListener(SaveConfirm);
@@ -229,7 +229,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void ExitContainer()
     {
         SamplePanel.SetActive(true);
-        PanelEdit("Exit", "Are you sure you want to get out of UnitContainer?");
+        PanelEdit("나가기", "정말로 나가시겠습니까?");
         ConfirmBtn.onClick.AddListener(ExitConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
     }
