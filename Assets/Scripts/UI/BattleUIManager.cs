@@ -57,9 +57,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> tBG = new List<GameObject>();
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
+    bool isSoundCheck = false;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
+
+    AudioSource audioSource;
 
     void Start()
     {
@@ -83,7 +86,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
             if (WaitingTime[(int)Phase.Start] >= 0)
+            {
                 Active((int)Phase.Start);
+            }
 
             if (WaitingTime[(int)Phase.Wave1] >= 0)
             {
@@ -188,6 +193,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     //
     void Init()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         time = 0;
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
@@ -269,10 +275,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     }
 
-    /// <summary>
-    /// 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 (전투 대비 : 0, 전투 시작 : 1)
-    /// </summary>
-    /// <param name="index"></param>
+    /// <summary> 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 (전투 대비 : 0, 전투 시작 : 1) </summary> <param name="index"></param>
     void Active(int index)
     {
         if (index == (int)Phase.Ready)

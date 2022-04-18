@@ -14,5 +14,6 @@ public static class ListExtension
     public static void Some()
     {
         List<int> intList = new List<int>();
+        intList.IsEmpty();
     }
 }
