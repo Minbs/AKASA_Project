@@ -62,6 +62,8 @@ public class Minion : Unit
     public List<SkillAbility> activeSkillAbilities = new List<SkillAbility>();
     public ActiveSkillType activeSkillType;
 
+    public SkillType skillType;
+
     private float healAmountRate = 100;
 
     public bool isNextBaseAttackEnhanced = false;
@@ -104,18 +106,12 @@ public class Minion : Unit
             }
         }
 
-        if (e.Data.Name == "" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
+        if (e.Data.Name == "skill_event" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
         {
-            switch (attackType)
+            switch (skillType)
             {
-                case AttackType.Bullet:
-                    BulletAttack();
-                    break;
-                case AttackType.Melee:
+                case SkillType.EnhanceNextAttack:
                     MeleeAttack();
-                    break;
-                case AttackType.SingleHeal:
-                    SingleHeal();
                     break;
             }
         }
@@ -287,7 +283,7 @@ public class Minion : Unit
             StartCoroutine(PerformSkill(activeSkillAbilities[i]));
         }
 
-        spineAnimation.PlayAnimation(skinName + "/skill", false, 1);
+       
     }
 
     IEnumerator PerformSkill(SkillAbility skillAbility)
@@ -316,6 +312,10 @@ public class Minion : Unit
             
             }
         }
+        else
+        {
+            spineAnimation.PlayAnimation(skinName + "/skill", false, 1);
+        }
 
         yield return null;
     }
@@ -338,7 +338,6 @@ public class Minion : Unit
 
         if (skillAbility.statType == StatType.ATK)
         {
-            isNextBaseAttackEnhanced = true;
             atk = initAtk;
         }
     }
