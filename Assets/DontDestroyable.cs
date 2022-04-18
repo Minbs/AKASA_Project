@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DontDestroyable : Singleton<DontDestroyable>
 {
+    public List<AudioClip> AudioList;
     private void Awake()
     {
         if (Instance != null)
         {
-            DontDestroyOnLoad(this.gameObject);
         }
     }
     // Start is called before the first frame update
@@ -16,13 +16,22 @@ public class DontDestroyable : Singleton<DontDestroyable>
     {
         if (DontDestroyable.Instance == this)
         {
-            ;
+            AudioPlay(0);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
+            this.gameObject.GetComponent<AudioSource>().Stop();
             //Instance.SetEdit();
             Destroy(this.gameObject);
         }
+    }
+
+    public void AudioPlay(int recordnum)
+    {
+        this.gameObject.GetComponent<AudioSource>().clip = AudioList[recordnum];
+        this.gameObject.GetComponent<AudioSource>().Play();
+
     }
 
     // Update is called once per frame

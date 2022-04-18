@@ -13,6 +13,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     [Space(10f)]
     [Header("title")]
     public TextMeshProUGUI BlinkTextUI;
+    public Image titleLogo;
     public Image TitleImage;
     public List<Sprite> TitleSprite;
     public float BG_Change_Time;
@@ -77,6 +78,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             for (; bgAlpha > 0.0f; bgAlpha -= .01f)
             {
                 BGAlphaChange(bgAlpha);
+                
                 yield return new WaitForSeconds(0.01f);
             }
             TitleImage.sprite = TitleSprite[BgCount];
@@ -123,6 +125,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         Color c_Dummy = TitleImage.color;
         c_Dummy.a = (float)Alpha;
         TitleImage.color = c_Dummy;
+        titleLogo.color = c_Dummy;
     }
 
 
@@ -131,6 +134,17 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadScene(string SceneName)
     {
+        switch (SceneName)
+        {
+            case "MainScene":
+                DontDestroyable.Instance.AudioPlay(1);
+                break;
+            case "StageSelectScene":
+                DontDestroyable.Instance.AudioPlay(2);
+                break;
+            default:
+                break;
+        }
         SceneManager.LoadScene(SceneName);
         Debug.Log(SceneName + "æ¿¿∏∑Œ ¿Ãµø");
     }
