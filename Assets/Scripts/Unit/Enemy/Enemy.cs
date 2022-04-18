@@ -14,14 +14,16 @@ public class Enemy : Unit
     public AttackType attackType;
     public float attackRangeDistance;
 
+    public float attackDelayTimer { get; set; }
+    public float attackDelayDuration;
+
     protected override void Start()
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
 
         moveTiles = BoardManager.Instance.FinalList.ToList();
-
-        poolItemName = "Enemy1";
+        attackDelayTimer = attackDelayDuration;
     }
 
     private void OnDestroy()
@@ -33,17 +35,25 @@ public class Enemy : Unit
     // Update is called once per frame
     void Update()
     {
-        if(currentHp <= 0)
+        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
+        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
+        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
+
+        attackDelayTimer += Time.deltaTime;
+
+        if (currentHp <= 0)
         {
             StartCoroutine(Die());
             return;
         }
 
+   
         AimTarget();
 
         if (BoardManager.Instance.end == true && moveTiles.Count != 0)
         {
-            if(target == null)
+            if(target == null || (attackDelayTimer < attackDelayDuration && attackType == AttackType.HitScan &&
+                (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1))))
             {
               Move();
             }
@@ -64,34 +74,34 @@ public class Enemy : Unit
         if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/move")
         {
             spineAnimation.PlayAnimation(skinName + "/move", true, 1);
+
         }
 
+
+    
 
 
         Vector3 des = moveTiles[0].transform.position;
         //des.y = transform.position.y;
         transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
 
+        if (moveTiles.Count > 1)
+        {
+
+            if (des.x - transform.position.x < 0)
+                SetDirection(Direction.RIGHT);
+            if (des.x - transform.position.x > 0)
+                SetDirection(Direction.LEFT);
+           if (des.z - transform.position.z > 0)
+               SetDirection(Direction.UP);
+            if (des.z - transform.position.z < 0)
+                SetDirection(Direction.DOWN);
+        }
+
         if (Vector3.Distance(transform.position, des) < 0.01f)
         {
             transform.position = des;
-            
-
-            if (moveTiles.Count > 1)
-            {
-                Node node = new Node();
-                node = moveTiles[1].node - moveTiles[0].node;
-
-                if (node.row > 0)
-                    SetDirection(Direction.RIGHT);
-                if (node.row < 0)
-                    SetDirection(Direction.LEFT);
-                if (node.column > 0)
-                    SetDirection(Direction.DOWN);
-                if (node.column < 0)
-                    SetDirection(Direction.UP);
-            }
-
+           
 
             moveTiles.RemoveAt(0);
 
@@ -101,19 +111,38 @@ public class Enemy : Unit
 
     void AimTarget()
     {
-
-        if (target == null && GameManager.Instance.minionsList.Count > 0)
-        {
-            foreach (var minion in GameManager.Instance.minionsList)
+         if(attackType == AttackType.Melee)
+         {
+            if (target == null && GameManager.Instance.minionsList.Count > 0)
             {
-                if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance)
+                foreach (var minion in GameManager.Instance.minionsList)
                 {
-                    target = minion;
+                    if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance)
+                    {
+                        target = minion;
 
-                    break;
+                        break;
+                    }
+                }
+            }
+         }
+        else if (attackType == AttackType.HitScan)
+        {
+            if (target == null && GameManager.Instance.minionsList.Count > 0)
+            {
+                foreach (var minion in GameManager.Instance.minionsList)
+                {
+                    if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance)
+                    {
+                        target = minion;
+
+                        break;
+                    }
                 }
             }
         }
+
+
     }
 
     void AttackTarget()
@@ -124,6 +153,7 @@ public class Enemy : Unit
 
         if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1)))
         {
+            attackDelayTimer = 0;
             Vector3 scale = Vector3.one;
             if (target.transform.position.x - transform.position.x >= -0.001)
             {
@@ -145,6 +175,11 @@ public class Enemy : Unit
         target.GetComponent<Unit>().Deal(atk);
     }
 
+    void HitScanAttack()
+    {
+        target.GetComponent<Unit>().Deal(atk);
+    }
+
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
         if (e.Data.Name == "shoot")
@@ -153,6 +188,9 @@ public class Enemy : Unit
             {
                 case AttackType.Melee:
                     MeleeAttack();
+                    break;
+                case AttackType.HitScan:
+                    HitScanAttack();
                     break;
             }
 

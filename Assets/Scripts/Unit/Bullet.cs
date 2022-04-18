@@ -40,10 +40,9 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        Vector3 des = target.transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
+     
 
-        if(Vector3.Distance(transform.position, target.transform.position) <= 0.01f)
+        if(Vector3.Distance(transform.position, target.transform.position) <= 0.01f )
         {
             ObjectPool.Instance.PushToPool("Bullet", gameObject);
             target.GetComponent<Unit>().Deal(damage);
@@ -53,5 +52,8 @@ public class Bullet : MonoBehaviour
             else
                 EffectManager.Instance.InstantiateAttackEffect("heal", transform.position);
         }
+
+        Vector3 des = target.transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
     }
 }

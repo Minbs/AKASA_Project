@@ -161,6 +161,10 @@ MonoBehaviour:
     prefab: {fileID: 2723945548647100095, guid: 362c170706367b04ab208f7d9106b3ff, type: 3}
     poolCount: 30
     poolList: []
+  - poolItemName: Enemy2
+    prefab: {fileID: 6299139124071220322, guid: 289b2fd0031c0b143ad1f7d3e1bbfe98, type: 3}
+    poolCount: 10
+    poolList: []
 --- !u!4 &98037801
 Transform:
   m_ObjectHideFlags: 0
@@ -450,6 +454,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189676874}
   m_CullTransparentMesh: 1
+--- !u!1001 &223103878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 543441431393234032, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.468262
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670594397369110939, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.5317383
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.056991
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.967908
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012630820374681509, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_Name
+      value: 1_1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
 --- !u!1001 &262108468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -547,6 +616,8 @@ MonoBehaviour:
   spawner: {fileID: 1367259471}
   tileCamera: {fileID: 638336736}
   characterCamera: {fileID: 532741028}
+  gameSpeed: 1
+  currentWave: 1
   heroSetPosition: {x: 0, y: 0, z: 0}
   enemiesList: []
   minionsList: []
@@ -2536,6 +2607,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: stage_1
       objectReference: {fileID: 0}
+    - target: {fileID: 2581250435089985986, guid: c94ca0ae84c87aa44b5682f3a7370dd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2925546680372439928, guid: c94ca0ae84c87aa44b5682f3a7370dd5, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -2748,6 +2823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc96b45afc9d26d46bf81070d885f053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySpawnDatas: []
+  spawnTimer: 0
 --- !u!4 &1367259472
 Transform:
   m_ObjectHideFlags: 0

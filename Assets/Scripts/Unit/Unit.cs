@@ -18,6 +18,7 @@ public enum Direction
 
 public class Unit : MonoBehaviour
 {
+    public string poolItemName;
     public int maxHp;
     public int currentHp;
     public Image healthBar;
@@ -27,7 +28,7 @@ public class Unit : MonoBehaviour
 
     public float attackSpeed = 1;
 
-    public string poolItemName{ get; set; }
+
 
     public Direction direction { get; set; }
 
@@ -95,13 +96,15 @@ public class Unit : MonoBehaviour
         if(direction == Direction.LEFT)
         {
                 scale.x = 1;
+            transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
         else if(direction == Direction.RIGHT)
         {
                 scale.x = -1;
+            transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
 
-        transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
+        
     }
 
     public IEnumerator ChangeUnitColor(Color color, float duration)

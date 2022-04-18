@@ -31,13 +31,11 @@ public class GameManager : Singleton<GameManager>
 
     public float gameSpeed = 1;
 
-
+    public int currentWave = 1;
 
     Node rayNode = new Node();
 
     Ray ray;
-
-  //  public GameObject hero;
 
     public Vector3 heroSetPosition;
 
@@ -96,7 +94,6 @@ public class GameManager : Singleton<GameManager>
           
             BattleUIManager.Instance.isSettingCharacterOn = false;
             BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
-            //    Debug.Log("mouse : " + Input.mousePosition.normalized + ", tile : " + unitSetCameraPos.normalized);
             Vector2 vec = Input.mousePosition - unitSetCameraPos;
             
             float dot = Vector2.Dot(vec.normalized,new Vector2(0, 1)); //앞뒤 판별
@@ -195,10 +192,12 @@ public class GameManager : Singleton<GameManager>
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(false);
                     }
+
+                    rayNode = raycastHit.collider.GetComponent<Tile>().node;
                 }
 
 
-                rayNode = raycastHit.collider.GetComponent<Tile>().node;
+           
             }
             else
             {

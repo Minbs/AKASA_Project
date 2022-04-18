@@ -21,7 +21,8 @@ public enum AttackType
 {
     Bullet,
     Melee,
-    SingleHeal
+    SingleHeal,
+    HitScan
 }
 
 public enum ActiveSkillType
@@ -142,7 +143,7 @@ public class Minion : Unit
                     foreach (var t in attackRangeTiles)
                     {
 
-                        if ((t.onTile(enemy.transform) || enemy.GetComponent<Unit>().target == gameObject) && enemy.GetComponent<Unit>().currentHp > 0)
+                        if ((t.onTile(enemy.transform) || (enemy.GetComponent<Unit>().target == gameObject && enemy.GetComponent<Enemy>().attackType == AttackType.Melee)) && enemy.GetComponent<Unit>().currentHp > 0)
                         {
                             target = enemy;
 

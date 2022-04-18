@@ -108,8 +108,12 @@ public class BoardManager : Singleton<BoardManager>
 
     void AddOpenList(int x, int y)
     {
-        Tile neighborTile = GetTile(x, y); 
-        if(x >= 0 && x < sizeX && y >= 0 && y < sizeY && !neighborTile.isBlock && neighborTile.height == 0 && !CloseList.Contains(neighborTile)) //타일 범위 안, 막혀있지 않음, 높이가 0, ClosedList에 없을 때
+        Tile neighborTile = GetTile(x, y);
+
+        if (neighborTile == null)
+            return;
+
+        if (x >= 0 && x < sizeX && y >= 0 && y < sizeY && !neighborTile.isBlock && neighborTile.height == 0 && !CloseList.Contains(neighborTile)) //타일 범위 안, 막혀있지 않음, 높이가 0, ClosedList에 없을 때
         {
 
 
@@ -131,6 +135,8 @@ public class BoardManager : Singleton<BoardManager>
         Node n = new Node(x, y);
         var tile = tilesList.Where(t => t.node == n);
 
+   
+        //n.
         Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
 
 
