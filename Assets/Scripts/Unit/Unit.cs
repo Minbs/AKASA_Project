@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
     public Image healthBar;
 
     public int atk;
-    public int def;
+    public float def;
 
     public float attackSpeed = 1;
 
@@ -67,8 +67,9 @@ public class Unit : MonoBehaviour
 
     public void Deal(int damage)
     {
-   
 
+        float damageSum = 0;
+        damageSum = damage;
 
         if (damage < 0) //heal
         {
@@ -77,12 +78,13 @@ public class Unit : MonoBehaviour
         else
         {
         StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
+            //Debug.Log((1 / (1 + (float)def)));
+            damageSum *= (1 / (1 + def));
         }
 
-        int damageSum = 0;
-        damageSum = damage;
+     
 
-        currentHp -= damage;
+        currentHp -= (int)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         UpdateHealthbar();

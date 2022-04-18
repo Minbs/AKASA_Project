@@ -209,7 +209,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
         }
 
-        for (int i = 0; i < maxMinionCount[0]; i++)
+        for (int i = 0; i < 12; i++)
         {
             tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
             wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
@@ -350,6 +350,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
+
+
         if (MinionManager.Instance.heroPrefabs.Count <= index)
             return;
 
