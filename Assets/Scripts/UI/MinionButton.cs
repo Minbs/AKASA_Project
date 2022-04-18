@@ -40,8 +40,11 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
         BattleUIManager.Instance.attackRangeNodes = hero.attackRangeNodes.ToList();
 
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = MinionManager.Instance.heroPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
+            skeletonDataAsset = MinionManager.Instance.heroPrefabs[index].transform.
+            GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
+        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
+            initialSkinName = hero.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         BattleUIManager.Instance.settingCharacter.SetActive(true);
@@ -56,16 +59,20 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
     public void MinionStanbyTimer(int index)
     {
-        MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
+        MinionManager.Instance.heroPrefabs[index].
+            GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
 
-        if (MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime <= 0)
+        if (MinionManager.Instance.heroPrefabs[index].
+            GetComponent<Minion>().minionStandbyTime <= 0)
         {
             BattleUIManager.Instance.isCheck = false;
             if (BattleUIManager.Instance.tBG[index].activeSelf)
                 BattleUIManager.Instance.tBG[index].SetActive(false);
         }
 
-        BattleUIManager.Instance.wTime[index].text = MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime.ToString("F1") + "s".ToString();
+        BattleUIManager.Instance.wTime[index].text = 
+            MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().
+            minionStandbyTime.ToString("F1") + "s".ToString();
     }
 }
 
