@@ -170,8 +170,9 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 0
   healthBar: {fileID: 1609300146875696240}
-  atk: 10
+  atk: 5
   def: 0
+  attackSpeed: 1
   minionClass: 6
   attackRangeNodes:
   - row: 0
@@ -203,7 +204,16 @@ MonoBehaviour:
   stopCount: 0
   cost: 0
   waitingTime: 0
-  activeSkillAbilities: []
+  currentSkillGauge: 0
+  maxSkillGauge: 90
+  activeSkillAbilities:
+  - abilityType: {fileID: 11400000, guid: be71190df5dd62d41b7231278e46260c, type: 2}
+    power: 200
+    duration: 10
+    statType: 5
+    rangeNodes: []
+    excludeSelf: 0
+  activeSkillType: 0
 --- !u!1001 &7489480818512568311
 PrefabInstance:
   m_ObjectHideFlags: 0

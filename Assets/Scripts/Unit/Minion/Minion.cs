@@ -54,6 +54,8 @@ public class Minion : Unit
     public List<SkillAbility> activeSkillAbilities = new List<SkillAbility>();
     public ActiveSkillType activeSkillType;
 
+    private float healAmountRate = 100;
+
     private void Awake()
     {
         attackRangeTiles = new List<Tile>();
@@ -71,7 +73,7 @@ public class Minion : Unit
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-        currentSkillGauge = maxSkillGauge;
+        //currentSkillGauge = maxSkillGauge;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -100,7 +102,7 @@ public class Minion : Unit
         GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
         bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
         bulletObject.transform.position = pos;
-        bulletObject.GetComponent<Bullet>().Init(-atk, target);
+        bulletObject.GetComponent<Bullet>().Init(-(int)(atk * (healAmountRate / 100)), target);
 
         bulletObject.SetActive(true);
     }
@@ -210,7 +212,6 @@ public class Minion : Unit
         if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || ((transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" )
             && normalizedTime >= 1)))
         {
-            Debug.Log("attack");
 
             Vector3 scale = Vector3.one;
             if (target.transform.position.x - transform.position.x >= -0.001)
@@ -286,6 +287,10 @@ public class Minion : Unit
                 value = skillAbility.power / 100;
                 target.attackSpeed += value;
                 break;
+            case StatType.HealAmountRate:
+                value = skillAbility.power;
+                target.GetComponent<Minion>().healAmountRate = value;
+                break;
         }
 
 
@@ -301,6 +306,9 @@ public class Minion : Unit
         {
             case StatType.AttackSpeed:
                 target.attackSpeed -= value;
+                break;
+            case StatType.HealAmountRate:
+                target.GetComponent<Minion>().healAmountRate = 100;
                 break;
         }
     }

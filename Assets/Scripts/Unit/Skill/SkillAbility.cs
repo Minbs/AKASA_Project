@@ -8,7 +8,8 @@ public enum StatType
     ATK,
     DEF,
     AttackSpeed,
-    MoveSpeed
+    MoveSpeed,
+    HealAmountRate
 }
 
 [System.Serializable]

@@ -29,6 +29,8 @@ public class GameManager : Singleton<GameManager>
     public Camera tileCamera;
     public Camera characterCamera;
 
+    public float gameSpeed = 1;
+
 
 
     Node rayNode = new Node();
@@ -57,6 +59,8 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+        Time.timeScale = gameSpeed;
+
         ray = tileCamera.ScreenPointToRay(Input.mousePosition);
 
         if (waitTimer <= 0 && state == State.WAIT)
