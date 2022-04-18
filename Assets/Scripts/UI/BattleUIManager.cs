@@ -6,6 +6,18 @@ using Spine.Unity;
 using System.Linq;
 using TMPro;
 
+public enum Phase
+{
+    Ready,  //전투 대비
+    Start,  //전투 시작
+    Wave1,  //웨이브 1
+    Wave2,  //웨이브 2
+    Wave3,   //웨이브 3
+    Between //웨이브 사이간격
+}
+
+/// <summary>
+/// </summary>
 public class BattleUIManager : Singleton<BattleUIManager>
 {
     public List<Node> attackRangeNodes = new List<Node>();
@@ -21,41 +33,42 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     //
     const int maxCost = 99;
+    int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
 
+    ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
     public TextMeshProUGUI[] text;
+    ///phase - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
 
+    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
     [SerializeField]
-    float readyWaitingTime = 1.0f, battleWaitingTime = 1.0f;
+    float[] WaitingTime;
     [SerializeField]
     int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
 
-    float time = 0, waitingTime, MinionWaitingTime;
+    float time = 0, phaseWaitingTime;
     int min, sec, currentEnemyCount = 0;
-    //
+    bool isPhaseCheck;
+
+    public GameObject minionBtnTranslucentBG;
+    public List<GameObject> tBG = new List<GameObject>();
+    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    public bool isCheck = false;
+    bool isSoundCheck = true;
+
+    public GameObject wBG;
+    public List<MinionButton> mBtn;
+
+    AudioSource audioSource;
 
     void Start()
     {
         ObjectPool.Instance.CreatePoolObject("AttackRangeTile", attackRangeTileImage, 20, worldCanvas.transform);
 
-        text[3].text = currentEnemyCount.ToString();
-        text[4].text = maxEnemyCount.ToString();
-        enemiesList = GameManager.Instance.enemiesList;
-
-        time = 0;
-        costText.text = GameManager.Instance.cost.ToString();
-
-        for (int i = 0; i < 3; i++)
-            if (text[i].gameObject.activeSelf)
-                text[i].gameObject.SetActive(false);
-        for (int j = 0; j < 2; j++)
-            if (phase[j].gameObject.activeSelf)
-                phase[j].gameObject.SetActive(false);
-        if (wave.gameObject.activeSelf)
-            wave.gameObject.SetActive(false);
+        Init();
     }
 
     void Update()
@@ -64,18 +77,40 @@ public class BattleUIManager : Singleton<BattleUIManager>
             SetSettingCharacterMousePosition();
 
         //
+        if (GameManager.Instance.state == State.WAIT)
+        {
+            if (WaitingTime[(int)Phase.Ready] >= 0)
+                Active((int)Phase.Ready);
+            WaitTime();
+        }
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
-            Active(1);
+            if (isSoundCheck == true)
+            {
+                audioSource.Play();
+                isSoundCheck = false;
+            }
+
+            if (WaitingTime[(int)Phase.Start] >= 0)
+            {
+                Active((int)Phase.Start);
+            }
+
+            if (WaitingTime[(int)Phase.Wave1] >= 0)
+            {
+                StartCoroutine("PhaseDelay");
+                Active((int)Phase.Wave1);
+            }
+
             BattleTime();
             RegenCost();
             EnemeyCount();
+
             //UnitCount();
         }
-        else if (GameManager.Instance.state == State.WAIT)
+        else 
         {
-            Active(0);
-            WaitTime();
+
         }
         //
     }
@@ -162,6 +197,40 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     //
+    void Init()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        time = 0;
+        enemiesList = GameManager.Instance.enemiesList;
+        costText.text = GameManager.Instance.cost.ToString();
+
+        for (int i = 0; i < wBG.transform.childCount - 1; i++)
+        {
+            mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+        }
+
+        for (int i = 0; i < maxMinionCount[0]; i++)
+        {
+            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
+            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
+
+            if (tBG[i].activeSelf)
+                tBG[i].SetActive(false);
+        }
+
+        for (int i = 0; i < 3; i++)
+            if (text[i].gameObject.activeSelf)
+                text[i].gameObject.SetActive(false);
+        text[3].text = currentEnemyCount.ToString();
+        text[4].text = maxEnemyCount.ToString();
+        text[5].text = maxMinionCount[0].ToString();
+        for (int i = 0; i < 5; i++)
+            if (phase[i].gameObject.activeSelf)
+                phase[i].gameObject.SetActive(false);
+        if (wave.gameObject.activeSelf)
+            wave.gameObject.SetActive(false);
+    }
+
     void BattleTime()
     {
         for (int i = 0; i < 3; i++)
@@ -212,39 +281,55 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     }
 
-    /// <summary>
-    /// 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 (전투 대비 : 0, 전투 시작 : 1)
-    /// </summary>
-    /// <param name="index"></param>
+    /// <summary> 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 (전투 대비 : 0, 전투 시작 : 1) </summary> <param name="index"></param>
     void Active(int index)
     {
-        if (index == 0)
+        if (index == (int)Phase.Ready)
         {
-            readyWaitingTime -= Time.deltaTime;
-            waitingTime = readyWaitingTime;
+            WaitingTime[(int)Phase.Ready] -= Time.deltaTime;
+            phaseWaitingTime = WaitingTime[(int)Phase.Ready];
+            isPhaseCheck = false;
         }
-        else if (index == 1)
+        else if (index == (int)Phase.Start)
         {
-            battleWaitingTime -= Time.deltaTime;
-            waitingTime = battleWaitingTime;
+            WaitingTime[(int)Phase.Start] -= Time.deltaTime;
+            phaseWaitingTime = WaitingTime[(int)Phase.Start];
+            isPhaseCheck = false;
+        }
+        else if (index == (int)Phase.Wave1 && isPhaseCheck == true)
+        {
+            WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
+            phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
+            isPhaseCheck = false;
+        }
+        else if (index == (int)Phase.Wave2 && isPhaseCheck == true)
+        {
+            WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
+            phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
+            isPhaseCheck = false;
+        }
+        else if (index == (int)Phase.Wave3 && isPhaseCheck == true)
+        {
+            WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
+            phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
+            isPhaseCheck = false;
         }
         else
             return;
 
-        if (waitingTime >= 0)
+        if (phaseWaitingTime >= 0)
             phase[index].gameObject.SetActive(true);
-        else
+        else if (phaseWaitingTime < 0)
             phase[index].gameObject.SetActive(false);
     }
 
     /// <summary>
-    /// 코스트 리젠
+    /// 코스트 리젠 (regenTime마다 실행)
     /// </summary>
     void RegenCost()
     {
         time += Time.deltaTime;
 
-        //regenTime마다 실행
         if (time >= regenTime)
         {
             if (GameManager.Instance.cost >= maxCost)
@@ -271,37 +356,56 @@ public class BattleUIManager : Singleton<BattleUIManager>
         GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
-    //
 
-    public float MinionWaitTime(int index)
+    public void DeploymentMinion(int index)
     {
-        /*
-        if (index == 0)
+        if (GameManager.Instance.cost >= 0)
         {
-            veritWaitingTime -= Time.deltaTime;
-            MinionWaitingTime = veritWaitingTime;
-        }
-        else if (index == 1)
-        {
-            isabellaWaitingTime -= Time.deltaTime;
-            MinionWaitingTime = isabellaWaitingTime;
-        }
+            if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
+            {
+                UseCost(index);
 
-        if (index == 0 && MinionWaitingTime <= 0)
-        {
-            veritWaitingTime = 50.0f;
-            MinionButton.Instance.isCheck = false;
-            return -1;
+                if (!tBG[index].activeSelf)
+                {
+                    tBG[index].SetActive(true);
+                    mBtn[index].MBtnTBGPosition();
+                    //isCheck = true;
+                }
+            }
         }
-        else if (index == 1 && MinionWaitingTime <= 0)
+        else
         {
-            isabellaWaitingTime = 60.0f;
-            MinionButton.Instance.isCheck = false;
-            return -1;
+            return;
         }
-        */
+    }
 
-        Debug.Log(MinionWaitingTime);
-        return MinionWaitingTime;
+    public void OnDoubleSpeedButton()
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 2;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    public void OnPauseButton()
+    {
+        if (Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    IEnumerator PhaseDelay()
+    {
+        yield return new WaitForSeconds(WaitingTime[(int)Phase.Between]);
+        isPhaseCheck = true;
     }
 }

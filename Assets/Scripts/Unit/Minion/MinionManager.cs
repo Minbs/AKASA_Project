@@ -7,7 +7,6 @@ public class MinionManager : Singleton<MinionManager>
     public List<GameObject> heroPrefabs = new List<GameObject>();
     public List<Minion> heroQueue = new List<Minion>();
 
-
     void Start()
     {
         foreach(var hero in heroPrefabs)
