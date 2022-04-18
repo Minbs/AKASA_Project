@@ -135,7 +135,13 @@ public class GameManager : Singleton<GameManager>
             }
 
             if (Input.GetMouseButtonDown(0))
-            {              
+            {
+                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
+                    .GetComponent<Minion>().minionStandbyTime =
+                    MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
+                    .GetComponent<Minion>().minionWaitingTime;
+                BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
+
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;

@@ -65,9 +65,11 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         if (MinionManager.Instance.heroPrefabs[index].
             GetComponent<Minion>().minionStandbyTime <= 0)
         {
-            BattleUIManager.Instance.isCheck = false;
             if (BattleUIManager.Instance.tBG[index].activeSelf)
+            {
+                BattleUIManager.Instance.isCheck = false;
                 BattleUIManager.Instance.tBG[index].SetActive(false);
+            }
         }
 
         BattleUIManager.Instance.wTime[index].text = 

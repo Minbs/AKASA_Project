@@ -204,9 +204,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
 
-        for (int i = 0; i < wBG.transform.childCount - 1; i++)
+        for (int i = 0; i < wBG.transform.childCount; i++)
         {
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
         }
 
         for (int i = 0; i < 12; i++)
@@ -363,8 +364,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-
-
         if (MinionManager.Instance.heroPrefabs.Count <= index)
             return;
 
@@ -382,9 +381,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
                 if (!tBG[index].activeSelf)
                 {
-                    tBG[index].SetActive(true);
                     mBtn[index].MBtnTBGPosition();
-                    //isCheck = true;
+                    tBG[index].SetActive(true);
+                    isCheck = true;
                 }
             }
         }
@@ -394,7 +393,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void OnDoubleSpeedButton()
+    public void OnDoubleSpeedBtn()
     {
         if (Time.timeScale == 1)
             Time.timeScale = 2;       
@@ -402,7 +401,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             Time.timeScale = 0;       
     }
 
-    public void OnPauseButton()
+    public void OnPauseBtn()
     {
         if (Time.timeScale != 0)      
             Time.timeScale = 0;       
