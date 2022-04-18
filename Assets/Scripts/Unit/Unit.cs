@@ -67,8 +67,7 @@ public class Unit : MonoBehaviour
 
     public void Deal(int damage)
     {
-        currentHp -= damage;
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+   
 
 
         if (damage < 0) //heal
@@ -79,6 +78,12 @@ public class Unit : MonoBehaviour
         {
         StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
         }
+
+        int damageSum = 0;
+        damageSum = damage;
+
+        currentHp -= damage;
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         UpdateHealthbar();
     }
