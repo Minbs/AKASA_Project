@@ -108,7 +108,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             //UnitCount();
         }
-        else 
+        else
         {
 
         }
@@ -204,9 +204,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
 
-        for (int i = 0; i < wBG.transform.childCount - 1; i++)
+        for (int i = 0; i < wBG.transform.childCount; i++)
         {
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
         }
 
         for (int i = 0; i < 12; i++)
@@ -281,41 +282,54 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     }
 
-    /// <summary> 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 (전투 대비 : 0, 전투 시작 : 1) </summary> <param name="index"></param>
+    /// <summary> 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
     void Active(int index)
     {
-        if (index == (int)Phase.Ready)
+        switch (index)
         {
-            WaitingTime[(int)Phase.Ready] -= Time.deltaTime;
-            phaseWaitingTime = WaitingTime[(int)Phase.Ready];
-            isPhaseCheck = false;
+            case (int)Phase.Ready:
+                WaitingTime[(int)Phase.Ready] -= Time.deltaTime;
+                phaseWaitingTime = WaitingTime[(int)Phase.Ready];
+                isPhaseCheck = false;
+                break;
+            case (int)Phase.Start:
+                WaitingTime[(int)Phase.Start] -= Time.deltaTime;
+                phaseWaitingTime = WaitingTime[(int)Phase.Start];
+                isPhaseCheck = false;
+                break;
+            case (int)Phase.Wave1:
+                if (isPhaseCheck == true)
+                {
+                    WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
+                    phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
+                    isPhaseCheck = false;
+                }
+                else
+                    return;
+                break;
+            case (int)Phase.Wave2:
+                if (isPhaseCheck == true)
+                {
+                    WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
+                    phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
+                    isPhaseCheck = false;
+                }
+                else
+                    return;
+                break;
+            case (int)Phase.Wave3:
+                if (isPhaseCheck == true)
+                {
+                    WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
+                    phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
+                    isPhaseCheck = false;
+                }
+                else
+                    return;
+                break;
+            default:
+                break;
         }
-        else if (index == (int)Phase.Start)
-        {
-            WaitingTime[(int)Phase.Start] -= Time.deltaTime;
-            phaseWaitingTime = WaitingTime[(int)Phase.Start];
-            isPhaseCheck = false;
-        }
-        else if (index == (int)Phase.Wave1 && isPhaseCheck == true)
-        {
-            WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
-            phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
-            isPhaseCheck = false;
-        }
-        else if (index == (int)Phase.Wave2 && isPhaseCheck == true)
-        {
-            WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
-            phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
-            isPhaseCheck = false;
-        }
-        else if (index == (int)Phase.Wave3 && isPhaseCheck == true)
-        {
-            WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
-            phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
-            isPhaseCheck = false;
-        }
-        else
-            return;
 
         if (phaseWaitingTime >= 0)
             phase[index].gameObject.SetActive(true);
@@ -350,8 +364,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-
-
         if (MinionManager.Instance.heroPrefabs.Count <= index)
             return;
 
@@ -369,9 +381,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
                 if (!tBG[index].activeSelf)
                 {
-                    tBG[index].SetActive(true);
                     mBtn[index].MBtnTBGPosition();
-                    //isCheck = true;
+                    tBG[index].SetActive(true);
+                    isCheck = true;
                 }
             }
         }
@@ -381,28 +393,20 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void OnDoubleSpeedButton()
+    public void OnDoubleSpeedBtn()
     {
         if (Time.timeScale == 1)
-        {
             Time.timeScale = 2;
-        }
         else
-        {
-            Time.timeScale = 1;
-        }
+            Time.timeScale = 0;
     }
 
-    public void OnPauseButton()
+    public void OnPauseBtn()
     {
         if (Time.timeScale != 0)
-        {
             Time.timeScale = 0;
-        }
         else
-        {
             Time.timeScale = 1;
-        }
     }
 
     IEnumerator PhaseDelay()

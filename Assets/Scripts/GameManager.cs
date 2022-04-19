@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
             ShowAttackRangeTiles();
         }
 
-        if(battleTime <= 0 && state == State.BATTLE)
+        if (battleTime <= 0 && state == State.BATTLE)
         {
             battleTime -= Time.deltaTime;
         }
@@ -91,13 +91,13 @@ public class GameManager : Singleton<GameManager>
         {
             Vector3 pos = unitSetTile.transform.position;
             pos += heroSetPosition;
-          
+
             BattleUIManager.Instance.isSettingCharacterOn = false;
             BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
             Vector2 vec = Input.mousePosition - unitSetCameraPos;
-            
-            float dot = Vector2.Dot(vec.normalized,new Vector2(0, 1)); //앞뒤 판별
-            Vector3 cross = Vector3.Cross(vec.normalized, new Vector2(0,1)); //좌우 판별
+
+            float dot = Vector2.Dot(vec.normalized, new Vector2(0, 1)); //앞뒤 판별
+            Vector3 cross = Vector3.Cross(vec.normalized, new Vector2(0, 1)); //좌우 판별
 
             List<Node> temp = new List<Node>();
             Direction direction = Direction.LEFT;
@@ -135,7 +135,13 @@ public class GameManager : Singleton<GameManager>
             }
 
             if (Input.GetMouseButtonDown(0))
-            {              
+            {
+                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
+                    .GetComponent<Minion>().minionStandbyTime =
+                    MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
+                    .GetComponent<Minion>().minionWaitingTime;
+                BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
+
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
                 unitSetTile.GetComponent<Tile>().isOnUnit = true;
@@ -144,7 +150,7 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.settingCharacter.SetActive(false);
                 BattleUIManager.Instance.isSettingCharacterOn = true;
                 hero.GetComponent<Unit>().SetDirection(direction);
-              //  hero.GetComponent<Minion>().onTile.no
+                //  hero.GetComponent<Minion>().onTile.no
                 scale.x = Mathf.Abs(scale.x);
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
                 foreach (var tile in temp)
@@ -162,7 +168,7 @@ public class GameManager : Singleton<GameManager>
                 minionsList.Add(hero);
                 hero.SetActive(true);
             }
-          
+
 
         }
         else
@@ -197,7 +203,7 @@ public class GameManager : Singleton<GameManager>
                 }
 
 
-           
+
             }
             else
             {
@@ -214,7 +220,7 @@ public class GameManager : Singleton<GameManager>
 
     public void CanSetTile()
     {
-            tileSetMode = true;
+        tileSetMode = true;
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {
