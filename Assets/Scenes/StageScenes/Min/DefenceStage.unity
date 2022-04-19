@@ -467,6 +467,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2012630819065791220, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 2012630820374681508, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -2065,6 +2069,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3615521047221733571, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: regenTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615521047221733571, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: maxEnemyCount
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 3615521047221733572, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -2401,8 +2413,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0.8191521, z: -0.5735764, w: 0}
-  m_LocalPosition: {x: -0.27, y: 8.71, z: 3.33}
+  m_LocalRotation: {x: 0, y: 0.809017, z: -0.58778524, w: 0}
+  m_LocalPosition: {x: -0.27, y: 7.5, z: 3.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2410,7 +2422,7 @@ Transform:
   - {fileID: 532741027}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 70, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 72, y: 180, z: 0}
 --- !u!20 &963194229
 Camera:
   m_ObjectHideFlags: 0
