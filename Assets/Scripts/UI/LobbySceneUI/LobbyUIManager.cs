@@ -184,6 +184,13 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     }
 
+    public void LoadStageScene()
+    {
+        SceneManager.LoadScene("DefenceStage");
+        Debug.Log("스테이지 선택 씬 보여주기");
+
+    }
+
     public void PreparingButton()
     {
         if (m_bPanelOn == false)
