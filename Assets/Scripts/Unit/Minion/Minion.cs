@@ -328,6 +328,9 @@ public class Minion : Unit
         if (activeSkillAbilities.Count <= 0)
             return;
 
+        Debug.Log(activeSkillAbilities.Count);
+        Debug.Log(activeSkillAbilities[0].power);
+
         for (int i = 0; i < activeSkillAbilities.Count; i++)
         {
             StartCoroutine(PerformSkill(activeSkillAbilities[0]));
@@ -338,6 +341,8 @@ public class Minion : Unit
 
     IEnumerator PerformSkill(SkillAbility skillAbility)
     {
+        Debug.Log("aa");
+
         List<GameObject> targets = new List<GameObject>();
 
         if (skillAbility.abilityType.rangeType == Ranges.Self)
@@ -379,7 +384,10 @@ public class Minion : Unit
         if (skillAbility.statType == StatType.ATK)
         {
             isNextBaseAttackEnhanced = true;
-            atk *= (int)(skillAbility.power / 100);
+            float sum = atk;
+            sum *= skillAbility.power / 100;
+            atk = (int)sum;
+          //  Debug.Log("en : " + atk);
         }
 
         if (skillAbility.statType == StatType.DEF)
@@ -400,6 +408,7 @@ public class Minion : Unit
         if (skillAbility.statType == StatType.ATK)
         {
             atk = initAtk;
+            Debug.Log("end");
         }
 
         if (skillAbility.statType == StatType.DEF)
@@ -436,13 +445,17 @@ public class Minion : Unit
         float timer = 0f;
         float duration = skillAbility.duration;
         float value = 0;
+        float initSpeed = 0;
 
-        float initSpeed = target.GetComponent<Enemy>().speed;
+        if(target.GetComponent<Enemy>() != null)
+            initSpeed = target.GetComponent<Enemy>().speed;
+
         switch (skillAbility.statType)
         {
             case StatType.AttackSpeed:
                 value = skillAbility.power / 100;
                 target.attackSpeed += value;
+                Debug.Log("s");
                 break;
             case StatType.HealAmountRate:
                 value = skillAbility.power;
