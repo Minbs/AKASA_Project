@@ -256,13 +256,13 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     void CreateSaveDirectory()
     {
-        string filePath = Application.dataPath + "/Resources";
-        if (!Directory.Exists(filePath))
-            AssetDatabase.CreateFolder("Assets", "Resources");
-        filePath += "/Levels";
-        if (!Directory.Exists(filePath))
-            AssetDatabase.CreateFolder("Assets/Resource", "Levels");
-        AssetDatabase.Refresh();
+        //string filePath = Application.dataPath + "/Resources";
+        //if (!Directory.Exists(filePath))
+        //    AssetDatabase.CreateFolder("Assets", "Resources");
+        //filePath += "/Levels";
+        //if (!Directory.Exists(filePath))
+        //    AssetDatabase.CreateFolder("Assets/Resource", "Levels");
+        //AssetDatabase.Refresh();
     }
 
 
