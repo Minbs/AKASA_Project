@@ -72,6 +72,7 @@ public class Minion : Unit
 
     public GameObject shootPivot;
 
+
     private void Awake()
     {
         attackRangeTiles = new List<Tile>();
@@ -147,11 +148,27 @@ public class Minion : Unit
 
     public void HitScanAttack()
     {
+        if (target == null)
+        {
+            return;
+        }
+
+
+        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit",target.transform.position);
         target.GetComponent<Unit>().Deal(atk);
     }
 
     public void HitScanAttack2()
     {
+        if (target == null)
+        {
+            return;
+        }
+
+
+
+        StartCoroutine(EffectManager.Instance.InstantiateHomingEffect("hwaseon_skill", target, activeSkillAbilities[0].duration));
+        EffectManager.Instance.InstantiateAttackEffect("hwaseon_skill", target.transform.position);
         target.GetComponent<Unit>().Deal(atk);
     }
 
@@ -207,6 +224,7 @@ public class Minion : Unit
 
             if (target == null)
             {
+
                 foreach (var enemy in GameManager.Instance.enemiesList)
                 {
                     foreach (var t in attackRangeTiles)
@@ -219,6 +237,7 @@ public class Minion : Unit
                             return;
                         }
                     }
+                
                 }
             }
             else
@@ -233,14 +252,14 @@ public class Minion : Unit
                     }
                 }
 
-                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 && target.GetComponent<Unit>().target != gameObject)
+                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 && target.GetComponent<Unit>().target != gameObject ||target.activeSelf == false)
                     target = null;
             }
         }
         else
         {
             if (target != null)
-                if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1)
+                if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 || target.activeSelf == false)
                 {
                     target = null;
                 }
@@ -313,9 +332,10 @@ public class Minion : Unit
 
         }
 
-        if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")
+        if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle" )
         {
-            spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
+
+                spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
     #endregion
@@ -455,7 +475,7 @@ public class Minion : Unit
             case StatType.AttackSpeed:
                 value = skillAbility.power / 100;
                 target.attackSpeed += value;
-                Debug.Log("s");
+                StartCoroutine(EffectManager.Instance.InstantiateHomingEffect("verity_skill", gameObject, skillAbility.duration));
                 break;
             case StatType.HealAmountRate:
                 value = skillAbility.power;

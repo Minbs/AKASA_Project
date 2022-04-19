@@ -34,7 +34,7 @@ public class Unit : MonoBehaviour
 
     public SpineAnimation spineAnimation { get; set; }
 
-    public GameObject target { get; set; }
+    public GameObject target;
 
     public SkeletonDataAsset skeletonData { get; set; }
 
@@ -78,12 +78,11 @@ public class Unit : MonoBehaviour
 
         isPoisoned = true;
 
-
+        StartCoroutine( EffectManager.Instance.InstantiateHomingEffect("isabella_skill", gameObject, duration));
 
         while (timer < duration)
         {
             timer += Time.deltaTime;
-            Debug.Log(damageTimer);
             damageTimer += Time.deltaTime;
             if (damageTimer >= damageDelay)
             {
@@ -105,14 +104,17 @@ public class Unit : MonoBehaviour
         float damageSum = 0;
         damageSum = damage;
 
+
+
         if (damage < 0) //heal
         {
+            if(gameObject.activeInHierarchy)
             StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
         }
         else
         {
-        StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
-            //Debug.Log((1 / (1 + (float)def)));
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
             damageSum *= (1 / (1 + def));
         }
 
@@ -150,7 +152,10 @@ public class Unit : MonoBehaviour
 
     public IEnumerator ChangeUnitColor(Color color, float duration)
     {
-        float timer = 0f;
+        if (gameObject != null)
+            StopCoroutine("ChangeUnitColor");
+
+            float timer = 0f;
     
 
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
@@ -160,8 +165,12 @@ public class Unit : MonoBehaviour
         {
             timer += Time.deltaTime;
             yield return null;
+
+            if (gameObject != null)
+                StopCoroutine("ChangeUnitColor");
         }
 
+     
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(initSkeletonColor);
     }
 

@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 7648258333483483267}
   - component: {fileID: 7648258333483483266}
   - component: {fileID: 7648258333483483265}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: verity_skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7648258333483483267
 Transform:
   m_ObjectHideFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7648258333483483264}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.07052572, y: 3.8319485, z: -3.3591695}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4826,7 +4826,7 @@ GameObject:
   - component: {fileID: 7648258334186429137}
   - component: {fileID: 7648258334186429139}
   - component: {fileID: 7648258334186429138}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: side_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,14 +4840,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7648258334186429136}
-  m_LocalRotation: {x: -0, y: 0.3143398, z: -0, w: 0.9493106}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7648258333483483267}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 36.642, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7648258334186429139
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4931,7 +4931,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4984,7 +4984,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5100,7 +5100,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -6121,8 +6121,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.19607843}
+        key2: {r: 0, g: 0, b: 0, a: 0.19607843}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -6138,7 +6138,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 11951
-        atime2: 28334
+        atime2: 28527
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -9601,9 +9601,9 @@ ParticleSystemRenderer:
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 100
   m_CameraVelocityScale: 0
-  m_VelocityScale: 0.5
+  m_VelocityScale: 0.3
   m_LengthScale: 1
   m_SortingFudge: 0
   m_NormalDirection: 1
@@ -9638,7 +9638,7 @@ GameObject:
   - component: {fileID: 7648258334391143012}
   - component: {fileID: 7648258334391143014}
   - component: {fileID: 7648258334391143013}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: center_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9652,14 +9652,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7648258334391143011}
-  m_LocalRotation: {x: -0, y: 0.3143398, z: -0, w: 0.9493106}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7648258333483483267}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 36.642, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7648258334391143014
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9743,7 +9743,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.05
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -9796,7 +9796,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -9912,7 +9912,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -10494,7 +10494,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 50
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -10933,8 +10933,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.19607843}
+        key2: {r: 0, g: 0, b: 0, a: 0.19607843}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -14413,9 +14413,9 @@ ParticleSystemRenderer:
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 100
   m_CameraVelocityScale: 0
-  m_VelocityScale: -1
+  m_VelocityScale: 0.3
   m_LengthScale: 1
   m_SortingFudge: 0
   m_NormalDirection: 1
@@ -14450,7 +14450,7 @@ GameObject:
   - component: {fileID: 7648258334923384212}
   - component: {fileID: 7648258334923384214}
   - component: {fileID: 7648258334923384213}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: back_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14465,7 +14465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7648258334923384211}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.07052572, y: -3.3591695, z: -3.8319497}
+  m_LocalPosition: {x: -0.5, y: 0, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14724,7 +14724,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 70
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -15803,8 +15803,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.19607843}
+        key2: {r: 0, g: 0, b: 0, a: 0.19607843}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
