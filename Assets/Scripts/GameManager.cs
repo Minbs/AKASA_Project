@@ -84,9 +84,6 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
-
-
-
         if (unitSetMode)
         {
             Vector3 pos = unitSetTile.transform.position;
@@ -141,6 +138,7 @@ public class GameManager : Singleton<GameManager>
                     MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
                     .GetComponent<Minion>().minionWaitingTime;
                 BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
+                BattleUIManager.Instance.isCostCheck = true;
 
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
@@ -168,15 +166,11 @@ public class GameManager : Singleton<GameManager>
                 minionsList.Add(hero);
                 hero.SetActive(true);
             }
-
-
         }
         else
         {
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
-
-
                 if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
                 {
                     if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
@@ -186,10 +180,6 @@ public class GameManager : Singleton<GameManager>
                         unitSetTile = raycastHit.collider.gameObject;
                         unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
                     }
-
-
-
-
                     if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
@@ -201,21 +191,12 @@ public class GameManager : Singleton<GameManager>
 
                     rayNode = raycastHit.collider.GetComponent<Tile>().node;
                 }
-
-
-
             }
             else
             {
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
             }
         }
-
-
-
-
-
-
     }
 
     public void CanSetTile()

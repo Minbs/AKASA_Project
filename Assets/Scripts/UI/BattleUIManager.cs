@@ -57,6 +57,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> tBG = new List<GameObject>();
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
+    public bool isCostCheck = true;
     bool isSoundCheck = true;
 
     public GameObject wBG;
@@ -207,7 +208,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < wBG.transform.childCount; i++)
         {
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
-            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
         }
 
         for (int i = 0; i < 12; i++)
@@ -364,11 +364,16 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.heroPrefabs.Count <= index)
-            return;
+        if (isCostCheck == true)
+        {
+            if (MinionManager.Instance.heroPrefabs.Count <= index)
+                return;
 
-        GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
-        costText.text = GameManager.Instance.cost.ToString();
+            GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
+            Debug.Log(MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost);
+            costText.text = GameManager.Instance.cost.ToString();
+            isCostCheck = false;
+        }
     }
 
     public void DeploymentMinion(int index)
@@ -381,8 +386,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
                 if (!tBG[index].activeSelf)
                 {
-                    mBtn[index].MBtnTBGPosition();
                     tBG[index].SetActive(true);
+                    mBtn[index].MBtnTBGPosition();
                     isCheck = true;
                 }
             }

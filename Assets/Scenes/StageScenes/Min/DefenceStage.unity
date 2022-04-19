@@ -463,6 +463,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 1.468262
       objectReference: {fileID: 0}
+    - target: {fileID: 878158706232915361, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebbd43067d7c27449ab366b55186aa8f, type: 2}
+    - target: {fileID: 878158706554562771, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ebbd43067d7c27449ab366b55186aa8f, type: 2}
     - target: {fileID: 1670594397369110939, guid: c2a576b5c6e40c94eb3e0e921b625ba3, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -554,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b68dea8ba1788942a57eddf85e9262b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 20
+  cost: 10
   waitTimer: 2
   battleTime: 180
   state: 0
@@ -2083,7 +2091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3615521047221733571, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: regenTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3615521047221733571, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: maxEnemyCount
@@ -4190,6 +4198,7 @@ MonoBehaviour:
   tBG: []
   wTime: []
   isCheck: 0
+  isCostCheck: 1
   wBG: {fileID: 0}
   mBtn: []
 --- !u!4 &2025873268
