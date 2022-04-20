@@ -51,10 +51,10 @@ public class Minion : Unit
     public int currentStopCount { get; set; }
 
     public int cost;
-    public float minionStandbyTime;
+    public float minionStandbyTime { get; set; }
     public float minionWaitingTime;
 
-    public float currentSkillGauge;
+    public float currentSkillGauge { get; set; }
     public int maxSkillGauge;
 
     public Tile onTileNode { get; set; }
@@ -64,11 +64,11 @@ public class Minion : Unit
 
     public SkillType skillType;
 
-    public float healAmountRate = 100;
+    public float healAmountRate { get; set; }
 
-    public bool isNextBaseAttackEnhanced = false;
+    public bool isNextBaseAttackEnhanced { get; set; }
 
-    public bool isEnhanced = false;
+    public bool isEnhanced { get; set; }
 
     public GameObject shootPivot;
 
@@ -90,6 +90,7 @@ public class Minion : Unit
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
+        healAmountRate = 100;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -115,7 +116,7 @@ public class Minion : Unit
 
         if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
         {
-            Debug.Log(e.Data.Name);
+    
 
             switch (skillType)
             {
@@ -348,8 +349,7 @@ public class Minion : Unit
         if (activeSkillAbilities.Count <= 0)
             return;
 
-        Debug.Log(activeSkillAbilities.Count);
-        Debug.Log(activeSkillAbilities[0].power);
+      
 
         for (int i = 0; i < activeSkillAbilities.Count; i++)
         {
@@ -361,7 +361,7 @@ public class Minion : Unit
 
     IEnumerator PerformSkill(SkillAbility skillAbility)
     {
-        Debug.Log("aa");
+
 
         List<GameObject> targets = new List<GameObject>();
 
