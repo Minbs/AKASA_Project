@@ -8,8 +8,11 @@ public class Bullet : MonoBehaviour
     private float speed;
     private int damage;
     private GameObject target;
-    
-    
+
+    public SkillAbility skillAbility;
+    public float duration;
+    public bool isPoison = false;
+    public float power;
 
     void Start()
     {
@@ -44,8 +47,13 @@ public class Bullet : MonoBehaviour
 
         if(Vector3.Distance(transform.position, target.transform.position) <= 0.01f )
         {
+
+            target.GetComponent<Unit>().Poison(skillAbility, damage, duration);
+            
             ObjectPool.Instance.PushToPool("Bullet", gameObject);
             target.GetComponent<Unit>().Deal(damage);
+
+      
 
             if(damage > 0)
             EffectManager.Instance.InstantiateAttackEffect("hit", transform.position);
@@ -56,4 +64,6 @@ public class Bullet : MonoBehaviour
         Vector3 des = target.transform.position;
         transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
     }
+
+
 }

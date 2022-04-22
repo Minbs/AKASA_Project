@@ -4,8 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
-using Spine;
-using Event = Spine.Event;
+
 public enum Direction
 {
     LEFT,
@@ -18,23 +17,27 @@ public enum Direction
 
 public class Unit : MonoBehaviour
 {
-    public string poolItemName;
-    public int maxHp;
-    public int currentHp;
-    public Image healthBar;
 
+    public string poolItemName;
+
+    [Header ("UnitStat")]
+    public int maxHp;
+    public int currentHp { get; set; }
+  
+    
     public int atk;
     public float def;
 
-    public float attackSpeed = 1;
+    public float attackSpeed { get; set; }
 
-
+    private bool isPoisoned = false;
 
     public Direction direction { get; set; }
 
     public SpineAnimation spineAnimation { get; set; }
 
     public GameObject target { get; set; }
+    public Image healthBar;
 
     public SkeletonDataAsset skeletonData { get; set; }
 
@@ -61,7 +64,41 @@ public class Unit : MonoBehaviour
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
         currentHp = maxHp;
+        attackSpeed = 1;
         UpdateHealthbar();
+    }
+
+    public void Poison(SkillAbility skillAbility, int damage, float duration)
+    {
+        if(isPoisoned == false)
+        StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
+    }
+    public IEnumerator PoisionCorutine(SkillAbility skillAbility, int damage, float duration)
+    {
+        float timer = 0f;
+
+        float damageTimer = 0;
+        float damageDelay = 1;
+
+        isPoisoned = true;
+
+        StartCoroutine( EffectManager.Instance.InstantiateHomingEffect("isabella_skill", gameObject, duration));
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            damageTimer += Time.deltaTime;
+            if (damageTimer >= damageDelay)
+            {
+                damageTimer = 0;
+                currentHp -= (int)(damage);
+                UpdateHealthbar();
+            }
+
+            yield return null;
+        }
+
+        isPoisoned = false;
     }
 
 
@@ -71,14 +108,17 @@ public class Unit : MonoBehaviour
         float damageSum = 0;
         damageSum = damage;
 
+
+
         if (damage < 0) //heal
         {
+            if(gameObject.activeInHierarchy)
             StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
         }
         else
         {
-        StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
-            //Debug.Log((1 / (1 + (float)def)));
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
             damageSum *= (1 / (1 + def));
         }
 
@@ -90,10 +130,9 @@ public class Unit : MonoBehaviour
         UpdateHealthbar();
     }
 
-    public void UpdateHealthbar()
-    {
-        healthBar.fillAmount = (float)currentHp / maxHp;
-    }
+    public void UpdateHealthbar() => healthBar.fillAmount = (float)currentHp / maxHp;
+
+
 
     public void SetDirection(Direction direction)
     {
@@ -116,7 +155,10 @@ public class Unit : MonoBehaviour
 
     public IEnumerator ChangeUnitColor(Color color, float duration)
     {
-        float timer = 0f;
+        if (gameObject != null)
+            StopCoroutine("ChangeUnitColor");
+
+            float timer = 0f;
     
 
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
@@ -126,8 +168,12 @@ public class Unit : MonoBehaviour
         {
             timer += Time.deltaTime;
             yield return null;
+
+            if (gameObject != null)
+                StopCoroutine("ChangeUnitColor");
         }
 
+     
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(initSkeletonColor);
     }
 

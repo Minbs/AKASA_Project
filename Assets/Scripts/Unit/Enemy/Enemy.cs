@@ -10,6 +10,8 @@ public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
+
+    [Header("EnemyStat")]
     public float speed;
     public AttackType attackType;
     public float attackRangeDistance;
@@ -117,7 +119,7 @@ public class Enemy : Unit
             {
                 foreach (var minion in GameManager.Instance.minionsList)
                 {
-                    if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance)
+                    if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance && minion.GetComponent<Minion>().currentStopCount > 0)
                     {
                         target = minion;
 
@@ -167,6 +169,16 @@ public class Enemy : Unit
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs( transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
 
             spineAnimation.PlayAnimation(skinName + "/attack", false, 1);
+
+            switch (attackType)
+            {
+                case AttackType.Melee:
+                    MeleeAttack();
+                    break;
+                case AttackType.HitScan:
+                    HitScanAttack();
+                    break;
+            }
         }
     }
 
@@ -182,6 +194,8 @@ public class Enemy : Unit
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
+        Debug.Log(e.Data.Name);
+
         if (e.Data.Name == "shoot")
         {
             switch(attackType)

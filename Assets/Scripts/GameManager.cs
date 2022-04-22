@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
             ShowAttackRangeTiles();
         }
 
-        if(battleTime <= 0 && state == State.BATTLE)
+        if (battleTime <= 0 && state == State.BATTLE)
         {
             battleTime -= Time.deltaTime;
         }
@@ -84,20 +84,17 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowAttackRangeTiles()
     {
-
-
-
         if (unitSetMode)
         {
             Vector3 pos = unitSetTile.transform.position;
             pos += heroSetPosition;
-          
+
             BattleUIManager.Instance.isSettingCharacterOn = false;
             BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
             Vector2 vec = Input.mousePosition - unitSetCameraPos;
-            
-            float dot = Vector2.Dot(vec.normalized,new Vector2(0, 1)); //앞뒤 판별
-            Vector3 cross = Vector3.Cross(vec.normalized, new Vector2(0,1)); //좌우 판별
+
+            float dot = Vector2.Dot(vec.normalized, new Vector2(0, 1)); //앞뒤 판별
+            Vector3 cross = Vector3.Cross(vec.normalized, new Vector2(0, 1)); //좌우 판별
 
             List<Node> temp = new List<Node>();
             Direction direction = Direction.LEFT;
@@ -141,6 +138,7 @@ public class GameManager : Singleton<GameManager>
                     MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
                     .GetComponent<Minion>().minionWaitingTime;
                 BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
+                BattleUIManager.Instance.isCostCheck = true;
 
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
@@ -150,7 +148,7 @@ public class GameManager : Singleton<GameManager>
                 BattleUIManager.Instance.settingCharacter.SetActive(false);
                 BattleUIManager.Instance.isSettingCharacterOn = true;
                 hero.GetComponent<Unit>().SetDirection(direction);
-              //  hero.GetComponent<Minion>().onTile.no
+                //  hero.GetComponent<Minion>().onTile.no
                 scale.x = Mathf.Abs(scale.x);
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
                 foreach (var tile in temp)
@@ -168,15 +166,11 @@ public class GameManager : Singleton<GameManager>
                 minionsList.Add(hero);
                 hero.SetActive(true);
             }
-          
-
         }
         else
         {
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
-
-
                 if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
                 {
                     if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
@@ -186,10 +180,6 @@ public class GameManager : Singleton<GameManager>
                         unitSetTile = raycastHit.collider.gameObject;
                         unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
                     }
-
-
-
-
                     if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
@@ -201,26 +191,17 @@ public class GameManager : Singleton<GameManager>
 
                     rayNode = raycastHit.collider.GetComponent<Tile>().node;
                 }
-
-
-           
             }
             else
             {
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
             }
         }
-
-
-
-
-
-
     }
 
     public void CanSetTile()
     {
-            tileSetMode = true;
+        tileSetMode = true;
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {

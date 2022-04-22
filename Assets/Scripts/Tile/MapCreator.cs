@@ -6,20 +6,6 @@ using System.Linq;
 
 public class MapCreator
 {
-    // Start is called before the first frame update
-
-    
-
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Load()
     {
         InitTiles();
@@ -43,8 +29,7 @@ public class MapCreator
                 tile.AddComponent<BoxCollider>();
             }
 
-            BoardManager.Instance.tilesList.Add(tile.GetComponent<Tile>());
-  
+            BoardManager.Instance.tilesList.Add(tile.GetComponent<Tile>()); 
         }
 
 
@@ -56,10 +41,7 @@ public class MapCreator
 
     void ReadTilesInfo()
     {
-        string textFile = Resources.Load<TextAsset>("Datas/TileInfo_Stage1") .text;
-        //   StringReader stringReader = new StringReader(textFile.text);
-
-        //    Debug.Log(stringReader.ReadToEnd());
+        string textFile = Resources.Load<TextAsset>("Datas/StageTileInfo/StageTileInfo_Stage1") .text;
         StringReader stringReader = new StringReader(textFile);
 
         int tileCount = 0;
