@@ -58,6 +58,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
     bool isSoundCheck = true;
+    public bool isCostCheck = false;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
