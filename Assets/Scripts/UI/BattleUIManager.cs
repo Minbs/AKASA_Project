@@ -43,7 +43,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
 
-    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
+    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bet
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]

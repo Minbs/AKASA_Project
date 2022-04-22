@@ -10,6 +10,7 @@ public struct Node
     {
         this.row = copy.row;
         this.column = copy.column;
+        this.row = copy.row;
     }
 
     public Node(int row, int column)
@@ -17,14 +18,30 @@ public struct Node
         this.row = row;
         this.column = column;
     }
-    
-    public static Node operator +(Node p1, Node p2) => new Node(p1.row + p2.row, p1.column + p2.column);
 
-    public static Node operator-(Node p1, Node p2) => new Node(p1.row - p2.row, p1.column - p2.column);
+    public static Node operator +(Node n1, Node n2) => new Node(n1.row + n2.row, n1.column + n2.column);
 
-    public static bool operator==(Node p1, Node p2) => ((p1.row == p2.row) && (p1.column == p2.column));
+    public static Node operator -(Node n1, Node n2) => new Node(n1.row - n2.row, n1.column - n2.column);
 
-    public static bool operator !=(Node p1, Node p2) => !(p1 == p2);
+
+    public static bool operator ==(Node n1, Node n2) => (n1.Equals(n2));
+
+    public static bool operator !=(Node n1, Node n2) => !n1.Equals(n2);
+
+    /// <summary>
+    /// struct key를 사용하는 Dictionary 최적화 
+    /// </summary>
+    public override bool Equals(object obj)
+    {
+        if (obj is Node)
+        {
+            Node node = (Node)obj;
+            return row.Equals(node.row) && column.Equals(node.column);
+        }
+        return false;
+    }
+
+    public override int GetHashCode() =>  column ^ row;
 
     public override string ToString()
     {

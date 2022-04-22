@@ -169,11 +169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolItemName: 
   maxHp: 120
-  currentHp: 0
-  healthBar: {fileID: 5814845813638632022}
   atk: 20
   def: 0
-  attackSpeed: 1
+  healthBar: {fileID: 5814845813638632022}
   minionClass: 0
   attackRangeNodes:
   - row: 0
@@ -184,9 +182,7 @@ MonoBehaviour:
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   stopCount: 2
   cost: 6
-  minionStandbyTime: 0
   minionWaitingTime: 25
-  currentSkillGauge: 0
   maxSkillGauge: 10
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: 67833d8fc1aa7084eba5b5e34dbbab1e, type: 2}
@@ -197,9 +193,6 @@ MonoBehaviour:
     excludeSelf: 0
   activeSkillType: 0
   skillType: 1
-  healAmountRate: 100
-  isNextBaseAttackEnhanced: 0
-  isEnhanced: 0
   shootPivot: {fileID: 0}
 --- !u!1001 &2380400476443150801
 PrefabInstance:

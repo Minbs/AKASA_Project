@@ -26,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void ReadEnemySpawnData()
     {
-		TextAsset textFile = Resources.Load("Datas/SpawnInfo_Stage1") as TextAsset;
+		TextAsset textFile = Resources.Load("Datas/EnemySpawnInfo/EnemySpawnInfo_Stage1") as TextAsset;
 		StringReader stringReader = new StringReader(textFile.text);
 		string line = stringReader.ReadLine();
 

@@ -5,13 +5,13 @@ using UnityEngine;
 public class EffectManager : Singleton<EffectManager>
 {
     public List<GameObject> effectsList;
-    // Start is called before the first frame update
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         

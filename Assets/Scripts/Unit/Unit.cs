@@ -4,8 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
-using Spine;
-using Event = Spine.Event;
+
 public enum Direction
 {
     LEFT,
@@ -18,15 +17,18 @@ public enum Direction
 
 public class Unit : MonoBehaviour
 {
-    public string poolItemName;
-    public int maxHp;
-    public int currentHp;
-    public Image healthBar;
 
+    public string poolItemName;
+
+    [Header ("UnitStat")]
+    public int maxHp;
+    public int currentHp { get; set; }
+  
+    
     public int atk;
     public float def;
 
-    public float attackSpeed = 1;
+    public float attackSpeed { get; set; }
 
     private bool isPoisoned = false;
 
@@ -34,7 +36,8 @@ public class Unit : MonoBehaviour
 
     public SpineAnimation spineAnimation { get; set; }
 
-    public GameObject target;
+    public GameObject target { get; set; }
+    public Image healthBar;
 
     public SkeletonDataAsset skeletonData { get; set; }
 
@@ -61,6 +64,7 @@ public class Unit : MonoBehaviour
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
         currentHp = maxHp;
+        attackSpeed = 1;
         UpdateHealthbar();
     }
 
@@ -126,10 +130,9 @@ public class Unit : MonoBehaviour
         UpdateHealthbar();
     }
 
-    public void UpdateHealthbar()
-    {
-        healthBar.fillAmount = (float)currentHp / maxHp;
-    }
+    public void UpdateHealthbar() => healthBar.fillAmount = (float)currentHp / maxHp;
+
+
 
     public void SetDirection(Direction direction)
     {

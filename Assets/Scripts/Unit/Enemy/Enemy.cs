@@ -10,6 +10,8 @@ public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
+
+    [Header("EnemyStat")]
     public float speed;
     public AttackType attackType;
     public float attackRangeDistance;

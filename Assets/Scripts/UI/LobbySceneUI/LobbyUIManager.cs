@@ -174,21 +174,18 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     public void ShowSettingScene()
     {
         Debug.Log("설정 씬 보여주기");
-
     }
 
     public void LoadStageSelectScene()
     {
         SceneManager.LoadScene("StageSelectScene");
         Debug.Log("스테이지 선택 씬 보여주기");
-
     }
 
     public void LoadStageScene()
     {
         SceneManager.LoadScene("DefenceStage");
         Debug.Log("스테이지 선택 씬 보여주기");
-
     }
 
     public void PreparingButton()
@@ -246,14 +243,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         PanelCancel();
         LoadMainScene();
     }
-    public void ShowPanel(GameObject obj)
-    {
-        obj.SetActive(true);
-    }
-    public void HidePanel(GameObject obj)
-    {
-        obj.SetActive(false);
-    }
+    public void SetPanelActive(GameObject obj , bool b) => obj.SetActive(b);
+
     public void PanelCancel()
     {
         ConfirmBtn.onClick.RemoveAllListeners();
@@ -263,13 +254,17 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     void CreateSaveDirectory()
     {
-        //string filePath = Application.dataPath + "/Resources";
-        //if (!Directory.Exists(filePath))
-        //    AssetDatabase.CreateFolder("Assets", "Resources");
-        //filePath += "/Levels";
-        //if (!Directory.Exists(filePath))
-        //    AssetDatabase.CreateFolder("Assets/Resource", "Levels");
-        //AssetDatabase.Refresh();
+        #if UNITY_EDITOR
+
+        string filePath = Application.dataPath + "/Resources";
+        if (!Directory.Exists(filePath))
+            AssetDatabase.CreateFolder("Assets", "Resources");
+        filePath += "/Levels";
+        if (!Directory.Exists(filePath))
+            AssetDatabase.CreateFolder("Assets/Resource", "Levels");
+        AssetDatabase.Refresh();
+
+       #endif
     }
 
 
@@ -292,6 +287,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         StageName_Text.text = obj.GetComponent<StageInfo>().pro_stagename;
         BestLvText.text = "Best Lv: " + obj.GetComponent<StageInfo>().pro_BestLv.ToString();
     }
+
     public void HideStageInfo()
     {
         StageManager.Instance.PopTargetStage();

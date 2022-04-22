@@ -5,6 +5,7 @@ using System.Linq;
 using Spine.Unity;
 using Spine;
 using Event = Spine.Event;
+
 public enum MinionClass
 {
     Buster,
@@ -39,16 +40,20 @@ public enum ActiveSkillType
 
 public class Minion : Unit
 {
+    [Header("MinionStat")]
     public MinionClass minionClass;
 
     public List<Node> attackRangeNodes = new List<Node>();
     public List<Tile> attackRangeTiles { get; set; }
 
     public AttackType attackType;
-    public Sprite bulletSprite;
 
+    [DrawIf("minionClass", MinionClass.Buster)]
     public int stopCount; // ÀúÁö ¼ö
+
+
     public int currentStopCount { get; set; }
+
 
     public int cost;
     public float minionStandbyTime { get; set; }
@@ -62,15 +67,26 @@ public class Minion : Unit
     public List<SkillAbility> activeSkillAbilities = new List<SkillAbility>();
     public ActiveSkillType activeSkillType;
 
+
+    public Sprite bulletSprite;
+
     public SkillType skillType;
 
     public float healAmountRate { get; set; }
 
+
+
     public bool isNextBaseAttackEnhanced { get; set; }
+
+
+    public GameObject shootPivot;
+    [DrawIf("attackType", AttackType.Bullet)]
+
+
+
 
     public bool isEnhanced { get; set; }
 
-    public GameObject shootPivot;
 
 
     private void Awake()
@@ -558,9 +574,5 @@ public class Minion : Unit
         AttackTarget();
 
     }
-
-
-
-
-
 }
+
