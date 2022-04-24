@@ -22,7 +22,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     void Update()
     {
         if(MinionManager.Instance.heroQueue.Count != 0)
-        hero = MinionManager.Instance.heroQueue[index];
+        hero = MinionManager.Instance.heroQueue[index].GetComponent<DefenceMinion>();
 
         if (BattleUIManager.Instance.isCheck == true)
         {

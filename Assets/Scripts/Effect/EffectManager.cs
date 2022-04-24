@@ -55,7 +55,7 @@ public class EffectManager : Singleton<EffectManager>
 
         while (timer < duration)
         {
-            if (target == null || !target.activeSelf && target.GetComponent<Unit>().currentHp <= 0)
+            if (target == null || !target.activeSelf || target.GetComponent<Unit>().currentHp <= 0)
             {
                 Destroy(effect);
                 break;

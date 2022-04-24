@@ -57,7 +57,7 @@ public class Enemy : Unit
             if(target == null || (attackDelayTimer < attackDelayDuration && attackType == AttackType.HitScan &&
                 (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1))))
             {
-              Move();
+                Move();
             }
             else
             {

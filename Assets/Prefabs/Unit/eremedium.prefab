@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758246430292652753}
-  m_LocalRotation: {x: -0.60876137, y: 0, z: 0, w: 0.7933534}
+  m_LocalRotation: {x: -0.46174863, y: 0, z: 0, w: 0.8870109}
   m_LocalPosition: {x: 0, y: 0, z: 0.15}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6208362256301881260}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -55, y: 0, z: 0}
 --- !u!33 &7038330258952526154
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -169,11 +169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolItemName: 
   maxHp: 60
-  currentHp: 0
-  healthBar: {fileID: 1609300146875696240}
   atk: 10
   def: 0
-  attackSpeed: 1
+  healthBar: {fileID: 1609300146875696240}
   minionClass: 6
   attackRangeNodes:
   - row: 0
@@ -201,12 +199,9 @@ MonoBehaviour:
   - row: -3
     column: 1
   attackType: 2
-  bulletSprite: {fileID: 21300000, guid: c4819ffcc87ff6d4795099953b7113eb, type: 3}
   stopCount: 0
   cost: 9
-  minionStandbyTime: 0
   minionWaitingTime: 60
-  currentSkillGauge: 0
   maxSkillGauge: 20
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: be71190df5dd62d41b7231278e46260c, type: 2}
@@ -216,10 +211,8 @@ MonoBehaviour:
     rangeNodes: []
     excludeSelf: 0
   activeSkillType: 0
+  bulletSprite: {fileID: 21300000, guid: c4819ffcc87ff6d4795099953b7113eb, type: 3}
   skillType: 0
-  healAmountRate: 100
-  isNextBaseAttackEnhanced: 0
-  isEnhanced: 0
   shootPivot: {fileID: 0}
 --- !u!1001 &7489480818512568311
 PrefabInstance:

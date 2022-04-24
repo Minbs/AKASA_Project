@@ -11,7 +11,7 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
 
     public State state;
 
-    public EnemySpawner spawner;
+    public OffenceEnemySpawner spawner;
 
     bool tileSetMode = false;
 
@@ -37,8 +37,13 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
 
     private Vector3 unitSetCameraPos;
 
+    public Tile startTile;
+    public Tile endTile;
+
     [SerializeField]
     public List<Tile> tilesList = new List<Tile>();
+
+    public int currentWave = 1;
 
     void Start()
     {
@@ -63,7 +68,7 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
         }
 
 
-        var result =tilesList.OrderBy(x => Mathf.Ceil(x.transform.position.x) / 100).ThenByDescending(x => x.transform.position.z); // 타일 위치 기준으로 리스트 정렬
+        var result =tilesList.OrderByDescending(x => Mathf.Ceil(x.transform.position.x) / 100).ThenByDescending(x => x.transform.position.z); // 타일 위치 기준으로 리스트 정렬
         tilesList = result.ToList();
 
         int rowCount = 0;
@@ -72,6 +77,11 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
             tile.GetComponent<Tile>().node.row = rowCount;
             rowCount++;
         }
+
+        startTile = tilesList[0];
+        endTile = tilesList[tilesList.Count - 1];
+
+        StartCoroutine(spawner.Spawn());
     }
 
     void Update()
@@ -80,6 +90,7 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
 
         ray = tileCamera.ScreenPointToRay(Input.mousePosition);
 
+        ShowAttackRangeTiles();
     }
 
     public void ShowAttackRangeTiles()
@@ -89,8 +100,10 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
             Vector3 pos = unitSetTile.transform.position;
             pos += heroSetPosition;
 
-            BattleUIManager.Instance.isSettingCharacterOn = false;
-            BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
+            OffenceModeUIManager.Instance.isSettingCharacterOn = false;
+            OffenceModeUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
+
+            /*
             Vector2 vec = Input.mousePosition - unitSetCameraPos;
 
             float dot = Vector2.Dot(vec.normalized, new Vector2(0, 1)); //앞뒤 판별
@@ -130,62 +143,41 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
                 scale.x = Mathf.Abs(scale.x);
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
             }
+            */
+            startTile.canOffenceUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, false);
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
-                    .GetComponent<DefenceMinion>().minionStandbyTime =
-                    MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
-                    .GetComponent<DefenceMinion>().minionWaitingTime;
-                BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
-                BattleUIManager.Instance.isCostCheck = true;
+   
 
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
-                unitSetTile.GetComponent<Tile>().isOnUnit = true;
                 unitSetMode = false;
                 tileSetMode = false;
-                BattleUIManager.Instance.settingCharacter.SetActive(false);
-                BattleUIManager.Instance.isSettingCharacterOn = true;
+                OffenceModeUIManager.Instance.settingCharacter.SetActive(false);
+   
+                OffenceModeUIManager.Instance.isSettingCharacterOn = true;
+                /*
                 hero.GetComponent<Unit>().SetDirection(direction);
                 scale.x = Mathf.Abs(scale.x);
                 BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-                foreach (var tile in temp)
-                {
-                    if (BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile) != null)
-                        hero.GetComponent<DefenceMinion>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
-                }
-
-                foreach (var tile in BoardManager.Instance.tilesList)
-                {
-                    tile.canUnitSetTile(hero.GetComponent<DefenceMinion>().minionClass, false);
-                }
-                BattleUIManager.Instance.ShowAttackRangeTiles(false);
-                unitSetTile = null;
+                */
                 minionsList.Add(hero);
                 hero.SetActive(true);
-            }
+            
         }
         else
         {
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
-                if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
+       //         Debug.Log(raycastHit.collider.name);
+                if (raycastHit.collider.GetComponent<Tile>() == startTile)
                 {
-                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass))
+  
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        //  tileSetMode = false;
+                        tileSetMode = false;
                         unitSetMode = true;
                         unitSetTile = raycastHit.collider.gameObject;
                         unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
-                    }
-                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass))
-                    {
-                        BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
-                    }
-                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass))
-                    {
-                        BattleUIManager.Instance.ShowAttackRangeTiles(false);
                     }
 
                     rayNode = raycastHit.collider.GetComponent<Tile>().node;
@@ -193,7 +185,7 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
             }
             else
             {
-                BattleUIManager.Instance.ShowAttackRangeTiles(false);
+               // BattleUIManager.Instance.ShowAttackRangeTiles(false);
             }
         }
     }
@@ -202,10 +194,9 @@ public class OffenseModeGameManager : Singleton<OffenseModeGameManager>
     {
         tileSetMode = true;
 
-        foreach (var tile in BoardManager.Instance.tilesList)
-        {
-            tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass, true);
-        }
+
+            startTile.canOffenceUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, true);
+        
 
     }
 }

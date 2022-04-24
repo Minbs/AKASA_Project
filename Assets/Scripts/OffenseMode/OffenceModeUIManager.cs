@@ -60,8 +60,8 @@ public class OffenceModeUIManager : Singleton<OffenceModeUIManager>
         if (isSettingCharacterOn)
             SetSettingCharacterMousePosition();
 
-      
-        
+
+        RegenCost();
     }
 
     public void SetSettingCharacterMousePosition()

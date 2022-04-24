@@ -6,17 +6,7 @@ using Spine.Unity;
 using Spine;
 using Event = Spine.Event;
 
-public enum MinionClass
-{
-    Buster,
-    Paladin,
-    Guardian,
-    Assassin,
-    Chaser,
-    Mage,
-    Rescue,
-    TacticalSupport
-}
+
 
 public enum AttackType
 {
@@ -41,7 +31,6 @@ public enum ActiveSkillType
 public class DefenceMinion : Minion
 {
     [Header("MinionStat")]
-    public MinionClass minionClass;
 
     public List<Node> attackRangeNodes = new List<Node>();
     public List<Tile> attackRangeTiles { get; set; }

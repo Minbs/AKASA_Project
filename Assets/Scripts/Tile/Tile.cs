@@ -93,9 +93,23 @@ public class Tile : MonoBehaviour
             else
                 renderer.materials[i].color = colors[i];
         }
+    }
 
+    public void canOffenceUnitSetTile(MinionClass minionClass, bool isActive)
+    {
 
+        for (int i = 0; i < renderer.materials.Length; i++)
+        {
+            renderer.materials[i].color = colors[i];
+        }
 
+        if (!isActive)
+            return;
+
+        for (int i = 0; i < renderer.materials.Length; i++)
+        {
+                renderer.materials[i].color = Color.Lerp(colors[i], new Color(0, 1, 0), 0.3f);
+        }
     }
 
     public bool onTile(Transform enemy)

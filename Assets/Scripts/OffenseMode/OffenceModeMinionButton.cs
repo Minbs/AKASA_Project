@@ -32,7 +32,7 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        /*
+        
         if (OffenseModeGameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<OffenceMinion>().cost)
             return;
 
@@ -51,7 +51,7 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
         OffenceModeUIManager.Instance.settingCharacter.SetActive(true);
 
         // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
-        */
+        
     }
 
     public void MBtnTBGPosition()

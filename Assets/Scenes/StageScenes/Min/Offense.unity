@@ -157,7 +157,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe3d405a9943c4498f7728d44c5944f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPool: []
+  objectPool:
+  - poolItemName: Enemy1
+    prefab: {fileID: 6299139124071220322, guid: 1ffe19503e3874e4d8079b4ef71e9540, type: 3}
+    poolCount: 10
+    poolList: []
+  - poolItemName: Enemy2
+    prefab: {fileID: 6299139124071220322, guid: 9e4ea238876b3a14da18471deecf30ad, type: 3}
+    poolCount: 10
+    poolList: []
+  - poolItemName: Bullet
+    prefab: {fileID: 2723945548647100095, guid: 86ab89a11f3624b45abeaed18b7332e1, type: 3}
+    poolCount: 10
+    poolList: []
 --- !u!4 &98037801
 Transform:
   m_ObjectHideFlags: 0
@@ -204,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 20
   state: 0
-  spawner: {fileID: 0}
+  spawner: {fileID: 1258642131}
   tileCamera: {fileID: 638336736}
   characterCamera: {fileID: 532741028}
   gameSpeed: 1
@@ -213,7 +225,10 @@ MonoBehaviour:
   minionsList: []
   heroesListIndex: 0
   unitSetMode: 0
+  startTile: {fileID: 0}
+  endTile: {fileID: 0}
   tilesList: []
+  currentWave: 1
 --- !u!4 &210876303
 Transform:
   m_ObjectHideFlags: 0
@@ -246,8 +261,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d69988b3fc494c96d419b8d24f566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
+  index: 1
   minion: {fileID: 0}
+--- !u!114 &443958248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3615521047025482566, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+  m_PrefabInstance: {fileID: 886613270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &470178506 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3615521047559379660, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
@@ -265,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d69988b3fc494c96d419b8d24f566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
+  index: 5
   minion: {fileID: 0}
 --- !u!1 &483093608 stripped
 GameObject:
@@ -284,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d69988b3fc494c96d419b8d24f566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
+  index: 4
   minion: {fileID: 0}
 --- !u!1 &532741026
 GameObject:
@@ -674,6 +700,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnDoubleSpeedBtn
       objectReference: {fileID: 0}
+    - target: {fileID: 2044753395340398004, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3615521047025482564, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -862,6 +892,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3615521047412933033, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3615521047449926955, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -913,6 +947,10 @@ PrefabInstance:
     - target: {fileID: 3615521047559379663, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615521047940369229, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3615521048085833152, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_IsActive
@@ -980,6 +1018,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3615521048346033582, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615521048455008210, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615521048495057345, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615521048539342769, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3615521048616003136, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
@@ -1377,7 +1427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d69988b3fc494c96d419b8d24f566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
+  index: 2
   minion: {fileID: 0}
 --- !u!1001 &1180782675
 PrefabInstance:
@@ -1386,7 +1436,23 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141288713966968464, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 239303732575328957, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 256234250909523118, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 298000551292618701, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 336113796142786496, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1394,7 +1460,27 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 373679861477988396, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 398168720834495105, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 400656862159291151, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 420703833659093901, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 426149160581558994, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 503428956248433948, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1410,11 +1496,27 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 559063251503743390, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 562967524851455466, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 618859872548763832, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 659947969430467511, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 751536838411285809, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 818114713148318774, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1438,6 +1540,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 1153505997204362421, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1253508340542994952, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 1255831061808487284, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -1447,6 +1557,14 @@ PrefabInstance:
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1400569520434778436, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402968996179056920, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460965916473559343, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1462,9 +1580,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 1639264151387913423, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
     - target: {fileID: 1642247569367828648, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655020399333566422, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1670594396325028820, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
@@ -1538,13 +1664,25 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 1673059305839647440, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 1914806749010529192, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 1928078336945195132, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1996260345874877461, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008980432909564816, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
       objectReference: {fileID: 0}
     - target: {fileID: 2012630820374681508, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_RootOrder
@@ -1598,6 +1736,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2064087591478405090, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
     - target: {fileID: 2072045655331622679, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -1610,6 +1752,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2330208015885305886, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2392501487446637571, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425167753921129938, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2438293823358252943, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -1618,7 +1772,23 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2513398910292526282, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560556047044104793, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2906695166165735497, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
     - target: {fileID: 2975524981555189315, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3097805935510164838, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1646,11 +1816,19 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 3662183845198112914, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3665791002547304225, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3688849902255498836, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3707181525037688832, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1666,7 +1844,23 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 3765995021514944289, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3885771414927754656, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3960728388003667674, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4017373801818947556, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020868731649217763, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1677,6 +1871,14 @@ PrefabInstance:
     - target: {fileID: 4090643360810652221, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155572068518429346, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 4171390549367199764, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
       objectReference: {fileID: 0}
     - target: {fileID: 4178589274300353999, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
@@ -1690,6 +1892,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 4377856467406376782, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4492862397695938987, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -1702,11 +1908,27 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 4767345085703565024, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 5088157575605376437, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5107487197786935250, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5145510574305754138, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156448564348447277, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5163671125606019809, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1718,11 +1940,19 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 5355285175270347792, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5375262594738379855, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5422337634427325889, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5525472574040167924, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1750,11 +1980,23 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 5856073583717700947, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
     - target: {fileID: 5926016899457803918, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5941060781514407656, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972154636214274810, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6016641263197601010, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1765,6 +2007,10 @@ PrefabInstance:
     - target: {fileID: 6038969927113897625, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6103278076112408307, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
       objectReference: {fileID: 0}
     - target: {fileID: 6169423072761665044, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
@@ -1790,6 +2036,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 6348665465713320732, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
     - target: {fileID: 6397736396431466938, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Tile
@@ -1799,6 +2049,14 @@ PrefabInstance:
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6521491903934373678, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604577408350524734, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669381507870450377, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1814,11 +2072,23 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 6837702997140465502, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6867601509569217154, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6983546964200723452, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Tile
       objectReference: {fileID: 0}
     - target: {fileID: 7176163967265186878, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246122589737569588, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1838,7 +2108,31 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 7632284103215182504, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7656223691580599644, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760662420012524171, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778698840166273531, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 7819672435014086859, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906783885868432225, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929354646137290128, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1854,7 +2148,19 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 8024368245735452673, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035040205689533632, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Tile
+      objectReference: {fileID: 0}
     - target: {fileID: 8047947834099055047, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080276450754032936, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1862,11 +2168,23 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 8247094879545592674, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8360923287793446286, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 8362983511062358324, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8392915463446298703, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432927996444840996, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1882,7 +2200,19 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 8720471965576454071, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8799273407918691582, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068377843161162226, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095584695976251465, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1892,6 +2222,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0916d92379398b40bb1514659bbd03d, type: 3}
+--- !u!1 &1258642130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1258642132}
+  - component: {fileID: 1258642131}
+  m_Layer: 0
+  m_Name: OffenceEnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1258642131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258642130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1fc240d0b007743af34a2bee2b5075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawnDatas: []
+  spawnTimer: 0
+--- !u!4 &1258642132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258642130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.48988172, y: -8.504879, z: -0.9458091}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1436030284 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3615521047221733570, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
@@ -1927,12 +2303,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroPrefabs:
-  - {fileID: 6208362256301881235, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-  - {fileID: 6208362256301881235, guid: 98e8528811d4e994787e593327e9d9ab, type: 3}
-  - {fileID: 6208362256301881235, guid: fb397419ebc89ea42823169c22d3da38, type: 3}
-  - {fileID: 6208362256301881235, guid: f51b816f7293ff34fa31694f0059c9e5, type: 3}
-  - {fileID: 6208362256301881235, guid: e4fd7dfd81332f148acad3ad98d6b1a4, type: 3}
-  - {fileID: 6208362256301881235, guid: 31685de70a1b1574a831c1e9c1514063, type: 3}
+  - {fileID: 6208362256301881235, guid: 85a84c7bbdab2cc42a3278b6a5f0b172, type: 3}
+  - {fileID: 6208362256301881235, guid: 9de522945e313aa429074eab4826ce23, type: 3}
+  - {fileID: 6208362256301881235, guid: 142e6ffa59f22624f831103455e0b5fe, type: 3}
+  - {fileID: 6208362256301881235, guid: 58ad0542e427dca4a957af3b74a59122, type: 3}
+  - {fileID: 6208362256301881235, guid: db5ce29b9bb27bd41b0a1def253cb10f, type: 3}
+  - {fileID: 6208362256301881235, guid: 883de6f5b8e0d184794bc8673d1e1ed0, type: 3}
   heroQueue: []
 --- !u!4 &1440665857
 Transform:
@@ -2017,7 +2393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831d69988b3fc494c96d419b8d24f566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
+  index: 3
   minion: {fileID: 0}
 --- !u!114 &1962367734
 MonoBehaviour:
@@ -2036,7 +2412,7 @@ MonoBehaviour:
   skeletonDataAsset: {fileID: 0}
   isSettingCharacterOn: 1
   text: []
-  costText: {fileID: 0}
+  costText: {fileID: 443958248}
   regenTime: 3
   minionBtnTranslucentBG: {fileID: 0}
   tBG: []

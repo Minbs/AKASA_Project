@@ -8,11 +8,8 @@ using Event = Spine.Event;
 
 public class OffenceMinion : Minion
 {
+    public float speed;
     [Header("MinionStat")]
-    public MinionClass minionClass;
-
-    public List<Node> attackRangeNodes = new List<Node>();
-    public List<Tile> attackRangeTiles { get; set; }
 
     public AttackType attackType;
 
@@ -48,25 +45,26 @@ public class OffenceMinion : Minion
 
 
     public GameObject shootPivot;
-    [DrawIf("attackType", AttackType.Bullet)]
+
 
 
 
 
     public bool isEnhanced { get; set; }
 
+    List<Tile> moveTiles = new List<Tile>();
 
+    public float attackRangeDistance;
 
     private void Awake()
     {
-        attackRangeTiles = new List<Tile>();
     }
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
+        if (OffenseModeGameManager.Instance != null)
         {
-            GameManager.Instance.minionsList.Remove(gameObject);
+            OffenseModeGameManager.Instance.minionsList.Remove(gameObject);
         }
     }
 
@@ -75,10 +73,14 @@ public class OffenceMinion : Minion
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
         healAmountRate = 100;
+
+        moveTiles = OffenseModeGameManager.Instance.tilesList.ToList();
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
+        Debug.Log(e.Data.Name);
+
         if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
         {
             switch (attackType)
@@ -195,79 +197,49 @@ public class OffenceMinion : Minion
         bulletObject.SetActive(true);
     }
 
-    public void AimTarget()
+    void AimTarget()
     {
-        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
-        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
-        var result = GameManager.Instance.minionsList.OrderBy(minion => minion.GetComponent<Unit>().currentHp);
-        GameManager.Instance.minionsList = result.ToList();
-
-        if (minionClass != MinionClass.Rescue)
+        if(minionClass == MinionClass.Rescue)
         {
-
-            if (target == null)
+            if (target == null && OffenseModeGameManager.Instance.minionsList.Count > 0)
             {
-
-                foreach (var enemy in GameManager.Instance.enemiesList)
+                foreach (var minion in OffenseModeGameManager.Instance.minionsList)
                 {
-                    foreach (var t in attackRangeTiles)
-                    {
-
-                        if ((t.onTile(enemy.transform) || (enemy.GetComponent<Unit>().target == gameObject && enemy.GetComponent<Enemy>().attackType == AttackType.Melee)) && enemy.GetComponent<Unit>().currentHp > 0)
-                        {
-                            target = enemy;
-
-                            return;
-                        }
-                    }
-
-                }
-            }
-            else
-            {
-                bool isOut = true;
-                foreach (var t in attackRangeTiles)
-                {
-
-                    if (t.onTile(target.transform))
-                    {
-                        isOut = false;
-                    }
-                }
-
-                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 && target.GetComponent<Unit>().target != gameObject || target.activeSelf == false)
-                    target = null;
-            }
-        }
-        else
-        {
-            if (target != null)
-                if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 || target.activeSelf == false)
-                {
-                    target = null;
-                }
-
-
-
-            foreach (var minion in GameManager.Instance.minionsList)
-            {
-                foreach (var t in attackRangeTiles)
-                {
-
-                    if (t.onTile(minion.transform) && minion.GetComponent<Unit>().currentHp < minion.GetComponent<Unit>().maxHp)
+                    if (Vector3.Distance(transform.position, minion.transform.position) <= attackRangeDistance && transform.position.x > minion.transform.position.x)
                     {
                         target = minion;
-
-                        return;
+                        break;
                     }
                 }
             }
-
-
+            else if (target != null)
+            {
+                if ((Vector3.Distance(transform.position, target.transform.position) > attackRangeDistance || transform.position.x <= target.transform.position.x) || target.GetComponent<Unit>().currentHp <= 0)
+                {
+                    target = null;
+                }
+            }
         }
 
+
+        if (target == null && OffenseModeGameManager.Instance.enemiesList.Count > 0)
+        {
+            foreach (var enemy in OffenseModeGameManager.Instance.enemiesList)
+            {
+                if (Vector3.Distance(transform.position, enemy.transform.position) <= attackRangeDistance && transform.position.x > enemy.transform.position.x)
+                {
+                    target = enemy;
+                    break;
+                }
+            }
+        }
+        else if (target != null)
+        {
+            if ((Vector3.Distance(transform.position, target.transform.position) > attackRangeDistance || transform.position.x <= target.transform.position.x) || target.GetComponent<Unit>().currentHp <= 0)
+            {
+                target = null;
+            }
+        }
     }
 
     public void AttackTarget()
@@ -287,40 +259,23 @@ public class OffenceMinion : Minion
             && normalizedTime >= 1)))
         {
 
-            Vector3 scale = Vector3.one;
-            if (target.transform.position.x - transform.position.x >= -0.001)
-            {
-                scale.x = 1;
-            }
-            else
-            {
-                scale.x = -1;
-            }
-
-            transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
-
             if (isNextBaseAttackEnhanced)
             {
                 if (activeSkillAbilities[0].abilityType.statusEffect.statusEffect != StatusEffect.StatusEffects.Poison)
                     isNextBaseAttackEnhanced = false;
 
                 spineAnimation.PlayAnimation(skinName + "/skill", false, 1 * attackSpeed);
+
             }
             else
             {
                 spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
             }
-
-
-
-
-
         }
 
         if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle")
         {
-
-            spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
+         //   spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
     #endregion
@@ -391,7 +346,6 @@ public class OffenceMinion : Minion
             float sum = atk;
             sum *= skillAbility.power / 100;
             atk = (int)sum;
-            //  Debug.Log("en : " + atk);
         }
 
         if (skillAbility.statType == StatType.DEF)
@@ -412,7 +366,6 @@ public class OffenceMinion : Minion
         if (skillAbility.statType == StatType.ATK)
         {
             atk = initAtk;
-            Debug.Log("end");
         }
 
         if (skillAbility.statType == StatType.DEF)
@@ -451,8 +404,8 @@ public class OffenceMinion : Minion
         float value = 0;
         float initSpeed = 0;
 
-        if (target.GetComponent<Enemy>() != null)
-            initSpeed = target.GetComponent<Enemy>().speed;
+        if (target.GetComponent<OffenceModeEnemy>() != null)
+            initSpeed = target.GetComponent<OffenceModeEnemy>().speed;
 
         switch (skillAbility.statType)
         {
@@ -463,7 +416,7 @@ public class OffenceMinion : Minion
                 break;
             case StatType.HealAmountRate:
                 value = skillAbility.power;
-                target.GetComponent<DefenceMinion>().healAmountRate = value;
+                target.GetComponent<OffenceMinion>().healAmountRate = value;
                 break;
             case StatType.DEF:
                 value = skillAbility.power / 100;
@@ -471,7 +424,7 @@ public class OffenceMinion : Minion
                 break;
             case StatType.MoveSpeed:
                 value = skillAbility.power / 100;
-                target.GetComponent<Enemy>().speed *= 1 + value;
+                target.GetComponent<OffenceModeEnemy>().speed *= 1 + value;
                 break;
 
         }
@@ -491,13 +444,14 @@ public class OffenceMinion : Minion
                 target.attackSpeed -= value;
                 break;
             case StatType.HealAmountRate:
-                target.GetComponent<DefenceMinion>().healAmountRate = 100;
+                target.GetComponent<OffenceMinion>().healAmountRate = 100;
                 break;
             case StatType.DEF:
                 target.def -= value;
                 break;
             case StatType.MoveSpeed:
-                target.GetComponent<Enemy>().speed = initSpeed;
+                if(target != null)
+                target.GetComponent<OffenceModeEnemy>().speed = initSpeed;
                 break;
         }
     }
@@ -507,23 +461,16 @@ public class OffenceMinion : Minion
     // Update is called once per frame
     void Update()
     {
+        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
+        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
+        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
+
         if (currentHp <= 0)
         {
             StartCoroutine(Die());
             return;
         }
 
-        if (attackType == AttackType.Melee)
-        {
-            currentStopCount = stopCount;
-            foreach (var enemy in GameManager.Instance.enemiesList)
-            {
-                if (enemy.GetComponent<Unit>().target == gameObject && enemy.GetComponent<Enemy>().attackType == AttackType.Melee)
-                {
-                    currentStopCount--;
-                }
-            }
-        }
 
         currentSkillGauge += Time.deltaTime;
 
@@ -541,5 +488,52 @@ public class OffenceMinion : Minion
         AimTarget();
         AttackTarget();
 
+
+        if (target == null &&
+            (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack"
+            || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1)
+            &&  (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/skill"
+            || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill" && normalizedTime >= 1))))
+        {
+            Move();
+        }
+
+
+
+
+    }
+
+
+    void Move()
+    {
+        if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/move")
+        {
+            spineAnimation.PlayAnimation(skinName + "/move", true, 1);
+
+        }
+
+
+
+
+
+        Vector3 des = moveTiles[0].transform.position;
+        //des.y = transform.position.y;
+        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, des) < 0.01f)
+        {
+            transform.position = des;
+
+
+            moveTiles.RemoveAt(0);
+
+
+        }
+
+        if (moveTiles.Count == 0)
+        {
+            OffenseModeGameManager.Instance.minionsList.Remove(gameObject);
+            Destroy(gameObject);
+        }
     }
 }
