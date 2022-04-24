@@ -119,7 +119,7 @@ public class Enemy : Unit
             {
                 foreach (var minion in GameManager.Instance.minionsList)
                 {
-                    if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance && minion.GetComponent<Minion>().currentStopCount > 0)
+                    if (Mathf.Abs(Vector3.Distance(transform.position, minion.transform.position)) < attackRangeDistance && minion.GetComponent<DefenceMinion>().currentStopCount > 0)
                     {
                         target = minion;
 

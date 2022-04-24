@@ -134,9 +134,9 @@ public class GameManager : Singleton<GameManager>
             if (Input.GetMouseButtonDown(0))
             {
                 MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
-                    .GetComponent<Minion>().minionStandbyTime =
+                    .GetComponent<DefenceMinion>().minionStandbyTime =
                     MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
-                    .GetComponent<Minion>().minionWaitingTime;
+                    .GetComponent<DefenceMinion>().minionWaitingTime;
                 BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
                 BattleUIManager.Instance.isCostCheck = true;
 
@@ -154,12 +154,12 @@ public class GameManager : Singleton<GameManager>
                 foreach (var tile in temp)
                 {
                     if (BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile) != null)
-                        hero.GetComponent<Minion>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
+                        hero.GetComponent<DefenceMinion>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
                 }
 
                 foreach (var tile in BoardManager.Instance.tilesList)
                 {
-                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, false);
+                    tile.canUnitSetTile(hero.GetComponent<DefenceMinion>().minionClass, false);
                 }
                 BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 unitSetTile = null;
@@ -173,18 +173,18 @@ public class GameManager : Singleton<GameManager>
             {
                 if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
                 {
-                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
+                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass))
                     {
                         //  tileSetMode = false;
                         unitSetMode = true;
                         unitSetTile = raycastHit.collider.gameObject;
                         unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
                     }
-                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
+                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass))
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
                     }
-                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
+                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass))
                     {
                         BattleUIManager.Instance.ShowAttackRangeTiles(false);
                     }
@@ -205,7 +205,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {
-            tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, true);
+            tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<DefenceMinion>().minionClass, true);
         }
 
     }

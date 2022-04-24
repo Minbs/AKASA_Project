@@ -11,7 +11,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
-    public Minion hero;
+    public DefenceMinion hero;
 
     void Start()
     {
@@ -21,8 +21,8 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        if (MinionManager.Instance.heroQueue.Count != 0)
-            hero = MinionManager.Instance.heroQueue[index];
+        if(MinionManager.Instance.heroQueue.Count != 0)
+        hero = MinionManager.Instance.heroQueue[index];
 
         if (BattleUIManager.Instance.isCheck == true)
         {
@@ -32,7 +32,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
+        if (GameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().cost)
             return;
 
         GameManager.Instance.heroesListIndex = index;
@@ -60,10 +60,10 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     public void MinionStanbyTimer(int index)
     {
         MinionManager.Instance.heroPrefabs[index].
-            GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
+            GetComponent<DefenceMinion>().minionStandbyTime -= Time.deltaTime;
 
         if (MinionManager.Instance.heroPrefabs[index].
-            GetComponent<Minion>().minionStandbyTime <= 0)
+            GetComponent<DefenceMinion>().minionStandbyTime <= 0)
         {
             if (BattleUIManager.Instance.tBG[index].activeSelf)
             {
@@ -72,8 +72,8 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
             }
         }
 
-        BattleUIManager.Instance.wTime[index].text =
-            MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().
+        BattleUIManager.Instance.wTime[index].text = 
+            MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().
             minionStandbyTime.ToString("F1") + "s".ToString();
     }
 }

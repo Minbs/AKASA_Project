@@ -10,7 +10,7 @@ public class HeroButton : Singleton<HeroButton>, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
-    public Minion hero;
+    public DefenceMinion hero;
 
     void Start()
     {

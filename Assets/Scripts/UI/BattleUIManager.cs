@@ -43,7 +43,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
 
-    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bet
+    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
@@ -57,8 +57,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> tBG = new List<GameObject>();
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
-    public bool isCostCheck = true;
     bool isSoundCheck = true;
+    public bool isCostCheck = false;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
@@ -109,7 +109,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             //UnitCount();
         }
-        else
+        else 
         {
 
         }
@@ -208,6 +208,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < wBG.transform.childCount; i++)
         {
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
         }
 
         for (int i = 0; i < 12; i++)
@@ -364,30 +365,25 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-        if (isCostCheck == true)
-        {
-            if (MinionManager.Instance.heroPrefabs.Count <= index)
-                return;
+        if (MinionManager.Instance.heroPrefabs.Count <= index)
+            return;
 
-            GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
-            Debug.Log(MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost);
-            costText.text = GameManager.Instance.cost.ToString();
-            isCostCheck = false;
-        }
+        GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().cost;
+        costText.text = GameManager.Instance.cost.ToString();
     }
 
     public void DeploymentMinion(int index)
     {
         if (GameManager.Instance.cost >= 0)
         {
-            if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
+            if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().cost)
             {
                 UseCost(index);
 
                 if (!tBG[index].activeSelf)
                 {
-                    tBG[index].SetActive(true);
                     mBtn[index].MBtnTBGPosition();
+                    tBG[index].SetActive(true);
                     isCheck = true;
                 }
             }
@@ -401,17 +397,17 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public void OnDoubleSpeedBtn()
     {
         if (Time.timeScale == 1)
-            Time.timeScale = 2;
-        else
-            Time.timeScale = 0;
+            Time.timeScale = 2;       
+        else       
+            Time.timeScale = 0;       
     }
 
     public void OnPauseBtn()
     {
-        if (Time.timeScale != 0)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
+        if (Time.timeScale != 0)      
+            Time.timeScale = 0;       
+        else       
+            Time.timeScale = 1;      
     }
 
     IEnumerator PhaseDelay()
