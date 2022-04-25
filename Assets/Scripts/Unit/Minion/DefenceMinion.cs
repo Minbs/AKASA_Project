@@ -67,14 +67,12 @@ public class DefenceMinion : Minion
 
     public bool isNextBaseAttackEnhanced { get; set; }
 
-
-    public GameObject shootPivot;
     [DrawIf("attackType", AttackType.Bullet)]
+    public GameObject shootPivot;
 
 
 
 
-    public bool isEnhanced { get; set; }
 
 
 
@@ -121,8 +119,6 @@ public class DefenceMinion : Minion
 
         if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
         {
-    
-
             switch (skillType)
             {
                 case SkillType.EnhanceNextAttack:
@@ -173,7 +169,7 @@ public class DefenceMinion : Minion
 
 
 
-        StartCoroutine(EffectManager.Instance.InstantiateHomingEffect("hwaseon_skill", target, activeSkillAbilities[0].duration));
+        EffectManager.Instance.InstantiateHomingEffect("hwaseon_skill", target, activeSkillAbilities[0].duration);
         EffectManager.Instance.InstantiateAttackEffect("hwaseon_skill", target.transform.position);
         target.GetComponent<Unit>().Deal(atk);
     }
@@ -218,16 +214,11 @@ public class DefenceMinion : Minion
 
     public void AimTarget()
     {
-        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
-        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
         var result = GameManager.Instance.minionsList.OrderBy(minion => minion.GetComponent<Unit>().currentHp);
         GameManager.Instance.minionsList = result.ToList();
 
         if (minionClass != MinionClass.Rescue)
         {
-
             if (target == null)
             {
 
@@ -235,11 +226,9 @@ public class DefenceMinion : Minion
                 {
                     foreach (var t in attackRangeTiles)
                     {
-
                         if ((t.onTile(enemy.transform) || (enemy.GetComponent<Unit>().target == gameObject && enemy.GetComponent<Enemy>().attackType == AttackType.Melee)) && enemy.GetComponent<Unit>().currentHp > 0)
                         {
                             target = enemy;
-
                             return;
                         }
                     }
@@ -293,10 +282,6 @@ public class DefenceMinion : Minion
 
     public void AttackTarget()
     {
-        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
-        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
         
         if(transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill" 
             && normalizedTime < 1)
@@ -331,16 +316,10 @@ public class DefenceMinion : Minion
             {
                 spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
             }
-
-        
-
-
-
         }
 
         if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle" )
         {
-
                 spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
         }
     }
@@ -433,7 +412,6 @@ public class DefenceMinion : Minion
         if (skillAbility.statType == StatType.ATK)
         {
             atk = initAtk;
-            Debug.Log("end");
         }
 
         if (skillAbility.statType == StatType.DEF)
@@ -480,7 +458,7 @@ public class DefenceMinion : Minion
             case StatType.AttackSpeed:
                 value = skillAbility.power / 100;
                 target.attackSpeed += value;
-                StartCoroutine(EffectManager.Instance.InstantiateHomingEffect("verity_skill", gameObject, skillAbility.duration));
+                EffectManager.Instance.InstantiateHomingEffect("verity_skill", gameObject, skillAbility.duration);
                 break;
             case StatType.HealAmountRate:
                 value = skillAbility.power;
@@ -526,8 +504,10 @@ public class DefenceMinion : Minion
     #endregion
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (currentHp <= 0)
         {
             StartCoroutine(Die());

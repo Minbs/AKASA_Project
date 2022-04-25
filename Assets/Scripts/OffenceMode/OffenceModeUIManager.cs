@@ -71,46 +71,11 @@ public class OffenceModeUIManager : Singleton<OffenceModeUIManager>
 
 
 
-    //
+    
     void Init()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
         time = 0;
-       // enemiesList = OffenseModeGameManager.Instance.enemiesList;
-        //costText.text = OffenseModeGameManager.Instance.cost.ToString();
-
-        /*
-        for (int i = 0; i < wBG.transform.childCount; i++)
-        {
-            mBtn.Add(wBG.GetComponentsInChildren<OffenceModeMinionButton>()[i]);
-            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
-        }
-
-        for (int i = 0; i < 12; i++)
-        {
-            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
-            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
-
-            if (tBG[i].activeSelf)
-                tBG[i].SetActive(false);
-        }
-        */
-
-    }
-
-
-
-
-    void EnemeyCount()
-    {
-        currentEnemyCount = enemiesList.Count;
-        if (currentEnemyCount >= 0)
-            text[3].text = currentEnemyCount.ToString();
-    }
-
-    void UnitCount()
-    {
-
     }
 
 
@@ -123,14 +88,14 @@ public class OffenceModeUIManager : Singleton<OffenceModeUIManager>
 
         if (time >= regenTime)
         {
-            if (OffenseModeGameManager.Instance.cost >= maxCost)
+            if (OffenceModeGameManager.Instance.cost >= maxCost)
             {
-                costText.text = OffenseModeGameManager.Instance.cost.ToString() + '+'.ToString();
+                costText.text = OffenceModeGameManager.Instance.cost.ToString() + '+'.ToString();
                 return;
             }
 
-            OffenseModeGameManager.Instance.cost++;
-            costText.text = OffenseModeGameManager.Instance.cost.ToString();
+            OffenceModeGameManager.Instance.cost++;
+            costText.text = OffenceModeGameManager.Instance.cost.ToString();
 
             time = 0;
         }
@@ -139,20 +104,21 @@ public class OffenceModeUIManager : Singleton<OffenceModeUIManager>
     /// <summary>
     /// 캐릭터 배치후 코스트 소모
     /// </summary>
+    /// <param name="index"> 클릭한 미니언의 인덱스</param>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.heroPrefabs.Count <= index)
+        if (MinionManager.Instance.minionPrefabs.Count <= index)
             return;
 
-        OffenseModeGameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().cost;
-        costText.text = OffenseModeGameManager.Instance.cost.ToString();
+        OffenceModeGameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
+        costText.text = OffenceModeGameManager.Instance.cost.ToString();
     }
 
     public void DeploymentMinion(int index)
     {
-        if (OffenseModeGameManager.Instance.cost >= 0)
+        if (OffenceModeGameManager.Instance.cost >= 0)
         {
-            if (OffenseModeGameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<OffenceMinion>().cost)
+            if (OffenceModeGameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<OffenceMinion>().cost)
             {
                 UseCost(index);
 

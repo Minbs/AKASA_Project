@@ -14,11 +14,9 @@ public class Tile : MonoBehaviour
     public bool isOnUnit = false;
 
     public bool ImpossibleUnitSetTile = false;
-    //타일 타입 추가
 
 
     //길찾기 알고리즘
-
     public int G { get; set; }
     public int H { get; set; }
     public Tile parentTile { get; set; }
@@ -45,9 +43,13 @@ public class Tile : MonoBehaviour
     {
     }
 
-    public bool IsCanSetUnit(MinionClass minionClass)
+    /// <summary>
+    /// 해당 클래스 미니언을 배치할 수 있는 타일인지 확인
+    /// </summary>
+    /// <param name="minionClass"></param>
+    /// <returns>true일시 배치 가능</returns>
+    public bool IsDeployableMinionTile(MinionClass minionClass)
     {
-
         if (!isBlock && !isOnUnit && !ImpossibleUnitSetTile)
         {
             if (minionClass == MinionClass.Buster || minionClass == MinionClass.Paladin || minionClass == MinionClass.Guardian || minionClass == MinionClass.Assassin)
@@ -74,10 +76,13 @@ public class Tile : MonoBehaviour
         return false;
     }
 
-
-    public void canUnitSetTile(MinionClass minionClass, bool isActive)
+    /// <summary>
+    /// 배치가능한 타일 녹색으로 표시
+    /// </summary>
+    /// <param name="isActive"></param>
+    /// <param name="minionClass"></param>
+    public void ShowDeployableTile(bool isActive, MinionClass minionClass = MinionClass.Buster)
     {
-
         for (int i = 0; i < renderer.materials.Length; i++)
         {
             renderer.materials[i].color = colors[i];
@@ -88,16 +93,20 @@ public class Tile : MonoBehaviour
 
         for (int i = 0; i < renderer.materials.Length; i++)
         {
-            if (IsCanSetUnit(minionClass))
+            if (IsDeployableMinionTile(minionClass))
                 renderer.materials[i].color = Color.Lerp(colors[i], new Color(0, 1, 0), 0.3f);
             else
                 renderer.materials[i].color = colors[i];
         }
     }
 
-    public void canOffenceUnitSetTile(MinionClass minionClass, bool isActive)
+    /// <summary>
+    /// 배치가능한 타일 녹색으로 표시
+    /// </summary>
+    /// <param name="minionClass"></param>
+    /// <param name="isActive"></param>
+    public void ShowOffenceModeDeployableTile(MinionClass minionClass, bool isActive)
     {
-
         for (int i = 0; i < renderer.materials.Length; i++)
         {
             renderer.materials[i].color = colors[i];

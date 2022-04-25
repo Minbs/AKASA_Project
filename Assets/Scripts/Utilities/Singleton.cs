@@ -16,7 +16,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
                 if(!_instance)
                 {
-                    Debug.Log(typeof(T) + "오브젝트 없음");
+                  //  Debug.Log(typeof(T) + "오브젝트 없음");
                 }
             }
 

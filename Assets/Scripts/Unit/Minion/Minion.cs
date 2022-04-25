@@ -4,10 +4,13 @@ using UnityEngine;
 
 public enum MinionClass
 {
+    //근거리 클래스
     Buster,
     Paladin,
     Guardian,
     Assassin,
+
+    //원거리 클래스
     Chaser,
     Mage,
     Rescue,
@@ -17,6 +20,7 @@ public enum MinionClass
 public class Minion : Unit
 {
     public MinionClass minionClass;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -24,8 +28,8 @@ public class Minion : Unit
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
     }
 }

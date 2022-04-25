@@ -208,7 +208,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < wBG.transform.childCount; i++)
         {
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
-            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
+            //MinionManager.Instance.minionPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
         }
 
         for (int i = 0; i < 12; i++)
@@ -365,10 +365,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.heroPrefabs.Count <= index)
+        if (MinionManager.Instance.minionPrefabs.Count <= index)
             return;
 
-        GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().cost;
+        GameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
 
@@ -376,7 +376,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         if (GameManager.Instance.cost >= 0)
         {
-            if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<DefenceMinion>().cost)
+            if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
             {
                 UseCost(index);
 

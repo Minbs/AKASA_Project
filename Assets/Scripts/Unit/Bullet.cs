@@ -43,9 +43,13 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-     
+        if (target == null || target.activeSelf == false)
+        {
+            ObjectPool.Instance.PushToPool("Bullet", gameObject);
+            return;
+        }
 
-        if(Vector3.Distance(transform.position, target.transform.position) <= 0.01f )
+        if (Vector3.Distance(transform.position, target.transform.position) <= 0.01f )
         {
 
             target.GetComponent<Unit>().Poison(skillAbility, damage, duration);
@@ -58,7 +62,7 @@ public class Bullet : MonoBehaviour
             if(damage > 0)
             EffectManager.Instance.InstantiateAttackEffect("hit", transform.position);
             else
-                EffectManager.Instance.InstantiateAttackEffect("heal", transform.position);
+                EffectManager.Instance.InstantiateHomingEffect("heal", target, 2);
         }
 
         Vector3 des = target.transform.position;

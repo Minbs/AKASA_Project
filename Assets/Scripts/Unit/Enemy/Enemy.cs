@@ -35,13 +35,11 @@ public class Enemy : Unit
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
-        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
+        base.Update();
 
-        attackDelayTimer += Time.deltaTime;
+  
 
         if (currentHp <= 0)
         {
@@ -49,7 +47,7 @@ public class Enemy : Unit
             return;
         }
 
-   
+        attackDelayTimer += Time.deltaTime;
         AimTarget();
 
         if (BoardManager.Instance.end == true && moveTiles.Count != 0)
@@ -149,10 +147,6 @@ public class Enemy : Unit
 
     void AttackTarget()
     {
-        Spine.TrackEntry trackEntry = new Spine.TrackEntry();
-        trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        float normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
         if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" && normalizedTime >= 1)))
         {
             attackDelayTimer = 0;

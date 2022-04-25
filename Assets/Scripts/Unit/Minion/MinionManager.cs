@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class MinionManager : Singleton<MinionManager>
 {
-    public List<GameObject> heroPrefabs = new List<GameObject>();
-    public List<Minion> heroQueue = new List<Minion>();
+    public List<GameObject> minionPrefabs = new List<GameObject>();
+    public List<Minion> minionQueue = new List<Minion>();
 
     void Start()
     {
-        foreach(var hero in heroPrefabs)
+        foreach(var hero in minionPrefabs)
         {
-            heroQueue.Add(hero.GetComponent<Minion>());
+            minionQueue.Add(hero.GetComponent<Minion>());
         }
     }
 

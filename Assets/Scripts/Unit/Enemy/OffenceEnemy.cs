@@ -6,7 +6,7 @@ using Spine.Unity;
 using Spine;
 using Event = Spine.Event;
 
-public class OffenceEnemy : Unit
+public class OffenceModeEnemy : Unit
 {
     List<Tile> moveTiles = new List<Tile>();
 

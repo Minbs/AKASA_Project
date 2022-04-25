@@ -35,7 +35,7 @@ public class EffectManager : Singleton<EffectManager>
         Destroy(effect, 3);
     }
 
-    public IEnumerator InstantiateHomingEffect(string effectName, GameObject target, float duration)
+    public void InstantiateHomingEffect(string effectName, GameObject target, float duration)
     {
         GameObject attackEffect = null;
         foreach (var e in effectsList)
@@ -49,26 +49,8 @@ public class EffectManager : Singleton<EffectManager>
 
 
         GameObject effect = Instantiate(attackEffect);
-
-        float timer = 0f;
-
-
-        while (timer < duration)
-        {
-            if (target == null || !target.activeSelf || target.GetComponent<Unit>().currentHp <= 0)
-            {
-                Destroy(effect);
-                break;
-            }
-
-
-            timer += Time.deltaTime;
-            effect.transform.position = target.transform.position;
-            yield return null;
-        }
-
-
-
-        Destroy(effect);
+        effect.AddComponent<Effect>();
+        StartCoroutine(effect.GetComponent<Effect>().HomingEffect(effectName, target, duration));
     }
+
 }

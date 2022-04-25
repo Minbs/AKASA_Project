@@ -21,8 +21,8 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        if(MinionManager.Instance.heroQueue.Count != 0)
-            minion = MinionManager.Instance.heroQueue[index];
+        if(MinionManager.Instance.minionQueue.Count != 0)
+            minion = MinionManager.Instance.minionQueue[index];
 
         if (OffenceModeUIManager.Instance.isCheck == true)
         {
@@ -33,25 +33,18 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         
-        if (OffenseModeGameManager.Instance.cost < MinionManager.Instance.heroPrefabs[index].GetComponent<OffenceMinion>().cost)
+        if (OffenceModeGameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<OffenceMinion>().cost)
             return;
 
-        OffenseModeGameManager.Instance.heroesListIndex = index;
-        OffenseModeGameManager.Instance.CanSetTile();
+        OffenceModeGameManager.Instance.minionListIndex = index;
+        OffenceModeGameManager.Instance.ChangeMinionPositioningState(); // 미니언 배치 상태로 전환
 
-        // BattleUIManager.Instance.attackRangeNodes = minion.attackRangeNodes.ToList();
-
-        OffenceModeUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
-            skeletonDataAsset = MinionManager.Instance.heroPrefabs[index].transform.
-            GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
-        OffenceModeUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
-            initialSkinName = minion.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
+        // MinionManager의 index 위치에 있는 미니언 스파인 데이터 대입
+        OffenceModeUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().skeletonDataAsset = MinionManager.Instance.minionPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset; 
+        OffenceModeUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().initialSkinName = minion.gameObject.transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         OffenceModeUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
 
         OffenceModeUIManager.Instance.settingCharacter.SetActive(true);
-
-        // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
-        
     }
 
     public void MBtnTBGPosition()
@@ -61,10 +54,10 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
 
     public void MinionStanbyTimer(int index)
     {
-        MinionManager.Instance.heroPrefabs[index].
+        MinionManager.Instance.minionPrefabs[index].
             GetComponent<OffenceMinion>().minionStandbyTime -= Time.deltaTime;
 
-        if (MinionManager.Instance.heroPrefabs[index].
+        if (MinionManager.Instance.minionPrefabs[index].
             GetComponent<OffenceMinion>().minionStandbyTime <= 0)
         {
             if (BattleUIManager.Instance.tBG[index].activeSelf)
@@ -75,7 +68,7 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
         }
 
         BattleUIManager.Instance.wTime[index].text = 
-            MinionManager.Instance.heroPrefabs[index].GetComponent<OffenceMinion>().
+            MinionManager.Instance.minionPrefabs[index].GetComponent<OffenceMinion>().
             minionStandbyTime.ToString("F1") + "s".ToString();
     }
 }
