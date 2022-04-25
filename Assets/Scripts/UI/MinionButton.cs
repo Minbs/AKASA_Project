@@ -68,7 +68,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
             {
                 Debug.Log("check");
                 BattleUIManager.Instance.tBG[index].SetActive(false);
-                BattleUIManager.Instance.isCheck = false;
+                //BattleUIManager.Instance.isCheck = false;
             }
         }
 

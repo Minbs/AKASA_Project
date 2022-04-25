@@ -342,6 +342,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (MinionManager.Instance.heroPrefabs.Count <= index) return;
         GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
+        isCostCheck = false;
     }
 
     public void DeploymentMinion(int index)
@@ -350,7 +351,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
-                UseCost(index);
+                if (isCostCheck)
+                    UseCost(index);
 
                 if (!tBG[index].activeSelf)
                 {
