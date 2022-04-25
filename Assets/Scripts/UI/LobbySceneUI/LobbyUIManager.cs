@@ -145,7 +145,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             default:
                 break;
         }
-        SceneManager.LoadScene(SceneName);
+        SceneLoad.LoadScene(SceneName);
+        //SceneManager.LoadScene(SceneName);
         Debug.Log(SceneName + "씬으로 이동");
     }
 
@@ -156,7 +157,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadMainScene()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneLoad.LoadScene("MainScene");
+        //SceneManager.LoadScene("MainScene");
         Debug.Log("메인 씬으로 이동");
     }
     public void LoadGachaScene()
@@ -166,7 +168,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadUnitContainerScene()
     {
-        SceneManager.LoadScene("UnitContainerScene");
+        SceneLoad.LoadScene("UnitContainerScene");
+        //SceneManager.LoadScene("UnitContainerScene");
         Debug.Log("유닛 관리 씬 출력");
 
     }
@@ -178,13 +181,15 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadStageSelectScene()
     {
-        SceneManager.LoadScene("StageSelectScene");
+        SceneLoad.LoadScene("StageSelectScene");
+        //SceneManager.LoadScene("StageSelectScene");
         Debug.Log("스테이지 선택 씬 보여주기");
     }
 
     public void LoadStageScene()
     {
-        SceneManager.LoadScene("DefenceStage");
+        SceneLoad.LoadScene("DefenceStage");
+        //SceneManager.LoadScene("DefenceStage");
         Debug.Log("스테이지 선택 씬 보여주기");
     }
 

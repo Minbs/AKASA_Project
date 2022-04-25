@@ -32,6 +32,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public bool isSettingCharacterOn = true;
 
     //
+    //최대 코스트(상수)
     const int maxCost = 99;
     int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
@@ -43,7 +44,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
 
-    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
+    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
@@ -59,7 +60,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public bool isCheck = false;
     bool isSoundCheck = true;
 
+    //대기열 패널
     public GameObject wBG;
+    //대기열 미니언 버튼
     public List<MinionButton> mBtn;
 
     AudioSource audioSource;
@@ -68,6 +71,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         ObjectPool.Instance.CreatePoolObject("AttackRangeTile", attackRangeTileImage, 20, worldCanvas.transform);
 
+        //초기화
         Init();
     }
 
@@ -77,20 +81,29 @@ public class BattleUIManager : Singleton<BattleUIManager>
             SetSettingCharacterMousePosition();
 
         //
+        //전투 대비 시간일 때
         if (GameManager.Instance.state == State.WAIT)
         {
             if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
             WaitTime();
         }
+        //전투 시작 시간일 때
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
+            //상단 패널에 타이머UI에서 웨이브UI로 변경
             BattleTime();
+            //에너미 카운트수 체크
             EnemeyCount();
+            //배경음악 재생
             if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
             if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); 
             else audioSource.UnPause();
+            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
+            //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+            //정해진 시간(regenTime)마다 코스트 1씩 추가
             RegenCost();
             //UnitCount();
         }
@@ -186,6 +199,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
 
+        //미니언 버튼
         for (int i = 0; i < wBG.transform.childCount; i++)
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
 
@@ -256,7 +270,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     }
 
-    /// <summary> 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
+    /// <summary> 페이즈 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
     void Active(int index)
     {
         switch (index)
@@ -312,9 +326,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         else phase[index].gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// 코스트 리젠 (regenTime마다 실행)
-    /// </summary>
+    /// <summary> 코스트 리젠 (regenTime마다 실행) </summary>
     void RegenCost()
     {
         time += Time.deltaTime;
@@ -333,9 +345,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    /// <summary>
-    /// 캐릭터 배치후 코스트 소모
-    /// </summary>
+    /// <summary> 캐릭터 배치후 코스트 소모 </summary>
     public void UseCost(int index)
     {
         if (MinionManager.Instance.heroPrefabs.Count <= index) return;
@@ -343,6 +353,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         costText.text = GameManager.Instance.cost.ToString();
     }
 
+    /// <summary> 미니언 배치 </summary> <param name="index"></param>
     public void DeploymentMinion(int index)
     {
         if (GameManager.Instance.cost >= 0)
