@@ -47,10 +47,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
-    int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
+    int maxEnemyCount, waveCount, regenTime;
 
-    float time = 0, phaseWaitingTime;
-    int min, sec, currentEnemyCount = 0;
+    float time, phaseWaitingTime;
+    int min, sec, currentEnemyCount;
     bool isPhaseCheck;
 
     public GameObject minionBtnTranslucentBG;
@@ -80,38 +80,20 @@ public class BattleUIManager : Singleton<BattleUIManager>
         //
         if (GameManager.Instance.state == State.WAIT)
         {
-            if (WaitingTime[(int)Phase.Ready] >= 0)
-                Active((int)Phase.Ready);
+            if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
             WaitTime();
         }
         if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
         {
-            if (isSoundCheck == true)
-            {
-                audioSource.Play();
-                isSoundCheck = false;
-            }
-
-            if (WaitingTime[(int)Phase.Start] >= 0)
-            {
-                Active((int)Phase.Start);
-            }
-
-            if (WaitingTime[(int)Phase.Wave1] >= 0)
-            {
-                StartCoroutine("PhaseDelay");
-                Active((int)Phase.Wave1);
-            }
-
             BattleTime();
-            RegenCost();
             EnemeyCount();
-
+            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); 
+            else audioSource.UnPause();
+            if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
+            if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+            RegenCost();
             //UnitCount();
-        }
-        else 
-        {
-
         }
         //
     }
@@ -200,37 +182,31 @@ public class BattleUIManager : Singleton<BattleUIManager>
     //
     void Init()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
         time = 0;
+        audioSource = gameObject.GetComponent<AudioSource>();
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
 
         for (int i = 0; i < wBG.transform.childCount; i++)
-        {
             mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
-            //MinionManager.Instance.heroPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
-        }
 
         for (int i = 0; i < 12; i++)
         {
             tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
             wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
-
-            if (tBG[i].activeSelf)
-                tBG[i].SetActive(false);
+            if (tBG[i].activeSelf) tBG[i].SetActive(false);
         }
 
         for (int i = 0; i < 3; i++)
-            if (text[i].gameObject.activeSelf)
-                text[i].gameObject.SetActive(false);
+            if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
         text[3].text = currentEnemyCount.ToString();
         text[4].text = maxEnemyCount.ToString();
         text[5].text = maxMinionCount[0].ToString();
+
         for (int i = 0; i < 5; i++)
-            if (phase[i].gameObject.activeSelf)
-                phase[i].gameObject.SetActive(false);
-        if (wave.gameObject.activeSelf)
-            wave.gameObject.SetActive(false);
+            if (phase[i].gameObject.activeSelf) phase[i].gameObject.SetActive(false);
+
+        if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
     }
 
     void BattleTime()
@@ -244,8 +220,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void WaitTime()
     {
-        for (int i = 0; i < 3; i++)
-            text[i].gameObject.SetActive(true);
+        for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
         float time = GameManager.Instance.waitTimer;
         min = (int)time / 60;
@@ -274,8 +249,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void EnemeyCount()
     {
         currentEnemyCount = enemiesList.Count;
-        if (currentEnemyCount >= 0)
-            text[3].text = currentEnemyCount.ToString();
+        text[3].text = currentEnemyCount >= 0 ? currentEnemyCount.ToString() : 0.ToString();
     }
 
     void UnitCount()
@@ -299,7 +273,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 isPhaseCheck = false;
                 break;
             case (int)Phase.Wave1:
-                if (isPhaseCheck == true)
+                StartCoroutine("PhaseDelay");
+                if (isPhaseCheck)
                 {
                     WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
                     phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
@@ -309,7 +284,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     return;
                 break;
             case (int)Phase.Wave2:
-                if (isPhaseCheck == true)
+                StartCoroutine("PhaseDelay");
+                if (isPhaseCheck)
                 {
                     WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
                     phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
@@ -319,7 +295,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     return;
                 break;
             case (int)Phase.Wave3:
-                if (isPhaseCheck == true)
+                StartCoroutine("PhaseDelay");
+                if (isPhaseCheck)
                 {
                     WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
                     phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
@@ -332,10 +309,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 break;
         }
 
-        if (phaseWaitingTime >= 0)
-            phase[index].gameObject.SetActive(true);
-        else if (phaseWaitingTime < 0)
-            phase[index].gameObject.SetActive(false);
+        if (phaseWaitingTime >= 0) phase[index].gameObject.SetActive(true);
+        else phase[index].gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -355,7 +330,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             GameManager.Instance.cost++;
             costText.text = GameManager.Instance.cost.ToString();
-
             time = 0;
         }
     }
@@ -365,9 +339,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// </summary>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.heroPrefabs.Count <= index)
-            return;
-
+        if (MinionManager.Instance.heroPrefabs.Count <= index) return;
         GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
@@ -394,21 +366,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void OnDoubleSpeedBtn()
-    {
-        if (Time.timeScale == 1)
-            Time.timeScale = 2;       
-        else       
-            Time.timeScale = 0;       
-    }
+    public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed = 
+        GameManager.Instance.gameSpeed == 1 ? GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
 
-    public void OnPauseBtn()
-    {
-        if (Time.timeScale != 0)      
-            Time.timeScale = 0;       
-        else       
-            Time.timeScale = 1;      
-    }
+    public void OnPauseButton() => GameManager.Instance.gameSpeed =
+        GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
 
     IEnumerator PhaseDelay()
     {

@@ -26,7 +26,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
         if (BattleUIManager.Instance.isCheck == true)
         {
-            MinionStanbyTimer(index);
+            MinionStanbyTimer();
         }
     }
 
@@ -52,23 +52,23 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         // GameManager.Instance.hero = MinionManager.Instance.heroPrefabs[index];
     }
 
-    public void MBtnTBGPosition()
-    {
-        BattleUIManager.Instance.tBG[index].transform.position = transform.position;
-    }
+    public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
 
-    public void MinionStanbyTimer(int index)
+    public void MinionStanbyTimer()
     {
         MinionManager.Instance.heroPrefabs[index].
             GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
+
+        Debug.Log(index);
 
         if (MinionManager.Instance.heroPrefabs[index].
             GetComponent<Minion>().minionStandbyTime <= 0)
         {
             if (BattleUIManager.Instance.tBG[index].activeSelf)
             {
-                BattleUIManager.Instance.isCheck = false;
+                Debug.Log("check");
                 BattleUIManager.Instance.tBG[index].SetActive(false);
+                BattleUIManager.Instance.isCheck = false;
             }
         }
 
