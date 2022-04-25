@@ -58,7 +58,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
     public bool isCheck = false;
     bool isSoundCheck = true;
-    public bool isCostCheck = false;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
@@ -342,7 +341,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (MinionManager.Instance.heroPrefabs.Count <= index) return;
         GameManager.Instance.cost -= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
-        isCostCheck = false;
     }
 
     public void DeploymentMinion(int index)
@@ -351,9 +349,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().cost)
             {
-                if (isCostCheck)
-                    UseCost(index);
-
                 if (!tBG[index].activeSelf)
                 {
                     mBtn[index].MBtnTBGPosition();

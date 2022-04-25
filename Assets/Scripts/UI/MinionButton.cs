@@ -28,6 +28,10 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         {
             MinionStanbyTimer();
         }
+        else
+        {
+            MinionManager.Instance.heroPrefabs[index].GetComponent<Minion>().minionStandbyTime = 0;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -59,16 +63,12 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         MinionManager.Instance.heroPrefabs[index].
             GetComponent<Minion>().minionStandbyTime -= Time.deltaTime;
 
-        Debug.Log(index);
-
         if (MinionManager.Instance.heroPrefabs[index].
             GetComponent<Minion>().minionStandbyTime <= 0)
         {
             if (BattleUIManager.Instance.tBG[index].activeSelf)
             {
-                Debug.Log("check");
                 BattleUIManager.Instance.tBG[index].SetActive(false);
-                //BattleUIManager.Instance.isCheck = false;
             }
         }
 

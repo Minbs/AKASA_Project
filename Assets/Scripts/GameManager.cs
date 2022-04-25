@@ -138,7 +138,7 @@ public class GameManager : Singleton<GameManager>
                     MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
                     .GetComponent<Minion>().minionWaitingTime;
                 BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
-                BattleUIManager.Instance.isCostCheck = true;
+                BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[heroesListIndex].index);
 
                 GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
                 hero.transform.position = pos;
