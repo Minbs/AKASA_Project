@@ -62,7 +62,6 @@ public class OffenceModeMinionButton : MonoBehaviour, IPointerDownHandler
         {
             if (BattleUIManager.Instance.tBG[index].activeSelf)
             {
-                BattleUIManager.Instance.isCheck = false;
                 BattleUIManager.Instance.tBG[index].SetActive(false);
             }
         }
