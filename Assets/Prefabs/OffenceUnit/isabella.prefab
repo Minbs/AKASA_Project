@@ -88,6 +88,7 @@ MonoBehaviour:
   stopCount: 0
   cost: 6
   minionWaitingTime: 60
+  currentSkillGauge: 0
   maxSkillGauge: 10
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: ff3c6454807a63c4d896c043657cfb93, type: 2}
@@ -101,6 +102,7 @@ MonoBehaviour:
   skillType: 1
   shootPivot: {fileID: 5829380570333821707}
   attackRangeDistance: 3
+  deployRange: 1
 --- !u!1 &6208362257474094919
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +222,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: isabella/idle
+  _animationName: isabella/move
   loop: 1
   timeScale: 1
 --- !u!1001 &1991330571967102422

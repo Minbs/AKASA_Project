@@ -220,11 +220,10 @@ MonoBehaviour:
   tileCamera: {fileID: 638336736}
   characterCamera: {fileID: 532741028}
   gameSpeed: 1
-  heroSetPosition: {x: 0, y: 0, z: 0}
+  minionSetPivot: {x: 0, y: 0, z: 0}
   enemiesList: []
   minionsList: []
-  heroesListIndex: 0
-  unitSetMode: 0
+  minionListIndex: 0
   startTile: {fileID: 0}
   endTile: {fileID: 0}
   tilesList: []
@@ -1028,6 +1027,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: -0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3615521048495057375, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: initialSkinName
+      value: hwaseon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615521048495057375, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b0741fb39c3e6c4baf3a0ae795b7312, type: 2}
     - target: {fileID: 3615521048539342769, guid: 8ee40d635facf7f4db47f2a9121b3985, type: 3}
       propertyPath: m_IsActive
       value: 0

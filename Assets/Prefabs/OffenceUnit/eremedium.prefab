@@ -118,7 +118,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: eremedium/idle
+  _animationName: eremedium/move
   loop: 1
   timeScale: 1
 --- !u!1 &6208362256301881235
@@ -178,6 +178,7 @@ MonoBehaviour:
   stopCount: 0
   cost: 9
   minionWaitingTime: 60
+  currentSkillGauge: 0
   maxSkillGauge: 20
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: be71190df5dd62d41b7231278e46260c, type: 2}
@@ -191,6 +192,7 @@ MonoBehaviour:
   skillType: 0
   shootPivot: {fileID: 0}
   attackRangeDistance: 3
+  deployRange: 1
 --- !u!1001 &7489480818512568311
 PrefabInstance:
   m_ObjectHideFlags: 0
