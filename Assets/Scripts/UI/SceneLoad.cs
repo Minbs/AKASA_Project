@@ -33,6 +33,7 @@ public class SceneLoad : MonoBehaviour
     private void Init()
     {
         random = Random.Range(0, illust.transform.childCount);
+        progressbar.value = 0;
 
         for (int i = 0; i < illust.transform.childCount; i++)
         {
@@ -41,6 +42,7 @@ public class SceneLoad : MonoBehaviour
         }
     }
 
+    /// <summary> 이전 씬에서 다음 씬으로 넘어갈 때, 로딩 씬 실행 </summary> <param name="sceneName"></param>
     public static void LoadScene(string sceneName)
     {
         nextSceneName = sceneName;
