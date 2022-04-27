@@ -9,52 +9,36 @@ public class SceneLoad : MonoBehaviour
     public Slider progressbar;
     static string nextSceneName;
 
-    int random;
-
     public GameObject illust;
     [SerializeField]
     List<GameObject> illustObj;
     [SerializeField]
     List<Image> illustImage;
 
+    int random;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        random = Random.Range(0, 4);
+        Init();
+
+        for (int i = 0; i < illust.transform.childCount; i++)
+            illustImage[i].gameObject.SetActive(false);
+        illustImage[random].gameObject.SetActive(true);
+
+        StartCoroutine(LoadSceneProcess());
+    }
+
+    /// <summary> √ ±‚»≠ </summary>
+    private void Init()
+    {
+        random = Random.Range(0, illust.transform.childCount);
 
         for (int i = 0; i < illust.transform.childCount; i++)
         {
             illustObj.Add(illust.transform.GetChild(i).gameObject);
             illustImage.Add(illustObj[i].GetComponentInChildren<Image>());
         }
-
-        switch (random)
-        {
-            case 0:
-                illustImage[1].gameObject.SetActive(false);
-                illustImage[2].gameObject.SetActive(false);
-                illustImage[3].gameObject.SetActive(false);
-                break;
-            case 1:
-                illustImage[0].gameObject.SetActive(false);
-                illustImage[2].gameObject.SetActive(false);
-                illustImage[3].gameObject.SetActive(false);
-                break;
-            case 2:
-                illustImage[0].gameObject.SetActive(false);
-                illustImage[1].gameObject.SetActive(false);
-                illustImage[3].gameObject.SetActive(false);
-                break;
-            case 3:
-                illustImage[0].gameObject.SetActive(false);
-                illustImage[1].gameObject.SetActive(false);
-                illustImage[2].gameObject.SetActive(false);
-                break;
-            default:
-                break;
-        }
-
-        StartCoroutine(LoadSceneProcess());
     }
 
     public static void LoadScene(string sceneName)
