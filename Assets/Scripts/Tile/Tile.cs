@@ -50,30 +50,7 @@ public class Tile : MonoBehaviour
     /// <returns>true일시 배치 가능</returns>
     public bool IsDeployableMinionTile(MinionClass minionClass)
     {
-        if (!isBlock && !isOnUnit && !ImpossibleUnitSetTile)
-        {
-            if (minionClass == MinionClass.Buster || minionClass == MinionClass.Paladin || minionClass == MinionClass.Guardian || minionClass == MinionClass.Assassin)
-            {
-                if (height == 0)
-                    return true;
-                else
-                    return false;
-            }
-            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport || minionClass == MinionClass.Rescue)
-            {
-                if (height != 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                Debug.Log(minionClass);
-            }
-        }
-
-
-        return false;
+        return (!isBlock && !isOnUnit && !ImpossibleUnitSetTile);
     }
 
     /// <summary>
