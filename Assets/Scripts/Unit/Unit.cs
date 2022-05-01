@@ -8,9 +8,7 @@ using UnityEngine.UI;
 public enum Direction
 {
     LEFT,
-    UP,
-    RIGHT,
-    DOWN
+    RIGHT
 }
 
 
@@ -26,7 +24,9 @@ public class Unit : MonoBehaviour
 
     public int atk;
     public float def;
-
+    public float moveSpeed;
+    public float attackRangeDistance; // 유닛 공격 범위
+    public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed { get; set; }
 
     private bool isPoisoned = false;
@@ -47,8 +47,15 @@ public class Unit : MonoBehaviour
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
 
+
+
     protected virtual void Start()
     {
+        if (!GetComponent<UnitStateMachine>())
+        {
+            gameObject.AddComponent<UnitStateMachine>();
+        }
+
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null) transform.GetChild(0).gameObject.AddComponent<SpineAnimation>();
 
         spineAnimation = transform.GetChild(0).GetComponent<SpineAnimation>();

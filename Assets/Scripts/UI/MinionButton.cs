@@ -38,7 +38,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.minionsListIndex = index;
         GameManager.Instance.ChangeMinionPositioningState();
 
-        BattleUIManager.Instance.attackRangeNodes = minion.attackRangeNodes.ToList();
+     //   BattleUIManager.Instance.attackRangeNodes = minion.attackRangeNodes.ToList();
 
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
             skeletonDataAsset = MinionManager.Instance.minionPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;

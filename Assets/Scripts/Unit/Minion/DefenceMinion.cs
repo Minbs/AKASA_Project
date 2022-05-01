@@ -32,8 +32,6 @@ public class DefenceMinion : Minion
 {
     [Header("MinionStat")]
 
-    public List<Node> attackRangeNodes = new List<Node>();
-    public List<Tile> attackRangeTiles { get; set; }
 
     public AttackType attackType;
 
@@ -70,15 +68,8 @@ public class DefenceMinion : Minion
 
     public GameObject shootPivot;
 
-
-
-
-
-
-
     private void Awake()
     {
-        attackRangeTiles = new List<Tile>();
     }
 
     private void OnDestroy()
@@ -217,67 +208,6 @@ public class DefenceMinion : Minion
         var result = GameManager.Instance.minionsList.OrderBy(minion => minion.GetComponent<Unit>().currentHp);
         GameManager.Instance.minionsList = result.ToList();
 
-        if (minionClass != MinionClass.Rescue)
-        {
-            if (target == null)
-            {
-
-                foreach (var enemy in GameManager.Instance.enemiesList)
-                {
-                    foreach (var t in attackRangeTiles)
-                    {
-                        if ((t.onTile(enemy.transform) || (enemy.GetComponent<Unit>().target == gameObject && enemy.GetComponent<Enemy>().attackType == AttackType.Melee)) && enemy.GetComponent<Unit>().currentHp > 0)
-                        {
-                            target = enemy;
-                            return;
-                        }
-                    }
-                
-                }
-            }
-            else
-            {
-                bool isOut = true;
-                foreach (var t in attackRangeTiles)
-                {
-
-                    if (t.onTile(target.transform))
-                    {
-                        isOut = false;
-                    }
-                }
-
-                if ((isOut || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 && target.GetComponent<Unit>().target != gameObject ||target.activeSelf == false)
-                    target = null;
-            }
-        }
-        else
-        {
-            if (target != null)
-                if ((target.GetComponent<Unit>().currentHp >= target.GetComponent<Unit>().maxHp || target.GetComponent<Unit>().currentHp <= 0) && normalizedTime >= 1 || target.activeSelf == false)
-                {
-                    target = null;
-                }
-
-
-
-            foreach (var minion in GameManager.Instance.minionsList)
-            {
-                foreach (var t in attackRangeTiles)
-                {
-
-                    if (t.onTile(minion.transform) && minion.GetComponent<Unit>().currentHp < minion.GetComponent<Unit>().maxHp)
-                    {
-                        target = minion;
-
-                        return;
-                    }
-                }
-            }
-
-
-        }
-
     }
 
     public void AttackTarget()
@@ -318,10 +248,7 @@ public class DefenceMinion : Minion
             }
         }
 
-        if (target == null && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/idle" )
-        {
-                spineAnimation.PlayAnimation(skinName + "/idle", true, 1);
-        }
+
     }
     #endregion
 
@@ -451,7 +378,7 @@ public class DefenceMinion : Minion
         float initSpeed = 0;
 
         if(target.GetComponent<Enemy>() != null)
-            initSpeed = target.GetComponent<Enemy>().speed;
+            initSpeed = target.GetComponent<Enemy>().moveSpeed;
 
         switch (skillAbility.statType)
         {
@@ -470,7 +397,7 @@ public class DefenceMinion : Minion
                 break;
             case StatType.MoveSpeed:
                 value = skillAbility.power / 100;
-                target.GetComponent<Enemy>().speed *= 1+ value;
+                target.GetComponent<Enemy>().moveSpeed *= 1+ value;
                 break;
 
         }
@@ -496,7 +423,7 @@ public class DefenceMinion : Minion
                 target.def -= value;
                 break;
             case StatType.MoveSpeed:
-                target.GetComponent<Enemy>().speed = initSpeed;
+                target.GetComponent<Enemy>().moveSpeed = initSpeed;
                 break;
         }
     }
@@ -514,6 +441,7 @@ public class DefenceMinion : Minion
             return;
         }
 
+        /*
         if(attackType == AttackType.Melee)
         {
             currentStopCount = stopCount;
@@ -541,7 +469,7 @@ public class DefenceMinion : Minion
 
         AimTarget();
         AttackTarget();
-
+        */
     }
 }
 

@@ -81,8 +81,8 @@ public class EnemySpawner : MonoBehaviour
 				{
 					GameObject enemy = ObjectPool.Instance.PopFromPool(enemySpawnDatas[0].name);
 					GameManager.Instance.enemiesList.Add(enemy);
-					Vector3 pos = BoardManager.Instance.startTile.transform.position;
-					enemy.transform.position = pos;
+			//		Vector3 pos = BoardManager.Instance.startTile.transform.position;
+			//		enemy.transform.position = pos;
 					enemy.SetActive(true);
 					enemySpawnDatas.RemoveAt(0);
 

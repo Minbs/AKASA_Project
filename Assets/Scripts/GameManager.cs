@@ -59,6 +59,10 @@ public class GameManager : Singleton<GameManager>
         state = State.WAIT;
         deployState = DeployState.None;
         currentWave = 1;
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var e in enemies)
+            enemiesList.Add(e);
     }
 
     void Update()
@@ -70,7 +74,6 @@ public class GameManager : Singleton<GameManager>
         if (waitTimer <= 0 && state.Equals(State.WAIT))
         {
             state = State.BATTLE;
-            StartCoroutine(spawner.Spawn());
         }
         else
         {
@@ -83,7 +86,7 @@ public class GameManager : Singleton<GameManager>
                 PositioningMinion();
                 break;
             case DeployState.SetDirection:
-                SetMinionDirection();
+               SetMinionDirection();
                 break;
             default:
                 break;
@@ -107,21 +110,13 @@ public class GameManager : Singleton<GameManager>
     {
         if (Physics.Raycast(ray, out RaycastHit raycastHit))
         {
-            if (raycastHit.collider.transform.tag == "Tile")
+            if (raycastHit.collider.transform.tag == "Tile" && raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile())
             {
-                if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile(MinionManager.Instance.minionPrefabs[minionsListIndex].GetComponent<DefenceMinion>().minionClass))
+                if (Input.GetMouseButtonDown(0))
                 {
                     deployState = DeployState.SetDirection;
                     unitSetTile = raycastHit.collider.gameObject;
                     unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
-                }
-                if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile(MinionManager.Instance.minionPrefabs[minionsListIndex].GetComponent<DefenceMinion>().minionClass))
-                {
-                    BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
-                }
-                else if (!raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile(MinionManager.Instance.minionPrefabs[minionsListIndex].GetComponent<DefenceMinion>().minionClass))
-                {
-                    BattleUIManager.Instance.ShowAttackRangeTiles(false);
                 }
 
                 rayNode = raycastHit.collider.GetComponent<Tile>().node;
@@ -129,7 +124,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            BattleUIManager.Instance.ShowAttackRangeTiles(false);
+
         }
     }
 
@@ -143,48 +138,10 @@ public class GameManager : Singleton<GameManager>
 
         BattleUIManager.Instance.isSettingCharacterOn = false;
         BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
-        Vector2 vec = Input.mousePosition - unitSetCameraPos;
+        Direction direction = Direction.RIGHT;
 
-        float dot = Vector2.Dot(vec.normalized, new Vector2(0, 1)); //앞뒤 판별
-        Vector3 cross = Vector3.Cross(vec.normalized, new Vector2(0, 1)); //좌우 판별
 
-        List<Node> temp = new List<Node>();
-        Direction direction = Direction.LEFT;
-
-        Vector3 scale = BattleUIManager.Instance.settingCharacter.transform.localScale;
-        if (dot > 0 && cross.z < 0.5f && cross.z > -0.5f)
-        {
-            temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.UP).ToList();
-            direction = Direction.UP;
-            BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-        }
-        if (dot < 0 && cross.z < 0.5f && cross.z > -0.5f)
-        {
-            temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.DOWN).ToList();
-            direction = Direction.DOWN;
-            BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-        }
-        if (cross.z > 0 && dot < 0.5f && dot > -0.5f)
-        {
-            temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.RIGHT).ToList();
-            direction = Direction.RIGHT;
-            BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-
-            scale.x = -Mathf.Abs(scale.x);
-            BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-        }
-        if (cross.z < 0 && dot < 0.5f && dot > -0.5f)
-        {
-            temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.LEFT).ToList();
-            direction = Direction.LEFT;
-            BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-
-            scale.x = Mathf.Abs(scale.x);
-            BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
+    
             MinionManager.Instance.minionPrefabs[BattleUIManager.Instance.mBtn[minionsListIndex].index]
                 .GetComponent<DefenceMinion>().minionStandbyTime =
                 MinionManager.Instance.minionPrefabs[BattleUIManager.Instance.mBtn[minionsListIndex].index]
@@ -197,26 +154,18 @@ public class GameManager : Singleton<GameManager>
             unitSetTile.GetComponent<Tile>().isOnUnit = true;
             deployState = DeployState.None;
             BattleUIManager.Instance.settingCharacter.SetActive(false);
-            BattleUIManager.Instance.isSettingCharacterOn = true;
             minion.GetComponent<Unit>().SetDirection(direction);
-            //  hero.GetComponent<Minion>().onTile.no
-            scale.x = Mathf.Abs(scale.x);
-            BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-            foreach (var tile in temp)
-            {
-                if (BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile) != null)
-                    minion.GetComponent<DefenceMinion>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
-            }
+
 
             foreach (var tile in BoardManager.Instance.tilesList)
             {
                 tile.ShowDeployableTile(false);
             }
-            BattleUIManager.Instance.ShowAttackRangeTiles(false);
+
             unitSetTile = null;
             minionsList.Add(minion);
             minion.SetActive(true);
-        }
+        
 
 
     }
@@ -230,7 +179,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var tile in BoardManager.Instance.tilesList)
         {
-            tile.ShowDeployableTile(true, MinionManager.Instance.minionPrefabs[minionsListIndex].GetComponent<DefenceMinion>().minionClass);
+            tile.ShowDeployableTile(true);
         }
     }
 }

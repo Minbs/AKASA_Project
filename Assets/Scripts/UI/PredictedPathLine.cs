@@ -26,7 +26,7 @@ public class PredictedPathLine : MonoBehaviour
         {
             //길 표시선의 개수
             line.positionCount = 3;
-            lineTile = BoardManager.Instance.FinalList.ToList();
+         //   lineTile = BoardManager.Instance.FinalList.ToList();
         }
         else if (BoardManager.Instance.end == true && lineTile.Count != 0)
         {
