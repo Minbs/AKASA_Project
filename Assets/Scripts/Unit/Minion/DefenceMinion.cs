@@ -37,7 +37,7 @@ public class DefenceMinion : Minion
 
     public AttackType attackType;
 
-    [DrawIf("minionClass", MinionClass.Buster)]
+
     public int stopCount; // ÀúÁö ¼ö
 
 
@@ -67,7 +67,7 @@ public class DefenceMinion : Minion
 
     public bool isNextBaseAttackEnhanced { get; set; }
 
-    [DrawIf("attackType", AttackType.Bullet)]
+
     public GameObject shootPivot;
 
 
