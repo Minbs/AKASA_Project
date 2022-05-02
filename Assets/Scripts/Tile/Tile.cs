@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class Tile : MonoBehaviour
     /// <param name="minionClass"></param>
     public void ShowDeployableTile(bool isActive)
     {
+        if (isOnUnit)
+            GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
+
         gameObject.SetActive(isActive);
     }
 

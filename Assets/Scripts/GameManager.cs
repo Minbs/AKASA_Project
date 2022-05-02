@@ -54,6 +54,9 @@ public class GameManager : Singleton<GameManager>
 
     private Vector3 unitSetCameraPos;
 
+    public bool isLineOver = false;
+    public bool isApproach = false;
+
     void Start()
     {
         state = State.WAIT;
@@ -74,12 +77,18 @@ public class GameManager : Singleton<GameManager>
         if (waitTimer <= 0 && state.Equals(State.WAIT))
         {
             state = State.BATTLE;
+
+            foreach(var e in enemiesList)
+            {
+                e.GetComponent<UnitStateMachine>().ChangeState(e.GetComponent<UnitStateMachine>().moveState);
+            }
         }
         else
         {
             waitTimer -= Time.deltaTime;
         }
 
+        if(state.Equals(State.WAIT))
         switch(deployState)
         {
             case DeployState.Positioning:
@@ -96,6 +105,19 @@ public class GameManager : Singleton<GameManager>
 
         if (battleTime > 0 && state.Equals(State.BATTLE))
         {
+
+            if (isApproach == false)
+            {
+                foreach (var m in minionsList)
+                {
+                    if (isLineOver)
+                        m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
+                }
+
+                if (isLineOver)
+                    isApproach = true;
+            }
+
             battleTime -= Time.deltaTime;
         }
     }

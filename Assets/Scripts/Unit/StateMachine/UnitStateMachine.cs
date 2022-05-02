@@ -9,6 +9,7 @@ public class UnitStateMachine : MonoBehaviour
     public UnitBaseState currentState { get; set; }
     private UnitBaseState prevState;
 
+    public UnitIdleState idleState = new UnitIdleState(); //대기 상태
     public  UnitMoveState moveState = new UnitMoveState(); //행동선택
     public  UnitApproachingState approachingState = new UnitApproachingState(); //명령 대기 상태
     public  UnitAttackState AttackState = new UnitAttackState();
@@ -19,7 +20,7 @@ public class UnitStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        currentState = moveState;
+        currentState = idleState;
         unit = GetComponent<Unit>();
         agent = GetComponent<NavMeshAgent>();
     }
@@ -33,6 +34,13 @@ public class UnitStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (unit.currentHp <= 0)
+        {
+            agent.isStopped = true;
+            StartCoroutine(unit.Die());
+            return;
+        }
+
         currentState.Update(this);
     }
 
@@ -88,5 +96,23 @@ public class UnitStateMachine : MonoBehaviour
     }
 
     public bool IsTargetInAttackRange() => Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.attackRangeDistance; // 공격 범위 안에 있는지 확인
+
+    public bool IsTargetInCognitiveRange() => Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.cognitiveRangeDistance; // 공격 범위 안에 있는지 확인
+
+    public void LookAtTarget(Vector3 targetPos)
+    {
+        Vector3 scale = transform.GetChild(0).localScale;
+
+       if ( transform.position.x < targetPos.x )
+        {
+            scale.x = Mathf.Abs(transform.GetChild(0).localScale.x) * -1; 
+        }
+        else if (transform.position.x > targetPos.x)
+        {
+            scale.x = Mathf.Abs(transform.GetChild(0).localScale.x) * 1;
+        }
+
+        transform.GetChild(0).localScale = scale;
+    }
     
 }

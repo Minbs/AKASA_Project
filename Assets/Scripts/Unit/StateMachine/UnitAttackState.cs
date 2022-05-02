@@ -15,8 +15,17 @@ public class UnitAttackState : UnitBaseState
             stateMachine.ChangeState(stateMachine.moveState);
         else
         {
-            if(!stateMachine.unit.isAnimationPlaying("/attack"))
-             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, 1);
+            if (!stateMachine.IsTargetInAttackRange())
+            {
+                stateMachine.unit.target = null;
+                return;
+            }
+
+            if (!stateMachine.unit.isAnimationPlaying("/attack"))
+            {
+                stateMachine.LookAtTarget(stateMachine.unit.target.transform.position);
+                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, 1);
+            }
         }
     }
 

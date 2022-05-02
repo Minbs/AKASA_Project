@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
 
     public int atk;
     public float def;
-    public float moveSpeed;
+  //  public float moveSpeed;
     public float attackRangeDistance; // 유닛 공격 범위
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed { get; set; }

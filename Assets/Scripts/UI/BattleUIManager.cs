@@ -23,6 +23,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject worldCanvas;
 
     public GameObject DeployableTileImage;
+    public Sprite NotDeployableTileSprite;
 
     public GameObject settingCharacter;
     public SkeletonDataAsset skeletonDataAsset;
@@ -100,7 +101,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
            }
 
            BattleTime();
-           RegenCost();
+           //RegenCost();
            EnemeyCount();
 
            //UnitCount();
