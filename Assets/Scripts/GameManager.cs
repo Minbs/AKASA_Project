@@ -164,6 +164,7 @@ public class GameManager : Singleton<GameManager>
         BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
         Direction direction = Direction.RIGHT;
 
+        BattleUIManager.Instance.edge[minionsListIndex].SetActive(true);
         BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
 
             GameObject minion = Instantiate(MinionManager.Instance.minionPrefabs[minionsListIndex]);

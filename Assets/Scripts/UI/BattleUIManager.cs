@@ -54,6 +54,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public GameObject mBG;
     public List<GameObject> tBG;
+    public List<GameObject> edge;
     public bool isCheck = false;
     bool isSoundCheck = true;
 
@@ -120,7 +121,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < 12; i++)
         {
             tBG.Add(mBG.transform.GetChild(i).gameObject);
+            edge.Add(tBG[i].transform.GetChild(0).gameObject);
             if (tBG[i].activeSelf) tBG[i].SetActive(false);
+            if (edge[i].activeSelf) edge[i].SetActive(false);
         }
 
         //미니언 버튼
@@ -281,7 +284,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 {
                     mBtn[index].MBtnTBGPosition();
                     tBG[index].SetActive(true);
-                    //isCheck = true;
                 }
             }
         }
