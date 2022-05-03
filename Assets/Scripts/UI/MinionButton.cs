@@ -49,10 +49,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         BattleUIManager.Instance.settingCharacter.SetActive(true);
     }
 
-    public void MBtnTBGPosition()
-    {
-        BattleUIManager.Instance.tBG[index].transform.position = transform.position;
-    }
+    public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
 
     public void MinionStanbyTimer(int index)
     {
@@ -63,10 +60,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
             GetComponent<DefenceMinion>().minionStandbyTime <= 0)
         {
             if (BattleUIManager.Instance.tBG[index].activeSelf)
-            {
-                BattleUIManager.Instance.isCheck = false;
                 BattleUIManager.Instance.tBG[index].SetActive(false);
-            }
         }
 
         BattleUIManager.Instance.wTime[index].text = 

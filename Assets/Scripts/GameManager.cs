@@ -147,7 +147,7 @@ public class GameManager : Singleton<GameManager>
                 MinionManager.Instance.minionPrefabs[BattleUIManager.Instance.mBtn[minionsListIndex].index]
                 .GetComponent<DefenceMinion>().minionWaitingTime;
             BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[minionsListIndex].index);
-            BattleUIManager.Instance.isCostCheck = true;
+            BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
 
             GameObject minion = Instantiate(MinionManager.Instance.minionPrefabs[minionsListIndex]);
             minion.transform.position = pos;
