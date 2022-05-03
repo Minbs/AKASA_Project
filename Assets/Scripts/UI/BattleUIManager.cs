@@ -31,46 +31,63 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public bool isSettingCharacterOn = true;
 
     //
+    //최대 코스트(상수)
     const int maxCost = 99;
     int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
 
-    ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
+    //텍스트UI - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
     public TextMeshProUGUI[] text;
-    ///phase - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
+    //페이즈UI - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
+    //웨이브UI
     public TextMeshProUGUI wave;
+    //코스트 값 UI
     public TextMeshProUGUI costText;
 
-    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
+    //WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
-    int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
+    int maxEnemyCount, waveCount, regenTime;
 
-    float time = 0, phaseWaitingTime;
-    int min, sec, currentEnemyCount = 0;
+    float time, phaseWaitingTime;
+    int min, sec, currentEnemyCount;
     bool isPhaseCheck;
 
+    //M_Btn_TranslucentBG 오브젝트 필요
     public GameObject minionBtnTranslucentBG;
+    //TimeEdge 오브젝트 필요
     public List<GameObject> tBG = new List<GameObject>();
+    //WaitTime 오브젝트 필요
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    //미니언 재배치 타이머 실행확인
     public bool isCheck = false;
+    //사운드 실행확인(최초 실행 이후 false)
     bool isSoundCheck = true;
-    public bool isCostCheck = false;
 
+    //대기열 패널
     public GameObject wBG;
+    //대기열 미니언 버튼
     public List<MinionButton> mBtn;
 
+    //사운드
     AudioSource audioSource;
 
     void Start()
     {
+<<<<<<< HEAD
+=======
+        ObjectPool.Instance.CreatePoolObject("AttackRangeTile", attackRangeTileImage, 20, worldCanvas.transform);
+
+        //초기화
+>>>>>>> e94892ada7b254ce6c1b80656754faa6baa3e7ee
         Init();
     }
 
     void Update()
     {
+<<<<<<< HEAD
        if (settingCharacter.activeSelf)
            SetSettingCharacterMousePosition();
 
@@ -111,6 +128,39 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
        }
        
+=======
+        if (isSettingCharacterOn)
+            SetSettingCharacterMousePosition();
+
+        //
+        //전투 대비 시간일 때
+        if (GameManager.Instance.state == State.WAIT)
+        {
+            if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
+            WaitTime();
+        }
+        //전투 시작 시간일 때
+        if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
+        {
+            //상단 패널에 타이머UI에서 웨이브UI로 변경
+            BattleTime();
+            //에너미 카운트수 체크
+            EnemeyCount();
+            //배경음악 재생
+            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause();
+            else audioSource.UnPause();
+            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
+            //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+            //정해진 시간(regenTime)마다 코스트 1씩 추가
+            RegenCost();
+            //UnitCount();
+        }
+        //
+>>>>>>> e94892ada7b254ce6c1b80656754faa6baa3e7ee
     }
 
     public void SetSettingCharacterMousePosition()
@@ -121,37 +171,33 @@ public class BattleUIManager : Singleton<BattleUIManager>
     
     void Init()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
         time = 0;
+        audioSource = gameObject.GetComponent<AudioSource>();
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
 
-        for (int i = 0; i < wBG.transform.childCount; i++)
-        {
-            mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
-            //MinionManager.Instance.minionPrefabs[mBtn[i].index].GetComponent<Minion>().minionStandbyTime = 1;
-        }
-
+        //
         for (int i = 0; i < 12; i++)
         {
             tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
             wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
-
-            if (tBG[i].activeSelf)
-                tBG[i].SetActive(false);
+            if (tBG[i].activeSelf) tBG[i].SetActive(false);
         }
 
+        //미니언 버튼
+        for (int i = 0; i < wBG.transform.childCount; i++)
+            mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+
         for (int i = 0; i < 3; i++)
-            if (text[i].gameObject.activeSelf)
-                text[i].gameObject.SetActive(false);
+            if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
         text[3].text = currentEnemyCount.ToString();
         text[4].text = maxEnemyCount.ToString();
         text[5].text = maxMinionCount[0].ToString();
+
         for (int i = 0; i < 5; i++)
-            if (phase[i].gameObject.activeSelf)
-                phase[i].gameObject.SetActive(false);
-        if (wave.gameObject.activeSelf)
-            wave.gameObject.SetActive(false);
+            if (phase[i].gameObject.activeSelf) phase[i].gameObject.SetActive(false);
+
+        if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
     }
 
     void BattleTime()
@@ -165,8 +211,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void WaitTime()
     {
-        for (int i = 0; i < 3; i++)
-            text[i].gameObject.SetActive(true);
+        for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
         float time = GameManager.Instance.waitTimer;
         min = (int)time / 60;
@@ -195,8 +240,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void EnemeyCount()
     {
         currentEnemyCount = enemiesList.Count;
-        if (currentEnemyCount >= 0)
-            text[3].text = currentEnemyCount.ToString();
+        text[3].text = currentEnemyCount >= 0 ? currentEnemyCount.ToString() : 0.ToString();
     }
 
     void UnitCount()
@@ -204,7 +248,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     }
 
-    /// <summary> 전투 대비, 전투 시작 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
+    /// <summary> 페이즈 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
     void Active(int index)
     {
         switch (index)
@@ -220,7 +264,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 isPhaseCheck = false;
                 break;
             case (int)Phase.Wave1:
-                if (isPhaseCheck == true)
+                StartCoroutine("PhaseDelay");
+                if (isPhaseCheck)
                 {
                     WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
                     phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
@@ -230,7 +275,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     return;
                 break;
             case (int)Phase.Wave2:
-                if (isPhaseCheck == true)
+                StartCoroutine("PhaseDelay");
+                if (isPhaseCheck)
                 {
                     WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
                     phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
@@ -240,7 +286,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     return;
                 break;
             case (int)Phase.Wave3:
-                if (isPhaseCheck == true)
+                StartCoroutine("PhaseDelay");
+                if (isPhaseCheck)
                 {
                     WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
                     phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
@@ -253,15 +300,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 break;
         }
 
-        if (phaseWaitingTime >= 0)
-            phase[index].gameObject.SetActive(true);
-        else if (phaseWaitingTime < 0)
-            phase[index].gameObject.SetActive(false);
+        if (phaseWaitingTime >= 0) phase[index].gameObject.SetActive(true);
+        else phase[index].gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// 코스트 리젠 (regenTime마다 실행)
-    /// </summary>
+    /// <summary> 코스트 리젠 (regenTime마다 실행) </summary>
     void RegenCost()
     {
         time += Time.deltaTime;
@@ -276,31 +319,25 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             GameManager.Instance.cost++;
             costText.text = GameManager.Instance.cost.ToString();
-
             time = 0;
         }
     }
 
-    /// <summary>
-    /// 캐릭터 배치후 코스트 소모
-    /// </summary>
+    /// <summary> 캐릭터 배치후 코스트 소모 </summary>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.minionPrefabs.Count <= index)
-            return;
-
+        if (MinionManager.Instance.minionPrefabs.Count <= index) return;
         GameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
 
+    /// <summary> 미니언 배치 </summary> <param name="index"></param>
     public void DeploymentMinion(int index)
     {
         if (GameManager.Instance.cost >= 0)
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
             {
-                UseCost(index);
-
                 if (!tBG[index].activeSelf)
                 {
                     mBtn[index].MBtnTBGPosition();
@@ -315,21 +352,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void OnDoubleSpeedBtn()
-    {
-        if (Time.timeScale == 1)
-            Time.timeScale = 2;       
-        else       
-            Time.timeScale = 0;       
-    }
+    public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+        GameManager.Instance.gameSpeed == 1 || GameManager.Instance.gameSpeed == 0 ?
+        GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
 
-    public void OnPauseBtn()
-    {
-        if (Time.timeScale != 0)      
-            Time.timeScale = 0;       
-        else       
-            Time.timeScale = 1;      
-    }
+    public void OnPauseButton() => GameManager.Instance.gameSpeed =
+        GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
 
     IEnumerator PhaseDelay()
     {
