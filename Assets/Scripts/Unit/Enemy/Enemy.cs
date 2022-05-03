@@ -68,8 +68,6 @@ public class Enemy : Unit
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
-        Debug.Log(e.Data.Name);
-
         if (e.Data.Name == "shoot")
         {
             switch(attackType)
@@ -82,6 +80,14 @@ public class Enemy : Unit
                     break;
             }
 
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.transform.name == "Cube")
+        {
+            GameManager.Instance.isLineOver = true;
         }
     }
 }

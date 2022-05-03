@@ -377,8 +377,8 @@ public class DefenceMinion : Minion
         float value = 0;
         float initSpeed = 0;
 
-        if(target.GetComponent<Enemy>() != null)
-            initSpeed = target.GetComponent<Enemy>().moveSpeed;
+   //     if(target.GetComponent<Enemy>() != null)
+     //       initSpeed = target.GetComponent<Enemy>().moveSpeed;
 
         switch (skillAbility.statType)
         {
@@ -397,7 +397,7 @@ public class DefenceMinion : Minion
                 break;
             case StatType.MoveSpeed:
                 value = skillAbility.power / 100;
-                target.GetComponent<Enemy>().moveSpeed *= 1+ value;
+          //      target.GetComponent<Enemy>().moveSpeed *= 1+ value;
                 break;
 
         }
@@ -423,7 +423,7 @@ public class DefenceMinion : Minion
                 target.def -= value;
                 break;
             case StatType.MoveSpeed:
-                target.GetComponent<Enemy>().moveSpeed = initSpeed;
+   //             target.GetComponent<Enemy>().moveSpeed = initSpeed;
                 break;
         }
     }
@@ -435,11 +435,7 @@ public class DefenceMinion : Minion
     {
         base.Update();
 
-        if (currentHp <= 0)
-        {
-            StartCoroutine(Die());
-            return;
-        }
+    
 
         /*
         if(attackType == AttackType.Melee)

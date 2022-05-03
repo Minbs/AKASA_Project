@@ -6,7 +6,7 @@ public class UnitApproachingState : UnitBaseState
 {
     public override void Begin(UnitStateMachine stateMachine)
     {
-        stateMachine.agent.SetDestination(stateMachine.unit.target.transform.position);
+
     }
 
     public override void Update(UnitStateMachine stateMachine)
@@ -14,12 +14,19 @@ public class UnitApproachingState : UnitBaseState
         if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
 
+        stateMachine.agent.SetDestination(stateMachine.unit.target.transform.position);
+
+
         if (stateMachine.unit.target == null)
             stateMachine.ChangeState(stateMachine.moveState);
         else
         {
+            stateMachine.LookAtTarget(stateMachine.unit.target.transform.position);
+
             if (stateMachine.IsTargetInAttackRange())
                 stateMachine.ChangeState(stateMachine.AttackState);
+            if (!stateMachine.IsTargetInCognitiveRange())
+                stateMachine.unit.target = null;
         }
     }
 
