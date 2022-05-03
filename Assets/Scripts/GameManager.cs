@@ -140,10 +140,7 @@ public class GameManager : Singleton<GameManager>
                     unitSetTile = raycastHit.collider.gameObject;
                     unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
 
-                    MinionManager.Instance.minionPrefabs[BattleUIManager.Instance.mBtn[minionsListIndex].index].GetComponent<DefenceMinion>().minionStandbyTime =
-                    MinionManager.Instance.minionPrefabs[BattleUIManager.Instance.mBtn[minionsListIndex].index].GetComponent<DefenceMinion>().minionWaitingTime;
                     BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[minionsListIndex].index);
-                    BattleUIManager.Instance.tBGObj[minionsListIndex].SetActive(false);
                 }
 
                 rayNode = raycastHit.collider.GetComponent<Tile>().node;
@@ -167,9 +164,6 @@ public class GameManager : Singleton<GameManager>
         BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
         Direction direction = Direction.RIGHT;
 
-
-        BattleUIManager.Instance.tBGObj[minionsListIndex].SetActive(true);
-        BattleUIManager.Instance.isCheck = true;
         BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
 
             GameObject minion = Instantiate(MinionManager.Instance.minionPrefabs[minionsListIndex]);

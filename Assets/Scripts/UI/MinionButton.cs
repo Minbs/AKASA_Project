@@ -13,21 +13,11 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     public int index;
     public DefenceMinion minion;
 
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
         if(MinionManager.Instance.minionQueue.Count != 0)
             minion = MinionManager.Instance.minionQueue[index].GetComponent<DefenceMinion>();
-
-        if (BattleUIManager.Instance.isCheck == true)
-        {
-            MinionStanbyTimer(index);
-        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -50,22 +40,5 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     }
 
     public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
-
-    public void MinionStanbyTimer(int index)
-    {
-        MinionManager.Instance.minionPrefabs[index].
-            GetComponent<DefenceMinion>().minionStandbyTime -= Time.deltaTime;
-
-        if (MinionManager.Instance.minionPrefabs[index].
-            GetComponent<DefenceMinion>().minionStandbyTime <= 0)
-        {
-            if (BattleUIManager.Instance.tBGObj[index].activeSelf)
-                BattleUIManager.Instance.tBGObj[index].SetActive(false);
-        }
-
-        BattleUIManager.Instance.wTime[index].text = 
-            MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().
-            minionStandbyTime.ToString("F1") + "s".ToString();
-    }
 }
 

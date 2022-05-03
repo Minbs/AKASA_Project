@@ -53,12 +53,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
     bool isPhaseCheck;
 
     public GameObject mBG;
-    public List<GameObject> tBG = new List<GameObject>();
-    public List<GameObject> tBGObj = new List<GameObject>();
-    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    public List<GameObject> tBG;
     public bool isCheck = false;
     bool isSoundCheck = true;
-    public bool isCostCheck = false;
 
     public GameObject wBG;
     public List<MinionButton> mBtn;
@@ -123,10 +120,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < 12; i++)
         {
             tBG.Add(mBG.transform.GetChild(i).gameObject);
-            tBGObj.Add(tBG[i].transform.GetChild(0).gameObject);
-            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
             if (tBG[i].activeSelf) tBG[i].SetActive(false);
-            if (tBGObj[i].activeSelf) tBGObj[i].SetActive(false);
         }
 
         //미니언 버튼
