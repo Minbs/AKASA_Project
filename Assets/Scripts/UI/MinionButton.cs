@@ -18,6 +18,8 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     {
         if(MinionManager.Instance.minionQueue.Count != 0)
             minion = MinionManager.Instance.minionQueue[index].GetComponent<DefenceMinion>();
+
+        MBtnTBGPosition();
     }
 
     public void OnPointerDown(PointerEventData eventData)
