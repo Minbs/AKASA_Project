@@ -63,6 +63,17 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     AudioSource audioSource;
 
+    private float fpsDeltaTime = 0;
+
+    [SerializeField, Range(1, 100)]
+    private int fpsFontSize = 25;
+
+    [SerializeField]
+    private Color fpsColor = Color.green;
+    private int fpsIndex = 0;
+    public bool isFpsShow;
+
+
     void Start()
     {
         Init();
@@ -73,8 +84,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
        if (settingCharacter.activeSelf)
            SetSettingCharacterMousePosition();
 
+        FPS();
+
        //
-       if (GameManager.Instance.state == State.WAIT)
+        if (GameManager.Instance.state == State.WAIT)
        {
            if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
            WaitTime();
@@ -305,5 +318,80 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         yield return new WaitForSeconds(WaitingTime[(int)Phase.Between]);
         isPhaseCheck = true;
+    }
+
+    private void FPS()
+    {
+        fpsDeltaTime += (Time.unscaledDeltaTime - fpsDeltaTime) * 0.1f;
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            isFpsShow = !isFpsShow;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            switch (fpsIndex)
+            {
+                case 0:
+                    Application.targetFrameRate = 25;
+                    fpsIndex++;
+                    break;
+                case 1:
+                    Application.targetFrameRate = 30;
+                    fpsIndex++;
+                    break;
+                case 2:
+                    Application.targetFrameRate = 60;
+                    fpsIndex++;
+                    break;
+                case 3:
+                    Application.targetFrameRate = 80;
+                    fpsIndex++;
+                    break;
+                case 4:
+                    Application.targetFrameRate = 120;
+                    fpsIndex++;
+                    break;
+                case 5:
+                    Application.targetFrameRate = 144;
+                    fpsIndex++;
+                    break;
+                case 6:
+                    Application.targetFrameRate = 200;
+                    fpsIndex++;
+                    break;
+                case 7:
+                    Application.targetFrameRate = 240;
+                    fpsIndex++;
+                    break;
+                case 8:
+                    Application.targetFrameRate = -1;
+                    fpsIndex++;
+                    break;
+                case 9:
+                    fpsIndex = 0;
+                    break;
+            }
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (isFpsShow)
+        {
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(30, 30, Screen.width, Screen.height);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontSize = fpsFontSize;
+            style.normal.textColor = fpsColor;
+
+            float ms = fpsDeltaTime * 1000f;
+            float fps = 1.0f / fpsDeltaTime;
+            string text = string.Format("{0:0.} FPS ({1:0.0} ms)", fps, ms);
+
+            GUI.Label(rect, text, style);
+        }
     }
 }
