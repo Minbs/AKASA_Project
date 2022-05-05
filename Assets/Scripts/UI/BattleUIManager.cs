@@ -55,19 +55,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject mBG;
     public List<GameObject> tBG;
     public List<GameObject> edge;
-    public bool isCheck = false;
     bool isSoundCheck = true;
 
-    public GameObject wBG;
+    public GameObject mPan;
+    public GameObject oPan;
+    public GameObject mCnt;
+    public GameObject oCnt;
     public List<MinionButton> mBtn;
+    public List<Button> oBtn;
+    bool isButtonCheck = true;
 
     AudioSource audioSource;
 
-    private float fpsDeltaTime = 0;
 
+
+    //fps 관련 변수
+    private float fpsDeltaTime = 0;
     [SerializeField, Range(1, 100)]
     private int fpsFontSize = 25;
-
     [SerializeField]
     private Color fpsColor = Color.green;
     private int fpsIndex = 0;
@@ -85,6 +90,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
            SetSettingCharacterMousePosition();
 
         FPS();
+        OnDeployButton();
 
        //
         if (GameManager.Instance.state == State.WAIT)
@@ -140,8 +146,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
 
         //미니언 버튼
-        for (int i = 0; i < wBG.transform.childCount; i++)
-            mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+        for (int i = 0; i < mCnt.transform.childCount; i++)
+            mBtn.Add(mCnt.GetComponentsInChildren<MinionButton>()[i]);
+
+        //오브젝트 버튼
+        for (int i = 0; i < oCnt.transform.childCount; i++)
+            oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -153,6 +163,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
             if (phase[i].gameObject.activeSelf) phase[i].gameObject.SetActive(false);
 
         if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
+
+        if (mPan.activeSelf) oPan.SetActive(false);
     }
 
     void BattleTime()
@@ -313,6 +325,23 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
 
+    public void OnDeployButtonCheck() => isButtonCheck = mPan.activeSelf == true ? false : true;
+
+    private void OnDeployButton()
+    {
+        if (isButtonCheck)
+        {
+            mPan.SetActive(true);
+            oPan.SetActive(false);
+            mBG.SetActive(true);
+        }
+        else
+        {
+            mPan.SetActive(false);
+            oPan.SetActive(true);
+            mBG.SetActive(false);
+        }
+    }
 
     IEnumerator PhaseDelay()
     {
