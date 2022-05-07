@@ -31,99 +31,96 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public bool isSettingCharacterOn = true;
 
     //
-    //최대 코스트(상수)
     const int maxCost = 99;
     int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
 
-    //텍스트UI - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
+    ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
     public TextMeshProUGUI[] text;
-    //페이즈UI - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
+    ///phase - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
-    //웨이브UI
     public TextMeshProUGUI wave;
-    //코스트 값 UI
     public TextMeshProUGUI costText;
 
-    //WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between
+    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
-    int maxEnemyCount, waveCount, regenTime;
+    int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
 
-    float time, phaseWaitingTime;
-    int min, sec, currentEnemyCount;
+    float time = 0, phaseWaitingTime;
+    int min, sec, currentEnemyCount = 0;
     bool isPhaseCheck;
 
-    //M_Btn_TranslucentBG 오브젝트 필요
-    public GameObject minionBtnTranslucentBG;
-    //TimeEdge 오브젝트 필요
-    public List<GameObject> tBG = new List<GameObject>();
-    //WaitTime 오브젝트 필요
-    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
-    //미니언 재배치 타이머 실행확인
-    public bool isCheck = false;
-    //사운드 실행확인(최초 실행 이후 false)
+    public GameObject mBG;
+    public List<GameObject> tBG;
+    public List<GameObject> edge;
     bool isSoundCheck = true;
 
-    //대기열 패널
-    public GameObject wBG;
-    //대기열 미니언 버튼
+    public GameObject mPan;
+    public GameObject oPan;
+    public GameObject mCnt;
+    public GameObject oCnt;
     public List<MinionButton> mBtn;
+    public List<Button> oBtn;
+    bool isButtonCheck = true;
 
-    //사운드
     AudioSource audioSource;
+
+
+
+    //fps 관련 변수
+    private float fpsDeltaTime = 0;
+    [SerializeField, Range(1, 100)]
+    private int fpsFontSize = 25;
+    [SerializeField]
+    private Color fpsColor = Color.green;
+    private int fpsIndex = 0;
+    public bool isFpsShow;
+
 
     void Start()
     {
-
         Init();
     }
 
     void Update()
     {
-
        if (settingCharacter.activeSelf)
            SetSettingCharacterMousePosition();
 
+        FPS();
+        OnDeployButton();
+
        //
-       if (GameManager.Instance.state == State.WAIT)
+        if (GameManager.Instance.state == State.WAIT)
        {
-           if (WaitingTime[(int)Phase.Ready] >= 0)
-               Active((int)Phase.Ready);
+           if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
            WaitTime();
        }
        if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
        {
-           if (isSoundCheck == true)
-           {
-               audioSource.Play();
-               isSoundCheck = false;
-           }
+            //상단 패널에 타이머UI에서 웨이브UI로 변경
+            BattleTime();
+            //에너미 카운트수 체크
+            EnemeyCount();
+            //배경음악 재생
+            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause();
+            else audioSource.UnPause();
+            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
+            //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
-           if (WaitingTime[(int)Phase.Start] >= 0)
-           {
-               Active((int)Phase.Start);
-           }
-
-           if (WaitingTime[(int)Phase.Wave1] >= 0)
-           {
-               StartCoroutine("PhaseDelay");
-               Active((int)Phase.Wave1);
-           }
-
-           BattleTime();
-           //RegenCost();
-           EnemeyCount();
-
-           //UnitCount();
-       }
+            //UnitCount();
+        }
        else 
        {
 
        }
        
-
     }
 
     public void SetSettingCharacterMousePosition()
@@ -131,7 +128,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         settingCharacter.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
     }
 
-    
+
     void Init()
     {
         time = 0;
@@ -142,14 +139,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
         //
         for (int i = 0; i < 12; i++)
         {
-            tBG.Add(minionBtnTranslucentBG.transform.GetChild(i).gameObject);
-            wTime.Add(tBG[i].GetComponentInChildren<TextMeshProUGUI>());
+            tBG.Add(mBG.transform.GetChild(i).gameObject);
+            edge.Add(tBG[i].transform.GetChild(0).gameObject);
             if (tBG[i].activeSelf) tBG[i].SetActive(false);
+            if (edge[i].activeSelf) edge[i].SetActive(false);
         }
 
         //미니언 버튼
-        for (int i = 0; i < wBG.transform.childCount; i++)
-            mBtn.Add(wBG.GetComponentsInChildren<MinionButton>()[i]);
+        for (int i = 0; i < mCnt.transform.childCount; i++)
+            mBtn.Add(mCnt.GetComponentsInChildren<MinionButton>()[i]);
+
+        //오브젝트 버튼
+        for (int i = 0; i < oCnt.transform.childCount; i++)
+            oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -161,6 +163,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
             if (phase[i].gameObject.activeSelf) phase[i].gameObject.SetActive(false);
 
         if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
+
+        if (mPan.activeSelf) oPan.SetActive(false);
     }
 
     void BattleTime()
@@ -305,7 +309,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 {
                     mBtn[index].MBtnTBGPosition();
                     tBG[index].SetActive(true);
-                    isCheck = true;
                 }
             }
         }
@@ -316,15 +319,108 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
-        GameManager.Instance.gameSpeed == 1 || GameManager.Instance.gameSpeed == 0 ?
-        GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
+            GameManager.Instance.gameSpeed == 1 || GameManager.Instance.gameSpeed == 0 ?
+            GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
 
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
+
+    public void OnDeployButtonCheck() => isButtonCheck = mPan.activeSelf == true ? false : true;
+
+    private void OnDeployButton()
+    {
+        if (isButtonCheck)
+        {
+            mPan.SetActive(true);
+            oPan.SetActive(false);
+            mBG.SetActive(true);
+        }
+        else
+        {
+            mPan.SetActive(false);
+            oPan.SetActive(true);
+            mBG.SetActive(false);
+        }
+    }
 
     IEnumerator PhaseDelay()
     {
         yield return new WaitForSeconds(WaitingTime[(int)Phase.Between]);
         isPhaseCheck = true;
+    }
+
+    private void FPS()
+    {
+        fpsDeltaTime += (Time.unscaledDeltaTime - fpsDeltaTime) * 0.1f;
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            isFpsShow = !isFpsShow;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            switch (fpsIndex)
+            {
+                case 0:
+                    Application.targetFrameRate = 25;
+                    fpsIndex++;
+                    break;
+                case 1:
+                    Application.targetFrameRate = 30;
+                    fpsIndex++;
+                    break;
+                case 2:
+                    Application.targetFrameRate = 60;
+                    fpsIndex++;
+                    break;
+                case 3:
+                    Application.targetFrameRate = 80;
+                    fpsIndex++;
+                    break;
+                case 4:
+                    Application.targetFrameRate = 120;
+                    fpsIndex++;
+                    break;
+                case 5:
+                    Application.targetFrameRate = 144;
+                    fpsIndex++;
+                    break;
+                case 6:
+                    Application.targetFrameRate = 200;
+                    fpsIndex++;
+                    break;
+                case 7:
+                    Application.targetFrameRate = 240;
+                    fpsIndex++;
+                    break;
+                case 8:
+                    Application.targetFrameRate = -1;
+                    fpsIndex++;
+                    break;
+                case 9:
+                    fpsIndex = 0;
+                    break;
+            }
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (isFpsShow)
+        {
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(30, 30, Screen.width, Screen.height);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontSize = fpsFontSize;
+            style.normal.textColor = fpsColor;
+
+            float ms = fpsDeltaTime * 1000f;
+            float fps = 1.0f / fpsDeltaTime;
+            string text = string.Format("{0:0.} FPS ({1:0.0} ms)", fps, ms);
+
+            GUI.Label(rect, text, style);
+        }
     }
 }
