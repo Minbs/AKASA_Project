@@ -17,7 +17,12 @@ public class UnitMoveState : UnitBaseState
             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
 
         if(stateMachine.gameObject.GetComponent<Minion>())
-        stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+        {
+            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
+                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+            else
+                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+        }
         else if(stateMachine.gameObject.GetComponent<Enemy>())
             stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
 

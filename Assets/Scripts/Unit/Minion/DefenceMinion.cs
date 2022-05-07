@@ -89,6 +89,11 @@ public class DefenceMinion : Minion
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
+        if (target == null)
+        {
+            return;
+        }
+
         if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
         {
             switch (attackType)
@@ -201,54 +206,6 @@ public class DefenceMinion : Minion
         bulletObject.GetComponent<Bullet>().Init(atk, target);
 
         bulletObject.SetActive(true);
-    }
-
-    public void AimTarget()
-    {
-        var result = GameManager.Instance.minionsList.OrderBy(minion => minion.GetComponent<Unit>().currentHp);
-        GameManager.Instance.minionsList = result.ToList();
-
-    }
-
-    public void AttackTarget()
-    {
-        
-        if(transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill" 
-            && normalizedTime < 1)
-        {
-            return;
-        }
-        
-        if (target != null && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName != skinName + "/attack" || ((transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack" )
-            && normalizedTime >= 1)))
-        {
-
-            Vector3 scale = Vector3.one;
-            if (target.transform.position.x - transform.position.x >= -0.001)
-            {
-                scale.x = 1;
-            }
-            else
-            {
-                scale.x = -1;
-            }
-
-            transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
-
-            if(isNextBaseAttackEnhanced)
-            {
-                if(activeSkillAbilities[0].abilityType.statusEffect.statusEffect != StatusEffect.StatusEffects.Poison)
-                isNextBaseAttackEnhanced = false;
-
-                spineAnimation.PlayAnimation(skinName + "/skill", false, 1 * attackSpeed);
-            }
-            else
-            {
-                spineAnimation.PlayAnimation(skinName + "/attack", false, 1 * attackSpeed);
-            }
-        }
-
-
     }
     #endregion
 
@@ -434,38 +391,6 @@ public class DefenceMinion : Minion
     protected override void Update()
     {
         base.Update();
-
-    
-
-        /*
-        if(attackType == AttackType.Melee)
-        {
-            currentStopCount = stopCount;
-            foreach (var enemy in GameManager.Instance.enemiesList)
-            {
-                if(enemy.GetComponent<Unit>().target == gameObject && enemy.GetComponent<Enemy>().attackType == AttackType.Melee)
-                {
-                    currentStopCount--;
-                }    
-            }
-        }
-
-        currentSkillGauge += Time.deltaTime;
-
-        if (currentSkillGauge >= maxSkillGauge)
-        {
-            currentSkillGauge = maxSkillGauge;
-
-            if (activeSkillType == ActiveSkillType.Auto)
-            {
-                UseSkill();
-                return;
-            }
-        }
-
-        AimTarget();
-        AttackTarget();
-        */
     }
 }
 

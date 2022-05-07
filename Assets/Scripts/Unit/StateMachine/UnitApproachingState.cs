@@ -14,13 +14,14 @@ public class UnitApproachingState : UnitBaseState
         if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
 
-        stateMachine.agent.SetDestination(stateMachine.unit.target.transform.position);
+
 
 
         if (stateMachine.unit.target == null)
             stateMachine.ChangeState(stateMachine.moveState);
         else
         {
+            stateMachine.agent.SetDestination(stateMachine.unit.target.transform.position);
             stateMachine.LookAtTarget(stateMachine.unit.target.transform.position);
 
             if (stateMachine.IsTargetInAttackRange())

@@ -32,13 +32,16 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (GameManager.Instance.state == State.BATTLE)
+            return;
+
+
+
         if (GameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
             return;
 
         GameManager.Instance.minionsListIndex = index;
         GameManager.Instance.ChangeMinionPositioningState();
-
-     //   BattleUIManager.Instance.attackRangeNodes = minion.attackRangeNodes.ToList();
 
         BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
             skeletonDataAsset = MinionManager.Instance.minionPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;

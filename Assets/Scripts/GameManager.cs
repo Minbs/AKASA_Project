@@ -82,6 +82,13 @@ public class GameManager : Singleton<GameManager>
             {
                 e.GetComponent<UnitStateMachine>().ChangeState(e.GetComponent<UnitStateMachine>().moveState);
             }
+
+            foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+            {
+                tile.ShowDeployableTile(false);
+            }
+
+            BattleUIManager.Instance.settingCharacter.SetActive(false);
         }
         else
         {
@@ -105,7 +112,6 @@ public class GameManager : Singleton<GameManager>
 
         if (battleTime > 0 && state.Equals(State.BATTLE))
         {
-
             if (isApproach == false)
             {
                 foreach (var m in minionsList)
@@ -179,7 +185,7 @@ public class GameManager : Singleton<GameManager>
             minion.GetComponent<Unit>().SetDirection(direction);
 
 
-            foreach (var tile in BoardManager.Instance.tilesList)
+            foreach (var tile in BoardManager.Instance.minionDeployTilesList)
             {
                 tile.ShowDeployableTile(false);
             }
@@ -199,7 +205,7 @@ public class GameManager : Singleton<GameManager>
     {
         deployState = DeployState.Positioning;
 
-        foreach (var tile in BoardManager.Instance.tilesList)
+        foreach (var tile in BoardManager.Instance.minionDeployTilesList)
         {
             tile.ShowDeployableTile(true);
         }

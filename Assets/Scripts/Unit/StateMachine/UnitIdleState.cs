@@ -12,7 +12,7 @@ public class UnitIdleState : UnitBaseState
     public override void Update(UnitStateMachine stateMachine)
     {
             if (!stateMachine.unit.isAnimationPlaying("/idle") && stateMachine.unit.GetComponent<Minion>() != null)
-                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, 1);       
+                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/idle", true, 1);       
     }
 
     public override void End(UnitStateMachine stateMachine)

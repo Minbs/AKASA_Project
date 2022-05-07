@@ -5,18 +5,27 @@ using System.Linq;
 
 public class BoardManager : Singleton<BoardManager>
 {
+
+
     [SerializeField]
-    public List<Tile> tilesList = new List<Tile>();
+    public List<Tile> minionDeployTilesList = new List<Tile>();
 
     public Vector3 tileStartPos;
 
     public int sizeX;
     public int sizeY;
 
+    [SerializeField]
+    public List<Tile> enemyDeployTilesList = new List<Tile>();
+
+    public Vector3 enemyTileStartPos;
+
+    public int enemyTilesSizeX;
+    public int enemyTilesSizeY;
+
+
 
     public bool isTileSet = false;
-
-    public bool end = false;
 
     private MapCreator mapCreator;
 
@@ -26,11 +35,12 @@ public class BoardManager : Singleton<BoardManager>
     {
         mapCreator = new MapCreator();
 
-        if (tilesList == null)
+        if (minionDeployTilesList == null)
             Debug.Log("n");
         else
         {
-            mapCreator.GenerateTileMap(tileStartPos, sizeX, sizeY);
+            mapCreator.GenerateMinionTileMap(tileStartPos, sizeX, sizeY);
+            mapCreator.GenerateEnemyTileMap(enemyTileStartPos, enemyTilesSizeX, enemyTilesSizeY);
             isTileSet = true;
         }
     }
@@ -53,7 +63,7 @@ public class BoardManager : Singleton<BoardManager>
     public Tile GetTile(int x, int y)
     {
         Node n = new Node(x, y);
-        var tile = tilesList.Where(t => t.node == n);
+        var tile = minionDeployTilesList.Where(t => t.node == n);
 
         Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
 
@@ -68,7 +78,7 @@ public class BoardManager : Singleton<BoardManager>
     public Tile GetTile(Node node)
     {
         Node n = node;
-        var tile = tilesList.Where(t => t.node == n);
+        var tile = minionDeployTilesList.Where(t => t.node == n);
 
         Tile returnVal = tile.SingleOrDefault(); //1개 데이터만 허용
 

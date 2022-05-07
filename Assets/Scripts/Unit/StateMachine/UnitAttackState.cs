@@ -11,7 +11,11 @@ public class UnitAttackState : UnitBaseState
 
     public override void Update(UnitStateMachine stateMachine)
     {
-        if (stateMachine.unit.target == null)
+        if (stateMachine.unit.isAnimationPlaying("/attack"))
+            return;
+
+
+            if (stateMachine.unit.target == null)
             stateMachine.ChangeState(stateMachine.moveState);
         else
         {
