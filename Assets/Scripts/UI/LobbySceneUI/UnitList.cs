@@ -14,9 +14,9 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
     private Vector2 MousePos;
     private RaycastHit hit;
     private GraphicRaycaster gr;
-    [SerializeField] private List<Unitportrait> MinionList;
-    [SerializeField] private Unitportrait Prefab;
-    [SerializeField] private List<Unitportrait> temp;
+    [SerializeField] private List<MinionsPortrait> MinionList;
+    [SerializeField] private MinionsPortrait Prefab;
+    [SerializeField] private List<MinionsPortrait> temp;
     [SerializeField] public List<Sprite> Minions_Illust;
     [SerializeField] public List<Sprite> Minions_Standing;
     Canvas myCanves;
@@ -27,7 +27,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         myCanves = GameObject.Find("Canvas").GetComponent<Canvas>();
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
 
-        ListSave();
+        //ListSave();
         //DontDestroyOnLoad(this.gameObject);
         //ListLoad();
         //LoadList();
@@ -39,97 +39,44 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
     public void ListSave()
     {
-        string path;
-        string filename;
-        string json;
-        for (int i = 0; i < MinionList.Count; i++)
-        {
-            filename = MinionList[i].pro_Minion_e_Name;
-            path = Application.dataPath + "/" + filename + ".Json";
+        //string path;
+        //string filename;
+        //string json;
+        //for (int i = 0; i < MinionList.Count; i++)
+        //{
+        //    filename = MinionList[i].pro_Minion_e_Name;
+        //    path = Application.dataPath + "/" + filename + ".Json";
 
-            json = JsonUtility.ToJson(MinionList[i]);
+        //    json = JsonUtility.ToJson(MinionList[i]);
 
-            File.WriteAllText(path, json);
-            Debug.Log(filename + "생성");
-            myUnits.Add(filename);
-        }
-        path = Application.dataPath + "/" + UnitListFile + ".Json";
-        string[] a = myUnits.ToArray();
-        json = JsonUtility.ToJson(a);
-        File.WriteAllText(path, json);
+        //    File.WriteAllText(path, json);
+        //    Debug.Log(filename + "생성");
+        //    myUnits.Add(filename);
+        //}
+        //path = Application.dataPath + "/" + UnitListFile + ".Json";
+        //string[] a = myUnits.ToArray();
+        //json = JsonUtility.ToJson(a);
+        //File.WriteAllText(path, json);
     }
-
-    // 리스트 랜덤 불러오기
-    //private void LoadList()
-    //{
-    //    // 임시로 10개 받아오기
-    //    for(int i = 0; i < 10; i++)
-    //    {
-    //        Unitportrait up = Instantiate<Unitportrait>(Prefab);
-
-    //        int a = Random.Range(0, Minions_Illust.Count);
-    //        switch (a)
-    //        {
-    //            case 0:
-    //                up.RandInit("eremedium", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 1:
-    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-
-    //                break;
-    //            case 2:
-    //                up.RandInit("verity", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 3:
-    //                up.RandInit("wraith", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 4:
-    //                up.RandInit("zippo", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 5:
-    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 6:
-    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 7:
-    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 8:
-    //                up.RandInit("kuen", Minions_Illust[a], Minions_Standing[a]);
-    //                break;
-    //            case 9:
-    //                break;
-    //            case 10:
-    //                break;
-    //            default:
-    //                break;
-    //        }
-
-    //        MinionList.Add(up);
-
-    //        up.transform.parent = this.transform;
-            
-    //    }
-    //}
 
     private void Update()
     {
 
     }
 
-    public void SetEditting(Unitportrait up)
+    public void SetEditting(MinionsPortrait up)
     {
-
         try
         {
-            if (EditList.Instance.ListCheck(Dummy.GetComponent<Unitportrait>()))
+            if (EditList.Instance.ListCheck(Dummy.GetComponent<MinionsPortrait>()))
             {
-                Dummy.GetComponent<Unitportrait>().GetData(ref up);
+                // 깊은 복사
+                //Dummy.GetComponent<MinionsPortrait>().GetData(ref up);
                 //EditList.Instance.e_NameList.Add(up.pro_Minion_e_Name);
-                Unitportrait dummy = up;
+                up.updateInfo(Dummy.GetComponent<MinionsPortrait>().pro_info);
+                up.init();
                 //up.GetData(ref dummy);
-                EditList.Instance.objList.Add(dummy);
+                EditList.Instance.objList.Add(up);
             }
             else
             {
@@ -219,7 +166,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
             if (results.Count <= 0) return;
             if (results[0].gameObject.tag == "Minions_EditList")
             {
-                SetEditting(results[0].gameObject.GetComponent<Unitportrait>());
+                SetEditting(results[0].gameObject.GetComponent<MinionsPortrait>());
             }
         }
         catch (System.NotImplementedException e)
@@ -258,7 +205,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
     {
         try
         {
-            MinionList.Sort((MinionA, MinionB) => MinionA.pro_Minion_e_Name.CompareTo(MinionB.pro_Minion_e_Name));   // 이름 순?
+            MinionList.Sort((MinionA, MinionB) => MinionA.pro_e_name.CompareTo(MinionB.pro_e_name));   // 이름 순?
             SortReverse();
         }
         catch
@@ -268,7 +215,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
         for (int i = 0; i < MinionList.Count; i++)
         {
-            Unitportrait g = Instantiate<Unitportrait>(MinionList[i]);
+            MinionsPortrait g = Instantiate<MinionsPortrait>(MinionList[i]);
 
             temp.Add(g);
 
@@ -284,7 +231,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
         MinionList = temp;
 
-        temp = new List<Unitportrait>();
+        temp = new List<MinionsPortrait>();
 
     }
 
@@ -292,7 +239,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
     {
         try
         {
-            MinionList.Sort((MinionA, MinionB) => MinionA.pro_MinionLv.CompareTo(MinionB.pro_MinionLv));
+            MinionList.Sort((MinionA, MinionB) => MinionA.pro_lv.CompareTo(MinionB.pro_lv));
             SortReverse();
         }
         catch
@@ -302,7 +249,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
         for (int i = 0; i < MinionList.Count; i++)
         {
-            Unitportrait g = Instantiate<Unitportrait>(MinionList[i]);
+            MinionsPortrait g = Instantiate<MinionsPortrait>(MinionList[i]);
 
             temp.Add(g);
 
@@ -318,7 +265,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
         MinionList = temp;
 
-        temp = new List<Unitportrait>();
+        temp = new List<MinionsPortrait>();
     }
 
     public void SortingRank()       // 등급으로 정렬
