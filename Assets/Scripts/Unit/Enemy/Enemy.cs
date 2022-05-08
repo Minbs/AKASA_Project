@@ -94,5 +94,12 @@ public class Enemy : Unit
         {
             GameManager.Instance.isLineOver = true;
         }
+
+        if (other.transform.tag == "Finish")
+        {
+            GameManager.Instance.enemiesList.Remove(gameObject);
+            Destroy(gameObject);
+        }
     }
+
 }
