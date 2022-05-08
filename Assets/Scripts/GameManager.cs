@@ -76,6 +76,7 @@ public class GameManager : Singleton<GameManager>
 
         if (waitTimer <= 0 && state.Equals(State.WAIT))
         {
+            waitTimer = 0;
             state = State.BATTLE;
 
             foreach(var e in enemiesList)
@@ -83,7 +84,7 @@ public class GameManager : Singleton<GameManager>
                 e.GetComponent<UnitStateMachine>().ChangeState(e.GetComponent<UnitStateMachine>().moveState);
             }
         }
-        else
+        else if (waitTimer > 0 && state.Equals(State.WAIT))
         {
             waitTimer -= Time.deltaTime;
         }
@@ -166,6 +167,7 @@ public class GameManager : Singleton<GameManager>
 
         BattleUIManager.Instance.edge[minionsListIndex].SetActive(true);
         BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
+        BattleUIManager.Instance.isCheck = true;
 
             GameObject minion = Instantiate(MinionManager.Instance.minionPrefabs[minionsListIndex]);
             minion.transform.position = pos;

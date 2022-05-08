@@ -55,6 +55,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject mBG;
     public List<GameObject> tBG;
     public List<GameObject> edge;
+
+    public List<GameObject> tBGObj = new List<GameObject>();
+    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+
+    public bool isCheck = false;
     bool isSoundCheck = true;
 
     public GameObject mPan;
