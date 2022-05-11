@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6333308894391565121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6333308894391565182}
+  - component: {fileID: 6333308894391565183}
+  m_Layer: 0
+  m_Name: CharacterStat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6333308894391565182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333308894391565121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.197945, z: 1.4166498}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6333308894391565183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6333308894391565121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c35bf2179def84199bcbc8035bbfaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VeriyStat:
+    Name: Verity
+    Class: Chaser
+    Brood: Beast
+    Belong: SkyHawk
+    HP: 10
+    Def: 0
+    Atk: 4
+    AtkSpeed: 1
+    MoveSpeed: 1
+    AtkRange: 4
+    CognitiveRange: 7
+  AngelusStat:
+    Name: Angelus
+    Class: Buster
+    Brood: Humanoid
+    Belong: SkyHawk
+    HP: 15
+    Def: 1
+    Atk: 5
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  AsherStat:
+    Name: Asher
+    Class: Gaurdian
+    Brood: Person
+    Belong: RoyalGarden
+    HP: 20
+    Def: 2
+    Atk: 3
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  EremediumStat:
+    Name: Eremedium
+    Class: Rescue
+    Brood: Humanoid
+    Belong: RoyalGarden
+    HP: 7
+    Def: 0
+    Atk: 4
+    AtkSpeed: 1
+    MoveSpeed: 1
+    AtkRange: 4
+    CognitiveRange: 7
+  IsabellaStat:
+    Name: Isabella
+    Class: Chaser
+    Brood: Insect
+    Belong: BloodMoon
+    HP: 10
+    Def: 0
+    Atk: 5
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 4
+    CognitiveRange: 7
+  KuenStat:
+    Name: Kuen
+    Class: Buster
+    Brood: Person
+    Belong: Trident
+    HP: 15
+    Def: 1
+    Atk: 5
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  NoahStat:
+    Name: Noah
+    Class: Gaurdian
+    Brood: Insect
+    Belong: Nautilus
+    HP: 20
+    Def: 2
+    Atk: 3
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  PardoStat:
+    Name: Pardo
+    Class: Chaser
+    Brood: Insect
+    Belong: RoyalGarden
+    HP: 10
+    Def: 1
+    Atk: 5
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 4
+    CognitiveRange: 7
+  PayStat:
+    Name: Pay
+    Class: Gaurdian
+    Brood: Beast
+    Belong: Trident
+    HP: 20
+    Def: 2
+    Atk: 3
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  SophiaStat:
+    Name: Sophia
+    Class: Rescue
+    Brood: Dragon
+    Belong: SkyHawk
+    HP: 7
+    Def: 2
+    Atk: 3
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 3
+    CognitiveRange: 7
+  WratihStat:
+    Name: Wratih
+    Class: Buster
+    Brood: Person
+    Belong: BloodMoon
+    HP: 15
+    Def: 1
+    Atk: 5
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  ZippoStat:
+    Name: Zippo
+    Class: Buster
+    Brood: Person
+    Belong: Trident
+    HP: 15
+    Def: 1
+    Atk: 5
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 1
+    CognitiveRange: 7
+  EilgosStat:
+    Name: Eilgos
+    Class: Chaser
+    Brood: Dragon
+    Belong: SkyHawk
+    HP: 10
+    Def: 0
+    Atk: 3
+    AtkSpeed: 1.03
+    MoveSpeed: 1
+    AtkRange: 4
+    CognitiveRange: 7
