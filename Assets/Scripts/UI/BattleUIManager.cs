@@ -72,7 +72,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     AudioSource audioSource;
 
-
+    public GameObject bBObj;
+    private GameObject rObj;
+    private GameObject bObj;
+    public List<GameObject> rBtn;
+    public List<GameObject> bBtn;
 
     //fps 관련 변수
     private float fpsDeltaTime = 0;
@@ -157,6 +161,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
         //오브젝트 버튼
         for (int i = 0; i < oCnt.transform.childCount; i++)
             oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
+
+        //전투대비 배치
+        rObj = bBObj.transform.GetChild(0).gameObject;
+        //전투시작 배치
+        bObj = bBObj.transform.GetChild(1).gameObject;
+
+        //전투대비 버튼
+        for (int i = 0; i < rObj.transform.childCount; i++)
+            rBtn.Add(rObj.transform.GetChild(i).gameObject);
+
+        //전투시작 버튼
+        for (int i = 0; i < bObj.transform.childCount; i++)
+            bBtn.Add(bObj.transform.GetChild(1).gameObject);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);

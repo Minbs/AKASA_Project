@@ -23,7 +23,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
         if (BattleUIManager.Instance.isCheck == true)
         {
-            MinionStanbyTimer(index);
+            //MinionStanbyTimer(index);
         }
     }
 
