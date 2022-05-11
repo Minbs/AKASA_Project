@@ -69,6 +69,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<MinionButton> mBtn;
     public List<Button> oBtn;
     bool isButtonCheck = true;
+    bool isDeployBtnCheck = true;
 
     AudioSource audioSource;
 
@@ -99,7 +100,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
            SetSettingCharacterMousePosition();
 
         FPS();
-        OnDeployButton();
+        //OnDeployButton();
 
        //
         if (GameManager.Instance.state == State.WAIT)
@@ -347,17 +348,25 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
 
-    public void OnDeployButtonCheck() => isButtonCheck = mPan.activeSelf == true ? false : true;
+    private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
 
-    private void OnDeployButton()
+    public void OnMinionDeployButtonCheck()
     {
-        if (isButtonCheck)
+        OnDeployButtonCheck();
+
+        if (isDeployBtnCheck)
         {
             mPan.SetActive(true);
             oPan.SetActive(false);
             mBG.SetActive(true);
         }
-        else
+    }
+
+    public void OnObjectDeployButtonCheck()
+    {
+        OnDeployButtonCheck();
+
+        if (!isDeployBtnCheck)
         {
             mPan.SetActive(false);
             oPan.SetActive(true);
