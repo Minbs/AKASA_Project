@@ -14,7 +14,15 @@ public class UnitApproachingState : UnitBaseState
         if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
 
-
+        if (stateMachine.gameObject.GetComponent<Minion>())
+        {
+            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
+                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+            else
+                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+        }
+        else if (stateMachine.gameObject.GetComponent<Enemy>())
+            stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
 
 
         if (stateMachine.unit.target == null)
@@ -26,8 +34,11 @@ public class UnitApproachingState : UnitBaseState
 
             if (stateMachine.IsTargetInAttackRange())
                 stateMachine.ChangeState(stateMachine.AttackState);
+
             if (!stateMachine.IsTargetInCognitiveRange())
+            {
                 stateMachine.unit.target = null;
+            }
         }
     }
 

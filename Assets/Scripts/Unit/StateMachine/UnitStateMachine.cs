@@ -50,7 +50,7 @@ public class UnitStateMachine : MonoBehaviour
         prevState = currentState;
         currentState = state;
         currentState.Begin(this);
-        //Debug.Log(currentState);
+        Debug.Log(currentState);
     }
 
     public void MoveToDirection(Direction direction)
@@ -87,19 +87,25 @@ public class UnitStateMachine : MonoBehaviour
 
             if (Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)) < unit.cognitiveRangeDistance) // 인지 범위 안에 있는지 확인
             {
-                if (target == null)
-                    target = e;
-
-
                 if (unit.GetComponent<Minion>() != null
                     && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
                 {
-                    if (target.GetComponent<Unit>().currentHp < e.GetComponent<Unit>().currentHp
-                        && e.GetComponent<Unit>().currentHp < e.GetComponent<Unit>().maxHp)
-                        target = e;
+                    if (e.GetComponent<Unit>().currentHp < e.GetComponent<Unit>().maxHp) // 최대 체력보다 현재 체력이 낮으면
+                    {
+                        if (target == null)
+                            target = e;
+
+                        if (target.GetComponent<Unit>().currentHp < e.GetComponent<Unit>().currentHp) // 해당 아군이 현재 타겟보다 체력이 낮으면
+                            target = e;
+                    }
+
+
                 }
                 else
                 {
+                    if (target == null)
+                        target = e;
+
                     if (Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, target.transform.position))) // 더 가까운 적이 있는지 확인
                         target = e;
                 }
