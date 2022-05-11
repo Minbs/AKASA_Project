@@ -55,6 +55,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject mBG;
     public List<GameObject> tBG;
     public List<GameObject> edge;
+
+    public List<GameObject> tBGObj = new List<GameObject>();
+    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+
+    public bool isCheck = false;
     bool isSoundCheck = true;
 
     public GameObject mPan;
@@ -64,10 +69,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<MinionButton> mBtn;
     public List<Button> oBtn;
     bool isButtonCheck = true;
+    bool isDeployBtnCheck = true;
 
     AudioSource audioSource;
 
-
+    public GameObject bBObj;
+    private GameObject rObj;
+    private GameObject bObj;
+    public List<GameObject> rBtn;
+    public List<GameObject> bBtn;
 
     //fps 관련 변수
     private float fpsDeltaTime = 0;
@@ -90,7 +100,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
            SetSettingCharacterMousePosition();
 
         FPS();
-        OnDeployButton();
+        //OnDeployButton();
 
        //
         if (GameManager.Instance.state == State.WAIT)
@@ -152,6 +162,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
         //오브젝트 버튼
         for (int i = 0; i < oCnt.transform.childCount; i++)
             oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
+
+        //전투대비 배치
+        rObj = bBObj.transform.GetChild(0).gameObject;
+        //전투시작 배치
+        bObj = bBObj.transform.GetChild(1).gameObject;
+
+        //전투대비 버튼
+        for (int i = 0; i < rObj.transform.childCount; i++)
+            rBtn.Add(rObj.transform.GetChild(i).gameObject);
+
+        //전투시작 버튼
+        for (int i = 0; i < bObj.transform.childCount; i++)
+            bBtn.Add(bObj.transform.GetChild(1).gameObject);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -325,17 +348,25 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
 
-    public void OnDeployButtonCheck() => isButtonCheck = mPan.activeSelf == true ? false : true;
+    private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
 
-    private void OnDeployButton()
+    public void OnMinionDeployButtonCheck()
     {
-        if (isButtonCheck)
+        OnDeployButtonCheck();
+
+        if (isDeployBtnCheck)
         {
             mPan.SetActive(true);
             oPan.SetActive(false);
             mBG.SetActive(true);
         }
-        else
+    }
+
+    public void OnObjectDeployButtonCheck()
+    {
+        OnDeployButtonCheck();
+
+        if (!isDeployBtnCheck)
         {
             mPan.SetActive(false);
             oPan.SetActive(true);
