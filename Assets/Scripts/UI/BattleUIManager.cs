@@ -110,11 +110,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
        {
            if (WaitingTime[(int)Phase.Wait] >= 0) Active((int)Phase.Wait);
            WaitTime();
-
+           ////mBG.SetActive(true);
+           //rObj.SetActive(true);
+           //bObj.SetActive(false);
         }
        if (GameManager.Instance.state == State.BATTLE)
        {
-            /*
+            
             //상단 패널에 타이머UI에서 웨이브UI로 변경
             BattleTime();
             //에너미 카운트수 체크
@@ -128,10 +130,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
             if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
-            mBG.SetActive(false);
-            rObj.SetActive(false);
-            bObj.SetActive(true);
-            */
+            //mBG.SetActive(false);
+            //rObj.SetActive(false);
+            //bObj.SetActive(true);
         }
        else 
        {
@@ -222,6 +223,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void WaitTime()
     {
+        //mBG.SetActive(true);
+        rObj.SetActive(true);
+        bObj.SetActive(false);
+        wave.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
         float time = GameManager.Instance.currentWaitTimer;
@@ -232,6 +237,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             text[0].text = 0.ToString();
             text[2].text = 0.ToString();
+
+            mBG.SetActive(false);
+            rObj.SetActive(false);
+            bObj.SetActive(true);
         }
         else
         {

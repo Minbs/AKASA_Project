@@ -201,13 +201,13 @@ public class GameManager : Singleton<GameManager>
 
         Debug.Log("waveEndStateEnd");
         /*
-foreach (var m in minionsList)
-{
-m.GetComponent<UnitStateMachine>().Initialize();
-m.GetComponent<Unit>().SetPositionOnTile();
-m.SetActive(true);
-}
-*/
+        foreach (var m in minionsList)
+        {
+            m.GetComponent<UnitStateMachine>().Initialize();
+            m.GetComponent<Unit>().SetPositionOnTile();
+            m.SetActive(true);
+        }
+        */
 
         StartCoroutine(WaitState());
     }
