@@ -87,7 +87,6 @@ MonoBehaviour:
   healthBar: {fileID: 7644924621521741393}
   minionClass: 4
   attackType: 0
-  stopCount: 0
   cost: 6
   minionWaitingTime: 60
   maxSkillGauge: 10
@@ -102,6 +101,8 @@ MonoBehaviour:
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   skillType: 1
   shootPivot: {fileID: 5829380570333821707}
+  sightAngle: 0
+  sightDistance: 0
 --- !u!195 &3386159740569189286
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208362257474094919}
   m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15}
+  m_LocalPosition: {x: 0, y: 0, z: -0.15}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -187,7 +188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa204f4d350c3064b9362ae9603581f8, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

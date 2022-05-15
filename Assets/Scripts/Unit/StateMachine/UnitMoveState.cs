@@ -14,20 +14,12 @@ public class UnitMoveState : UnitBaseState
         stateMachine.MoveToDirection(stateMachine.unit.direction);
 
         if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
-            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, GameManager.Instance.gameSpeed);
 
-        if(stateMachine.gameObject.GetComponent<Minion>())
-        {
-            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
-            else
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
-        }
-        else if(stateMachine.gameObject.GetComponent<Enemy>())
-            stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
-
-        if (stateMachine.unit.target != null)
-            stateMachine.ChangeState(stateMachine.approachingState);
+        if (GameManager.Instance.state == State.BATTLE)
+            BattleMove(stateMachine);
+        else if (GameManager.Instance.state == State.WAVE_END)
+            WaveEndMove(stateMachine);
     }
 
     public override void End(UnitStateMachine stateMachine)
@@ -35,5 +27,33 @@ public class UnitMoveState : UnitBaseState
 
     }
 
+    public void BattleMove(UnitStateMachine stateMachine)
+    {
+        if (stateMachine.gameObject.GetComponent<Minion>())
+        {
+            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
+                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+            else
+                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+        }
+        else if (stateMachine.gameObject.GetComponent<Enemy>())
+            stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
 
+        if (stateMachine.unit.target != null)
+            stateMachine.ChangeState(stateMachine.approachingState);
+    }
+
+    public void WaveEndMove(UnitStateMachine stateMachine)
+    {
+        stateMachine.agent.SetDestination(stateMachine.unit.onTile.transform.position);
+        stateMachine.LookAtTarget(stateMachine.unit.onTile.transform.position);
+
+       // Debug.Log(Vector3.Distance(stateMachine.unit.transform.position, stateMachine.unit.onTile.transform.position));
+
+        if (Vector3.Distance(stateMachine.unit.transform.position, stateMachine.unit.onTile.transform.position) < 0.14)
+        {
+            stateMachine.unit.transform.position = stateMachine.unit.onTile.transform.position;
+            stateMachine.ChangeState(stateMachine.idleState);
+        }
+    }
 }

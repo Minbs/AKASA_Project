@@ -13,10 +13,12 @@ public class UnitStateMachine : MonoBehaviour
     public UnitMoveState moveState = new UnitMoveState(); //행동선택
     public UnitApproachingState approachingState = new UnitApproachingState(); //명령 대기 상태
     public UnitAttackState AttackState = new UnitAttackState();
+    public UnitSkillPerformState SkillPerformState = new UnitSkillPerformState();
 
     public Unit unit { get; set; }
     public NavMeshAgent agent { get; set; }
 
+    private float speed;
 
     private void Awake()
     {
@@ -28,7 +30,7 @@ public class UnitStateMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        speed = agent.speed;
     }
 
     // Update is called once per frame
@@ -41,6 +43,8 @@ public class UnitStateMachine : MonoBehaviour
             return;
         }
 
+        agent.speed = speed  * GameManager.Instance.gameSpeed;
+
         currentState.Update(this);
     }
 
@@ -50,7 +54,7 @@ public class UnitStateMachine : MonoBehaviour
         prevState = currentState;
         currentState = state;
         currentState.Begin(this);
-        Debug.Log(currentState);
+//        Debug.Log(currentState);
     }
 
     public void MoveToDirection(Direction direction)
@@ -68,6 +72,13 @@ public class UnitStateMachine : MonoBehaviour
         }
 
         agent.SetDestination(new Vector3(desX, transform.position.y, transform.position.z));
+    }
+
+    public void Initialize()
+    {
+        unit.currentHp = unit.maxHp;
+        unit.UpdateHealthbar();
+        ChangeState(idleState);
     }
 
     /// <summary>
@@ -113,7 +124,7 @@ public class UnitStateMachine : MonoBehaviour
         }
 
         unit.target = target;
-    }
+    } //범위 모양, 길이, 우선 순위 넣어서 만들기
 
     public bool IsTargetInAttackRange()  // 공격, 힐 범위 안에 있는지 확인
     {

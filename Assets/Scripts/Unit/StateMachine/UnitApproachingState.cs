@@ -9,10 +9,10 @@ public class UnitApproachingState : UnitBaseState
 
     }
 
-    public override void Update(UnitStateMachine stateMachine)
+    public override void Update(UnitStateMachine stateMachine) 
     {
-        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
-            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
+        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move") 
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, GameManager.Instance.gameSpeed);
 
         if (stateMachine.gameObject.GetComponent<Minion>())
         {
@@ -25,7 +25,7 @@ public class UnitApproachingState : UnitBaseState
             stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
 
 
-        if (stateMachine.unit.target == null)
+        if (stateMachine.unit.target == null || !stateMachine.unit.target.activeSelf)
             stateMachine.ChangeState(stateMachine.moveState);
         else
         {

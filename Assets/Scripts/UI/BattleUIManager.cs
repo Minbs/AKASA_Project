@@ -108,28 +108,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
            if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
            WaitTime();
        }
-       if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
-       {
-            //상단 패널에 타이머UI에서 웨이브UI로 변경
-            BattleTime();
-            //에너미 카운트수 체크
-            EnemeyCount();
-            //배경음악 재생
-            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
-            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
-            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause();
-            else audioSource.UnPause();
-            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
-            if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
-            //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
-            if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
-            //UnitCount();
-        }
-       else 
-       {
-
-       }
        
     }
 
@@ -203,7 +182,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
-        float time = GameManager.Instance.waitTimer;
+        float time = GameManager.Instance.currentWaitTimer;
         min = (int)time / 60;
         sec = ((int)time - min * 60) % 60;
 
@@ -233,13 +212,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         text[3].text = currentEnemyCount >= 0 ? currentEnemyCount.ToString() : 0.ToString();
     }
 
-    void UnitCount()
-    {
-
-    }
-
     /// <summary> 페이즈 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
-    void Active(int index)
+    public void Active(int index)
     {
         switch (index)
         {
@@ -341,12 +315,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+     //  SetGameSpeed
+    /* 
+            public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
             GameManager.Instance.gameSpeed == 1 || GameManager.Instance.gameSpeed == 0 ?
             GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
 
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
+    */
 
     private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
 
@@ -378,6 +355,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         yield return new WaitForSeconds(WaitingTime[(int)Phase.Between]);
         isPhaseCheck = true;
+    }
+
+    public void SkillButton()
+    {
+       GameObject wraith =  GameObject.Find("wraith(Clone)");
+        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState) ;
     }
 
     private void FPS()

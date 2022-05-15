@@ -21,6 +21,7 @@ public class Unit : MonoBehaviour
     public int maxHp;
     public int currentHp { get; set; }
 
+    public Tile onTile { get; set; }
 
     public int atk;
     public float def;
@@ -46,8 +47,6 @@ public class Unit : MonoBehaviour
     private Color initSkeletonColor; // 최초 스파인 색상
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
-
-
 
     protected virtual void Start()
     {
@@ -75,6 +74,8 @@ public class Unit : MonoBehaviour
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
         normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
+
+        
     }
 
     public void Poison(SkillAbility skillAbility, int damage, float duration)
@@ -191,19 +192,32 @@ public class Unit : MonoBehaviour
     {
         if (!isAnimationPlaying("/knockdown"))
         {
-            spineAnimation.PlayAnimation(skinName + "/knockdown", false, 1);
+            spineAnimation.PlayAnimation(skinName + "/knockdown", false, GameManager.Instance.gameSpeed);
         }
 
         if (skeletonAnimation.AnimationName == skinName + "/knockdown" && normalizedTime >= 1)
         {
-            Destroy(gameObject);
+            if (GetComponent<Minion>())
+            {
+                gameObject.SetActive(false);
+            }
+            else if(GetComponent<Enemy>())
+            {
+                ObjectPool.Instance.PushToPool(poolItemName, gameObject);
+                GameManager.Instance.enemiesList.Remove(gameObject);
+            }
         }
 
         yield return null;
     }
 
+    public void SetPositionOnTile()
+    {
+        transform.position = onTile.gameObject.transform.position + GameManager.Instance.minionSetPosition;
+    }
+
     /// <summary>
-   /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
-   /// </summary>
+    /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
+    /// </summary>
     public bool isAnimationPlaying(string animationName) =>  skeletonAnimation.AnimationName == skinName + animationName && normalizedTime< 1;  // 실행중인 애니메이션의 이름이 animationName과 다르거나 끝나지 않았을 때
 }

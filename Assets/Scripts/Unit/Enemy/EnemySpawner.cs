@@ -8,97 +8,68 @@ using System;
 
 public class EnemySpawner : MonoBehaviour
 {
-
-	
-	[Serializable]
-	public struct EnemySpawnData
+    [Serializable]
+    public struct EnemySpawnData
     {
-		public string name;
-		public string start;
-		public string end;
-		public float time;
-		public int wave;
+        public string name;
+        public Node node;
+        public int wave;
     }
 
-	public List<EnemySpawnData> enemySpawnDatas = new List<EnemySpawnData>();
+    public List<EnemySpawnData> enemySpawnDatas = new List<EnemySpawnData>();
 
-	public float spawnTimer;
+    public float spawnTimer;
 
     public void ReadEnemySpawnData()
     {
-		TextAsset textFile = Resources.Load("Datas/EnemySpawnInfo/EnemySpawnInfo_Stage1") as TextAsset;
-		StringReader stringReader = new StringReader(textFile.text);
-		string line = stringReader.ReadLine();
+        TextAsset textFile = Resources.Load("Datas/EnemySpawnInfo/EnemySpawnInfo_Stage1") as TextAsset;
+        StringReader stringReader = new StringReader(textFile.text);
+        string line = stringReader.ReadLine();
 
-		while (stringReader != null)
-		{
-			line = stringReader.ReadLine();
-			if (line == null)
-			{
-				break;
-			}
+        while (stringReader != null)
+        {
+            line = stringReader.ReadLine();
+            if (line == null)
+            {
+                break;
+            }
 
-			EnemySpawnData enemyData = new EnemySpawnData();
+            EnemySpawnData enemyData = new EnemySpawnData();
 
-			enemyData.name = line.Split(',')[0];
-			enemyData.start = line.Split(',')[1];
-			enemyData.end = line.Split(',')[2];
-			enemyData.time = float.Parse(line.Split(',')[3]);
-			enemyData.wave = int.Parse(line.Split(',')[4]);
+            enemyData.name = line.Split(',')[0];
+            enemyData.node.row = int.Parse(line.Split(',')[1]);
+            enemyData.node.column = int.Parse(line.Split(',')[2]);
+            enemyData.wave = int.Parse(line.Split(',')[3]);
 
-			enemySpawnDatas.Add(enemyData);
-		}
-
-		enemySpawnDatas.OrderBy(e => e.time);
-	}
+            enemySpawnDatas.Add(enemyData);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-		spawnTimer = 0;
-		ReadEnemySpawnData();
+        spawnTimer = 0;
+        ReadEnemySpawnData();
     }
 
     // Update is called once per frame
     void Update()
     {
-	
+
     }
 
-	public IEnumerator Spawn()
+    public IEnumerator Spawn(int wave)
     {
-		if (GameManager.Instance.state == State.BATTLE)
-		{
-			while (enemySpawnDatas.Count > 0)
-			{
-				spawnTimer += Time.deltaTime;
-				yield return null;
+        if (enemySpawnDatas.Count <= 0
+            || enemySpawnDatas[0].wave != wave)
+            yield break;
 
-
-
-
-				if (enemySpawnDatas[0].time <= spawnTimer && GameManager.Instance.currentWave == enemySpawnDatas[0].wave)
-				{
-					GameObject enemy = ObjectPool.Instance.PopFromPool(enemySpawnDatas[0].name);
-					GameManager.Instance.enemiesList.Add(enemy);
-			//		Vector3 pos = BoardManager.Instance.startTile.transform.position;
-			//		enemy.transform.position = pos;
-					enemy.SetActive(true);
-					enemySpawnDatas.RemoveAt(0);
-
-				}
-
-				if (GameManager.Instance.enemiesList.Count == 0 && enemySpawnDatas[0].wave != GameManager.Instance.currentWave)
-				{
-					Debug.Log(enemySpawnDatas[0].wave);
-					spawnTimer = 0;
-					GameManager.Instance.currentWave++;
-				}
-			}
-
-			
-		}
-
-
+        yield return null;
+        GameObject enemy = ObjectPool.Instance.PopFromPool(enemySpawnDatas[0].name);
+        enemy.GetComponent<Unit>().onTile = BoardManager.Instance.GetEnemyTile(enemySpawnDatas[0].node);
+        enemy.GetComponent<Unit>().SetPositionOnTile();
+        GameManager.Instance.enemiesList.Add(enemy);
+        enemy.SetActive(true);
+        enemySpawnDatas.RemoveAt(0);
     }
 }
