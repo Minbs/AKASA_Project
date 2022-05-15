@@ -68,6 +68,11 @@ public class Enemy : Unit
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
+        if (target == null)
+        {
+            return;
+        }
+
         if (e.Data.Name == "shoot")
         {
             switch(attackType)
@@ -89,5 +94,12 @@ public class Enemy : Unit
         {
             GameManager.Instance.isLineOver = true;
         }
+
+        if (other.transform.tag == "Finish")
+        {
+            GameManager.Instance.enemiesList.Remove(gameObject);
+            Destroy(gameObject);
+        }
     }
+
 }

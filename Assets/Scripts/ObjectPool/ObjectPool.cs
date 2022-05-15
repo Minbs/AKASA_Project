@@ -46,9 +46,6 @@ public class ObjectPool : Singleton<ObjectPool>
 
 
         pool.PushToPool(item, parent == null ? transform : parent);
-
-
-
         return true;
     }
 

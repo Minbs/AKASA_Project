@@ -6,7 +6,7 @@ using Spine.Unity;
 using System.Linq;
 using TMPro;
 
-public enum Phase
+public enum Phase //Phase 사용 X GameManager State 사용하기
 {
     Wait,  //전투 대비
     Start,  //전투 시작
@@ -52,6 +52,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     int min, sec, currentEnemyCount = 0;
     bool isPhaseCheck;
 
+    // 변수 이름 기능이나 용도를 알 수 있게 바꾸기
     public GameObject mBG;
     public List<GameObject> tBG;
     public List<GameObject> edge;
@@ -104,14 +105,16 @@ public class BattleUIManager : Singleton<BattleUIManager>
         FPS();
         //OnDeployButton();
 
-       //
+       
        if (GameManager.Instance.state == State.WAIT)
        {
            if (WaitingTime[(int)Phase.Wait] >= 0) Active((int)Phase.Wait);
            WaitTime();
+
         }
-       if (GameManager.Instance.waitTimer <= 0 && GameManager.Instance.state == State.BATTLE)
+       if (GameManager.Instance.state == State.BATTLE)
        {
+            /*
             //상단 패널에 타이머UI에서 웨이브UI로 변경
             BattleTime();
             //에너미 카운트수 체크
@@ -128,11 +131,16 @@ public class BattleUIManager : Singleton<BattleUIManager>
             mBG.SetActive(false);
             rObj.SetActive(false);
             bObj.SetActive(true);
+            */
         }
        else 
        {
 
        }
+
+       
+        
+
        
     }
 
@@ -216,7 +224,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
-        float time = GameManager.Instance.waitTimer;
+        float time = GameManager.Instance.currentWaitTimer;
         min = (int)time / 60;
         sec = ((int)time - min * 60) % 60;
 
@@ -247,7 +255,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     /// <summary> 페이즈 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
-    void Active(int index)
+    public void Active(int index) // Phase State로 바꾸기
     {
         switch (index)
         {
@@ -349,6 +357,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
+
     public void SkillWaitingTimer(int index)
     {
         skillTime -= Time.deltaTime;
@@ -359,12 +368,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
         wTime[index].text = skillTime.ToString("F1") + "s".ToString();
     }
 
-    public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+    //GameManager SetGameSpeed 함수 사용
+ //   public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+
+     //  SetGameSpeed
+    /* 
+            public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+
             GameManager.Instance.gameSpeed == 1 || GameManager.Instance.gameSpeed == 0 ?
             GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
 
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
+    */
 
     private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
 
@@ -396,6 +412,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         yield return new WaitForSeconds(WaitingTime[(int)Phase.Between]);
         isPhaseCheck = true;
+    }
+
+    public void SkillButton()
+    {
+       GameObject wraith =  GameObject.Find("wraith(Clone)");
+        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState) ;
     }
 
     private void FPS()

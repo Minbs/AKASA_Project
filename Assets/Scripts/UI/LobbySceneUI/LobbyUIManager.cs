@@ -143,6 +143,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             case "StageSelectScene":
                 DontDestroyable.Instance.AudioPlay(2);
                 break;
+            case "DefenceStageScene":
+                GameObject obj =  GameObject.Find("BackGroundAudio");
+                Destroy(obj);
+                    break;
             default:
                 break;
         }

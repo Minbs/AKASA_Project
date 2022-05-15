@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     public void Init(int damage, GameObject target)
@@ -38,7 +37,7 @@ public class Bullet : MonoBehaviour
         Quaternion qt = Quaternion.AngleAxis(rot_z, Vector3.forward);
     
         transform.eulerAngles = qt.eulerAngles;
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x + 116.438f, transform.eulerAngles.y, transform.eulerAngles.z + 90);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x + 133f - 90, transform.eulerAngles.y, transform.eulerAngles.z + 90);
     }
 
     void Update()
@@ -66,7 +65,7 @@ public class Bullet : MonoBehaviour
         }
 
         Vector3 des = target.transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, des, speed * Time.deltaTime *  GameManager.Instance.gameSpeed);
     }
 
 
