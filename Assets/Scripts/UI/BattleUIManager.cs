@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using Spine.Unity;
 using System.Linq;
 using TMPro;
@@ -78,8 +77,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     AudioSource audioSource;
 
     public GameObject bBObj;
-    public GameObject rObj;
-    public GameObject bObj;
+    private GameObject rObj;
+    private GameObject bObj;
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
@@ -92,6 +91,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     private int fpsIndex = 0;
     public bool isFpsShow;
 
+
     void Start()
     {
         Init();
@@ -99,24 +99,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void Update()
     {
-       if (settingCharacter.activeSelf)
-           SetSettingCharacterMousePosition();
+        if (settingCharacter.activeSelf)
+            SetSettingCharacterMousePosition();
 
         FPS();
         //OnDeployButton();
 
-       
-       if (GameManager.Instance.state == State.WAIT)
-       {
-           if (WaitingTime[(int)Phase.Wait] >= 0) Active((int)Phase.Wait);
-           WaitTime();
-           ////mBG.SetActive(true);
-           //rObj.SetActive(true);
-           //bObj.SetActive(false);
+
+        if (GameManager.Instance.state == State.WAIT)
+        {
+            if (WaitingTime[(int)Phase.Wait] >= 0) Active((int)Phase.Wait);
+            WaitTime();
+            ////mBG.SetActive(true);
+            //rObj.SetActive(true);
+            //bObj.SetActive(false);
         }
-       if (GameManager.Instance.state == State.BATTLE)
-       {
-            
+        if (GameManager.Instance.state == State.BATTLE)
+        {
+
             //상단 패널에 타이머UI에서 웨이브UI로 변경
             BattleTime();
             //에너미 카운트수 체크
@@ -134,15 +134,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //rObj.SetActive(false);
             //bObj.SetActive(true);
         }
-       else 
-       {
+        else
+        {
 
-       }
+        }
 
-       
-        
 
-       
+
+
+
     }
 
     public void SetSettingCharacterMousePosition()
@@ -371,16 +371,16 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         skillTime -= Time.deltaTime;
 
-        if (skillTime <= 0) 
+        if (skillTime <= 0)
             if (stBG[index].activeSelf) stBG[index].SetActive(false);
-        
+
         wTime[index].text = skillTime.ToString("F1") + "s".ToString();
     }
 
     //GameManager SetGameSpeed 함수 사용
- //   public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+    //   public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
 
-     //  SetGameSpeed
+    //  SetGameSpeed
     /* 
             public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
 
@@ -400,8 +400,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
             rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
-            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(0, 0, 0, 255);
-            //rBtn[0].transform.GetChild(1).gameObject.SetActive(true);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            rBtn[0].transform.GetChild(1).gameObject.SetActive(true);
+            rBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+
             mPan.SetActive(true);
             oPan.SetActive(false);
             mBG.SetActive(true);
@@ -414,9 +416,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (!isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
-            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(0, 0, 0, 255);
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
             rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
-            //rBtn[0].transform.GetChild(1).gameObject.SetActive(false);
+            rBtn[0].transform.GetChild(1).gameObject.SetActive(false);
+            rBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+
             mPan.SetActive(false);
             oPan.SetActive(true);
             mBG.SetActive(false);
@@ -431,8 +435,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public void SkillButton()
     {
-       GameObject wraith =  GameObject.Find("wraith(Clone)");
-        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState) ;
+        GameObject wraith = GameObject.Find("wraith(Clone)");
+        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState);
     }
 
     private void FPS()
