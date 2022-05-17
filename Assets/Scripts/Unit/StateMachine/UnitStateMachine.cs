@@ -94,7 +94,10 @@ public class UnitStateMachine : MonoBehaviour
         foreach (var e in targetsList)
         {
             if (e.GetComponent<Unit>().currentHp <= 0)
+            {
+                Debug.Log(e.gameObject.name);
                 continue;
+            }
 
             if (Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)) < unit.cognitiveRangeDistance) // 인지 범위 안에 있는지 확인
             {
@@ -128,6 +131,9 @@ public class UnitStateMachine : MonoBehaviour
 
     public bool IsTargetInAttackRange()  // 공격, 힐 범위 안에 있는지 확인
     {
+        if (unit.target.GetComponent<Unit>().currentHp <= 0)
+            return false;
+
         if (unit.GetComponent<Minion>() != null
         && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
         {
@@ -139,8 +145,11 @@ public class UnitStateMachine : MonoBehaviour
     }
 
     public bool IsTargetInCognitiveRange() // 인지 범위 안에 있는지 확인
-    {
-        if (unit.GetComponent<Minion>() != null
+    {    
+            if (unit.target.GetComponent<Unit>().currentHp <= 0)
+                return false;
+
+            if (unit.GetComponent<Minion>() != null
         && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
         {
             if (unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
