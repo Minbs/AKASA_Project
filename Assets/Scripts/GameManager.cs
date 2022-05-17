@@ -55,10 +55,7 @@ public class GameManager : Singleton<GameManager>
 
     private GameObject unitSetTile;
 
-    private Vector3 unitSetCameraPos;
-
-    public bool isLineOver = false;
-    public bool isApproach = false;
+   // private Vector3 unitSetCameraPos;
 
     void Start()
     {
@@ -83,8 +80,7 @@ public class GameManager : Singleton<GameManager>
         SetGameSpeed(1);
         currentWaitTimer = waitTime;
         currentWave++;
-        isLineOver = false;
-        isApproach = false;
+
 
 
         while (currentWaitTimer > 0)
@@ -142,17 +138,6 @@ public class GameManager : Singleton<GameManager>
 
     void BattleStateUpdate()
     {
-        if (isApproach == false)
-        {
-            foreach (var m in minionsList)
-            {
-                if (isLineOver)
-                    m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
-            }
-
-            if (isLineOver)
-                isApproach = true;
-        }
 
 
     }
@@ -229,8 +214,6 @@ m.SetActive(true);
                 {
                     deployState = DeployState.Deploying;
                     unitSetTile = raycastHit.collider.gameObject;
-                    unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
-
                     BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[minionsListIndex].index);
                 }
             }

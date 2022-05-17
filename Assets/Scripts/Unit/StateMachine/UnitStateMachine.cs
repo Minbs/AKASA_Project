@@ -175,4 +175,15 @@ public class UnitStateMachine : MonoBehaviour
         transform.GetChild(0).localScale = scale;
     }
 
+    public void ReturnToTilePosition()
+    {
+        agent.SetDestination(unit.onTile.transform.position);
+        LookAtTarget(unit.onTile.transform.position);
+
+        if (Vector3.Distance(unit.transform.position, unit.onTile.transform.position) < 0.14)
+        {
+            unit.transform.position = unit.onTile.transform.position;
+            ChangeState(idleState);
+        }
+    }
 }

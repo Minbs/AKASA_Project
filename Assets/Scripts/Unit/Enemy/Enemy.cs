@@ -90,10 +90,6 @@ public class Enemy : Unit
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.name == "Cube")
-        {
-            GameManager.Instance.isLineOver = true;
-        }
 
         if (other.transform.tag == "Finish")
         {
