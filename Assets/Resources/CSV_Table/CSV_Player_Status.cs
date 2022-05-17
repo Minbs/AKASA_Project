@@ -51,19 +51,19 @@ public class CSV_Player_Status: MonoBehaviour
         string StringSavedata = File.ReadAllText(Application.dataPath + "/SaveData.json");
         SaveData _saveData = JsonUtility.FromJson<SaveData>(StringSavedata);
 
-        List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - VerityStatus");
-        List<Dictionary<string, object>> Eremediumdata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - EremediumStatus");
-        List<Dictionary<string, object>> Isabelladata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - IsabellaStatus");
-        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - Hwaseon");
+        List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList.xlsx - VerityStatus");
+        List<Dictionary<string, object>> Eremediumdata = CSVReader.Read("LevelDesignDataList.xlsx - EremediumStatus");
+        List<Dictionary<string, object>> Isabelladata = CSVReader.Read("LevelDesignDataList.xlsx - IsabellaStatus");
+        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - Hwaseon");
         //List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
         //List<Dictionary<string, object>> Asherdata = CSVReader.Read("Asher_Stat_Table");
-        List<Dictionary<string, object>> Kuendata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - KuenStatus");
+        List<Dictionary<string, object>> Kuendata = CSVReader.Read("LevelDesignDataList.xlsx - KuenStatus");
         //List<Dictionary<string, object>> Noahdata = CSVReader.Read("Noah_Stat_Table");
-        List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - PardoStatus");
+        List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PardoStatus");
         //List<Dictionary<string, object>> Paydata = CSVReader.Read("Pay_Stat_Table");
         //List<Dictionary<string, object>> Sophiadata = CSVReader.Read("Sophia_Stat_Table");
-        List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - WraithStatus");
-        List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList_20220511.xlsx - ZippoStatus");
+        List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList.xlsx - WraithStatus");
+        List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList.xlsx - ZippoStatus");
         //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
         Stat _VeriyStat = new Stat();
         Stat _AngelusStat = new Stat();
