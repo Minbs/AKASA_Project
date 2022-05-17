@@ -28,8 +28,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
 
         //ListSave();
-        //DontDestroyOnLoad(this.gameObject);
-        //ListLoad();
+
         //LoadList();
     }
     public void ListLoad()

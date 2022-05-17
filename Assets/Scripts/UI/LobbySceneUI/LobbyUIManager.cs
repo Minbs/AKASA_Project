@@ -192,10 +192,17 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void ClearEditList()
     {
-        PopupPanel.SetActive(true);
-        PanelEdit("초기화", "정말 초기화하시겠습니까?");
-        ConfirmBtn.onClick.AddListener(ClearConfirm);
-        cancelBtn.onClick.AddListener(PanelCancel);
+        if (PopupPanel != null)
+        {
+            PopupPanel.SetActive(true);
+            PanelEdit("초기화", "정말 초기화하시겠습니까?");
+            ConfirmBtn.onClick.AddListener(ClearConfirm);
+            cancelBtn.onClick.AddListener(PanelCancel);
+        }
+        else
+        {
+            Debug.Log("Clear EditList Confirm Error");
+        }
     }
 
 
@@ -212,17 +219,24 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void SaveEditList()
     {
-        PopupPanel.SetActive(true);
-        PanelEdit("저장", "정말로 저장하시겠습니까?");
+        if(PopupPanel != null)
+        {
+            PopupPanel.SetActive(true);
+            PanelEdit("저장", "정말로 저장하시겠습니까?");
 
 
-        ConfirmBtn.onClick.AddListener(SaveConfirm);
-        cancelBtn.onClick.AddListener(PanelCancel);
+            ConfirmBtn.onClick.AddListener(SaveConfirm);
+            cancelBtn.onClick.AddListener(PanelCancel);
+        }
+        else
+        {
+            Debug.Log("Error SaveEditList Confirm");
+        }
     }
     public void SaveConfirm()
     {
         Debug.Log("저장!");
-        //EditList.Instance.SaveJsonFile();
+        EditList.Instance.SaveMinionsData();
         PanelCancel();
     }
 
