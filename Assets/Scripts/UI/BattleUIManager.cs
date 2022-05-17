@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Spine.Unity;
 using System.Linq;
 using TMPro;
@@ -77,8 +78,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     AudioSource audioSource;
 
     public GameObject bBObj;
-    private GameObject rObj;
-    private GameObject bObj;
+    public GameObject rObj;
+    public GameObject bObj;
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
@@ -90,7 +91,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
     private Color fpsColor = Color.green;
     private int fpsIndex = 0;
     public bool isFpsShow;
-
 
     void Start()
     {
@@ -399,6 +399,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(0, 0, 0, 255);
+            //rBtn[0].transform.GetChild(1).gameObject.SetActive(true);
             mPan.SetActive(true);
             oPan.SetActive(false);
             mBG.SetActive(true);
@@ -411,6 +414,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (!isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(0, 0, 0, 255);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            //rBtn[0].transform.GetChild(1).gameObject.SetActive(false);
             mPan.SetActive(false);
             oPan.SetActive(true);
             mBG.SetActive(false);
