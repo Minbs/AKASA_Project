@@ -15,16 +15,23 @@ public class UnitIdleState : UnitBaseState
             if (!stateMachine.unit.isAnimationPlaying("/idle") && stateMachine.unit.GetComponent<Minion>() != null)
                 stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/idle", true, GameManager.Instance.gameSpeed);
 
-        if (stateMachine.gameObject.GetComponent<Minion>())
+        if (stateMachine.gameObject.GetComponent<Minion>() && GameManager.Instance.state == State.BATTLE)
         {
             if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
                 stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
             else
                 stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
-        }
 
-        if (stateMachine.unit.target != null)
-            stateMachine.ChangeState(stateMachine.approachingState);
+            if(stateMachine.unit.target != null)
+            {
+                stateMachine.ChangeState(stateMachine.approachingState);
+            }
+        }
+        else
+        {
+            if(GameManager.Instance.state == State.BATTLE)
+            stateMachine.ChangeState(stateMachine.moveState);
+        }
     }
 
     public override void End(UnitStateMachine stateMachine)

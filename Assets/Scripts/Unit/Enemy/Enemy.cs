@@ -75,6 +75,8 @@ public class Enemy : Unit
 
         if (e.Data.Name == "shoot")
         {
+            target.GetComponent<UnitStateMachine>().SetAttackTargetInRange(gameObject);
+
             switch(attackType)
             {
                 case AttackType.Melee:

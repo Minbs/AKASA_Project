@@ -6,15 +6,11 @@ public enum MinionClass
 {
     //근거리 클래스
     Buster,
-    Paladin,
     Guardian,
-    Assassin,
 
     //원거리 클래스
     Chaser,
-    Mage,
-    Rescue,
-    TacticalSupport
+    Rescue
 }
 
 public class Minion : Unit

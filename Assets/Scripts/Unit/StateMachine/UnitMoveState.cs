@@ -13,7 +13,7 @@ public class UnitMoveState : UnitBaseState
     {
         if (stateMachine.gameObject.GetComponent<Enemy>())
             stateMachine.MoveToDirection(stateMachine.unit.direction);
-        else if(stateMachine.gameObject.GetComponent<Minion>())
+        else if(stateMachine.gameObject.GetComponent<Minion>() && stateMachine.unit.target == null)
             stateMachine.ReturnToTilePosition();
 
         if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
