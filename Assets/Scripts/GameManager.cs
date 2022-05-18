@@ -151,7 +151,11 @@ public class GameManager : Singleton<GameManager>
         foreach (var m in minionsList)
         {
             if (m.activeSelf)
+            {
                 m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
+                m.GetComponent<Unit>().currentHp = m.GetComponent<Unit>().maxHp;
+                m.GetComponent<Unit>().UpdateHealthbar();
+            }    
         }
 
         /**
@@ -253,9 +257,17 @@ m.SetActive(true);
                 tile.ShowDeployableTile(false);
             }
 
+            minion.GetComponent<Unit>().Init();
             unitSetTile = null;
             minionsList.Add(minion);
             minion.SetActive(true);
+
+
+        foreach (var m in minionsList)
+        {
+            SynergyManager.Instance.CheckClassSynergy(m);
+        }
+
     }
 
     /// <summary>

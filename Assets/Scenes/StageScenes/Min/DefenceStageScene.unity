@@ -2415,10 +2415,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280c88f141f873b4790beff611c04cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guardianSynergyNodes: []
-  bursterSynergyNodes: []
-  chaserSynergyNodes: []
-  rescueSynergyNodes: []
+  busterSynergyNodes:
+  - row: 0
+    column: -1
+  - row: 0
+    column: 1
+  busterCoefficient: 30
+  guardianSynergyNodes:
+  - row: 0
+    column: -1
+  - row: 0
+    column: 1
+  - row: -1
+    column: -1
+  - row: -1
+    column: 0
+  - row: -1
+    column: 1
+  guardianCoefficient: 30
+  chaserSynergyNodes:
+  - row: 0
+    column: -2
+  - row: 0
+    column: 2
+  chaserCoefficient: 30
+  rescueSynergyNodes:
+  - row: -1
+    column: 0
+  - row: 1
+    column: 0
+  - row: 0
+    column: -1
+  - row: 0
+    column: 1
+  rescueCoefficient: 30
 --- !u!4 &1545038041
 Transform:
   m_ObjectHideFlags: 0

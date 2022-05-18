@@ -112,8 +112,6 @@ public class UnitStateMachine : MonoBehaviour
                         if (target.GetComponent<Unit>().currentHp < e.GetComponent<Unit>().currentHp) // 해당 아군이 현재 타겟보다 체력이 낮으면
                             target = e;
                     }
-
-
                 }
                 else
                 {
@@ -147,7 +145,7 @@ public class UnitStateMachine : MonoBehaviour
                 continue;
             }
 
-            Debug.Log(Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)));
+           // Debug.Log(Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)));
 
             if (Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)) <= targetSetRange) // 인지 범위 안에 있는지 확인
             {

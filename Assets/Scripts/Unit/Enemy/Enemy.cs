@@ -19,6 +19,11 @@ public class Enemy : Unit
     public float attackDelayTimer { get; set; }
     public float attackDelayDuration;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -26,6 +31,8 @@ public class Enemy : Unit
 
       //  moveTiles = BoardManager.Instance.FinalList.ToList();
         attackDelayTimer = attackDelayDuration;
+        Init();
+        UpdateHealthbar();
     }
 
     private void OnDestroy()
@@ -50,20 +57,14 @@ public class Enemy : Unit
 
     }
 
-
-
-
-
-
-
     void MeleeAttack()
     {
-        target.GetComponent<Unit>().Deal(atk);
+        target.GetComponent<Unit>().Deal(currentAtk);
     }
 
     void HitScanAttack()
     {
-        target.GetComponent<Unit>().Deal(atk);
+        target.GetComponent<Unit>().Deal(currentAtk);
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)

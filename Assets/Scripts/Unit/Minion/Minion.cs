@@ -18,6 +18,11 @@ public class Minion : Unit
     public MinionClass minionClass;
 
     // Start is called before the first frame update
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();
@@ -28,4 +33,6 @@ public class Minion : Unit
     {
         base.Update();
     }
+
+
 }
