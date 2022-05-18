@@ -77,9 +77,9 @@ public class CSV_EnemyStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<Dictionary<string, object>> EnemyAStatList = CSVReader.Read("LevelDesignDataList_20220511.xlsx - Enemy_AStatus");
-        List<Dictionary<string, object>> EnemyBStatList = CSVReader.Read("LevelDesignDataList_20220511.xlsx - Enemy_BStatus");
-        List<Dictionary<string, object>> EnemyCStatList = CSVReader.Read("LevelDesignDataList_20220511.xlsx - Enemy_CStatus");
+        List<Dictionary<string, object>> EnemyAStatList = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_AStatus");
+        List<Dictionary<string, object>> EnemyBStatList = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BStatus");
+        List<Dictionary<string, object>> EnemyCStatList = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_CStatus");
 
         
 

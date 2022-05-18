@@ -43,7 +43,7 @@ public class CSV_UpgradeReward : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<Dictionary<string, object>> EtherUpgradeRewardList = CSVReader.Read("LevelDesignDataList_20220511.xlsx - EtherUpgradeReward");
+        List<Dictionary<string, object>> EtherUpgradeRewardList = CSVReader.Read("LevelDesignDataList.xlsx - EtherUpgradeReward");
         StageWaveUpdate(EtherUpgradeReward_Level1, EtherUpgradeRewardList,0);
         StageWaveUpdate(EtherUpgradeReward_Level2, EtherUpgradeRewardList, 1);
         StageWaveUpdate(EtherUpgradeReward_Level3, EtherUpgradeRewardList, 2);
