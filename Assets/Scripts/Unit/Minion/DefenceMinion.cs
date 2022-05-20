@@ -36,8 +36,8 @@ public class DefenceMinion : Minion
     public AttackType attackType;
 
     public int cost;
-    public float minionStandbyTime { get; set; }
-    public float minionWaitingTime;
+    //public float minionStandbyTime { get; set; }
+    //public float minionWaitingTime;
 
     public float currentSkillGauge { get; set; }
     public int maxSkillGauge;

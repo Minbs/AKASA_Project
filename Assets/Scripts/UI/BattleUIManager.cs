@@ -6,9 +6,9 @@ using Spine.Unity;
 using System.Linq;
 using TMPro;
 
-public enum Phase
+public enum Phase //Phase 사용 X GameManager State 사용하기
 {
-    Ready,  //전투 대비
+    Wait,  //전투 대비
     Start,  //전투 시작
     Wave1,  //웨이브 1
     Wave2,  //웨이브 2
@@ -37,12 +37,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
     public TextMeshProUGUI[] text;
-    ///phase - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
+    ///phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
 
-    ///WaitingTime - 0:Ready, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
+    ///WaitingTime - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
@@ -52,11 +52,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
     int min, sec, currentEnemyCount = 0;
     bool isPhaseCheck;
 
+    // 변수 이름 기능이나 용도를 알 수 있게 바꾸기
     public GameObject mBG;
     public List<GameObject> tBG;
     public List<GameObject> edge;
 
-    public List<GameObject> tBGObj = new List<GameObject>();
+    private float skillTime;
+
+    public GameObject sBG;
+    public List<GameObject> stBG = new List<GameObject>();
     public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
 
     public bool isCheck = false;
@@ -68,7 +72,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject oCnt;
     public List<MinionButton> mBtn;
     public List<Button> oBtn;
-    bool isButtonCheck = true;
     bool isDeployBtnCheck = true;
 
     AudioSource audioSource;
@@ -96,27 +99,56 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void Update()
     {
-       if (settingCharacter.activeSelf)
-           SetSettingCharacterMousePosition();
+        if (settingCharacter.activeSelf)
+            SetSettingCharacterMousePosition();
 
         FPS();
         //OnDeployButton();
 
-       //
-        if (GameManager.Instance.state == State.WAIT)
-       {
-           if (WaitingTime[(int)Phase.Ready] >= 0) Active((int)Phase.Ready);
-           WaitTime();
-       }
 
-       
+        if (GameManager.Instance.state == State.WAIT)
+        {
+            if (WaitingTime[(int)Phase.Wait] >= 0) Active((int)Phase.Wait);
+            WaitTime();
+            ////mBG.SetActive(true);
+            //rObj.SetActive(true);
+            //bObj.SetActive(false);
+        }
+        if (GameManager.Instance.state == State.BATTLE)
+        {
+
+            //상단 패널에 타이머UI에서 웨이브UI로 변경
+            BattleTime();
+            //에너미 카운트수 체크
+            EnemeyCount();
+            //배경음악 재생
+            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause();
+            else audioSource.UnPause();
+            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
+            //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+            //mBG.SetActive(false);
+            //rObj.SetActive(false);
+            //bObj.SetActive(true);
+        }
+        else
+        {
+
+        }
+
+
+
+
+
     }
 
     public void SetSettingCharacterMousePosition()
     {
         settingCharacter.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
     }
-
 
     void Init()
     {
@@ -126,12 +158,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
         costText.text = GameManager.Instance.cost.ToString();
 
         //
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < mBG.transform.childCount; i++)
         {
             tBG.Add(mBG.transform.GetChild(i).gameObject);
             edge.Add(tBG[i].transform.GetChild(0).gameObject);
             if (tBG[i].activeSelf) tBG[i].SetActive(false);
             if (edge[i].activeSelf) edge[i].SetActive(false);
+        }
+
+        for (int i = 0; i < sBG.transform.childCount; i++)
+        {
+            stBG.Add(sBG.transform.GetChild(i).gameObject);
+            wTime.Add(stBG[i].GetComponentInChildren<TextMeshProUGUI>());
+            if (stBG[i].activeSelf) stBG[i].SetActive(false);
         }
 
         //미니언 버튼
@@ -147,13 +186,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
         //전투시작 배치
         bObj = bBObj.transform.GetChild(1).gameObject;
 
+        rObj.SetActive(true);
+
         //전투대비 버튼
         for (int i = 0; i < rObj.transform.childCount; i++)
             rBtn.Add(rObj.transform.GetChild(i).gameObject);
 
         //전투시작 버튼
         for (int i = 0; i < bObj.transform.childCount; i++)
-            bBtn.Add(bObj.transform.GetChild(1).gameObject);
+            bBtn.Add(bObj.transform.GetChild(i).gameObject);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -167,6 +208,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
 
         if (mPan.activeSelf) oPan.SetActive(false);
+
+        if (rObj.activeSelf) bObj.SetActive(false);
     }
 
     void BattleTime()
@@ -180,6 +223,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void WaitTime()
     {
+        //mBG.SetActive(true);
+        rObj.SetActive(true);
+        bObj.SetActive(false);
+        wave.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
         float time = GameManager.Instance.currentWaitTimer;
@@ -190,6 +237,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             text[0].text = 0.ToString();
             text[2].text = 0.ToString();
+
+            mBG.SetActive(false);
+            rObj.SetActive(false);
+            bObj.SetActive(true);
         }
         else
         {
@@ -213,13 +264,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     /// <summary> 페이즈 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
-    public void Active(int index)
+    public void Active(int index) // Phase State로 바꾸기
     {
         switch (index)
         {
-            case (int)Phase.Ready:
-                WaitingTime[(int)Phase.Ready] -= Time.deltaTime;
-                phaseWaitingTime = WaitingTime[(int)Phase.Ready];
+            case (int)Phase.Wait:
+                WaitingTime[(int)Phase.Wait] -= Time.deltaTime;
+                phaseWaitingTime = WaitingTime[(int)Phase.Wait];
                 isPhaseCheck = false;
                 break;
             case (int)Phase.Start:
@@ -315,9 +366,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-     //  SetGameSpeed
+
+    public void SkillWaitingTimer(int index)
+    {
+        skillTime -= Time.deltaTime;
+
+        if (skillTime <= 0)
+            if (stBG[index].activeSelf) stBG[index].SetActive(false);
+
+        wTime[index].text = skillTime.ToString("F1") + "s".ToString();
+    }
+
+    //GameManager SetGameSpeed 함수 사용
+    //   public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+
+    //  SetGameSpeed
     /* 
             public void OnDoubleSpeedButton() => GameManager.Instance.gameSpeed =
+
             GameManager.Instance.gameSpeed == 1 || GameManager.Instance.gameSpeed == 0 ?
             GameManager.Instance.gameSpeed = 2 : GameManager.Instance.gameSpeed = 1;
 
@@ -331,8 +397,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         OnDeployButtonCheck();
 
-        if (isDeployBtnCheck)
+        if (isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            rBtn[0].transform.GetChild(1).gameObject.SetActive(true);
+            rBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+
             mPan.SetActive(true);
             oPan.SetActive(false);
             mBG.SetActive(true);
@@ -343,8 +414,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         OnDeployButtonCheck();
 
-        if (!isDeployBtnCheck)
+        if (!isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            rBtn[0].transform.GetChild(1).gameObject.SetActive(false);
+            rBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+
             mPan.SetActive(false);
             oPan.SetActive(true);
             mBG.SetActive(false);
@@ -359,8 +435,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public void SkillButton()
     {
-       GameObject wraith =  GameObject.Find("wraith(Clone)");
-        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState) ;
+        GameObject wraith = GameObject.Find("wraith(Clone)");
+        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState);
     }
 
     private void FPS()
