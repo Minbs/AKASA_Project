@@ -133,7 +133,7 @@ public class UnitStateMachine : MonoBehaviour
     public void SetAttackTargetInRange(GameObject attackEnemy) 
     {
 
-        float targetSetRange = 2.0f;
+        float targetSetRange = 3.0f;
 
         foreach (var e in GameManager.Instance.minionsList)
         {
