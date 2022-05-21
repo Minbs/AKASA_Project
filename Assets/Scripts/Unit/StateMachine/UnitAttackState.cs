@@ -7,6 +7,7 @@ public class UnitAttackState : UnitBaseState
     public override void Begin(UnitStateMachine stateMachine)
     {
         stateMachine.agent.isStopped = true;
+        stateMachine.agent.velocity = Vector3.zero;
     }
 
     public override void Update(UnitStateMachine stateMachine)
@@ -21,6 +22,7 @@ public class UnitAttackState : UnitBaseState
         {
             if (!stateMachine.IsTargetInAttackRange())
             {
+                Debug.Log("¹Ù²Ù±â");
                 stateMachine.unit.target = null;
                 return;
             }

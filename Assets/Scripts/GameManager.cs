@@ -56,10 +56,7 @@ public class GameManager : Singleton<GameManager>
 
     private GameObject unitSetTile;
 
-    private Vector3 unitSetCameraPos;
-
-    public bool isLineOver = false;
-    public bool isApproach = false;
+   // private Vector3 unitSetCameraPos;
 
     void Start()
     {
@@ -84,8 +81,7 @@ public class GameManager : Singleton<GameManager>
         SetGameSpeed(1);
         currentWaitTimer = waitTime;
         currentWave++;
-        isLineOver = false;
-        isApproach = false;
+
 
 
         while (currentWaitTimer > 0)
@@ -143,17 +139,6 @@ public class GameManager : Singleton<GameManager>
 
     void BattleStateUpdate()
     {
-        if (isApproach == false)
-        {
-            foreach (var m in minionsList)
-            {
-                if (isLineOver)
-                    m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
-            }
-
-            if (isLineOver)
-                isApproach = true;
-        }
 
 
     }
@@ -167,7 +152,11 @@ public class GameManager : Singleton<GameManager>
         foreach (var m in minionsList)
         {
             if (m.activeSelf)
+            {
                 m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
+                m.GetComponent<Unit>().currentHp = m.GetComponent<Unit>().maxHp;
+                m.GetComponent<Unit>().UpdateHealthbar();
+            }    
         }
 
         /**
@@ -230,8 +219,6 @@ public class GameManager : Singleton<GameManager>
                 {
                     deployState = DeployState.Deploying;
                     unitSetTile = raycastHit.collider.gameObject;
-                    unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
-
                     BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[minionsListIndex].index);
                 }
             }
@@ -271,9 +258,17 @@ public class GameManager : Singleton<GameManager>
                 tile.ShowDeployableTile(false);
             }
 
+            minion.GetComponent<Unit>().Init();
             unitSetTile = null;
             minionsList.Add(minion);
             minion.SetActive(true);
+
+
+        foreach (var m in minionsList)
+        {
+            SynergyManager.Instance.CheckClassSynergy(m);
+        }
+
     }
 
     /// <summary>

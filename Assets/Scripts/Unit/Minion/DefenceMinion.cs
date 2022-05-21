@@ -110,6 +110,9 @@ public class DefenceMinion : Minion
         }
     }
 
+
+
+    #region BaseAttack
     public void HitScanAttack()
     {
         if (target == null)
@@ -118,25 +121,23 @@ public class DefenceMinion : Minion
         }
 
 
-        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit",target.transform.position);
-        target.GetComponent<Unit>().Deal(atk);
+        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit", target.transform.position);
+        target.GetComponent<Unit>().Deal(currentAtk);
     }
-
-    #region BaseAttack
     public void SingleHeal()
     {
         Vector3 pos = transform.position;
         GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
         bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
         bulletObject.transform.position = pos;
-        bulletObject.GetComponent<Bullet>().Init(-(int)(atk * (healAmountRate / 100)), target);
+        bulletObject.GetComponent<Bullet>().Init(-(int)(currentAtk * (healAmountRate / 100)), target);
 
         bulletObject.SetActive(true);
     }
 
     public void MeleeAttack()
     {
-        target.GetComponent<Unit>().Deal(atk);
+        target.GetComponent<Unit>().Deal(currentAtk);
     }
 
     public void BulletAttack()
@@ -145,7 +146,7 @@ public class DefenceMinion : Minion
         GameObject bulletObject = ObjectPool.Instance.PopFromPool("Bullet");
         bulletObject.GetComponent<SpriteRenderer>().sprite = bulletSprite;
         bulletObject.transform.position = pos;
-        bulletObject.GetComponent<Bullet>().Init(atk, target);
+        bulletObject.GetComponent<Bullet>().Init(currentAtk, target);
 
         bulletObject.SetActive(true);
     }

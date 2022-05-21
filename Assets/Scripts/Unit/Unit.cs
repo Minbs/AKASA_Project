@@ -24,13 +24,16 @@ public class Unit : MonoBehaviour
     public Tile onTile { get; set; }
 
     public int atk;
+    public int currentAtk; //{ get; set; }
     public float def;
   //  public float moveSpeed;
     public float attackRangeDistance; // 유닛 공격 범위
     public float cognitiveRangeDistance; // 유닛 인지 범위
-    public float attackSpeed { get; set; }
+    public float attackSpeed;  //{ get; set; }
 
     private bool isPoisoned = false;
+    public int damageRedution = 0;
+    public int healTakeAmount = 0;
 
     public Direction direction { get; set; }
 
@@ -48,6 +51,11 @@ public class Unit : MonoBehaviour
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
 
+    protected virtual void Awake()
+    {
+
+    }
+
     protected virtual void Start()
     {
         if (!GetComponent<UnitStateMachine>())
@@ -64,9 +72,15 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+        UpdateHealthbar();
+    }
+
+    public void Init()
+    {
+        currentAtk = atk;
         currentHp = maxHp;
         attackSpeed = 1;
-        UpdateHealthbar();
+        damageRedution = 0;
     }
 
     protected virtual void Update()
@@ -119,23 +133,24 @@ public class Unit : MonoBehaviour
     public void Deal(int damage)
     {
         float damageSum = 0;
-        damageSum = damage;
-
-
 
         if (damage < 0) //heal
         {
             if (gameObject.activeInHierarchy)
                 StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
+
+            damageSum = damage + (float)damage * ((float)healTakeAmount / 100);
+            Debug.Log(damageSum);
         }
         else
         {
             if (gameObject.activeInHierarchy)
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
-            damageSum *= (1 / (1 + def));
+
+            //데미지 = (공격력 - 방어력) * N/100
+            damageSum = (float)(damage - def) * (float)(100 - damageRedution) / 100;
+            damageSum = Mathf.Max(damageSum, 1);
         }
-
-
 
         currentHp -= (int)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);

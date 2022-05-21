@@ -54,7 +54,7 @@ public class UnitStateMachine : MonoBehaviour
         prevState = currentState;
         currentState = state;
         currentState.Begin(this);
-//        Debug.Log(currentState);
+       // Debug.Log(currentState);
     }
 
     public void MoveToDirection(Direction direction)
@@ -88,13 +88,16 @@ public class UnitStateMachine : MonoBehaviour
     {
         if (targetsList.Count <= 0)
             return;
-
-        GameObject target = null;
+        
+        GameObject target = unit.target;
 
         foreach (var e in targetsList)
         {
             if (e.GetComponent<Unit>().currentHp <= 0)
+            {
+
                 continue;
+            }
 
             if (Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)) < unit.cognitiveRangeDistance) // 인지 범위 안에 있는지 확인
             {
@@ -109,8 +112,6 @@ public class UnitStateMachine : MonoBehaviour
                         if (target.GetComponent<Unit>().currentHp < e.GetComponent<Unit>().currentHp) // 해당 아군이 현재 타겟보다 체력이 낮으면
                             target = e;
                     }
-
-
                 }
                 else
                 {
@@ -126,8 +127,39 @@ public class UnitStateMachine : MonoBehaviour
         unit.target = target;
     } //범위 모양, 길이, 우선 순위 넣어서 만들기
 
+    /// <summary>
+    /// 자신 또는 범위 내의 아군을 공격한 대상을 타겟으로설정
+    /// </summary>
+    public void SetAttackTargetInRange(GameObject attackEnemy) 
+    {
+
+        float targetSetRange = 3.0f;
+
+        foreach (var e in GameManager.Instance.minionsList)
+        {
+                if (e.GetComponent<Unit>().currentHp <= 0
+                || e.GetComponent<Minion>().minionClass == MinionClass.Rescue
+                || (e.GetComponent<UnitStateMachine>().currentState.GetType().ToString() != e.GetComponent<UnitStateMachine>().idleState.GetType().ToString()
+                && e.GetComponent<UnitStateMachine>().currentState.GetType().ToString() != e.GetComponent<UnitStateMachine>().moveState.GetType().ToString()))
+            {
+                continue;
+            }
+
+           // Debug.Log(Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)));
+
+            if (Mathf.Abs(Vector3.Distance(transform.position, e.transform.position)) <= targetSetRange) // 인지 범위 안에 있는지 확인
+            {
+                e.GetComponent<Unit>().target = attackEnemy;
+                e.GetComponent<UnitStateMachine>().ChangeState(approachingState);
+            }
+        }
+    }
+
     public bool IsTargetInAttackRange()  // 공격, 힐 범위 안에 있는지 확인
     {
+        if (unit.target.GetComponent<Unit>().currentHp <= 0)
+            return false;
+
         if (unit.GetComponent<Minion>() != null
         && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
         {
@@ -139,8 +171,11 @@ public class UnitStateMachine : MonoBehaviour
     }
 
     public bool IsTargetInCognitiveRange() // 인지 범위 안에 있는지 확인
-    {
-        if (unit.GetComponent<Minion>() != null
+    {    
+            if (unit.target.GetComponent<Unit>().currentHp <= 0)
+                return false;
+
+            if (unit.GetComponent<Minion>() != null
         && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
         {
             if (unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
@@ -150,9 +185,12 @@ public class UnitStateMachine : MonoBehaviour
         return Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.cognitiveRangeDistance;
     }
 
+
     public void LookAtTarget(Vector3 targetPos)
     {
         Vector3 scale = transform.GetChild(0).localScale;
+        Vector3 prevScale = scale;
+
 
         if (transform.position.x < targetPos.x)
         {
@@ -164,6 +202,20 @@ public class UnitStateMachine : MonoBehaviour
         }
 
         transform.GetChild(0).localScale = scale;
+
+        if (!prevScale.Equals(scale))
+            agent.velocity = Vector3.zero;
     }
 
+    public void ReturnToTilePosition()
+    {
+        agent.SetDestination(unit.onTile.transform.position);
+        LookAtTarget(unit.onTile.transform.position);
+
+        if (Vector3.Distance(unit.transform.position, unit.onTile.transform.position) < 0.14)
+        {
+            unit.transform.position = unit.onTile.transform.position;
+            ChangeState(idleState);
+        }
+    }
 }

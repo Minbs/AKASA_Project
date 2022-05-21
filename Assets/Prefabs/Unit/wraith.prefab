@@ -171,9 +171,13 @@ MonoBehaviour:
   poolItemName: 
   maxHp: 120
   atk: 20
+  currentAtk: 0
   def: 0
   attackRangeDistance: 1
-  cognitiveRangeDistance: 5
+  cognitiveRangeDistance: 3
+  attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
   healthBar: {fileID: 5814845813638632022}
   minionClass: 0
   attackType: 1
@@ -203,8 +207,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 0.5
-  m_Acceleration: 8
+  m_Speed: 1
+  m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0

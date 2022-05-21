@@ -34,11 +34,6 @@ public class UnitApproachingState : UnitBaseState
 
             if (stateMachine.IsTargetInAttackRange())
                 stateMachine.ChangeState(stateMachine.AttackState);
-
-            if (!stateMachine.IsTargetInCognitiveRange())
-            {
-                stateMachine.unit.target = null;
-            }
         }
     }
 
