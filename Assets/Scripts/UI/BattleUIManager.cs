@@ -35,22 +35,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
     int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
 
-    ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
+    //text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
     public TextMeshProUGUI[] text;
-    ///phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
+    //phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
+    public TextMeshProUGUI costEarnedText;
 
     ///WaitingTime - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
-    int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
+    int maxEnemyCount = 3, waveCount = 1;
 
     float time = 0, phaseWaitingTime;
     int min, sec, currentEnemyCount = 0;
     bool isPhaseCheck;
+    int[] enemyRewardCost = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
     // 변수 이름 기능이나 용도를 알 수 있게 바꾸기
     public GameObject mBG;
@@ -105,6 +107,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         FPS();
         //OnDeployButton();
 
+        //코스트 획득량당 코스트 획득
+        RegenCost();
 
         if (GameManager.Instance.state == State.WAIT)
         {
@@ -124,12 +128,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //배경음악 재생
             if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
             //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
-            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause();
-            else audioSource.UnPause();
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); else audioSource.UnPause();
             //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+
             //mBG.SetActive(false);
             //rObj.SetActive(false);
             //bObj.SetActive(true);
@@ -156,6 +160,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         audioSource = gameObject.GetComponent<AudioSource>();
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
+        costEarnedText.text = GameManager.Instance.earnedCost.ToString();
 
         //
         for (int i = 0; i < mBG.transform.childCount; i++)
@@ -319,12 +324,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
         else phase[index].gameObject.SetActive(false);
     }
 
-    /// <summary> 코스트 리젠 (regenTime마다 실행) </summary>
+    /// <summary> 코스트 리젠 (GameManager.Instance.earnedCost마다 실행) </summary>
     void RegenCost()
     {
         time += Time.deltaTime;
 
-        if (time >= regenTime)
+        if (time >= GameManager.Instance.earnedCost)
         {
             if (GameManager.Instance.cost >= maxCost)
             {
