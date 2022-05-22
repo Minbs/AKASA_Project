@@ -16,7 +16,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        MBtnTBGPosition();
+      //  MBtnTBGPosition();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -38,6 +38,6 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
          GameManager.Instance.settingCharacter = Instantiate(MinionManager.Instance.minionPrefabs[index], MinionManager.Instance.transform);
     }
 
-    public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
+    //public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
 }
 

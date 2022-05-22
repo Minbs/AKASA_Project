@@ -6,15 +6,15 @@ using Spine.Unity;
 using System.Linq;
 using TMPro;
 
-public enum Phase //Phase 사용 X GameManager State 사용하기
-{
-    Wait,  //전투 대비
-    Start,  //전투 시작
-    Wave1,  //웨이브 1
-    Wave2,  //웨이브 2
-    Wave3,   //웨이브 3
-    Between //웨이브 사이간격
-}
+//public enum Phase //Phase 사용 X GameManager State 사용하기
+//{
+//    Wait,  //전투 대비
+//    Start,  //전투 시작
+//    Wave1,  //웨이브 1
+//    Wave2,  //웨이브 2
+//    Wave3,   //웨이브 3
+//    Between //웨이브 사이간격
+//}
 
 /// <summary>
 /// </summary>
@@ -29,26 +29,28 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public SkeletonDataAsset skeletonDataAsset;
 
     //
-    const int maxCost = 99;
+    //const int maxCost = 99;
     int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
 
-    ///text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
+    //text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
     public TextMeshProUGUI[] text;
-    ///phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
+    //phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
+    public TextMeshProUGUI costEarnedText;
 
-    ///WaitingTime - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Bett
+    //WaitingTime - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
-    int maxEnemyCount = 3, waveCount = 1, regenTime = 3;
+    int maxEnemyCount = 3, waveCount = 1;
 
     float time = 0, phaseWaitingTime;
     int min, sec, currentEnemyCount = 0;
     bool isPhaseCheck;
+    int[] enemyRewardCost = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
     // 변수 이름 기능이나 용도를 알 수 있게 바꾸기
     public GameObject mBG;
@@ -80,6 +82,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
+    [SerializeField]
+    private Tooltip tooltip;
+
     //fps 관련 변수
     private float fpsDeltaTime = 0;
     [SerializeField, Range(1, 100)]
@@ -103,10 +108,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
         FPS();
         //OnDeployButton();
 
+        //코스트 획득량당 코스트 획득
+        RegenCost();
 
         if (GameManager.Instance.state == State.WAIT)
         {
-            if (WaitingTime[(int)Phase.Wait] >= 0) Active((int)Phase.Wait);
+            if (WaitingTime[(int)State.WAIT] >= 0) Active((int)State.WAIT);
             WaitTime();
             ////mBG.SetActive(true);
             //rObj.SetActive(true);
@@ -122,12 +129,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //배경음악 재생
             if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
             //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
-            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause();
-            else audioSource.UnPause();
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); else audioSource.UnPause();
             //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
-            if (WaitingTime[(int)Phase.Start] >= 0) Active((int)Phase.Start);
+            if (WaitingTime[(int)State.BATTLE] >= 0) Active((int)State.BATTLE);
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
-            if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+            //if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+
             //mBG.SetActive(false);
             //rObj.SetActive(false);
             //bObj.SetActive(true);
@@ -149,6 +156,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         audioSource = gameObject.GetComponent<AudioSource>();
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
+        costEarnedText.text = GameManager.Instance.costTime.ToString();
 
         //
         for (int i = 0; i < mBG.transform.childCount; i++)
@@ -261,49 +269,49 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         switch (index)
         {
-            case (int)Phase.Wait:
-                WaitingTime[(int)Phase.Wait] -= Time.deltaTime;
-                phaseWaitingTime = WaitingTime[(int)Phase.Wait];
+            case (int)State.WAIT:
+                WaitingTime[(int)State.WAIT] -= Time.deltaTime;
+                phaseWaitingTime = WaitingTime[(int)State.WAIT];
                 isPhaseCheck = false;
                 break;
-            case (int)Phase.Start:
-                WaitingTime[(int)Phase.Start] -= Time.deltaTime;
-                phaseWaitingTime = WaitingTime[(int)Phase.Start];
+            case (int)State.BATTLE:
+                WaitingTime[(int)State.BATTLE] -= Time.deltaTime;
+                phaseWaitingTime = WaitingTime[(int)State.BATTLE];
                 isPhaseCheck = false;
                 break;
-            case (int)Phase.Wave1:
-                StartCoroutine("PhaseDelay");
-                if (isPhaseCheck)
-                {
-                    WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
-                    phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
-                    isPhaseCheck = false;
-                }
-                else
-                    return;
-                break;
-            case (int)Phase.Wave2:
-                StartCoroutine("PhaseDelay");
-                if (isPhaseCheck)
-                {
-                    WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
-                    phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
-                    isPhaseCheck = false;
-                }
-                else
-                    return;
-                break;
-            case (int)Phase.Wave3:
-                StartCoroutine("PhaseDelay");
-                if (isPhaseCheck)
-                {
-                    WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
-                    phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
-                    isPhaseCheck = false;
-                }
-                else
-                    return;
-                break;
+            //case (int)Phase.Wave1:
+            //    StartCoroutine("PhaseDelay");
+            //    if (isPhaseCheck)
+            //    {
+            //        WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
+            //        phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
+            //        isPhaseCheck = false;
+            //    }
+            //    else
+            //        return;
+            //    break;
+            //case (int)Phase.Wave2:
+            //    StartCoroutine("PhaseDelay");
+            //    if (isPhaseCheck)
+            //    {
+            //        WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
+            //        phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
+            //        isPhaseCheck = false;
+            //    }
+            //    else
+            //        return;
+            //    break;
+            //case (int)Phase.Wave3:
+            //    StartCoroutine("PhaseDelay");
+            //    if (isPhaseCheck)
+            //    {
+            //        WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
+            //        phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
+            //        isPhaseCheck = false;
+            //    }
+            //    else
+            //        return;
+            //    break;
             default:
                 break;
         }
@@ -312,20 +320,17 @@ public class BattleUIManager : Singleton<BattleUIManager>
         else phase[index].gameObject.SetActive(false);
     }
 
-    /// <summary> 코스트 리젠 (regenTime마다 실행) </summary>
+    /// <summary> 코스트 리젠 (GameManager.Instance.earnedCost마다 실행) </summary>
     void RegenCost()
     {
         time += Time.deltaTime;
 
-        if (time >= regenTime)
+        if (time >= GameManager.Instance.costTime)
         {
-            if (GameManager.Instance.cost >= maxCost)
-            {
-                costText.text = GameManager.Instance.cost.ToString() + '+'.ToString();
-                return;
-            }
+
 
             GameManager.Instance.cost += GameManager.Instance.totalIncome;
+
             costText.text = GameManager.Instance.cost.ToString();
             time = 0;
         }
@@ -348,7 +353,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 if (!tBG[index].activeSelf)
                 {
-                    mBtn[index].MBtnTBGPosition();
+             //       mBtn[index].MBtnTBGPosition();
                     tBG[index].SetActive(true);
                 }
             }
@@ -422,7 +427,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     IEnumerator PhaseDelay()
     {
-        yield return new WaitForSeconds(WaitingTime[(int)Phase.Between]);
+        yield return new WaitForSeconds(WaitingTime[5]);
         isPhaseCheck = true;
     }
 
@@ -500,7 +505,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (GameManager.Instance.incomeUpgradeCount + 1>= GameManager.Instance.incomeUpgradeDatas.Count)
         {
             incomeUpgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "UpgradeComplete";
-            Debug.Log("com");
         }
         else
         {

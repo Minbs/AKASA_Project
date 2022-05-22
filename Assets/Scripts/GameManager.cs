@@ -31,6 +31,7 @@ public struct IncomeUpgradeData
 public class GameManager : Singleton<GameManager>
 {
     public int cost = 20; // 초기 보유 코스트
+    public int costTime = 10; // 초기 코스트 획득량
 
     public float waitTime = 30; // 대기 시간
     public float clearTimeTerm = 30;
@@ -48,7 +49,7 @@ public class GameManager : Singleton<GameManager>
 
     public int currentWave { get; set; }
 
-//    Node rayNode = new Node();
+    //    Node rayNode = new Node();
 
     Ray ray;
 
@@ -93,9 +94,18 @@ public class GameManager : Singleton<GameManager>
                 {
                     BattleUIManager.Instance.SetIncomeUpgradeButtonActive(true);
                 }
-                else if(raycastHit.collider.transform.tag != "Tower"
+                else if ((raycastHit.collider.transform.tag != "Tower"
+                    && !raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.incomeUpgradeButton))
                     && (Input.GetMouseButtonUp(1)
                     || Input.GetMouseButtonUp(0)))
+                {
+                    BattleUIManager.Instance.SetIncomeUpgradeButtonActive(false);
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonUp(1)
+                    || Input.GetMouseButtonUp(0))
                 {
                     BattleUIManager.Instance.SetIncomeUpgradeButtonActive(false);
                 }
@@ -123,8 +133,8 @@ public class GameManager : Singleton<GameManager>
 
         deployState = DeployState.NONE;
 
-        if(settingCharacter)
-        Destroy(settingCharacter);
+        if (settingCharacter)
+            Destroy(settingCharacter);
 
         settingCharacter = null;
         StartCoroutine(BattleState());
@@ -188,7 +198,7 @@ public class GameManager : Singleton<GameManager>
                 m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
                 m.GetComponent<Unit>().currentHp = m.GetComponent<Unit>().maxHp;
                 m.GetComponent<Unit>().UpdateHealthbar();
-            }    
+            }
         }
 
         /**
@@ -233,7 +243,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void PositioningMinion()
     {
-        foreach(var minion in minionsList)
+        foreach (var minion in minionsList)
         {
             if (minion.Equals(settingCharacter))
                 continue;
@@ -261,7 +271,7 @@ public class GameManager : Singleton<GameManager>
                     BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[minionsListIndex].index);
                 }
             }
-            else if(raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.sellPanel) && isChangePosition)
+            else if (raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.sellPanel) && isChangePosition)
             {
                 if (Input.GetMouseButtonUp(0))
                 {
@@ -270,6 +280,7 @@ public class GameManager : Singleton<GameManager>
                     minionsList.Remove(settingCharacter);
                     Destroy(settingCharacter);
                     settingCharacter = null;
+                    isChangePosition = false;
                     BattleUIManager.Instance.sellPanel.SetActive(false);
                     deployState = DeployState.NONE;
 
@@ -297,30 +308,30 @@ public class GameManager : Singleton<GameManager>
 
         BattleUIManager.Instance.edge[minionsListIndex].SetActive(true);
 
-        if(!isChangePosition)
-        BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
+        if (!isChangePosition)
+            BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
 
         BattleUIManager.Instance.isCheck = true;
 
 
-            settingCharacter.transform.position = pos;
-            unitSetTile.GetComponent<Tile>().isOnUnit = true;
-            settingCharacter.GetComponent<DefenceMinion>().onTile = unitSetTile.GetComponent<Tile>();
-            deployState = DeployState.NONE;
-              settingCharacter.GetComponent<Unit>().SetDirection(direction);
+        settingCharacter.transform.position = pos;
+        unitSetTile.GetComponent<Tile>().isOnUnit = true;
+        settingCharacter.GetComponent<DefenceMinion>().onTile = unitSetTile.GetComponent<Tile>();
+        deployState = DeployState.NONE;
+        settingCharacter.GetComponent<Unit>().SetDirection(direction);
 
-            foreach (var tile in BoardManager.Instance.minionDeployTilesList)
-            {
-                tile.ShowDeployableTile(false);
-            }
+        foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+        {
+            tile.ShowDeployableTile(false);
+        }
 
-            settingCharacter.GetComponent<Unit>().Init();
-            unitSetTile = null;
-            minionsList.Add(settingCharacter);
-            settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
-            settingCharacter = null;
-            isChangePosition = false;
-            BattleUIManager.Instance.sellPanel.SetActive(false);
+        settingCharacter.GetComponent<Unit>().Init();
+        unitSetTile = null;
+        minionsList.Add(settingCharacter);
+        settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
+        settingCharacter = null;
+        isChangePosition = false;
+        BattleUIManager.Instance.sellPanel.SetActive(false);
 
         foreach (var m in minionsList)
         {
