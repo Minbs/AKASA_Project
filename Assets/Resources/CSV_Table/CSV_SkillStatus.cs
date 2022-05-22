@@ -35,7 +35,7 @@ public class CSV_SkillStatus : MonoBehaviour
     void Start()
     {
 
-        List<Dictionary<string, object>> ChargingShotList = CSVReader.Read("LevelDesignDataList_20220511.xlsx - VeritySkillStatus");
+        List<Dictionary<string, object>> ChargingShotList = CSVReader.Read("LevelDesignDataList.xlsx - VeritySkillStatus");
         
         SkillStutus(ChargingShot_Level1, ChargingShotList, 0);
         SkillStutus(ChargingShot_Level2, ChargingShotList, 1);

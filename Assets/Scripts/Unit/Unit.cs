@@ -8,9 +8,7 @@ using UnityEngine.UI;
 public enum Direction
 {
     LEFT,
-    UP,
-    RIGHT,
-    DOWN
+    RIGHT
 }
 
 
@@ -23,13 +21,19 @@ public class Unit : MonoBehaviour
     public int maxHp;
     public int currentHp { get; set; }
 
+    public Tile onTile { get; set; }
 
     public int atk;
+    public int currentAtk; //{ get; set; }
     public float def;
-
-    public float attackSpeed { get; set; }
+  //  public float moveSpeed;
+    public float attackRangeDistance; // 유닛 공격 범위
+    public float cognitiveRangeDistance; // 유닛 인지 범위
+    public float attackSpeed;  //{ get; set; }
 
     private bool isPoisoned = false;
+    public int damageRedution = 0;
+    public int healTakeAmount = 0;
 
     public Direction direction { get; set; }
 
@@ -47,8 +51,18 @@ public class Unit : MonoBehaviour
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
 
+    protected virtual void Awake()
+    {
+
+    }
+
     protected virtual void Start()
     {
+        if (!GetComponent<UnitStateMachine>())
+        {
+            gameObject.AddComponent<UnitStateMachine>();
+        }
+
         if (transform.GetChild(0).GetComponent<SpineAnimation>() == null) transform.GetChild(0).gameObject.AddComponent<SpineAnimation>();
 
         spineAnimation = transform.GetChild(0).GetComponent<SpineAnimation>();
@@ -58,9 +72,15 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+        UpdateHealthbar();
+    }
+
+    public void Init()
+    {
+        currentAtk = atk;
         currentHp = maxHp;
         attackSpeed = 1;
-        UpdateHealthbar();
+        damageRedution = 0;
     }
 
     protected virtual void Update()
@@ -68,6 +88,8 @@ public class Unit : MonoBehaviour
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
         normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
+
+        
     }
 
     public void Poison(SkillAbility skillAbility, int damage, float duration)
@@ -111,23 +133,24 @@ public class Unit : MonoBehaviour
     public void Deal(int damage)
     {
         float damageSum = 0;
-        damageSum = damage;
-
-
 
         if (damage < 0) //heal
         {
             if (gameObject.activeInHierarchy)
                 StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
+
+            damageSum = damage + (float)damage * ((float)healTakeAmount / 100);
+            Debug.Log(damageSum);
         }
         else
         {
             if (gameObject.activeInHierarchy)
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
-            damageSum *= (1 / (1 + def));
+
+            //데미지 = (공격력 - 방어력) * N/100
+            damageSum = (float)(damage - def) * (float)(100 - damageRedution) / 100;
+            damageSum = Mathf.Max(damageSum, 1);
         }
-
-
 
         currentHp -= (int)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
@@ -184,19 +207,32 @@ public class Unit : MonoBehaviour
     {
         if (!isAnimationPlaying("/knockdown"))
         {
-            spineAnimation.PlayAnimation(skinName + "/knockdown", false, 1);
+            spineAnimation.PlayAnimation(skinName + "/knockdown", false, GameManager.Instance.gameSpeed);
         }
 
         if (skeletonAnimation.AnimationName == skinName + "/knockdown" && normalizedTime >= 1)
         {
-            Destroy(gameObject);
+            if (GetComponent<Minion>())
+            {
+                gameObject.SetActive(false);
+            }
+            else if(GetComponent<Enemy>())
+            {
+                ObjectPool.Instance.PushToPool(poolItemName, gameObject);
+                GameManager.Instance.enemiesList.Remove(gameObject);
+            }
         }
 
         yield return null;
     }
 
+    public void SetPositionOnTile()
+    {
+        transform.position = onTile.gameObject.transform.position + GameManager.Instance.minionSetPosition;
+    }
+
     /// <summary>
-   /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
-   /// </summary>
+    /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
+    /// </summary>
     public bool isAnimationPlaying(string animationName) =>  skeletonAnimation.AnimationName == skinName + animationName && normalizedTime< 1;  // 실행중인 애니메이션의 이름이 animationName과 다르거나 끝나지 않았을 때
 }

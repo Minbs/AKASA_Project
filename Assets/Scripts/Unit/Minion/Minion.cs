@@ -6,15 +6,11 @@ public enum MinionClass
 {
     //근거리 클래스
     Buster,
-    Paladin,
     Guardian,
-    Assassin,
 
     //원거리 클래스
     Chaser,
-    Mage,
-    Rescue,
-    TacticalSupport
+    Rescue
 }
 
 public class Minion : Unit
@@ -22,6 +18,11 @@ public class Minion : Unit
     public MinionClass minionClass;
 
     // Start is called before the first frame update
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();
@@ -32,4 +33,6 @@ public class Minion : Unit
     {
         base.Update();
     }
+
+
 }

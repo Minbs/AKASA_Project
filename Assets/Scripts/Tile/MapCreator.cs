@@ -3,77 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEngine.UI;
 
 public class MapCreator
 {
-    public void Load()
+    public void GenerateMinionTileMap(Vector3 tileStartPos, int width, int height)
     {
-        InitTiles();
-        ReadTilesInfo();
-        BoardManager.Instance.isTileSet = true;
+        InitTiles(tileStartPos, width, height);
     }
 
-    void InitTiles()
+    public void GenerateEnemyTileMap(Vector3 tileStartPos, int width, int height)
     {
-        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
-
-        foreach(var tile in tiles)
-        {
-            if(tile.GetComponent<Tile>() == null)
-            {
-              tile.AddComponent<Tile>();
-            }
-
-            if (tile.GetComponent<BoxCollider>() == null)
-            {
-                tile.AddComponent<BoxCollider>();
-            }
-
-            BoardManager.Instance.tilesList.Add(tile.GetComponent<Tile>()); 
-        }
-
-
-     var result = BoardManager.Instance.tilesList.OrderBy(x=> Mathf.Ceil( x.transform.position.z) / 100).ThenByDescending(x=> x.transform.position.x); // 타일 위치 기준으로 리스트 정렬
-        BoardManager.Instance.tilesList = result.ToList();
-
-        
+        InitEnemyTiles(tileStartPos, width, height);
     }
 
-    void ReadTilesInfo()
+    void InitTiles(Vector3 tileStartPos, int width, int height)
     {
-        string textFile = Resources.Load<TextAsset>("Datas/StageTileInfo/StageTileInfo_Stage1") .text;
-        StringReader stringReader = new StringReader(textFile);
+        float w = BattleUIManager.Instance.DeployableTileImage.GetComponent<RectTransform>().rect.width;
+        float h = BattleUIManager.Instance.DeployableTileImage.GetComponent<RectTransform>().rect.height;
 
-        int tileCount = 0;
-        while (stringReader != null)
-        {
-            string line = stringReader.ReadLine();
-
-            if (line == null)
-                break;
-
-            string[] s = line.Split(' ');
-
-            switch (s[0])
+        for (int col = 0; col < height; col++)
+            for(int row = 0; row < width; row++)
             {
-                case "Size":
-                    BoardManager.Instance.sizeX = int.Parse(s[1]);
-                    BoardManager.Instance.sizeY = int.Parse(s[2]);
-                    break;
-
-                case "Tile":
-                    BoardManager.Instance.tilesList[tileCount].SetTileInfo(s); //pos, isEmpty 설정
-                    tileCount++;
-                    break;
-
-                default:
-                    break;
+                GameObject tileImage = GameObject.Instantiate(BattleUIManager.Instance.DeployableTileImage, BattleUIManager.Instance.worldCanvas.transform);
+                tileImage.transform.position = new Vector3(tileStartPos.x + row * w , tileStartPos.y, tileStartPos.z - col * h);
+                tileImage.transform.eulerAngles = new Vector3(90, 0, 0);
+                tileImage.AddComponent<Tile>();
+                tileImage.GetComponent<Tile>().node = new Node(row , col);
+                tileImage.SetActive(false);
+                BoardManager.Instance.minionDeployTilesList.Add(tileImage.GetComponent<Tile>());
             }
-        }
+    }
 
-        // Close Text File
-        stringReader.Close();
+    void InitEnemyTiles(Vector3 tileStartPos, int width, int height)
+    {
+        float w = BattleUIManager.Instance.DeployableTileImage.GetComponent<RectTransform>().rect.width;
+        float h = BattleUIManager.Instance.DeployableTileImage.GetComponent<RectTransform>().rect.height;
 
+        for (int col = 0; col < height; col++)
+            for (int row = 0; row < width; row++)
+            {
+                GameObject tileImage = GameObject.Instantiate(BattleUIManager.Instance.DeployableTileImage, BattleUIManager.Instance.worldCanvas.transform);
+                tileImage.transform.position = new Vector3(tileStartPos.x + row * w, tileStartPos.y, tileStartPos.z - col * h);
+                tileImage.transform.eulerAngles = new Vector3(90, 0, 0);
+                tileImage.AddComponent<Tile>();
+                tileImage.GetComponent<Tile>().node = new Node(row, col);
+                tileImage.SetActive(true);
+                BoardManager.Instance.enemyDeployTilesList.Add(tileImage.GetComponent<Tile>());
+            }
     }
 
 

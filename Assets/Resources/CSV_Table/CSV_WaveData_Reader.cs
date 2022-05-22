@@ -35,7 +35,7 @@ public class CSV_WaveData_Reader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<Dictionary<string, object>> WaveDataList = CSVReader.Read("LevelDesignDataList_20220511.xlsx - StageWaveReward");
+        List<Dictionary<string, object>> WaveDataList = CSVReader.Read("LevelDesignDataList.xlsx - StageWaveReward");
 
         StageWaveUpdate(WaveData1_1,WaveDataList,0);
         StageWaveUpdate(WaveData1_2, WaveDataList, 1);

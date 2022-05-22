@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758246430292652753}
-  m_LocalRotation: {x: -0.58778524, y: 0, z: 0, w: 0.809017}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 0, z: -0.15}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6208362256301881260}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -72, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!33 &7038330258952526154
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ca7212d9459532d448003383101c4f4e, type: 2}
+  - {fileID: 2100000, guid: f80b757ca503e3440991cce3e1b6a6e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,9 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 437a98c47d4c3034496b80734881c902, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 8934d52a9487d2445b838a79f1395194, type: 2}
   initialSkinName: eremedium
-  initialFlipX: 1
+  initialFlipX: 0
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
+  - component: {fileID: 1394970959969739886}
   m_Layer: 9
   m_Name: eremedium
   m_TagString: Untagged
@@ -171,35 +172,12 @@ MonoBehaviour:
   maxHp: 60
   atk: 10
   def: 0
+  attackRangeDistance: 2
+  cognitiveRangeDistance: 3
+  attackSpeed: 0
   healthBar: {fileID: 1609300146875696240}
-  minionClass: 6
-  attackRangeNodes:
-  - row: 0
-    column: 0
-  - row: -1
-    column: 0
-  - row: -2
-    column: 0
-  - row: 0
-    column: 1
-  - row: -1
-    column: 1
-  - row: -2
-    column: 1
-  - row: 0
-    column: -1
-  - row: -1
-    column: -1
-  - row: -2
-    column: -1
-  - row: -3
-    column: -1
-  - row: -3
-    column: 0
-  - row: -3
-    column: 1
+  minionClass: 3
   attackType: 2
-  stopCount: 0
   cost: 9
   minionWaitingTime: 60
   maxSkillGauge: 20
@@ -214,6 +192,30 @@ MonoBehaviour:
   bulletSprite: {fileID: 21300000, guid: c4819ffcc87ff6d4795099953b7113eb, type: 3}
   skillType: 0
   shootPivot: {fileID: 0}
+  sightAngle: 0
+  sightDistance: 0
+--- !u!195 &1394970959969739886
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 1
+  m_Acceleration: 1
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &7489480818512568311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,27 +241,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.7
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -271,15 +273,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.88105595
+      value: 0.8191521
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4730121
+      value: 0.5735764
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.y
@@ -295,11 +297,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.34002686
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -56.46
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
