@@ -29,6 +29,24 @@ public class SaveData
 public class SaveDataManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    private static SaveDataManager instance;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public static SaveDataManager getInstance()
+    {
+        return instance;
+    }
+
     public void newGame()
     {
         SaveData data = new SaveData();
