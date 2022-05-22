@@ -20,11 +20,16 @@ public class UnitStateMachine : MonoBehaviour
 
     private float speed;
 
+    public bool isDeploying { get; set; }
+
     private void Awake()
     {
         currentState = idleState;
         unit = GetComponent<Unit>();
         agent = GetComponent<NavMeshAgent>();
+
+        if(GetComponent<Minion>())
+        isDeploying = true;
     }
 
     // Start is called before the first frame update
@@ -36,6 +41,9 @@ public class UnitStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDeploying)
+            return;
+
         if (unit.currentHp <= 0)
         {
             agent.isStopped = true;
@@ -194,11 +202,11 @@ public class UnitStateMachine : MonoBehaviour
 
         if (transform.position.x < targetPos.x)
         {
-            scale.x = Mathf.Abs(transform.GetChild(0).localScale.x) * -1;
+            scale.x = Mathf.Abs(transform.GetChild(0).localScale.x) * 1;
         }
         else if (transform.position.x > targetPos.x)
         {
-            scale.x = Mathf.Abs(transform.GetChild(0).localScale.x) * 1;
+            scale.x = Mathf.Abs(transform.GetChild(0).localScale.x) * -1;
         }
 
         transform.GetChild(0).localScale = scale;

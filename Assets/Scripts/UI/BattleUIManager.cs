@@ -24,11 +24,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
+    public Sprite DeployableTileSprite;
 
-    public GameObject settingCharacter;
     public SkeletonDataAsset skeletonDataAsset;
-
-    public bool isSettingCharacterOn = true;
 
     //
     const int maxCost = 99;
@@ -91,16 +89,16 @@ public class BattleUIManager : Singleton<BattleUIManager>
     private int fpsIndex = 0;
     public bool isFpsShow;
 
-
+    public GameObject sellPanel;
+    public GameObject incomeUpgradeButton;
     void Start()
     {
+        incomeUpgradeButton.GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
         Init();
     }
 
     void Update()
     {
-        if (settingCharacter.activeSelf)
-            SetSettingCharacterMousePosition();
 
         FPS();
         //OnDeployButton();
@@ -143,11 +141,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
 
 
-    }
-
-    public void SetSettingCharacterMousePosition()
-    {
-        settingCharacter.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
     }
 
     void Init()
@@ -332,7 +325,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 return;
             }
 
-            GameManager.Instance.cost++;
+            GameManager.Instance.cost += GameManager.Instance.totalIncome;
             costText.text = GameManager.Instance.cost.ToString();
             time = 0;
         }
@@ -493,6 +486,51 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     break;
             }
         }
+    }
+
+    public void SetSellCostText(int cost)
+    {
+        sellPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "판매 : " + cost;
+    }
+
+    public void SetIncomeUpgradeButtonActive(bool active)
+    {
+        IncomeUpgradeData data;
+
+        if (GameManager.Instance.incomeUpgradeCount + 1>= GameManager.Instance.incomeUpgradeDatas.Count)
+        {
+            incomeUpgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "UpgradeComplete";
+            Debug.Log("com");
+        }
+        else
+        {
+            data = GameManager.Instance.incomeUpgradeDatas[GameManager.Instance.incomeUpgradeCount + 1];
+            incomeUpgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost: " + data.upgradeCost + " / " + "Income: " + data.income;
+        }
+
+        incomeUpgradeButton.SetActive(active);
+    }
+
+    public void IncomeUpgrade()
+    {
+        if (GameManager.Instance.incomeUpgradeCount + 1 >= GameManager.Instance.incomeUpgradeDatas.Count)
+            return;
+
+        IncomeUpgradeData data;
+        data = GameManager.Instance.incomeUpgradeDatas[GameManager.Instance.incomeUpgradeCount + 1];
+
+        if (GameManager.Instance.cost <data.upgradeCost)
+        {
+            Debug.Log("코스트 부족");
+            return;
+        }
+
+        GameManager.Instance.totalIncome = data.income;
+        GameManager.Instance.cost -= data.upgradeCost;
+        GameManager.Instance.incomeUpgradeCount++;
+        SetIncomeUpgradeButtonActive(true);
+
+        costText.text = GameManager.Instance.cost.ToString();
     }
 
     private void OnGUI()

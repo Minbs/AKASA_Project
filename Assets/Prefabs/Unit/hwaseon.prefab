@@ -171,15 +171,17 @@ MonoBehaviour:
   poolItemName: hwaseon
   maxHp: 200
   atk: 15
+  currentAtk: 0
   def: 0
   attackRangeDistance: 2
   cognitiveRangeDistance: 3
   attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
   healthBar: {fileID: 5485994177288912733}
   minionClass: 2
   attackType: 3
   cost: 9
-  minionWaitingTime: 80
   maxSkillGauge: 5
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: 6f19fb0c08553de44971f58971280327, type: 2}
@@ -226,6 +228,10 @@ PrefabInstance:
     - target: {fileID: 706432351067167521, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 706432351067167521, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_Pivot.x

@@ -53,7 +53,6 @@ public class Unit : MonoBehaviour
 
     protected virtual void Awake()
     {
-
     }
 
     protected virtual void Start()
@@ -72,6 +71,7 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+    
         UpdateHealthbar();
     }
 
@@ -81,6 +81,9 @@ public class Unit : MonoBehaviour
         currentHp = maxHp;
         attackSpeed = 1;
         damageRedution = 0;
+        healthBar.transform.parent.gameObject.SetActive(true);
+        transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        UpdateHealthbar();
     }
 
     protected virtual void Update()
@@ -170,12 +173,12 @@ public class Unit : MonoBehaviour
 
         if (direction == Direction.LEFT)
         {
-            scale.x = 1;
+            scale.x = -1;
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
         else if (direction == Direction.RIGHT)
         {
-            scale.x = -1;
+            scale.x = 1;
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
     }
