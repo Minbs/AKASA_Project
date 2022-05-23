@@ -96,6 +96,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public GameObject sellPanel;
     public GameObject incomeUpgradeButton;
+    public TextMeshProUGUI incomeText;
     void Start()
     {
         incomeUpgradeButton.GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
@@ -530,6 +531,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
 
         GameManager.Instance.totalIncome = data.income;
+        incomeText.text = GameManager.Instance.totalIncome.ToString();
         GameManager.Instance.cost -= data.upgradeCost;
         GameManager.Instance.incomeUpgradeCount++;
         SetIncomeUpgradeButtonActive(true);
