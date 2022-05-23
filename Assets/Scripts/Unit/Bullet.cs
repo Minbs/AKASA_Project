@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField]
     private float speed;
-    private int damage;
+    private float damage;
     private GameObject target;
 
     public SkillAbility skillAbility;
@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     {
     }
 
-    public void Init(int damage, GameObject target)
+    public void Init(float damage, GameObject target)
     {
         this.damage = damage;
         this.target = target;

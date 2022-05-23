@@ -183,9 +183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameDataManager: {fileID: 6388068130375445577, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: hwaseon
-  maxHp: 10
-  atk: 4
+  Unitname: Hwaseon
+  maxHp: 200
+  atk: 15
   currentAtk: 0
   def: 0
   attackRangeDistance: 2
@@ -196,9 +198,19 @@ MonoBehaviour:
   healthBar: {fileID: 5485994177288912733}
   minionClass: 2
   attackType: 3
-  cost: 21
-  sellCost: 15
+  cost: 9
+  sellCost: 0
+  maxSkillGauge: 5
+  activeSkillAbilities:
+  - abilityType: {fileID: 11400000, guid: 6f19fb0c08553de44971f58971280327, type: 2}
+    power: -30
+    duration: 10
+    statType: 4
+    rangeNodes: []
+    excludeSelf: 0
+  activeSkillType: 0
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
+  skillType: 1
   shootPivot: {fileID: 0}
   sightAngle: 0
   sightDistance: 0
