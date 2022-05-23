@@ -34,11 +34,11 @@ public class DefenceMinion : Minion
 
 
     public AttackType attackType;
-
     public int cost;
     public int sellCost;
     //public float minionStandbyTime { get; set; }
     //public float minionWaitingTime;
+
 
     public float currentSkillGauge { get; set; }
     public int maxSkillGauge;
@@ -62,6 +62,7 @@ public class DefenceMinion : Minion
 
     private void Awake()
     {
+        
     }
 
     private void OnDestroy()
@@ -74,6 +75,8 @@ public class DefenceMinion : Minion
 
     protected override void Start()
     {
+        
+        
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
         healAmountRate = 100;

@@ -26,7 +26,7 @@ public class Stat
     public float UpgradeCost;
     public float BuyCost;
     public float CellCost;
-
+    public float RewardCost;
 }
 
 public class CSV_Player_Status: MonoBehaviour
@@ -44,9 +44,13 @@ public class CSV_Player_Status: MonoBehaviour
     public Stat WratihStat;
     public Stat ZippoStat;
     public Stat EilgosStat;
+    public Stat HwnseonStat;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+
+    }
+    public void StartParsing()
     {
         string StringSavedata = File.ReadAllText(Application.dataPath + "/SaveData.json");
         SaveData _saveData = JsonUtility.FromJson<SaveData>(StringSavedata);
@@ -96,23 +100,29 @@ public class CSV_Player_Status: MonoBehaviour
         StatUpdate(_ZippoStat, _saveData.ZippoLevel, Zippodata);
         //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
 
-         VeriyStat = _VeriyStat;
-         AngelusStat = _AngelusStat;
-         AsherStat = _AsherStat;
-         EremediumStat = _EremediumStat;
-         IsabellaStat = _IsabellaStat;
-         KuenStat = _KuenStat;
-         NoahStat = _NoahStat;
-         PardoStat = _PardoStat;
-         PayStat =_PayStat;
-         SophiaStat = _SophiaStat;
-         WratihStat = _WratihStat;
-         ZippoStat = _ZippoStat;
-         EilgosStat = _EilgosStat;
+        HwnseonStat = _HwaseonStat;
+        VeriyStat = _VeriyStat;
+        AngelusStat = _AngelusStat;
+        AsherStat = _AsherStat;
+        EremediumStat = _EremediumStat;
+        IsabellaStat = _IsabellaStat;
+        KuenStat = _KuenStat;
+        NoahStat = _NoahStat;
+        PardoStat = _PardoStat;
+        PayStat = _PayStat;
+        SophiaStat = _SophiaStat;
+        WratihStat = _WratihStat;
+        ZippoStat = _ZippoStat;
+        EilgosStat = _EilgosStat;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
 
     }
 
-    void StatUpdate(Stat charactor, int charactorlevel, List<Dictionary<string, object>> ListData)
+    public void StatUpdate(Stat charactor, int charactorlevel, List<Dictionary<string, object>> ListData)
     {
         charactor.Name = ListData[charactorlevel]["Name"].ToString();
         charactor.Grade = ListData[charactorlevel]["Grade"].ToString();
@@ -135,7 +145,42 @@ public class CSV_Player_Status: MonoBehaviour
         charactor.CellCost = float.Parse(ListData[charactorlevel]["CellCost"].ToString());
     }
 
+    public Stat Call_Stat(string name)
+    {
 
+        Stat errerStat = new Stat();
+
+        if (name == "Verity")
+        {
+            return VeriyStat;
+        }
+        if (name == "Angelus")
+            return AngelusStat;
+        if (name == "Asher")
+            return AsherStat;
+        if (name == "Eremedium")
+            return EremediumStat;
+        if (name == "Isabella")
+            return IsabellaStat;
+        if (name == "Kuen")
+            return KuenStat;
+        if (name == "Noah")
+            return NoahStat;
+        if (name == "Pardo")
+            return PardoStat;
+        if (name == "Sophia")
+            return SophiaStat;
+        if (name == "Wraith")
+            return WratihStat;
+        if (name == "Zippo")
+            return ZippoStat;
+        if (name == "Eilgos")
+            return EilgosStat;
+        if (name == "Hwaseon")
+            return HwnseonStat;
+
+        return errerStat;
+    }
 
     // Update is called once per frame
     void Update()

@@ -200,18 +200,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameDataManager: {fileID: 6388068130375445577, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
+  Unitname: Pardo
   maxHp: 60
   atk: 8
+  currentAtk: 0
   def: 0
   attackRangeDistance: 2
   cognitiveRangeDistance: 3
   attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
   healthBar: {fileID: 5756680591819409201}
   minionClass: 2
   attackType: 0
   cost: 7
-  minionWaitingTime: 50
+  sellCost: 0
   maxSkillGauge: 10
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: be71190df5dd62d41b7231278e46260c, type: 2}
