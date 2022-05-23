@@ -169,27 +169,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolItemName: 
-  maxHp: 120
-  atk: 20
+  maxHp: 15
+  atk: 6
+  currentAtk: 0
   def: 0
   attackRangeDistance: 1
   cognitiveRangeDistance: 5
+  attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
   healthBar: {fileID: 5814845813638632022}
   minionClass: 0
   attackType: 1
-  cost: 6
-  minionWaitingTime: 25
-  maxSkillGauge: 10
-  activeSkillAbilities:
-  - abilityType: {fileID: 11400000, guid: 67833d8fc1aa7084eba5b5e34dbbab1e, type: 2}
-    power: 150
-    duration: 0
-    statType: 1
-    rangeNodes: []
-    excludeSelf: 0
-  activeSkillType: 0
+  cost: 18
+  sellCost: 13
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
-  skillType: 1
   shootPivot: {fileID: 0}
   sightAngle: 0
   sightDistance: 0
