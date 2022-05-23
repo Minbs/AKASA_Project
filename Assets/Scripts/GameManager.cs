@@ -49,6 +49,8 @@ public class GameManager : Singleton<GameManager>
 
     public int currentWave { get; set; }
 
+    public List<int> waveClearRewards;
+
     //    Node rayNode = new Node();
 
     Ray ray;
@@ -234,6 +236,9 @@ public class GameManager : Singleton<GameManager>
 
             yield return null;
         }
+
+        cost += waveClearRewards[currentWave - 1];
+        BattleUIManager.Instance.costText.text = cost.ToString();
 
         StartCoroutine(WaitState());
     }
