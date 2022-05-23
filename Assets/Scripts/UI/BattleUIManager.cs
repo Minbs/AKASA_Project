@@ -549,7 +549,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         minionUpgradeUI.SetActive(true);
       //  Vector3 pos = Camera.main.WorldToScreenPoint(minion.transform.position);
-        minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition = minion.transform.position;
+        minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
     }
 
     private void OnGUI()
