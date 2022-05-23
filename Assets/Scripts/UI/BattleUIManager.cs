@@ -342,8 +342,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary> 캐릭터 배치후 코스트 소모 </summary>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.minionPrefabs.Count <= index) return;
+        if (MinionManager.Instance.minionPrefabs.Count <= index
+            || GameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost) return;
         GameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
+
+        Debug.Log(MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost);
         costText.text = GameManager.Instance.cost.ToString();
     }
 
@@ -541,9 +544,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
         costText.text = GameManager.Instance.cost.ToString();
     }
 
+    public Vector3 offset;
     public void SetMinionUpgradeUI(GameObject minion)
     {
         minionUpgradeUI.SetActive(true);
+      //  Vector3 pos = Camera.main.WorldToScreenPoint(minion.transform.position);
         minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition = minion.transform.position;
     }
 

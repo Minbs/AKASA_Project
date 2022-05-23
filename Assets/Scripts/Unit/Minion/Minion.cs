@@ -36,14 +36,26 @@ public class Minion : Unit
 
         
     }
+  
+
+    private void OnMouseOver()
+    {
+        if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
+            }
+        }
+    }
+
     private void OnMouseUp()
     {
         if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButton(0))
                 GameManager.Instance.minionChangePos(gameObject);
-            else if (Input.GetMouseButtonUp(1))
-                BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
+
         }
     }
 
