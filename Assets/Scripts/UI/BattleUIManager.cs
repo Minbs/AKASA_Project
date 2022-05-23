@@ -99,7 +99,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
     void Start()
     {
-        incomeUpgradeButton.GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
+        incomeUpgradeButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
         Init();
     }
 
@@ -226,8 +226,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void WaitTime()
     {
         //mBG.SetActive(true);
-        rObj.SetActive(true);
-        bObj.SetActive(false);
+     //   rObj.SetActive(true);
+    //    bObj.SetActive(false);
         wave.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
@@ -505,12 +505,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (GameManager.Instance.incomeUpgradeCount + 1>= GameManager.Instance.incomeUpgradeDatas.Count)
         {
-            incomeUpgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "UpgradeComplete";
+            incomeUpgradeButton.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "UpgradeComplete";
         }
         else
         {
             data = GameManager.Instance.incomeUpgradeDatas[GameManager.Instance.incomeUpgradeCount + 1];
-            incomeUpgradeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost: " + data.upgradeCost + " / " + "Income: " + data.income;
+            incomeUpgradeButton.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost: " + data.upgradeCost + " / " + "Income: " + data.income;
         }
 
         incomeUpgradeButton.SetActive(active);

@@ -28,8 +28,10 @@ public class UnitStateMachine : MonoBehaviour
         unit = GetComponent<Unit>();
         agent = GetComponent<NavMeshAgent>();
 
-        if(GetComponent<Minion>())
-        isDeploying = true;
+        if (GetComponent<Minion>())
+            isDeploying = true;
+        else if (GetComponent<Enemy>())
+            LookAtTarget(new Vector3(-10, 0,0 ));
     }
 
     // Start is called before the first frame update
