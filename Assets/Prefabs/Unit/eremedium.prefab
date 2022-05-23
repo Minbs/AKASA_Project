@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 8934d52a9487d2445b838a79f1395194, type: 2}
   initialSkinName: eremedium
-  initialFlipX: 0
+  initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
@@ -171,15 +171,18 @@ MonoBehaviour:
   poolItemName: 
   maxHp: 60
   atk: 10
+  currentAtk: 0
   def: 0
   attackRangeDistance: 2
   cognitiveRangeDistance: 3
   attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
   healthBar: {fileID: 1609300146875696240}
   minionClass: 3
   attackType: 2
   cost: 9
-  minionWaitingTime: 60
+  sellCost: 0
   maxSkillGauge: 20
   activeSkillAbilities:
   - abilityType: {fileID: 11400000, guid: be71190df5dd62d41b7231278e46260c, type: 2}
