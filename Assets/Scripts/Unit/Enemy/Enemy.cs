@@ -46,8 +46,6 @@ public class Enemy : Unit
     {
         base.Update();
 
-  
-
         if (currentHp <= 0)
         {
             StartCoroutine(Die());

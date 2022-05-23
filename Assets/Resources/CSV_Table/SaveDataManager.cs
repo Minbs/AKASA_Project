@@ -29,26 +29,44 @@ public class SaveData
 public class SaveDataManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    private static SaveDataManager instance;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public static SaveDataManager getInstance()
+    {
+        return instance;
+    }
+
     public void newGame()
     {
         SaveData data = new SaveData();
 
         data.Name = "";
-        data.Crystal = 1;
+        data.Crystal = 0;
         data.VertyLevel = 0;
-        data.IsabellaLevel = 1;
-        data.EilgosLevel = 1;
-        data.ZippoLevel = 1;
-        data.KuenLevel = 1;
-        data.PardoLevel = 1;
-        data.WratihLevel = 1;
-        data.HwaseonLevel = 1;
-        data.AsherLevel = 1;
-        data.PayLevel = 1;
-        data.SophiaLevel = 1;
-        data.AngelusLevel = 1;
-        data.NoahLevel = 1;
-        data.EilgosLevel = 1;
+        data.IsabellaLevel = 0;
+        data.EilgosLevel = 0;
+        data.ZippoLevel = 0;
+        data.KuenLevel = 0;
+        data.PardoLevel = 0;
+        data.WratihLevel = 0;
+        data.HwaseonLevel = 0;
+        data.AsherLevel = 0;
+        data.PayLevel = 0;
+        data.SophiaLevel = 0;
+        data.AngelusLevel = 0;
+        data.NoahLevel = 0;
+        data.EilgosLevel = 0;
 
         File.WriteAllText(Application.dataPath + "/SaveData.json", JsonUtility.ToJson(data));
     }
