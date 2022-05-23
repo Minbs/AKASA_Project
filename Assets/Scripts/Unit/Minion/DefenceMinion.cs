@@ -31,8 +31,6 @@ public enum ActiveSkillType
 public class DefenceMinion : Minion
 {
     [Header("MinionStat")]
-
-
     public AttackType attackType;
 
     public int cost;
@@ -40,23 +38,9 @@ public class DefenceMinion : Minion
     //public float minionStandbyTime { get; set; }
     //public float minionWaitingTime;
 
-    public float currentSkillGauge { get; set; }
-    public int maxSkillGauge;
-
-    public List<SkillAbility> activeSkillAbilities = new List<SkillAbility>();
-    public ActiveSkillType activeSkillType;
-
-
     public Sprite bulletSprite;
 
-    public SkillType skillType;
-
     public float healAmountRate { get; set; }
-
-
-
-    public bool isNextBaseAttackEnhanced { get; set; }
-
 
     public GameObject shootPivot;
 

@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
     public float clearTimeTerm = 30;
     public float currentWaitTimer { get; set; }
 
-    public State state;
+    public State state { get; set; }
     public DeployState deployState { get; set; } // 배치 상태
 
     public EnemySpawner spawner;
@@ -58,18 +58,18 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> enemiesList = new List<GameObject>();
     public List<GameObject> minionsList = new List<GameObject>();
 
-    public int minionsListIndex = 0;
+    public int minionsListIndex { get; set; }
 
     private GameObject unitSetTile;
 
     public GameObject settingCharacter { get; set; }
     // private Vector3 unitSetCameraPos;
 
-    public bool isChangePosition = false;
+    public bool isChangePosition { get; set; }
 
-    public int totalIncome = 1;
+    public int totalIncome { get; set; }
     public List<IncomeUpgradeData> incomeUpgradeDatas;
-    public int incomeUpgradeCount = 0;
+    public int incomeUpgradeCount { get; set; }
 
     void Start()
     {
@@ -78,6 +78,9 @@ public class GameManager : Singleton<GameManager>
             enemiesList.Add(e);
 
         currentWave = 0;
+        totalIncome = incomeUpgradeDatas[0].income;
+        incomeUpgradeCount = 0;
+        isChangePosition = false;
         StartCoroutine(WaitState());
     }
 
