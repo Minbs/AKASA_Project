@@ -345,6 +345,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85bdcb737a9b00147ab630245a1e76c6, type: 3}
+--- !u!114 &177849334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9158611108525588063, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
+  m_PrefabInstance: {fileID: 1979898706}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &285796144
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 20
   costTime: 10
-  waitTime: 200
+  waitTime: 20
   clearTimeTerm: 5
   state: 0
   spawner: {fileID: 1367259471}
@@ -1567,6 +1578,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 428642197011461193, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 428642197080531635, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 428642197233751419, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -73.100006
@@ -1667,6 +1686,10 @@ PrefabInstance:
       propertyPath: sellPanel
       value: 
       objectReference: {fileID: 1917462050}
+    - target: {fileID: 1030427569084694740, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
+      propertyPath: incomeText
+      value: 
+      objectReference: {fileID: 177849334}
     - target: {fileID: 1030427569084694740, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
       propertyPath: incomeUpgradeButton
       value: 
@@ -1878,6 +1901,10 @@ PrefabInstance:
     - target: {fileID: 5696740971118912938, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158611108525588061, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d49e78d2fa1d844cbd2020ba64b89f2, type: 3}
