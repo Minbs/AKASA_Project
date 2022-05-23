@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
-
+using UnityEngine.AI;
 public enum Direction
 {
     LEFT,
@@ -71,7 +71,8 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
-    
+        if(GetComponent<Minion>())
+        transform.GetComponent<NavMeshAgent>().enabled = false;
         UpdateHealthbar();
     }
 
@@ -83,6 +84,7 @@ public class Unit : MonoBehaviour
         damageRedution = 0;
         healthBar.transform.parent.gameObject.SetActive(true);
         transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        transform.GetComponent<NavMeshAgent>().enabled = true;
         UpdateHealthbar();
     }
 

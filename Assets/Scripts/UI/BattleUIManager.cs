@@ -97,6 +97,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject sellPanel;
     public GameObject incomeUpgradeButton;
     public TextMeshProUGUI incomeText;
+
+    public GameObject minionUpgradeUI;
     void Start()
     {
         incomeUpgradeButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
@@ -537,6 +539,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
         SetIncomeUpgradeButtonActive(true);
 
         costText.text = GameManager.Instance.cost.ToString();
+    }
+
+    public void SetMinionUpgradeUI(GameObject minion)
+    {
+        minionUpgradeUI.SetActive(true);
+        minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition = minion.transform.position;
     }
 
     private void OnGUI()

@@ -40,7 +40,10 @@ public class Minion : Unit
     {
         if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
         {
-            GameManager.Instance.minionChangePos(gameObject);
+            if (Input.GetMouseButtonUp(0))
+                GameManager.Instance.minionChangePos(gameObject);
+            else if (Input.GetMouseButtonUp(1))
+                BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
         }
     }
 

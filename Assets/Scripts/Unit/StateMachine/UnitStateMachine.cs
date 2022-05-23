@@ -105,7 +105,6 @@ public class UnitStateMachine : MonoBehaviour
         {
             if (e.GetComponent<Unit>().currentHp <= 0)
             {
-
                 continue;
             }
 
