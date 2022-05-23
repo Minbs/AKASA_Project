@@ -72,7 +72,16 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject oCnt;
     public List<MinionButton> mBtn;
     public List<Button> oBtn;
+
+    public GameObject msPan;
+    public GameObject psPan;
+    public GameObject msCnt;
+    public GameObject psCnt;
+    public List<Button> msBtn;
+    public List<Button> psBtn;
+
     bool isDeployBtnCheck = true;
+    bool isSkillBtnCheck = true;
 
     AudioSource audioSource;
 
@@ -185,6 +194,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < oCnt.transform.childCount; i++)
             oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
 
+        //미니언 스킬 버튼
+        for (int i = 0; i < msCnt.transform.childCount; i++)
+            msBtn.Add(msCnt.GetComponentsInChildren<Button>()[i]);
+
+        //오브젝트 버튼
+        for (int i = 0; i < psCnt.transform.childCount; i++)
+            psBtn.Add(psCnt.GetComponentsInChildren<Button>()[i]);
+
         //전투대비 배치
         rObj = bBObj.transform.GetChild(0).gameObject;
         //전투시작 배치
@@ -211,7 +228,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
 
-        if (mPan.activeSelf) oPan.SetActive(false);
+        if (mPan.activeSelf) 
+        { 
+            oPan.SetActive(false);
+            msPan.SetActive(false);
+            psPan.SetActive(false);
+        } 
+        else
+            mPan.SetActive(true);
 
         if (rObj.activeSelf) bObj.SetActive(false);
     }
@@ -220,6 +244,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         for (int i = 0; i < 3; i++)
             text[i].gameObject.SetActive(false);
+
+        mPan.SetActive(false);
+        oPan.SetActive(false);
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -280,6 +307,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
             case (int)State.BATTLE:
                 WaitingTime[(int)State.BATTLE] -= Time.deltaTime;
                 phaseWaitingTime = WaitingTime[(int)State.BATTLE];
+                bObj.SetActive(true);
+                psPan.SetActive(true);
                 isPhaseCheck = false;
                 break;
             //case (int)Phase.Wave1:
@@ -370,7 +399,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-
     public void SkillWaitingTimer(int index)
     {
         skillTime -= Time.deltaTime;
@@ -396,6 +424,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     */
 
     private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
+    private void OnSkillButtonCheck() => isSkillBtnCheck = msPan.activeSelf == true ? false : true;
 
     public void OnMinionDeployButtonCheck()
     {
@@ -428,6 +457,40 @@ public class BattleUIManager : Singleton<BattleUIManager>
             mPan.SetActive(false);
             oPan.SetActive(true);
             mBG.SetActive(false);
+        }
+    }
+
+    public void OnMinionSkillButtonCheck()
+    {
+        OnSkillButtonCheck();
+
+        if (isSkillBtnCheck && GameManager.Instance.state == State.BATTLE)
+        {
+            bBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            bBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            bBtn[0].transform.GetChild(1).gameObject.SetActive(true);
+            bBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+
+            msPan.SetActive(true);
+            psPan.SetActive(false);
+            //mBG.SetActive(true);
+        }
+    }
+
+    public void OnPlayerSkillButtonCheck()
+    {
+        OnSkillButtonCheck();
+
+        if (!isSkillBtnCheck && GameManager.Instance.state == State.BATTLE)
+        {
+            bBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            bBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            bBtn[0].transform.GetChild(1).gameObject.SetActive(false);
+            bBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+
+            msPan.SetActive(false);
+            psPan.SetActive(true);
+            //mBG.SetActive(false);
         }
     }
 

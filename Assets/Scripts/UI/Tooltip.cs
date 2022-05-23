@@ -56,12 +56,15 @@ public class Tooltip : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Input.mousePosition;
+        //  rt.position = Input.mousePosition;
+        Vector2 point;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rt, Input.mousePosition, Camera.main, out point);
+        rt.localPosition = point;
 
-        if (rt.anchoredPosition.x + rt.sizeDelta.x > halfWidth)
-            rt.pivot = new Vector2(1, 1);
-        else
-            rt.pivot = new Vector2(0, 1);
+    //    if (rt.anchoredPosition.x + rt.sizeDelta.x > halfWidth)
+    //        rt.pivot = new Vector2(1, 1);
+    //    else
+      //      rt.pivot = new Vector2(0, 1);
     }
 
     public void SetupTooltip(string nameTxt, string titleTxt, string explanationTxt)
