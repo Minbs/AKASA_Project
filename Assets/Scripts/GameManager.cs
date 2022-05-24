@@ -204,6 +204,7 @@ public class GameManager : Singleton<GameManager>
                 m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
                 m.GetComponent<Unit>().currentHp = m.GetComponent<Unit>().maxHp;
                 m.GetComponent<Unit>().UpdateHealthbar();
+                m.GetComponent<Unit>().target = null;
             }
         }
 

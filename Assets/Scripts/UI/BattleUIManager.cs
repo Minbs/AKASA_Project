@@ -284,6 +284,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
+
+                mBG.SetActive(true);
+                rObj.SetActive(true);
+                bObj.SetActive(false);
             }
         }
     }
@@ -308,7 +312,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 WaitingTime[(int)State.BATTLE] -= Time.deltaTime;
                 phaseWaitingTime = WaitingTime[(int)State.BATTLE];
                 bObj.SetActive(true);
-                psPan.SetActive(true);
+                msPan.SetActive(true);
                 isPhaseCheck = false;
                 break;
             //case (int)Phase.Wave1:
