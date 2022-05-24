@@ -562,7 +562,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    public void SetSellCostText(int cost)
+    public void SetSellCostText(float cost)
     {
         sellPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "ÆÇ¸Å : " + cost;
     }

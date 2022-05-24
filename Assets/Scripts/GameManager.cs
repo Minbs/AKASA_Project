@@ -30,8 +30,8 @@ public struct IncomeUpgradeData
 
 public class GameManager : Singleton<GameManager>
 {
-    public int cost = 20; // 초기 보유 코스트
-    public int costTime = 10; // 초기 코스트 획득량
+    public float cost = 20; // 초기 보유 코스트
+    public float costTime = 10; // 초기 코스트 획득량
 
     public float waitTime = 30; // 대기 시간
     public float clearTimeTerm = 30;

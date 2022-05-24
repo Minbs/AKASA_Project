@@ -33,8 +33,8 @@ public class DefenceMinion : Minion
     [Header("MinionStat")]
     public AttackType attackType;
 
-    public int cost;
-    public int sellCost;
+    public float cost;
+    public float sellCost;
     //public float minionStandbyTime { get; set; }
     //public float minionWaitingTime;
 

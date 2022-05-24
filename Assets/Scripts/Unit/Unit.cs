@@ -18,13 +18,13 @@ public class Unit : MonoBehaviour
     public string poolItemName;
 
     [Header("UnitStat")]
-    public int maxHp;
-    public int currentHp { get; set; }
+    public float maxHp;
+    public float currentHp { get; set; }
 
     public Tile onTile { get; set; }
 
-    public int atk;
-    public int currentAtk; //{ get; set; }
+    public float atk;
+    public float currentAtk; //{ get; set; }
     public float def;
   //  public float moveSpeed;
     public float attackRangeDistance; // 유닛 공격 범위
@@ -32,8 +32,8 @@ public class Unit : MonoBehaviour
     public float attackSpeed;  //{ get; set; }
 
     private bool isPoisoned = false;
-    public int damageRedution = 0;
-    public int healTakeAmount = 0;
+    public float damageRedution = 0;
+    public float healTakeAmount = 0;
 
     public Direction direction { get; set; }
 
@@ -97,13 +97,13 @@ public class Unit : MonoBehaviour
         
     }
 
-    public void Poison(SkillAbility skillAbility, int damage, float duration)
+    public void Poison(SkillAbility skillAbility, float damage, float duration)
     {
         if (isPoisoned == false)
             StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
     }
 
-    public IEnumerator PoisionCorutine(SkillAbility skillAbility, int damage, float duration)
+    public IEnumerator PoisionCorutine(SkillAbility skillAbility, float damage, float duration)
     {
         float timer = 0f;
 
@@ -121,7 +121,7 @@ public class Unit : MonoBehaviour
             if (damageTimer >= damageDelay)
             {
                 damageTimer = 0;
-                currentHp -= (int)(damage);
+                currentHp -= (float)(damage);
                 UpdateHealthbar();
             }
 
@@ -135,7 +135,7 @@ public class Unit : MonoBehaviour
     /// 데미지 부여 damage가 음수일 때 회복
     /// </summary>
     /// <param name="damage"></param>
-    public void Deal(int damage)
+    public void Deal(float damage)
     {
         float damageSum = 0;
 
@@ -153,11 +153,11 @@ public class Unit : MonoBehaviour
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
 
             //데미지 = (공격력 - 방어력) * N/100
-            damageSum = (float)(damage - def) * (float)(100 - damageRedution) / 100;
+            damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
             damageSum = Mathf.Max(damageSum, 1);
         }
 
-        currentHp -= (int)damageSum;
+        currentHp -= (float)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         UpdateHealthbar();

@@ -53,7 +53,6 @@ public class Minion : Unit
     {
         if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
         {
-            if (Input.GetMouseButton(0))
                 GameManager.Instance.minionChangePos(gameObject);
 
         }
