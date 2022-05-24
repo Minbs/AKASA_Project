@@ -154,7 +154,7 @@ public class Unit : MonoBehaviour
 
             //데미지 = (공격력 - 방어력) * N/100
             damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
-            damageSum = Mathf.Max(damageSum, 1);
+            damageSum = Mathf.Max(damageSum, 0.5f);
         }
 
         currentHp -= (float)damageSum;

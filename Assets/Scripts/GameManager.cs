@@ -343,6 +343,7 @@ public class GameManager : Singleton<GameManager>
         isChangePosition = false;
         BattleUIManager.Instance.sellPanel.SetActive(false);
 
+
         foreach (var m in minionsList)
         {
             SynergyManager.Instance.CheckClassSynergy(m);

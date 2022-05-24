@@ -25,6 +25,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
     public Sprite DeployableTileSprite;
+    
 
     public SkeletonDataAsset skeletonDataAsset;
 
