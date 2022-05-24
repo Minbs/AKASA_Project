@@ -279,6 +279,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             text[0].text = 0.ToString();
             text[2].text = 0.ToString();
 
+            wPanObj.SetActive(false);
             bPanObj.SetActive(true);
 
             //mBG.SetActive(false);
@@ -298,7 +299,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
 
-                mBG.SetActive(true);
+                //mBG.SetActive(true);
+
+                wPanObj.SetActive(true);
+                bPanObj.SetActive(false);
+
                 wBtnObj.SetActive(true);
                 bBtnObj.SetActive(false);
                 //mPan.SetActive(true);
