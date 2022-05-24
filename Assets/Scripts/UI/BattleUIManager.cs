@@ -66,6 +66,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public bool isCheck = false;
     bool isSoundCheck = true;
 
+    public GameObject wPanObj;
     public GameObject mPan;
     public GameObject oPan;
     public GameObject mCnt;
@@ -73,6 +74,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<MinionButton> mBtn;
     public List<Button> oBtn;
 
+    public GameObject bPanObj;
     public GameObject msPan;
     public GameObject psPan;
     public GameObject msCnt;
@@ -86,8 +88,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     AudioSource audioSource;
 
     public GameObject bBObj;
-    private GameObject rObj;
-    private GameObject bObj;
+    private GameObject wBtnObj;
+    private GameObject bBtnObj;
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
@@ -128,8 +130,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
             if (WaitingTime[(int)State.WAIT] >= 0) Active((int)State.WAIT);
             WaitTime();
             ////mBG.SetActive(true);
-            //rObj.SetActive(true);
-            //bObj.SetActive(false);
+            //wBtnObj.SetActive(true);
+            //bBtnObj.SetActive(false);
         }
         if (GameManager.Instance.state == State.BATTLE)
         {
@@ -148,8 +150,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
             //mBG.SetActive(false);
-            //rObj.SetActive(false);
-            //bObj.SetActive(true);
+            //wBtnObj.SetActive(false);
+            //bBtnObj.SetActive(true);
+        }
+        if (GameManager.Instance.state == State.WAVE_END)
+        {
+            bPanObj.SetActive(false);
+            wPanObj.SetActive(true);
+            //mPan.SetActive(true);
         }
         else
         {
@@ -198,24 +206,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < msCnt.transform.childCount; i++)
             msBtn.Add(msCnt.GetComponentsInChildren<Button>()[i]);
 
-        //오브젝트 버튼
+        //플레이어 스킬 버튼
         for (int i = 0; i < psCnt.transform.childCount; i++)
             psBtn.Add(psCnt.GetComponentsInChildren<Button>()[i]);
 
         //전투대비 배치
-        rObj = bBObj.transform.GetChild(0).gameObject;
+        wBtnObj = bBObj.transform.GetChild(0).gameObject;
         //전투시작 배치
-        bObj = bBObj.transform.GetChild(1).gameObject;
+        bBtnObj = bBObj.transform.GetChild(1).gameObject;
 
-        rObj.SetActive(true);
+        wBtnObj.SetActive(true);
 
         //전투대비 버튼
-        for (int i = 0; i < rObj.transform.childCount; i++)
-            rBtn.Add(rObj.transform.GetChild(i).gameObject);
+        for (int i = 0; i < wBtnObj.transform.childCount; i++)
+            rBtn.Add(wBtnObj.transform.GetChild(i).gameObject);
 
         //전투시작 버튼
-        for (int i = 0; i < bObj.transform.childCount; i++)
-            bBtn.Add(bObj.transform.GetChild(i).gameObject);
+        for (int i = 0; i < bBtnObj.transform.childCount; i++)
+            bBtn.Add(bBtnObj.transform.GetChild(i).gameObject);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -231,13 +239,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (mPan.activeSelf) 
         { 
             oPan.SetActive(false);
-            msPan.SetActive(false);
-            psPan.SetActive(false);
+            bPanObj.SetActive(false);
+            //msPan.SetActive(false);
+            //psPan.SetActive(false);
         } 
         else
             mPan.SetActive(true);
 
-        if (rObj.activeSelf) bObj.SetActive(false);
+        if (wBtnObj.activeSelf) bBtnObj.SetActive(false);
     }
 
     void BattleTime()
@@ -245,8 +254,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < 3; i++)
             text[i].gameObject.SetActive(false);
 
-        mPan.SetActive(false);
-        oPan.SetActive(false);
+        wPanObj.SetActive(false);
+        //mPan.SetActive(false);
+        //oPan.SetActive(false);
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -255,8 +265,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void WaitTime()
     {
         //mBG.SetActive(true);
-     //   rObj.SetActive(true);
-    //    bObj.SetActive(false);
+     //   wBtnObj.SetActive(true);
+    //    bBtnObj.SetActive(false);
         wave.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
@@ -269,9 +279,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
             text[0].text = 0.ToString();
             text[2].text = 0.ToString();
 
-            mBG.SetActive(false);
-            rObj.SetActive(false);
-            bObj.SetActive(true);
+            bPanObj.SetActive(true);
+
+            //mBG.SetActive(false);
+            wBtnObj.SetActive(false);
+            bBtnObj.SetActive(true);
+            //msPan.SetActive(true);
         }
         else
         {
@@ -284,6 +297,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
+
+                mBG.SetActive(true);
+                wBtnObj.SetActive(true);
+                bBtnObj.SetActive(false);
+                //mPan.SetActive(true);
             }
         }
     }
@@ -307,8 +325,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
             case (int)State.BATTLE:
                 WaitingTime[(int)State.BATTLE] -= Time.deltaTime;
                 phaseWaitingTime = WaitingTime[(int)State.BATTLE];
-                bObj.SetActive(true);
-                psPan.SetActive(true);
                 isPhaseCheck = false;
                 break;
             //case (int)Phase.Wave1:
