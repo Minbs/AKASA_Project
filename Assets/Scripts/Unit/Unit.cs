@@ -15,7 +15,12 @@ public enum Direction
 
 public class Unit : MonoBehaviour
 {
+    public GameObject GameDataManager;
     public string poolItemName;
+    public string Unitname;
+    public int Level = 1;
+    private Stat ParsingStat;
+
 
     [Header("UnitStat")]
     public float maxHp;
@@ -57,6 +62,35 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
+
+        if (Unitname == "Enemy1" || Unitname == "Enemy2")
+        {
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname, Level);
+            maxHp = ParsingStat.HP;
+            atk = ParsingStat.Atk;
+            def = ParsingStat.Def;
+            attackRangeDistance = ParsingStat.AtkRange;
+            cognitiveRangeDistance = ParsingStat.CognitiveRange;
+            attackSpeed = ParsingStat.AtkSpeed;
+
+        }
+        else
+        {
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname,Level);
+
+            maxHp = ParsingStat.HP;
+            atk = ParsingStat.Atk;
+            def = ParsingStat.Def;
+            attackRangeDistance = ParsingStat.AtkRange;
+            cognitiveRangeDistance = ParsingStat.CognitiveRange;
+            attackSpeed = ParsingStat.AtkSpeed;
+        }
+
+
+
+
         if (!GetComponent<UnitStateMachine>())
         {
             gameObject.AddComponent<UnitStateMachine>();
