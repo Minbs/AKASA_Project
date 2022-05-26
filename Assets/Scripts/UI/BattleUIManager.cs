@@ -24,11 +24,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
+    public Sprite DeployableTileSprite;
+    
 
-    public GameObject settingCharacter;
     public SkeletonDataAsset skeletonDataAsset;
-
-    public bool isSettingCharacterOn = true;
 
     //
     //const int maxCost = 99;
@@ -68,6 +67,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public bool isCheck = false;
     bool isSoundCheck = true;
 
+    public GameObject wPanObj;
     public GameObject mPan;
     public GameObject oPan;
     public GameObject mCnt;
@@ -75,6 +75,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<MinionButton> mBtn;
     public List<Button> oBtn;
 
+    public GameObject bPanObj;
     public GameObject msPan;
     public GameObject psPan;
     public GameObject msCnt;
@@ -88,8 +89,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     AudioSource audioSource;
 
     public GameObject bBObj;
-    private GameObject rObj;
-    private GameObject bObj;
+    private GameObject wBtnObj;
+    private GameObject bBtnObj;
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
@@ -105,16 +106,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
     private int fpsIndex = 0;
     public bool isFpsShow;
 
+    public GameObject sellPanel;
+    public GameObject incomeUpgradeButton;
+    public TextMeshProUGUI incomeText;
 
+    public GameObject minionUpgradeUI;
     void Start()
     {
+        incomeUpgradeButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
         Init();
     }
 
     void Update()
     {
-        if (settingCharacter.activeSelf)
-            SetSettingCharacterMousePosition();
 
         FPS();
         //OnDeployButton();
@@ -127,8 +131,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
             if (WaitingTime[(int)State.WAIT] >= 0) Active((int)State.WAIT);
             WaitTime();
             ////mBG.SetActive(true);
-            //rObj.SetActive(true);
-            //bObj.SetActive(false);
+            //wBtnObj.SetActive(true);
+            //bBtnObj.SetActive(false);
         }
         if (GameManager.Instance.state == State.BATTLE)
         {
@@ -147,8 +151,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
             //mBG.SetActive(false);
-            //rObj.SetActive(false);
-            //bObj.SetActive(true);
+            //wBtnObj.SetActive(false);
+            //bBtnObj.SetActive(true);
+        }
+        if (GameManager.Instance.state == State.WAVE_END)
+        {
+            bPanObj.SetActive(false);
+            wPanObj.SetActive(true);
+            //mPan.SetActive(true);
         }
         else
         {
@@ -159,11 +169,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
 
 
-    }
-
-    public void SetSettingCharacterMousePosition()
-    {
-        settingCharacter.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
     }
 
     void Init()
@@ -202,24 +207,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < msCnt.transform.childCount; i++)
             msBtn.Add(msCnt.GetComponentsInChildren<Button>()[i]);
 
-        //오브젝트 버튼
+        //플레이어 스킬 버튼
         for (int i = 0; i < psCnt.transform.childCount; i++)
             psBtn.Add(psCnt.GetComponentsInChildren<Button>()[i]);
 
         //전투대비 배치
-        rObj = bBObj.transform.GetChild(0).gameObject;
+        wBtnObj = bBObj.transform.GetChild(0).gameObject;
         //전투시작 배치
-        bObj = bBObj.transform.GetChild(1).gameObject;
+        bBtnObj = bBObj.transform.GetChild(1).gameObject;
 
-        rObj.SetActive(true);
+        wBtnObj.SetActive(true);
 
         //전투대비 버튼
-        for (int i = 0; i < rObj.transform.childCount; i++)
-            rBtn.Add(rObj.transform.GetChild(i).gameObject);
+        for (int i = 0; i < wBtnObj.transform.childCount; i++)
+            rBtn.Add(wBtnObj.transform.GetChild(i).gameObject);
 
         //전투시작 버튼
-        for (int i = 0; i < bObj.transform.childCount; i++)
-            bBtn.Add(bObj.transform.GetChild(i).gameObject);
+        for (int i = 0; i < bBtnObj.transform.childCount; i++)
+            bBtn.Add(bBtnObj.transform.GetChild(i).gameObject);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -235,13 +240,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (mPan.activeSelf) 
         { 
             oPan.SetActive(false);
-            msPan.SetActive(false);
-            psPan.SetActive(false);
+            bPanObj.SetActive(false);
+            //msPan.SetActive(false);
+            //psPan.SetActive(false);
         } 
         else
             mPan.SetActive(true);
 
-        if (rObj.activeSelf) bObj.SetActive(false);
+        if (wBtnObj.activeSelf) bBtnObj.SetActive(false);
     }
 
     void BattleTime()
@@ -249,8 +255,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < 3; i++)
             text[i].gameObject.SetActive(false);
 
-        mPan.SetActive(false);
-        oPan.SetActive(false);
+        wPanObj.SetActive(false);
+        //mPan.SetActive(false);
+        //oPan.SetActive(false);
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -259,8 +266,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void WaitTime()
     {
         //mBG.SetActive(true);
-        rObj.SetActive(true);
-        bObj.SetActive(false);
+     //   wBtnObj.SetActive(true);
+    //    bBtnObj.SetActive(false);
         wave.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
@@ -273,9 +280,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
             text[0].text = 0.ToString();
             text[2].text = 0.ToString();
 
-            mBG.SetActive(false);
-            rObj.SetActive(false);
-            bObj.SetActive(true);
+            wPanObj.SetActive(false);
+            bPanObj.SetActive(true);
+
+            //mBG.SetActive(false);
+            wBtnObj.SetActive(false);
+            bBtnObj.SetActive(true);
+            //msPan.SetActive(true);
         }
         else
         {
@@ -288,6 +299,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
+
+                //mBG.SetActive(true);
+
+                wPanObj.SetActive(true);
+                bPanObj.SetActive(false);
+
+                wBtnObj.SetActive(true);
+                bBtnObj.SetActive(false);
+                //mPan.SetActive(true);
             }
         }
     }
@@ -311,8 +331,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
             case (int)State.BATTLE:
                 WaitingTime[(int)State.BATTLE] -= Time.deltaTime;
                 phaseWaitingTime = WaitingTime[(int)State.BATTLE];
-                bObj.SetActive(true);
-                psPan.SetActive(true);
                 isPhaseCheck = false;
                 break;
             //case (int)Phase.Wave1:
@@ -363,7 +381,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (time >= GameManager.Instance.costTime)
         {
-            GameManager.Instance.cost++;
+
+
+            GameManager.Instance.cost += GameManager.Instance.totalIncome;
+
             costText.text = GameManager.Instance.cost.ToString();
             time = 0;
         }
@@ -372,8 +393,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary> 캐릭터 배치후 코스트 소모 </summary>
     public void UseCost(int index)
     {
-        if (MinionManager.Instance.minionPrefabs.Count <= index) return;
+        if (MinionManager.Instance.minionPrefabs.Count <= index
+            || GameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost) return;
         GameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
+
+        Debug.Log(MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost);
         costText.text = GameManager.Instance.cost.ToString();
     }
 
@@ -386,7 +410,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 if (!tBG[index].activeSelf)
                 {
-                    mBtn[index].MBtnTBGPosition();
+             //       mBtn[index].MBtnTBGPosition();
                     tBG[index].SetActive(true);
                 }
             }
@@ -558,6 +582,59 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     break;
             }
         }
+    }
+
+    public void SetSellCostText(float cost)
+    {
+        sellPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "판매 : " + cost;
+    }
+
+    public void SetIncomeUpgradeButtonActive(bool active)
+    {
+        IncomeUpgradeData data;
+
+        if (GameManager.Instance.incomeUpgradeCount + 1>= GameManager.Instance.incomeUpgradeDatas.Count)
+        {
+            incomeUpgradeButton.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "UpgradeComplete";
+        }
+        else
+        {
+            data = GameManager.Instance.incomeUpgradeDatas[GameManager.Instance.incomeUpgradeCount + 1];
+            incomeUpgradeButton.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost: " + data.upgradeCost + " / " + "Income: " + data.income;
+        }
+
+        incomeUpgradeButton.SetActive(active);
+    }
+
+    public void IncomeUpgrade()
+    {
+        if (GameManager.Instance.incomeUpgradeCount + 1 >= GameManager.Instance.incomeUpgradeDatas.Count)
+            return;
+
+        IncomeUpgradeData data;
+        data = GameManager.Instance.incomeUpgradeDatas[GameManager.Instance.incomeUpgradeCount + 1];
+
+        if (GameManager.Instance.cost <data.upgradeCost)
+        {
+            Debug.Log("코스트 부족");
+            return;
+        }
+
+        GameManager.Instance.totalIncome = data.income;
+        incomeText.text = GameManager.Instance.totalIncome.ToString();
+        GameManager.Instance.cost -= data.upgradeCost;
+        GameManager.Instance.incomeUpgradeCount++;
+        SetIncomeUpgradeButtonActive(true);
+
+        costText.text = GameManager.Instance.cost.ToString();
+    }
+
+    public Vector3 offset;
+    public void SetMinionUpgradeUI(GameObject minion)
+    {
+        minionUpgradeUI.SetActive(true);
+      //  Vector3 pos = Camera.main.WorldToScreenPoint(minion.transform.position);
+        minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
     }
 
     private void OnGUI()

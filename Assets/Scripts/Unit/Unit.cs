@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
-
+using UnityEngine.AI;
 public enum Direction
 {
     LEFT,
@@ -15,16 +15,21 @@ public enum Direction
 
 public class Unit : MonoBehaviour
 {
+    public GameObject GameDataManager;
     public string poolItemName;
+    public string Unitname;
+    public int Level = 1;
+    private Stat ParsingStat;
+
 
     [Header("UnitStat")]
-    public int maxHp;
-    public int currentHp { get; set; }
+    public float maxHp;
+    public float currentHp { get; set; }
 
     public Tile onTile { get; set; }
 
-    public int atk;
-    public int currentAtk; //{ get; set; }
+    public float atk;
+    public float currentAtk; //{ get; set; }
     public float def;
   //  public float moveSpeed;
     public float attackRangeDistance; // 유닛 공격 범위
@@ -32,8 +37,8 @@ public class Unit : MonoBehaviour
     public float attackSpeed;  //{ get; set; }
 
     private bool isPoisoned = false;
-    public int damageRedution = 0;
-    public int healTakeAmount = 0;
+    public float damageRedution = 0;
+    public float healTakeAmount = 0;
 
     public Direction direction { get; set; }
 
@@ -53,11 +58,39 @@ public class Unit : MonoBehaviour
 
     protected virtual void Awake()
     {
-
     }
 
     protected virtual void Start()
     {
+
+        if (Unitname == "Enemy1" || Unitname == "Enemy2")
+        {
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname, Level);
+            maxHp = ParsingStat.HP;
+            atk = ParsingStat.Atk;
+            def = ParsingStat.Def;
+            attackRangeDistance = ParsingStat.AtkRange;
+            cognitiveRangeDistance = ParsingStat.CognitiveRange;
+            attackSpeed = ParsingStat.AtkSpeed;
+
+        }
+        else
+        {
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname,Level);
+
+            maxHp = ParsingStat.HP;
+            atk = ParsingStat.Atk;
+            def = ParsingStat.Def;
+            attackRangeDistance = ParsingStat.AtkRange;
+            cognitiveRangeDistance = ParsingStat.CognitiveRange;
+            attackSpeed = ParsingStat.AtkSpeed;
+        }
+
+
+
+
         if (!GetComponent<UnitStateMachine>())
         {
             gameObject.AddComponent<UnitStateMachine>();
@@ -72,6 +105,8 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+        if(GetComponent<Minion>())
+        transform.GetComponent<NavMeshAgent>().enabled = false;
         UpdateHealthbar();
     }
 
@@ -81,6 +116,10 @@ public class Unit : MonoBehaviour
         currentHp = maxHp;
         attackSpeed = 1;
         damageRedution = 0;
+        healthBar.transform.parent.gameObject.SetActive(true);
+        transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        transform.GetComponent<NavMeshAgent>().enabled = true;
+        UpdateHealthbar();
     }
 
     protected virtual void Update()
@@ -92,13 +131,13 @@ public class Unit : MonoBehaviour
         
     }
 
-    public void Poison(SkillAbility skillAbility, int damage, float duration)
+    public void Poison(SkillAbility skillAbility, float damage, float duration)
     {
         if (isPoisoned == false)
             StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
     }
 
-    public IEnumerator PoisionCorutine(SkillAbility skillAbility, int damage, float duration)
+    public IEnumerator PoisionCorutine(SkillAbility skillAbility, float damage, float duration)
     {
         float timer = 0f;
 
@@ -116,7 +155,7 @@ public class Unit : MonoBehaviour
             if (damageTimer >= damageDelay)
             {
                 damageTimer = 0;
-                currentHp -= (int)(damage);
+                currentHp -= (float)(damage);
                 UpdateHealthbar();
             }
 
@@ -130,7 +169,7 @@ public class Unit : MonoBehaviour
     /// 데미지 부여 damage가 음수일 때 회복
     /// </summary>
     /// <param name="damage"></param>
-    public void Deal(int damage)
+    public void Deal(float damage)
     {
         float damageSum = 0;
 
@@ -148,11 +187,11 @@ public class Unit : MonoBehaviour
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
 
             //데미지 = (공격력 - 방어력) * N/100
-            damageSum = (float)(damage - def) * (float)(100 - damageRedution) / 100;
-            damageSum = Mathf.Max(damageSum, 1);
+            damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
+            damageSum = Mathf.Max(damageSum, 0.5f);
         }
 
-        currentHp -= (int)damageSum;
+        currentHp -= (float)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         UpdateHealthbar();
@@ -170,12 +209,12 @@ public class Unit : MonoBehaviour
 
         if (direction == Direction.LEFT)
         {
-            scale.x = 1;
+            scale.x = -1;
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
         else if (direction == Direction.RIGHT)
         {
-            scale.x = -1;
+            scale.x = 1;
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
     }

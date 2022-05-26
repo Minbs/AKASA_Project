@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
-public class CSV_EnemyStatus : MonoBehaviour
+public class CSV_EnemyStat : MonoBehaviour
 {
-    /*
+
     public Stat Enemy_A;
     public Stat Enemy_B;
     public Stat Enemy_C;
@@ -75,7 +75,7 @@ public class CSV_EnemyStatus : MonoBehaviour
 
         return errerStat;
     }
-    */
+
     // Update is called once per frame
     void Update()
     {

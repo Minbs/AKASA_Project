@@ -10,7 +10,7 @@ public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
-
+    public int Level;
     [Header("EnemyStat")]
 
     public AttackType attackType;

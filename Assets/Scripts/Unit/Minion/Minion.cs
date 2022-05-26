@@ -17,6 +17,7 @@ public class Minion : Unit
 {
     public MinionClass minionClass;
 
+
     // Start is called before the first frame update
 
     protected override void Awake()
@@ -32,7 +33,31 @@ public class Minion : Unit
     protected override void Update()
     {
         base.Update();
+
+        
+    }
+  
+
+    private void OnMouseOver()
+    {
+        if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+        {
+            if (Input.GetMouseButton(1))
+            {
+                BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
+            }
+        }
     }
 
+    private void OnMouseUp()
+    {
+        if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+        {
+                GameManager.Instance.minionChangePos(gameObject);
 
+        }
+    }
+
+    
+  
 }

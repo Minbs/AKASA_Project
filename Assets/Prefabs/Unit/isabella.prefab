@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
   - component: {fileID: 3386159740569189286}
+  - component: {fileID: 675713550458598133}
   m_Layer: 9
   m_Name: isabella
   m_TagString: Untagged
@@ -78,29 +79,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
-  maxHp: 60
-  atk: 7
+  Unitname: Isabella
+  Level: 1
+  maxHp: 10
+  atk: 3
+  currentAtk: 0
   def: 0
   attackRangeDistance: 2
-  cognitiveRangeDistance: 3
+  cognitiveRangeDistance: 4
   attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
   healthBar: {fileID: 7644924621521741393}
   minionClass: 2
   attackType: 0
-  cost: 6
-  minionWaitingTime: 60
-  maxSkillGauge: 10
-  activeSkillAbilities:
-  - abilityType: {fileID: 11400000, guid: ff3c6454807a63c4d896c043657cfb93, type: 2}
-    power: 30
-    duration: 5
-    statType: 0
-    rangeNodes: []
-    excludeSelf: 0
-  activeSkillType: 0
+  cost: 14
+  sellCost: 10
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
-  skillType: 1
   shootPivot: {fileID: 5829380570333821707}
   sightAngle: 0
   sightDistance: 0
@@ -111,7 +108,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208362256301881235}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.2
   m_Speed: 1
@@ -126,6 +123,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &675713550458598133
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6208362257474094919
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +151,7 @@ GameObject:
   - component: {fileID: 6208362257474094915}
   - component: {fileID: 6208362257474094914}
   - component: {fileID: 8724695787588246052}
+  - component: {fileID: 6687152630900180191}
   m_Layer: 9
   m_Name: Spine GameObject (spi_ani_test_character)
   m_TagString: Untagged
@@ -225,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 6207b5944d6a6114c9ff689cd0fcd923, type: 2}
   initialSkinName: isabella
-  initialFlipX: 0
+  initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
@@ -248,6 +262,19 @@ MonoBehaviour:
   _animationName: isabella/idle
   loop: 1
   timeScale: 1
+--- !u!65 &6687152630900180191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362257474094919}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 7.9365716, y: 13.619974, z: 0.0000008118137}
+  m_Center: {x: -0.7864511, y: 7.0206566, z: 0.0000013721381}
 --- !u!1001 &1991330571967102422
 PrefabInstance:
   m_ObjectHideFlags: 0

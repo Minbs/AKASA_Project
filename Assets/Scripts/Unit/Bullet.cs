@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField]
     private float speed;
-    private int damage;
+    private float damage;
     private GameObject target;
 
     public SkillAbility skillAbility;
@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     {
     }
 
-    public void Init(int damage, GameObject target)
+    public void Init(float damage, GameObject target)
     {
         this.damage = damage;
         this.target = target;
@@ -51,17 +51,24 @@ public class Bullet : MonoBehaviour
         if (Vector3.Distance(transform.position, target.transform.position) <= 0.01f )
         {
 
-            target.GetComponent<Unit>().Poison(skillAbility, damage, duration);
+
             
             ObjectPool.Instance.PushToPool("Bullet", gameObject);
-            target.GetComponent<Unit>().Deal(damage);
+
+            if(target.GetComponent<Unit>().currentHp > 0)
+            {
+               target.GetComponent<Unit>().Poison(skillAbility, damage, duration);
+               target.GetComponent<Unit>().Deal(damage);
+
+                if (damage > 0)
+                    EffectManager.Instance.InstantiateAttackEffect("hit", transform.position);
+                else
+                    EffectManager.Instance.InstantiateHomingEffect("heal", target, 2);
+            }
 
       
 
-            if(damage > 0)
-            EffectManager.Instance.InstantiateAttackEffect("hit", transform.position);
-            else
-                EffectManager.Instance.InstantiateHomingEffect("heal", target, 2);
+   
         }
 
         Vector3 des = target.transform.position;

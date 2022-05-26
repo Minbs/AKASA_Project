@@ -11,15 +11,12 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
-    public DefenceMinion minion;
+
 
     // Update is called once per frame
     void Update()
     {
-        if(MinionManager.Instance.minionQueue.Count != 0)
-            minion = MinionManager.Instance.minionQueue[index].GetComponent<DefenceMinion>();
-
-        MBtnTBGPosition();
+      //  MBtnTBGPosition();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -35,15 +32,12 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         GameManager.Instance.minionsListIndex = index;
         GameManager.Instance.ChangeMinionPositioningState();
 
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
-            skeletonDataAsset = MinionManager.Instance.minionPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().skeletonDataAsset;
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().
-            initialSkinName = MinionManager.Instance.minionPrefabs[index].transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
-        BattleUIManager.Instance.settingCharacter.GetComponent<SkeletonGraphic>().Initialize(true);
+        if (GameManager.Instance.settingCharacter)
+            Destroy(GameManager.Instance.settingCharacter);
 
-        BattleUIManager.Instance.settingCharacter.SetActive(true);
+         GameManager.Instance.settingCharacter = Instantiate(MinionManager.Instance.minionPrefabs[index], MinionManager.Instance.transform);
     }
 
-    public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
+    //public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
 }
 
