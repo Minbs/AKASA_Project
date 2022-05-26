@@ -26,7 +26,7 @@ public class Stat
     public float UpgradeCost;
     public float BuyCost;
     public float CellCost;
-
+    public float RewardCost;
 }
 
 public class CSV_Player_Status: MonoBehaviour
@@ -44,9 +44,17 @@ public class CSV_Player_Status: MonoBehaviour
     public Stat WratihStat;
     public Stat ZippoStat;
     public Stat EilgosStat;
+    public Stat HwnseonStat;
 
-    // Start is called before the first frame update
-    void Start()
+    public Stat EnemyAStat;
+    public Stat EnemyBStat;
+    public Stat EnemyCStat;
+
+    void Awake()
+    {
+
+    }
+    public void StartParsing()
     {
         string StringSavedata = File.ReadAllText(Application.dataPath + "/SaveData.json");
         SaveData _saveData = JsonUtility.FromJson<SaveData>(StringSavedata);
@@ -65,6 +73,11 @@ public class CSV_Player_Status: MonoBehaviour
         List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList.xlsx - WraithStatus");
         List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList.xlsx - ZippoStatus");
         //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
+        List<Dictionary<string, object>> EnemyA = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_AStatus");
+        List<Dictionary<string, object>> EnemyB = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BStatus");
+        List<Dictionary<string, object>> EnemyC = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_CStatus");
+
+
         Stat _VeriyStat = new Stat();
         Stat _AngelusStat = new Stat();
         Stat _AsherStat = new Stat();
@@ -79,6 +92,9 @@ public class CSV_Player_Status: MonoBehaviour
         Stat _WratihStat = new Stat();
         Stat _ZippoStat = new Stat();
         Stat _EilgosStat = new Stat();
+        Stat _EnemyA = new Stat();
+        Stat _EnemyB = new Stat();
+        Stat _EnemyC = new Stat();
 
 
         StatUpdate(_VeriyStat, _saveData.VertyLevel, Veritydata);
@@ -95,24 +111,38 @@ public class CSV_Player_Status: MonoBehaviour
         StatUpdate(_WratihStat, _saveData.WratihLevel, Wratihdata);
         StatUpdate(_ZippoStat, _saveData.ZippoLevel, Zippodata);
         //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
+        StatUpdate_Enemy(_EnemyA, 0, EnemyA);
+        StatUpdate_Enemy(_EnemyB, 0, EnemyB);
+        StatUpdate_Enemy(_EnemyC, 0, EnemyC);
 
-         VeriyStat = _VeriyStat;
-         AngelusStat = _AngelusStat;
-         AsherStat = _AsherStat;
-         EremediumStat = _EremediumStat;
-         IsabellaStat = _IsabellaStat;
-         KuenStat = _KuenStat;
-         NoahStat = _NoahStat;
-         PardoStat = _PardoStat;
-         PayStat =_PayStat;
-         SophiaStat = _SophiaStat;
-         WratihStat = _WratihStat;
-         ZippoStat = _ZippoStat;
-         EilgosStat = _EilgosStat;
+
+        HwnseonStat = _HwaseonStat;
+        VeriyStat = _VeriyStat;
+        AngelusStat = _AngelusStat;
+        AsherStat = _AsherStat;
+        EremediumStat = _EremediumStat;
+        IsabellaStat = _IsabellaStat;
+        KuenStat = _KuenStat;
+        NoahStat = _NoahStat;
+        PardoStat = _PardoStat;
+        PayStat = _PayStat;
+        SophiaStat = _SophiaStat;
+        WratihStat = _WratihStat;
+        ZippoStat = _ZippoStat;
+        EilgosStat = _EilgosStat;
+
+        EnemyAStat = _EnemyA;
+        EnemyBStat = _EnemyB;
+        EnemyCStat = _EnemyC;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        
 
     }
 
-    void StatUpdate(Stat charactor, int charactorlevel, List<Dictionary<string, object>> ListData)
+    public void StatUpdate(Stat charactor, int charactorlevel, List<Dictionary<string, object>> ListData)
     {
         charactor.Name = ListData[charactorlevel]["Name"].ToString();
         charactor.Grade = ListData[charactorlevel]["Grade"].ToString();
@@ -134,8 +164,61 @@ public class CSV_Player_Status: MonoBehaviour
         charactor.BuyCost = float.Parse(ListData[charactorlevel]["BuyCost"].ToString());
         charactor.CellCost = float.Parse(ListData[charactorlevel]["CellCost"].ToString());
     }
+    public void StatUpdate_Enemy(Stat charactor, int charactorlevel, List<Dictionary<string, object>> ListData)
+    {
+        charactor.Name = ListData[charactorlevel]["Name"].ToString();
+        charactor.Grade = ListData[charactorlevel]["Grade"].ToString();
+        charactor.Class = ListData[charactorlevel]["Class"].ToString();
+        charactor.HP = float.Parse(ListData[charactorlevel]["Hp"].ToString());
+        charactor.Def = float.Parse(ListData[charactorlevel]["Def"].ToString());
+        charactor.Atk = float.Parse(ListData[charactorlevel]["Atk"].ToString());
+        charactor.AtkSpeed = float.Parse(ListData[charactorlevel]["AtkSpeed"].ToString());
+        charactor.MoveSpeed = float.Parse(ListData[charactorlevel]["MoveSpeed"].ToString());
+        charactor.AtkRange = float.Parse(ListData[charactorlevel]["AtkRange"].ToString());
+        charactor.CognitiveRange = float.Parse(ListData[charactorlevel]["CognitiveRange"].ToString());
+        charactor.RewardCost = float.Parse(ListData[charactorlevel]["RewardCost"].ToString());
+    }
 
+    public Stat Call_Stat(string name)
+    {
 
+        Stat errerStat = new Stat();
+
+        if (name == "Verity")
+            return VeriyStat;
+        if (name == "Angelus")
+            return AngelusStat;
+        if (name == "Asher")
+            return AsherStat;
+        if (name == "Eremedium")
+            return EremediumStat;
+        if (name == "Isabella")
+            return IsabellaStat;
+        if (name == "Kuen")
+            return KuenStat;
+        if (name == "Noah")
+            return NoahStat;
+        if (name == "Pardo")
+            return PardoStat;
+        if (name == "Sophia")
+            return SophiaStat;
+        if (name == "Wraith")
+            return WratihStat;
+        if (name == "Zippo")
+            return ZippoStat;
+        if (name == "Eilgos")
+            return EilgosStat;
+        if (name == "Hwaseon")
+            return HwnseonStat;
+        if (name == "Enemy1")
+            return EnemyAStat;
+        if (name == "Enemy2")
+            return EnemyBStat;
+        if (name == "Enemy3")
+            return EnemyCStat;
+
+        return errerStat;
+    }
 
     // Update is called once per frame
     void Update()
