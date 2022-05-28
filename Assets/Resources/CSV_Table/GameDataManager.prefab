@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6388068130375445577
+--- !u!1 &1629390581798776592
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,13 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6388068130375445581}
-  - component: {fileID: 6388068130375445580}
-  - component: {fileID: 6388068130375445579}
-  - component: {fileID: 6388068130375445582}
-  - component: {fileID: 6388068130375445583}
-  - component: {fileID: 6388068130375445568}
-  - component: {fileID: 6388068130375445578}
+  - component: {fileID: 864096527459745445}
+  - component: {fileID: 6493748568450161302}
+  - component: {fileID: 1129542134438174736}
+  - component: {fileID: 1972130817340570512}
+  - component: {fileID: 8858300106503006446}
+  - component: {fileID: 1227511301707851084}
+  - component: {fileID: 8860573144335150652}
   m_Layer: 0
   m_Name: GameDataManager
   m_TagString: Untagged
@@ -22,504 +22,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6388068130375445581
+--- !u!4 &864096527459745445
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
+  m_GameObject: {fileID: 1629390581798776592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.285205, y: 11.590691, z: 1.392127}
+  m_LocalPosition: {x: 8.146894, y: 5.6710134, z: -8.042395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6388068130375445580
+--- !u!114 &6493748568450161302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1c35bf2179def84199bcbc8035bbfaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VeriyStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  AngelusStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  AsherStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  EremediumStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  IsabellaStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  KuenStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  NoahStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  PardoStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  PayStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  SophiaStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  WratihStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  ZippoStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
-  EilgosStat:
-    Name: 
-    Grade: 
-    Class: 
-    Brood: 
-    Belong: 
-    HP: 0
-    HPUP: 0
-    Def: 0
-    DefUP: 0
-    Atk: 0
-    AtkAdd: 0
-    AtkSpeed: 0
-    AtkSpeedUp: 0
-    MoveSpeed: 0
-    AtkRange: 0
-    CognitiveRange: 0
-    UpgradeCost: 0
-    BuyCost: 0
-    CellCost: 0
---- !u!114 &6388068130375445579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb128bc465f61ee46867a26904d2c885, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WaveData1_1:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_2:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_3:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_4:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_5:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_6:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_7:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_8:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_9:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
-  WaveData1_10:
-    Stage: 0
-    Wave: 0
-    WaveReward: 0
-    MonsterReward: 0
-    MonsterNum: 0
-    WaveTotalReward: 0
-    Total: 0
---- !u!114 &6388068130375445582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 740f8caea3592db4bab8badfeab6b86a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EtherUpgradeReward_Level1:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level2:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level3:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level4:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level5:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level6:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level7:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level8:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level9:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level10:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level11:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level12:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level13:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level14:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level15:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level16:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level17:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level18:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level19:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
-  EtherUpgradeReward_Level20:
-    Level: 0
-    EtherUpgradeCost: 0
-    UpgradeReward: 0
-    TotalReward: 0
---- !u!114 &6388068130375445583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
+  m_GameObject: {fileID: 1629390581798776592}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd2fec405b5b10749b4835116633e693, type: 3}
@@ -1110,13 +634,382 @@ MonoBehaviour:
     AtkRange: 0
     CognitiveRange: 0
     RewardCost: 0
---- !u!114 &6388068130375445568
+--- !u!114 &1129542134438174736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
+  m_GameObject: {fileID: 1629390581798776592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c35bf2179def84199bcbc8035bbfaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VeriyStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  AngelusStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  AsherStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  EremediumStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  IsabellaStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  KuenStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  NoahStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  PardoStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  PayStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  SophiaStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  WratihStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  ZippoStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  EilgosStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  HwnseonStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  EnemyAStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  EnemyBStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  EnemyCStat:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+--- !u!114 &1972130817340570512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629390581798776592}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17c749aab0b8e844d901079dcbe213d8, type: 3}
@@ -1212,13 +1105,217 @@ MonoBehaviour:
     Cooltime: 0
     SkillCoefficient: 0
     BasicDamage: 0
---- !u!114 &6388068130375445578
+--- !u!114 &8858300106503006446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6388068130375445577}
+  m_GameObject: {fileID: 1629390581798776592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740f8caea3592db4bab8badfeab6b86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EtherUpgradeReward_Level1:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level2:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level3:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level4:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level5:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level6:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level7:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level8:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level9:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level10:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level11:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level12:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level13:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level14:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level15:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level16:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level17:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level18:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level19:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+  EtherUpgradeReward_Level20:
+    Level: 0
+    EtherUpgradeCost: 0
+    UpgradeReward: 0
+    TotalReward: 0
+--- !u!114 &1227511301707851084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629390581798776592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb128bc465f61ee46867a26904d2c885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaveData1_1:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_2:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_3:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_4:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_5:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_6:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_7:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_8:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_9:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+  WaveData1_10:
+    Stage: 0
+    Wave: 0
+    WaveReward: 0
+    MonsterReward: 0
+    MonsterNum: 0
+    WaveTotalReward: 0
+    Total: 0
+--- !u!114 &8860573144335150652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629390581798776592}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3d86ee11e0a53946876b2f2d7c8b61c, type: 3}

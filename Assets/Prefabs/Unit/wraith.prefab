@@ -183,34 +183,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameDataManager: {fileID: 6388068130375445577, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
+  GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Wraith
-  maxHp: 120
-  atk: 20
+  Level: 1
+  maxHp: 20
+  atk: 2
   currentAtk: 0
-  def: 0
+  def: 1
   attackRangeDistance: 1
   cognitiveRangeDistance: 3
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
   healthBar: {fileID: 5814845813638632022}
-  minionClass: 0
+  minionClass: 1
   attackType: 1
-  cost: 6
-  sellCost: 1
-  maxSkillGauge: 10
-  activeSkillAbilities:
-  - abilityType: {fileID: 11400000, guid: 67833d8fc1aa7084eba5b5e34dbbab1e, type: 2}
-    power: 150
-    duration: 0
-    statType: 1
-    rangeNodes: []
-    excludeSelf: 0
-  activeSkillType: 0
+  cost: 15
+  sellCost: 11
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
-  skillType: 1
   shootPivot: {fileID: 0}
   sightAngle: 0
   sightDistance: 0
@@ -221,7 +212,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208362256301881235}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.2
   m_Speed: 1

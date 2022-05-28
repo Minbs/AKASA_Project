@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6299139124071220317}
   - component: {fileID: 6299139124071220316}
-  - component: {fileID: 8383545571456269890}
-  - component: {fileID: 3924089413698333958}
+  - component: {fileID: 201675959092706450}
   m_Layer: 9
-  m_Name: Enemy2
+  m_Name: Enemy3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,23 +48,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
-  poolItemName: Enemy2
-  Unitname: Enemy2
+  poolItemName: Enemy3
+  Unitname: Enemy1
   Level: 1
-  maxHp: 7
-  atk: 1
+  maxHp: 15
+  atk: 2
   currentAtk: 0
-  def: 0
-  attackRangeDistance: 2
+  def: 1
+  attackRangeDistance: 1
   cognitiveRangeDistance: 3
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
   healthBar: {fileID: 6831602217341417594}
   Level: 1
-  attackType: 3
-  attackDelayDuration: 3
---- !u!195 &8383545571456269890
+  attackType: 1
+  attackDelayDuration: 0
+--- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,19 +86,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &3924089413698333958
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6299139124071220322}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6299139124783264950
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +98,7 @@ GameObject:
   - component: {fileID: 6299139124783264946}
   - component: {fileID: 6299139124783264947}
   - component: {fileID: 6299139124783264944}
-  - component: {fileID: 5457827478705239241}
+  - component: {fileID: 3270104930051822208}
   m_Layer: 9
   m_Name: Spine GameObject (spi_ani_test_character)
   m_TagString: Untagged
@@ -198,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 00dac8c48c6ebd840baa2fcf3253aa95, type: 2}
-  initialSkinName: sniper_enemy
+  initialSkinName: short_ernemy
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -219,10 +205,10 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: sniper_enemy/move
+  _animationName: short_ernemy/move
   loop: 1
   timeScale: 1
---- !u!65 &5457827478705239241
+--- !u!65 &3270104930051822208
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,8 +219,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.379667, y: 11.465472, z: 0.0000006833954}
-  m_Center: {x: -1.7467122, y: 5.8115134, z: 0.0000003463932}
+  m_Size: {x: 9.64533, y: 11.043193, z: 0.0000006582256}
+  m_Center: {x: -1.6025634, y: 5.6201825, z: 0.00000033498898}
 --- !u!1001 &3419394231967310845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -264,27 +250,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_LocalPosition.x
