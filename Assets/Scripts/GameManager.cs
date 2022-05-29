@@ -278,7 +278,6 @@ public class GameManager : Singleton<GameManager>
                 {
                     deployState = DeployState.Deploying;
                     unitSetTile = raycastHit.collider.gameObject;
-                    BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[minionsListIndex].index);
                 }
             }
             else if (raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.sellPanel) && isChangePosition)
@@ -293,10 +292,6 @@ public class GameManager : Singleton<GameManager>
                     isChangePosition = false;
                     BattleUIManager.Instance.sellPanel.SetActive(false);
                     deployState = DeployState.NONE;
-
-                    //코드 추가하기
-                    BattleUIManager.Instance.edge[minionsListIndex].SetActive(false);
-                    BattleUIManager.Instance.isCheck = false;
                 }
             }
         }
@@ -315,11 +310,6 @@ public class GameManager : Singleton<GameManager>
         pos += minionSetPosition;
 
         Direction direction = Direction.RIGHT;
-
-        BattleUIManager.Instance.edge[minionsListIndex].SetActive(true);
-
-        if (!isChangePosition)
-            BattleUIManager.Instance.UseCost(BattleUIManager.Instance.mBtn[minionsListIndex].index);
 
         BattleUIManager.Instance.isCheck = true;
 
