@@ -20,15 +20,14 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     [Space(10f)]
     [Header("잠깐 보여주는 Panel")]
-    public GameObject showPanel;
+    public GameObject AnimePanel;
     bool m_bPanelOn = false;
+    public MinionsPortrait minions;
 
-    //public GameObject ClearPanel;
-    //public GameObject SavePanel;
-    //public GameObject ExitPanel;
     [Space(10f)]
     [Header("Popup Panel")]
-    public GameObject SamplePanel;
+    public GameObject PopupPanel;
+    public GameObject InfoPanel;
     public TextMeshProUGUI Title_text;
     public TextMeshProUGUI Content_text;
     public Button ConfirmBtn;
@@ -56,12 +55,14 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             StartCoroutine(ChangeBG());
         }
 
-        if (SamplePanel != null)
-            SamplePanel.SetActive(false);
+        if (PopupPanel != null)
+            PopupPanel.SetActive(false);
         if (StageInfo_Screen != null)
             StageInfo_Screen.SetActive(false);
         if (EditPanel != null)
-            EditPanel.SetActive(false); 
+            EditPanel.SetActive(false);
+        if (InfoPanel != null)
+            InfoPanel.SetActive(false);
 
         //btn.onClick.AddListener(SaveConfirm);     // 버튼 적용 법
     }
@@ -154,11 +155,6 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         Debug.Log(SceneName + "씬으로 이동");
     }
 
-    private void Update()
-    {
-
-    }
-
     public void LoadMainScene()
     {
         SceneLoad.LoadScene("MainScene");
@@ -205,10 +201,17 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void ClearEditList()
     {
-        SamplePanel.SetActive(true);
-        PanelEdit("초기화", "정말 초기화하시겠습니까?");
-        ConfirmBtn.onClick.AddListener(ClearConfirm);
-        cancelBtn.onClick.AddListener(PanelCancel);
+        if (PopupPanel != null)
+        {
+            PopupPanel.SetActive(true);
+            PanelEdit("초기화", "정말 초기화하시겠습니까?");
+            ConfirmBtn.onClick.AddListener(ClearConfirm);
+            cancelBtn.onClick.AddListener(PanelCancel);
+        }
+        else
+        {
+            Debug.Log("Clear EditList Confirm Error");
+        }
     }
 
 
@@ -225,23 +228,30 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void SaveEditList()
     {
-        SamplePanel.SetActive(true);
-        PanelEdit("저장", "정말로 저장하시겠습니까?");
+        if(PopupPanel != null)
+        {
+            PopupPanel.SetActive(true);
+            PanelEdit("저장", "정말로 저장하시겠습니까?");
 
 
-        ConfirmBtn.onClick.AddListener(SaveConfirm);
-        cancelBtn.onClick.AddListener(PanelCancel);
+            ConfirmBtn.onClick.AddListener(SaveConfirm);
+            cancelBtn.onClick.AddListener(PanelCancel);
+        }
+        else
+        {
+            Debug.Log("Error SaveEditList Confirm");
+        }
     }
     public void SaveConfirm()
     {
         Debug.Log("저장!");
-        EditList.Instance.SaveJsonFile();
+        EditList.Instance.SaveMinionsData();
         PanelCancel();
     }
 
     public void ExitContainer()
     {
-        SamplePanel.SetActive(true);
+        PopupPanel.SetActive(true);
         PanelEdit("나가기", "정말로 나가시겠습니까?");
         ConfirmBtn.onClick.AddListener(ExitConfirm);
         cancelBtn.onClick.AddListener(PanelCancel);
@@ -252,13 +262,26 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         PanelCancel();
         LoadMainScene();
     }
+
+    public void ShowPanel(GameObject obj)
+    {
+        SetPanelActive(obj, true);
+    }
+
+    public void HidePanel(GameObject obj)
+    {
+        SetPanelActive(obj, false);
+    }
+
     public void SetPanelActive(GameObject obj , bool b) => obj.SetActive(b);
+
+    
 
     public void PanelCancel()
     {
         ConfirmBtn.onClick.RemoveAllListeners();
         cancelBtn.onClick.RemoveAllListeners();
-        SamplePanel.SetActive(false);
+        PopupPanel.SetActive(false);
     }
 
     void CreateSaveDirectory()
@@ -276,16 +299,14 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
        #endif
     }
 
-
-
     public IEnumerator PanelPlay()
     {
         m_bPanelOn = true;
-        showPanel.SetActive(true);
+        AnimePanel.SetActive(true);
         yield return new WaitForSeconds(1.0f);
-        showPanel.GetComponent<Animator>().SetTrigger("Hide");
+        AnimePanel.GetComponent<Animator>().SetTrigger("Hide");
         yield return new WaitForSeconds(1.0f);
-        showPanel.SetActive(false);
+        AnimePanel.SetActive(false);
         m_bPanelOn = false;
     }
 
@@ -301,6 +322,11 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     {
         StageManager.Instance.PopTargetStage();
         StageInfo_Screen.SetActive(false);
+    }
+
+    public void ShowMinionsInfo()
+    {
+        minions.gameObject.SetActive(true);
     }
 
 }

@@ -4,14 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
+public enum ILLUST_TYPE
+{
+    UNITLIST = 0,
+    EDITLIST,
+    STANDING
+}
 public enum RANK
 {
+    RANK_NONE= -1,
     RANK_RARE =0,
     RANK_EPIC = 1,
     RANK_LEGEND = 2
 }
 public enum MINION_CLASS
 {
+    CLASS_NONE = 0,
     CLASS_GUARDIAN = 0 ,
     CLASS_RESCUE = 1,
     CLASS_MAGE = 2,
@@ -19,7 +28,8 @@ public enum MINION_CLASS
     CLASS_CHASER = 4 ,
     CLASS_PALADIN = 5,
     CLASS_TACSUP = 6,
-    CLASS_ASSASIN = 7
+    CLASS_ASSASIN = 7,
+    CLASS_END = 8
 }
 
 public enum UnitName
@@ -32,9 +42,14 @@ public enum UnitName
     NAME_ISABELLA,
 }
 
+struct item
+{
+    public Sprite st;
+}
+
 public class Unitportrait : MonoBehaviour
 {
-    
+    [Header("BG")]
     [SerializeField] private Sprite Minions_List_BG;        // À¯´Ö ¸®½ºÆ® µÞ¹è°æ
     [SerializeField] private Sprite EditBGSprite;           // ÆíÁýÃ¢ µÞ¹è°æ
     [Header("Text")]
@@ -100,6 +115,8 @@ public class Unitportrait : MonoBehaviour
     [SerializeField] private float Atk;
     [SerializeField] private float Def;
 
+
+
     //[Space(10f)]
 
     public int getCount; // È¹µæ ³¯Â¥.
@@ -127,8 +144,6 @@ public class Unitportrait : MonoBehaviour
         this.gameObject.GetComponent<Image>().sprite = Level_Inventory[rand];
 
         LevelText.text = "Lv." + Random.Range(1, 100).ToString();
-
-
     }
 
     public void UpdateUI(ref Unitportrait p)
