@@ -103,12 +103,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             //상단 패널에 타이머UI에서 웨이브UI로 변경
             BattleTime();
-            //배경음악 재생
-      //      if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
-            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
-           // if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); else audioSource.UnPause();
-            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
-          //  if (WaitingTime[(int)State.BATTLE] >= 0) Active((int)State.BATTLE);
         }
 
     }
