@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Spine.Unity;
 using System.Linq;
 using TMPro;
+using DG.Tweening;
 
 //public enum Phase //Phase 사용 X GameManager State 사용하기
 //{
@@ -97,6 +98,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     [SerializeField]
     private Tooltip tooltip;
 
+    //카메라 관련 변수
+    Vector3 startingPoint;
+    Vector3 endingPoint;
+    public int endDuration = 3, endDelay = 1, startDuration = 4, startDelay = 5;
+
     //fps 관련 변수
     private float fpsDeltaTime = 0;
     [SerializeField, Range(1, 100)]
@@ -111,6 +117,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
+
     void Start()
     {
         incomeUpgradeButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
@@ -178,6 +185,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         enemiesList = GameManager.Instance.enemiesList;
         costText.text = GameManager.Instance.cost.ToString();
         costEarnedText.text = GameManager.Instance.costTime.ToString();
+        startingPoint = Camera.main.transform.localPosition;
+        endingPoint = new Vector3(8.55f, 16.52f, -16.04f);
 
         //
         for (int i = 0; i < mBG.transform.childCount; i++)
@@ -241,13 +250,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
         { 
             oPan.SetActive(false);
             bPanObj.SetActive(false);
-            //msPan.SetActive(false);
-            //psPan.SetActive(false);
         } 
         else
             mPan.SetActive(true);
 
         if (wBtnObj.activeSelf) bBtnObj.SetActive(false);
+
+        Camera.main.transform.DOMove(endingPoint, endDuration).SetDelay(endDelay);
+        Camera.main.transform.DOMove(startingPoint, startDuration).SetDelay(startDelay);
     }
 
     void BattleTime()
@@ -256,8 +266,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
             text[i].gameObject.SetActive(false);
 
         wPanObj.SetActive(false);
-        //mPan.SetActive(false);
-        //oPan.SetActive(false);
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -265,9 +273,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void WaitTime()
     {
-        //mBG.SetActive(true);
-     //   wBtnObj.SetActive(true);
-    //    bBtnObj.SetActive(false);
         wave.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
 
@@ -286,7 +291,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //mBG.SetActive(false);
             wBtnObj.SetActive(false);
             bBtnObj.SetActive(true);
-            //msPan.SetActive(true);
         }
         else
         {
@@ -307,7 +311,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
                 wBtnObj.SetActive(true);
                 bBtnObj.SetActive(false);
-                //mPan.SetActive(true);
             }
         }
     }
@@ -381,8 +384,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (time >= GameManager.Instance.costTime)
         {
-
-
             GameManager.Instance.cost += GameManager.Instance.totalIncome;
 
             costText.text = GameManager.Instance.cost.ToString();
@@ -410,7 +411,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 if (!tBG[index].activeSelf)
                 {
-             //       mBtn[index].MBtnTBGPosition();
+                    //mBtn[index].MBtnTBGPosition();
                     tBG[index].SetActive(true);
                 }
             }
@@ -461,7 +462,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             mPan.SetActive(true);
             oPan.SetActive(false);
-            mBG.SetActive(true);
+            //mBG.SetActive(true);
         }
     }
 
@@ -478,7 +479,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             mPan.SetActive(false);
             oPan.SetActive(true);
-            mBG.SetActive(false);
+            //mBG.SetActive(false);
         }
     }
 

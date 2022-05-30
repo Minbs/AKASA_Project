@@ -10,14 +10,9 @@ public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
-    public int Level;
     [Header("EnemyStat")]
 
     public AttackType attackType;
-
-
-    public float attackDelayTimer { get; set; }
-    public float attackDelayDuration;
 
     protected override void Awake()
     {
@@ -28,9 +23,6 @@ public class Enemy : Unit
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-
-      //  moveTiles = BoardManager.Instance.FinalList.ToList();
-        attackDelayTimer = attackDelayDuration;
         Init();
         UpdateHealthbar();
     }
@@ -45,8 +37,6 @@ public class Enemy : Unit
     protected override void Update()
     {
         base.Update();
-
-  
 
         if (currentHp <= 0)
         {

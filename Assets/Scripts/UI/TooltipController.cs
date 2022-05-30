@@ -44,6 +44,11 @@ public class TooltipController : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     }
 
+    public void Update()
+    {
+        
+    }
+
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
         GetTooltip(synergyObj);
