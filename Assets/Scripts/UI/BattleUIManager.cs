@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Spine.Unity;
 using System.Linq;
 using TMPro;
+using DG.Tweening;
 
 //public enum Phase //Phase 사용 X GameManager State 사용하기
 //{
@@ -25,15 +26,24 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
     public Sprite DeployableTileSprite;
-   
+    
 
+    public SkeletonDataAsset skeletonDataAsset;
 
+    //
+    //const int maxCost = 99;
+    int[] maxMinionCount = { 3, 5 };
+    List<GameObject> enemiesList = new List<GameObject>();
+
+    //text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
+    public TextMeshProUGUI[] text;
     //phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
     public Image[] phase;
     public TextMeshProUGUI wave;
     public TextMeshProUGUI costText;
     public TextMeshProUGUI costEarnedText;
 
+    //WaitingTime - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between
     [SerializeField]
     float[] WaitingTime;
     [SerializeField]
@@ -42,17 +52,56 @@ public class BattleUIManager : Singleton<BattleUIManager>
     float time = 0, phaseWaitingTime;
     int min, sec, currentEnemyCount = 0;
     bool isPhaseCheck;
+    int[] enemyRewardCost = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+
+    // 변수 이름 기능이나 용도를 알 수 있게 바꾸기
+    public GameObject mBG;
+    public List<GameObject> tBG;
+    public List<GameObject> edge;
+
+    private float skillTime;
+
+    public GameObject sBG;
+    public List<GameObject> stBG = new List<GameObject>();
+    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
 
     public bool isCheck = false;
     bool isSoundCheck = true;
+
+    public GameObject wPanObj;
+    public GameObject mPan;
+    public GameObject oPan;
+    public GameObject mCnt;
+    public GameObject oCnt;
+    public List<MinionButton> mBtn;
+    public List<Button> oBtn;
+
+    public GameObject bPanObj;
+    public GameObject msPan;
+    public GameObject psPan;
+    public GameObject msCnt;
+    public GameObject psCnt;
+    public List<Button> msBtn;
+    public List<Button> psBtn;
 
     bool isDeployBtnCheck = true;
     bool isSkillBtnCheck = true;
 
     AudioSource audioSource;
 
+    public GameObject bBObj;
+    private GameObject wBtnObj;
+    private GameObject bBtnObj;
+    public List<GameObject> rBtn;
+    public List<GameObject> bBtn;
+
     [SerializeField]
     private Tooltip tooltip;
+
+    //카메라 관련 변수
+    Vector3 startingPoint;
+    Vector3 endingPoint;
+    public int endDuration = 3, endDelay = 1, startDuration = 4, startDelay = 5;
 
     //fps 관련 변수
     private float fpsDeltaTime = 0;
@@ -69,28 +118,17 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public GameObject minionUpgradeUI;
 
-    public GameObject SkillCutSceneObject;
-    public GameObject SkillCutSceneImage;
-    public GameObject SkillCutSceneIllust;
-
-    Vector3 illustStartPos;
     void Start()
     {
         incomeUpgradeButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(IncomeUpgrade);
-        illustStartPos = SkillCutSceneIllust.GetComponent<RectTransform>().position;
         Init();
-    }
-
-    private void FixedUpdate()
-    {
-      
-        //
     }
 
     void Update()
     {
-      
+
         FPS();
+        //OnDeployButton();
 
         //코스트 획득량당 코스트 획득
         RegenCost();
@@ -98,24 +136,189 @@ public class BattleUIManager : Singleton<BattleUIManager>
         if (GameManager.Instance.state == State.WAIT)
         {
             if (WaitingTime[(int)State.WAIT] >= 0) Active((int)State.WAIT);
+            WaitTime();
+            ////mBG.SetActive(true);
+            //wBtnObj.SetActive(true);
+            //bBtnObj.SetActive(false);
         }
         if (GameManager.Instance.state == State.BATTLE)
         {
+
             //상단 패널에 타이머UI에서 웨이브UI로 변경
             BattleTime();
+            //에너미 카운트수 체크
+            EnemeyCount();
+            //배경음악 재생
+            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
+            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); else audioSource.UnPause();
+            //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            if (WaitingTime[(int)State.BATTLE] >= 0) Active((int)State.BATTLE);
+            //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
+            //if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+
+            //mBG.SetActive(false);
+            //wBtnObj.SetActive(false);
+            //bBtnObj.SetActive(true);
         }
+        if (GameManager.Instance.state == State.WAVE_END)
+        {
+            bPanObj.SetActive(false);
+            wPanObj.SetActive(true);
+            //mPan.SetActive(true);
+        }
+        else
+        {
+
+        }
+
+
+
+
 
     }
 
     void Init()
     {
+        time = 0;
+        audioSource = gameObject.GetComponent<AudioSource>();
+        enemiesList = GameManager.Instance.enemiesList;
+        costText.text = GameManager.Instance.cost.ToString();
+        costEarnedText.text = GameManager.Instance.costTime.ToString();
+        startingPoint = Camera.main.transform.localPosition;
+        endingPoint = new Vector3(8.55f, 16.52f, -16.04f);
 
+        //
+        for (int i = 0; i < mBG.transform.childCount; i++)
+        {
+            tBG.Add(mBG.transform.GetChild(i).gameObject);
+            edge.Add(tBG[i].transform.GetChild(0).gameObject);
+            if (tBG[i].activeSelf) tBG[i].SetActive(false);
+            if (edge[i].activeSelf) edge[i].SetActive(false);
+        }
+
+        for (int i = 0; i < sBG.transform.childCount; i++)
+        {
+            stBG.Add(sBG.transform.GetChild(i).gameObject);
+            wTime.Add(stBG[i].GetComponentInChildren<TextMeshProUGUI>());
+            if (stBG[i].activeSelf) stBG[i].SetActive(false);
+        }
+
+        //미니언 버튼
+        for (int i = 0; i < mCnt.transform.childCount; i++)
+            mBtn.Add(mCnt.GetComponentsInChildren<MinionButton>()[i]);
+
+        //오브젝트 버튼
+        for (int i = 0; i < oCnt.transform.childCount; i++)
+            oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
+
+        //미니언 스킬 버튼
+        for (int i = 0; i < msCnt.transform.childCount; i++)
+            msBtn.Add(msCnt.GetComponentsInChildren<Button>()[i]);
+
+        //플레이어 스킬 버튼
+        for (int i = 0; i < psCnt.transform.childCount; i++)
+            psBtn.Add(psCnt.GetComponentsInChildren<Button>()[i]);
+
+        //전투대비 배치
+        wBtnObj = bBObj.transform.GetChild(0).gameObject;
+        //전투시작 배치
+        bBtnObj = bBObj.transform.GetChild(1).gameObject;
+
+        wBtnObj.SetActive(true);
+
+        //전투대비 버튼
+        for (int i = 0; i < wBtnObj.transform.childCount; i++)
+            rBtn.Add(wBtnObj.transform.GetChild(i).gameObject);
+
+        //전투시작 버튼
+        for (int i = 0; i < bBtnObj.transform.childCount; i++)
+            bBtn.Add(bBtnObj.transform.GetChild(i).gameObject);
+
+        for (int i = 0; i < 3; i++)
+            if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
+        text[3].text = currentEnemyCount.ToString();
+        text[4].text = maxEnemyCount.ToString();
+        text[5].text = maxMinionCount[0].ToString();
+
+        for (int i = 0; i < 5; i++)
+            if (phase[i].gameObject.activeSelf) phase[i].gameObject.SetActive(false);
+
+        if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
+
+        if (mPan.activeSelf) 
+        { 
+            oPan.SetActive(false);
+            bPanObj.SetActive(false);
+        } 
+        else
+            mPan.SetActive(true);
+
+        if (wBtnObj.activeSelf) bBtnObj.SetActive(false);
+
+        Camera.main.transform.DOMove(endingPoint, endDuration).SetDelay(endDelay);
+        Camera.main.transform.DOMove(startingPoint, startDuration).SetDelay(startDelay);
     }
 
     void BattleTime()
     {
+        for (int i = 0; i < 3; i++)
+            text[i].gameObject.SetActive(false);
+
+        wPanObj.SetActive(false);
+
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
+    }
+
+    void WaitTime()
+    {
+        wave.gameObject.SetActive(false);
+        for (int i = 0; i < 3; i++) text[i].gameObject.SetActive(true);
+
+        float time = GameManager.Instance.currentWaitTimer;
+        min = (int)time / 60;
+        sec = ((int)time - min * 60) % 60;
+
+        if (min <= 0 && sec <= 0)
+        {
+            text[0].text = 0.ToString();
+            text[2].text = 0.ToString();
+
+            wPanObj.SetActive(false);
+            bPanObj.SetActive(true);
+
+            //mBG.SetActive(false);
+            wBtnObj.SetActive(false);
+            bBtnObj.SetActive(true);
+        }
+        else
+        {
+            if (sec >= 60)
+            {
+                min += 1;
+                sec -= 60;
+            }
+            else
+            {
+                text[0].text = min.ToString();
+                text[2].text = sec.ToString();
+
+                //mBG.SetActive(true);
+
+                wPanObj.SetActive(true);
+                bPanObj.SetActive(false);
+
+                wBtnObj.SetActive(true);
+                bBtnObj.SetActive(false);
+            }
+        }
+    }
+
+    void EnemeyCount()
+    {
+        currentEnemyCount = enemiesList.Count;
+        text[3].text = currentEnemyCount >= 0 ? currentEnemyCount.ToString() : 0.ToString();
     }
 
     /// <summary> 페이즈 팝업UI 출력, 지정된 시간 후 해제 </summary> <param name="index"></param>
@@ -133,6 +336,39 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 phaseWaitingTime = WaitingTime[(int)State.BATTLE];
                 isPhaseCheck = false;
                 break;
+            //case (int)Phase.Wave1:
+            //    StartCoroutine("PhaseDelay");
+            //    if (isPhaseCheck)
+            //    {
+            //        WaitingTime[(int)Phase.Wave1] -= Time.deltaTime;
+            //        phaseWaitingTime = WaitingTime[(int)Phase.Wave1];
+            //        isPhaseCheck = false;
+            //    }
+            //    else
+            //        return;
+            //    break;
+            //case (int)Phase.Wave2:
+            //    StartCoroutine("PhaseDelay");
+            //    if (isPhaseCheck)
+            //    {
+            //        WaitingTime[(int)Phase.Wave2] -= Time.deltaTime;
+            //        phaseWaitingTime = WaitingTime[(int)Phase.Wave2];
+            //        isPhaseCheck = false;
+            //    }
+            //    else
+            //        return;
+            //    break;
+            //case (int)Phase.Wave3:
+            //    StartCoroutine("PhaseDelay");
+            //    if (isPhaseCheck)
+            //    {
+            //        WaitingTime[(int)Phase.Wave3] -= Time.deltaTime;
+            //        phaseWaitingTime = WaitingTime[(int)Phase.Wave3];
+            //        isPhaseCheck = false;
+            //    }
+            //    else
+            //        return;
+            //    break;
             default:
                 break;
         }
@@ -173,13 +409,27 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
             {
-
+                if (!tBG[index].activeSelf)
+                {
+                    //mBtn[index].MBtnTBGPosition();
+                    tBG[index].SetActive(true);
+                }
             }
         }
         else
         {
             return;
         }
+    }
+
+    public void SkillWaitingTimer(int index)
+    {
+        skillTime -= Time.deltaTime;
+
+        if (skillTime <= 0)
+            if (stBG[index].activeSelf) stBG[index].SetActive(false);
+
+        wTime[index].text = skillTime.ToString("F1") + "s".ToString();
     }
 
     //GameManager SetGameSpeed 함수 사용
@@ -195,6 +445,89 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public void OnPauseButton() => GameManager.Instance.gameSpeed =
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
     */
+
+    private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
+    private void OnSkillButtonCheck() => isSkillBtnCheck = msPan.activeSelf == true ? false : true;
+
+    public void OnMinionDeployButtonCheck()
+    {
+        OnDeployButtonCheck();
+
+        if (isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
+        {
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            rBtn[0].transform.GetChild(1).gameObject.SetActive(true);
+            rBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+
+            mPan.SetActive(true);
+            oPan.SetActive(false);
+            //mBG.SetActive(true);
+        }
+    }
+
+    public void OnObjectDeployButtonCheck()
+    {
+        OnDeployButtonCheck();
+
+        if (!isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
+        {
+            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            rBtn[0].transform.GetChild(1).gameObject.SetActive(false);
+            rBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+
+            mPan.SetActive(false);
+            oPan.SetActive(true);
+            //mBG.SetActive(false);
+        }
+    }
+
+    public void OnMinionSkillButtonCheck()
+    {
+        OnSkillButtonCheck();
+
+        if (isSkillBtnCheck && GameManager.Instance.state == State.BATTLE)
+        {
+            bBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            bBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            bBtn[0].transform.GetChild(1).gameObject.SetActive(true);
+            bBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+
+            msPan.SetActive(true);
+            psPan.SetActive(false);
+            //mBG.SetActive(true);
+        }
+    }
+
+    public void OnPlayerSkillButtonCheck()
+    {
+        OnSkillButtonCheck();
+
+        if (!isSkillBtnCheck && GameManager.Instance.state == State.BATTLE)
+        {
+            bBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            bBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            bBtn[0].transform.GetChild(1).gameObject.SetActive(false);
+            bBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+
+            msPan.SetActive(false);
+            psPan.SetActive(true);
+            //mBG.SetActive(false);
+        }
+    }
+
+    IEnumerator PhaseDelay()
+    {
+        yield return new WaitForSeconds(WaitingTime[5]);
+        isPhaseCheck = true;
+    }
+
+    public void SkillButton()
+    {
+        GameObject wraith = GameObject.Find("wraith(Clone)");
+        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState);
+    }
 
     private void FPS()
     {
@@ -297,58 +630,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
         costText.text = GameManager.Instance.cost.ToString();
     }
 
-    public void skill()
-    {
-        StartCoroutine(ActiveCutScene(1));
-    }
-
+    public Vector3 offset;
     public void SetMinionUpgradeUI(GameObject minion)
     {
         minionUpgradeUI.SetActive(true);
+      //  Vector3 pos = Camera.main.WorldToScreenPoint(minion.transform.position);
         minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
     }
 
-    //스킬 컷신
-    public IEnumerator ActiveCutScene(float duration)
-    {
-        SkillCutSceneObject.SetActive(true);
-        float timer = 0;
-
-
-
-        Vector3 startPos = new Vector3(-362, 81, 0);
-        Vector3 startRot = new Vector3(0, 0, 35);
-
-        Vector3 endPos = new Vector3(-362, 300, 0);
-        Vector3 endRot = new Vector3(0, 0, 9);
-
-        SkillCutSceneImage.GetComponent<RectTransform>().localPosition = startPos;
-        SkillCutSceneImage.GetComponent<RectTransform>().localEulerAngles = startRot;
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-
-            SkillCutSceneImage.GetComponent<RectTransform>().localPosition = Vector3.Lerp(startPos, endPos, timer / duration);
-            SkillCutSceneImage.GetComponent<RectTransform>().localEulerAngles = Vector3.Lerp(startRot, endRot, timer / duration);
-
-            SkillCutSceneIllust.GetComponent<RectTransform>().position = illustStartPos;
-            SkillCutSceneIllust.GetComponent<RectTransform>().localEulerAngles = new Vector3(SkillCutSceneImage.GetComponent<RectTransform>().localEulerAngles.x, SkillCutSceneImage.GetComponent<RectTransform>().localEulerAngles.y, -SkillCutSceneImage.GetComponent<RectTransform>().localEulerAngles.z);
-        }
-
-        SkillCutSceneImage.GetComponent<RectTransform>().localPosition = endPos;
-        SkillCutSceneImage.GetComponent<RectTransform>().localEulerAngles = endRot;
-
-        float timer2 = 0;
-        float duration2 = 1;
-        while (timer2 < duration2)
-        {
-            timer2 += Time.deltaTime;
-            yield return null;
-        }
-
-        SkillCutSceneObject.SetActive(false);
-    }
     private void OnGUI()
     {
         if (isFpsShow)
