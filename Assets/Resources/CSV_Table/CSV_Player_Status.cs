@@ -29,7 +29,7 @@ public class Stat
     public float RewardCost;
 }
 
-public class CSV_Player_Status : MonoBehaviour
+public class CSV_Player_Status : Singleton<CSV_Player_Status>
 {
     public Stat VeriyStat;
     public Stat AngelusStat;
