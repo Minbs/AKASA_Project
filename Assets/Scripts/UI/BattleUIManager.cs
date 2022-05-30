@@ -95,8 +95,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
-    [SerializeField]
-    private Tooltip tooltip;
+   // [SerializeField]
+   // private Tooltip tooltip;
 
     //카메라 관련 변수
     Vector3 startingPoint;
@@ -155,7 +155,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)State.BATTLE] >= 0) Active((int)State.BATTLE);
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
-            //if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+          //  if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
             //mBG.SetActive(false);
             //wBtnObj.SetActive(false);
@@ -517,11 +517,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    IEnumerator PhaseDelay()
-    {
-        yield return new WaitForSeconds(WaitingTime[5]);
-        isPhaseCheck = true;
-    }
+ //   IEnumerator PhaseDelay()
+  //  {
+     //   yield return new WaitForSeconds(WaitingTime[5]);
+   //     isPhaseCheck = true;
+//    }
 
     public void SkillButton()
     {
