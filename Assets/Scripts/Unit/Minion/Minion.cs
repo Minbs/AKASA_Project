@@ -54,7 +54,6 @@ public class Minion : Unit
         if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
         {
                 GameManager.Instance.minionChangePos(gameObject);
-
         }
     }
 

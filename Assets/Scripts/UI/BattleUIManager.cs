@@ -95,8 +95,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public List<GameObject> rBtn;
     public List<GameObject> bBtn;
 
-    [SerializeField]
-    private Tooltip tooltip;
+   // [SerializeField]
+   // private Tooltip tooltip;
 
     //카메라 관련 변수
     Vector3 startingPoint;
@@ -155,7 +155,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)State.BATTLE] >= 0) Active((int)State.BATTLE);
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
-            //if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
+          //  if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
             //mBG.SetActive(false);
             //wBtnObj.SetActive(false);
@@ -517,11 +517,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
     }
 
-    IEnumerator PhaseDelay()
-    {
-        yield return new WaitForSeconds(WaitingTime[5]);
-        isPhaseCheck = true;
-    }
+ //   IEnumerator PhaseDelay()
+  //  {
+     //   yield return new WaitForSeconds(WaitingTime[5]);
+   //     isPhaseCheck = true;
+//    }
 
     public void SkillButton()
     {
@@ -630,13 +630,58 @@ public class BattleUIManager : Singleton<BattleUIManager>
         costText.text = GameManager.Instance.cost.ToString();
     }
 
-    public Vector3 offset;
+    private GameObject upgradeMinion;
+    private Stat currentStat = null;
+    private Stat nextLevelStat = null;
     public void SetMinionUpgradeUI(GameObject minion)
     {
         minionUpgradeUI.SetActive(true);
-      //  Vector3 pos = Camera.main.WorldToScreenPoint(minion.transform.position);
         minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
+        upgradeMinion = minion;
+
+        // 미니언 이름으로 데이터 쉽게 가져올 수 있게 바꾸기
+        if(minion.GetComponent<Minion>().Unitname == "Verity")
+        {
+            currentStat = CSV_Player_Status.Instance.VeriyStat_Array[minion.GetComponent<Unit>().Level - 1];
+            nextLevelStat = CSV_Player_Status.Instance.VeriyStat_Array[minion.GetComponent<Unit>().Level];
+        }
+        else if (minion.GetComponent<Minion>().Unitname == "Isabella")
+        {
+            currentStat = CSV_Player_Status.Instance.IsabellaStat_Array[minion.GetComponent<Unit>().Level - 1];
+            nextLevelStat = CSV_Player_Status.Instance.IsabellaStat_Array[minion.GetComponent<Unit>().Level];
+        }
+        else if (minion.GetComponent<Minion>().Unitname == "Wraith")
+        {
+            currentStat = CSV_Player_Status.Instance.WraithStat_Array[minion.GetComponent<Unit>().Level - 1];
+            nextLevelStat = CSV_Player_Status.Instance.WraithStat_Array[minion.GetComponent<Unit>().Level];
+        }
+        else if (minion.GetComponent<Minion>().Unitname == "Zippo")
+        {
+            currentStat = CSV_Player_Status.Instance.ZippoStat_Array[minion.GetComponent<Unit>().Level - 1];
+            nextLevelStat = CSV_Player_Status.Instance.ZippoStat_Array[minion.GetComponent<Unit>().Level];
+        }
+        
+        minionUpgradeUI.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = currentStat.UpgradeCost.ToString();
+        // 체력 텍스트
+        minionUpgradeUI.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = currentStat.HP.ToString() + " → " + nextLevelStat.HP.ToString();
+        // 방어력 텍스트
+        minionUpgradeUI.transform.GetChild(1).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = currentStat.Def.ToString() + " → " + nextLevelStat.Def.ToString();
+        // 공격력 텍스트
+        minionUpgradeUI.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = currentStat.Atk.ToString() + " → " + nextLevelStat.Atk.ToString();
+        // 공격속도 텍스트
+        minionUpgradeUI.transform.GetChild(1).GetChild(0).GetChild(3).GetComponent<TextMeshProUGUI>().text = currentStat.AtkSpeed.ToString() + " → " + nextLevelStat.AtkSpeed.ToString();
+
+
     }
+
+    public void MinionUpgradeButton()
+    {
+       upgradeMinion.GetComponent<Unit>().Level++;
+       upgradeMinion.GetComponent<Unit>().SetUnitStat(nextLevelStat);
+       SetMinionUpgradeUI(upgradeMinion);
+    }
+
+
 
     private void OnGUI()
     {
