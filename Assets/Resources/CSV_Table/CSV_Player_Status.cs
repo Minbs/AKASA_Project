@@ -71,7 +71,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
     {
         StartParsing();
     }
-
+    
     void Start()
     {
         List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList.xlsx - VerityStatus");
@@ -116,7 +116,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
 
     }
 
-
+    
     public void StartParsing()
     {
         
@@ -236,7 +236,87 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         charactor.RewardCost = float.Parse(ListData[charactorlevel]["RewardCost"].ToString());
     }
 
-    public Stat Call_Stat(string name, int level)
+
+    public Stat Call_Stat_Array(string name, int level)
+    {
+        Stat errerStat = new Stat();
+        if (name == "Verity")
+        {
+            return VeriyStat_Array[level-1];
+        }
+
+        if (name == "Angelus")
+        {
+            return AngelusStat_Array[level - 1];
+        }
+        if (name == "Asher")
+        {
+            return AsherStat_Array[level - 1];
+        }
+        if (name == "Eremedium")
+        {
+            return EremediumStat_Array[level - 1];
+        }
+
+        if (name == "Isabella")
+        {
+            return IsabellaStat_Array[level - 1];
+        }
+
+        if (name == "Kuen")
+        {
+            return KuenStat_Array[level - 1];
+        }
+
+        if (name == "Noah")
+        {
+            return NoahStat_Array[level - 1];
+        }
+
+        if (name == "Pardo")
+        {
+            return PardoStat_Array[level - 1];
+        }
+        if (name == "Sophia")
+        {
+            return SophiaStat_Array[level - 1];
+        }
+
+        if (name == "Wraith")
+        {
+            return WraithStat_Array[level - 1];
+        }
+        if (name == "Zippo")
+        {
+            return ZippoStat_Array[level - 1];
+        }
+        if (name == "Eilgos")
+        {
+            return EilgosStat_Array[level - 1];
+        }
+        if (name == "Hwaseon")
+        {
+            return HwaseonStat_Array[level - 1];
+        }
+
+        if (name == "Enemy1")
+        {
+            return EnemyAStat_Array[level - 1];
+        }
+        if (name == "Enemy2")
+        {
+            return EnemyBStat_Array[level - 1];
+        }
+        if (name == "Enemy3")
+        {
+            return EnemyCStat_Array[level - 1];
+        }
+
+        return errerStat;
+
+    }
+
+    public Stat Call_Stat_CSV(string name, int level)
     {
 
         Stat errerStat = new Stat();

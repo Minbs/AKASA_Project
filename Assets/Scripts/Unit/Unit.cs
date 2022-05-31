@@ -66,7 +66,7 @@ public class Unit : MonoBehaviour
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
-            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname, Level);
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
@@ -78,7 +78,7 @@ public class Unit : MonoBehaviour
         else
         {
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
-            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname,Level);
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
 
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
