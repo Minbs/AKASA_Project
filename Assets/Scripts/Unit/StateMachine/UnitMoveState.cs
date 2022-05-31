@@ -16,8 +16,12 @@ public class UnitMoveState : UnitBaseState
         else if(stateMachine.gameObject.GetComponent<Minion>() && stateMachine.unit.target == null)
             stateMachine.ReturnToTilePosition();
 
-        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
+        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move" 
+            && stateMachine.gameObject.GetComponent<Enemy>())
             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, GameManager.Instance.gameSpeed);
+        else if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
+            && stateMachine.gameObject.GetComponent<Minion>())
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
 
         if (GameManager.Instance.state == State.BATTLE)
             BattleMove(stateMachine);

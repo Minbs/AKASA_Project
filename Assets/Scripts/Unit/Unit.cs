@@ -66,7 +66,7 @@ public class Unit : MonoBehaviour
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
-            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname, Level);
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
@@ -78,7 +78,7 @@ public class Unit : MonoBehaviour
         else
         {
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
-            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat(Unitname,Level);
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
 
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
@@ -105,9 +105,28 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
-        if(GetComponent<Minion>())
-        transform.GetComponent<NavMeshAgent>().enabled = false;
-        UpdateHealthbar();
+        if (GetComponent<Minion>())
+        {
+            transform.GetComponent<NavMeshAgent>().enabled = false;
+            UpdateHealthbar();
+
+            if (GetComponent<Minion>().Unitname == "Verity")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.VeriyStat_Array[0]);
+            }
+            else if (GetComponent<Minion>().Unitname == "Isabella")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.IsabellaStat_Array[0]);
+            }
+            else if (GetComponent<Minion>().Unitname == "Wraith")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.WraithStat_Array[0]);
+            }
+            else if (GetComponent<Minion>().Unitname == "Zippo")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.ZippoStat_Array[0]);
+            }
+        }
     }
 
     public void Init()
@@ -270,6 +289,22 @@ public class Unit : MonoBehaviour
         transform.position = onTile.gameObject.transform.position + GameManager.Instance.minionSetPosition;
     }
 
+    public void SetUnitStat(Stat stat)
+    {
+      maxHp = stat.HP;
+      currentHp = maxHp;
+      atk = stat.Atk;
+      currentAtk = atk;
+      def = stat.Def;
+      attackSpeed = stat.AtkSpeed;
+      attackRangeDistance = stat.AtkRange;
+
+      if (GetComponent<DefenceMinion>())
+      {
+        GetComponent<DefenceMinion>().cost = stat.BuyCost;
+        GetComponent<DefenceMinion>().sellCost = stat.CellCost;
+      }
+    }
     /// <summary>
     /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
     /// </summary>

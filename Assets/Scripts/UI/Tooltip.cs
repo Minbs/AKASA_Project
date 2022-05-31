@@ -7,56 +7,41 @@ using TMPro;
 public class Tooltip : MonoBehaviour
 {
     [SerializeField]
-    private GameObject logoObj;
-    [SerializeField]
-    private List<GameObject> logoImage;
-    [SerializeField]
     private TextMeshProUGUI nameText;
-    [SerializeField]
-    private GameObject InformObj;
-    [SerializeField]
-    private List<GameObject> InformImage;
     [SerializeField]
     private TextMeshProUGUI titleText;
     [SerializeField]
     private TextMeshProUGUI explanationText;
 
-    private float halfWidth;
+    private Sprite synergyIconSprite;
+
+    [Header("시너지 아이콘 이미지")]
+    public Sprite guardianSynergyIcon;
+    public Sprite chaserSynergyIcon;
+    public Sprite busterSynergyIcon;
+    public Sprite rescueSynergyIcon;
+
+ //   private float halfWidth;
     RectTransform rt;
 
     private void Start()
     {
-        halfWidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
+      //  halfWidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
         rt = GetComponent<RectTransform>();
-
-        logoObj = transform.GetChild(0).gameObject;
-        for (int i = 0; i < logoObj.transform.childCount; i++)
-            logoImage.Add(logoObj.transform.GetChild(i).gameObject);
 
         nameText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
 
-        InformObj = transform.GetChild(3).gameObject;
-        for (int i = 0; i < InformObj.transform.childCount; i++)
-            InformImage.Add(InformObj.transform.GetChild(i).gameObject);
+      //  InformObj = transform.GetChild(3).gameObject;
 
         titleText = transform.GetChild(4).GetComponentInChildren<TextMeshProUGUI>();
         explanationText = transform.GetChild(5).GetComponentInChildren<TextMeshProUGUI>();
 
-        for (int i = 0; i < logoObj.transform.childCount; i++)
-            if (logoImage[i].gameObject.activeSelf)
-                logoImage[i].gameObject.SetActive(false);
-
-        for (int i = 0; i < InformObj.transform.childCount; i++)
-            if (InformImage[i].gameObject.activeSelf)
-                InformImage[i].gameObject.SetActive(false);
-
-        if (this.gameObject.activeSelf)
-            this.gameObject.SetActive(false);
+        //시너지 왼쪽 아이콘 이미지
+        synergyIconSprite = transform.GetChild(0).GetComponent<Image>().sprite;
     }
 
     private void Update()
     {
-        //  rt.position = Input.mousePosition;
         Vector2 point;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rt, Input.mousePosition, Camera.main, out point);
         rt.localPosition = point;
@@ -69,37 +54,25 @@ public class Tooltip : MonoBehaviour
 
     public void SetupTooltip(string nameTxt, string titleTxt, string explanationTxt)
     {
-        for (int i = 0; i < logoObj.transform.childCount; i++)
-            if (logoImage[i].gameObject.activeSelf)
-                logoImage[i].gameObject.SetActive(false);
-
-        for (int i = 0; i < InformObj.transform.childCount; i++)
-            if (InformImage[i].gameObject.activeSelf)
-                InformImage[i].gameObject.SetActive(false);
-
-        nameText.text = nameTxt;
+        //nameText.text = nameTxt;
         switch (nameTxt)
         {
             case "Guardian":
-                logoImage[0].gameObject.SetActive(true);
-                InformImage[0].gameObject.SetActive(true);
+                synergyIconSprite = guardianSynergyIcon;
                 break;
             case "Rescue":
-                logoImage[1].gameObject.SetActive(true);
-                InformImage[1].gameObject.SetActive(true);
+                synergyIconSprite = rescueSynergyIcon;
                 break;
             case "Buster":
-                logoImage[2].gameObject.SetActive(true);
-                InformImage[2].gameObject.SetActive(true);
+                synergyIconSprite = busterSynergyIcon;
                 break;
             case "Chaser":
-                logoImage[3].gameObject.SetActive(true);
-                InformImage[3].gameObject.SetActive(true);
+                synergyIconSprite = chaserSynergyIcon;
                 break;
             default:
                 break;
         }
-        titleText.text = titleTxt;
-        explanationText.text = explanationTxt;
+        //titleText.text = titleTxt;
+    //    explanationText.text = explanationTxt;
     }
 }
