@@ -27,84 +27,145 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public Sprite NotDeployableTileSprite;
     public Sprite DeployableTileSprite;
     
-
     public SkeletonDataAsset skeletonDataAsset;
 
     //
-    //const int maxCost = 99;
     int[] maxMinionCount = { 3, 5 };
     List<GameObject> enemiesList = new List<GameObject>();
 
-    //text - 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable
+    [Space(10)]
+
+    [Header("TopPanel-Text")]
+    [Tooltip("(필요) 0:LimitTimeMin, 1:LimitTimeColon, 2:LimitTimeSec, 3:GameTargetCurrent, 4:GameTargetMax, 5:MinionAvailable")]
     public TextMeshProUGUI[] text;
-    //phase - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3
-    public Image[] phase;
     public TextMeshProUGUI wave;
+    [SerializeField]
+    int waveCount = 1;
+
+    [Space(10)]
+
+    [Header("Phase-Image")]
+    [Tooltip("(필요) 0:Wait, 1:Battle, 2:Wave1, 3:Wave2, 4:Wave3")]
+    public Image[] phase;
+
+    [Space(10)]
+
+    [Header("Cost-Text")]
+    [Tooltip("(필요) CostValue")]
     public TextMeshProUGUI costText;
+    [Tooltip("(필요) CostTimeText")]
     public TextMeshProUGUI costEarnedText;
 
-    //WaitingTime - 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between
+    [Space(10)]
+
+    [Header("WaitingTime-Text")]
+    [Tooltip("(필요) 0:Wait, 1:Start, 2:Wave1, 3:Wave2, 4:Wave3, 5:Between")]
     [SerializeField]
     float[] WaitingTime;
-    [SerializeField]
-    int maxEnemyCount = 3, waveCount = 1;
 
     float time = 0, phaseWaitingTime;
-    int min, sec, currentEnemyCount = 0;
-    bool isPhaseCheck;
-    int[] enemyRewardCost = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+    int maxEnemyCount = 20, min, sec, currentEnemyCount = 0;
+    //bool isPhaseCheck;
+
+    [Space(10)]
 
     // 변수 이름 기능이나 용도를 알 수 있게 바꾸기
-    public GameObject mBG;
-    public List<GameObject> tBG;
+    [Header("BottominionDeployPanelel-Object")]
+    [Tooltip("(필요) DisableMinionObj")]
+    public GameObject disableMinionObj;
+    [HideInInspector]
+    public List<GameObject> translucentTexture;
+    [HideInInspector]
     public List<GameObject> edge;
 
     private float skillTime;
 
-    public GameObject sBG;
-    public List<GameObject> stBG = new List<GameObject>();
-    public List<TextMeshProUGUI> wTime = new List<TextMeshProUGUI>();
+    [Tooltip("(필요) DisableSkillObj")]
+    public GameObject disableSkillObj;
+    [HideInInspector]
+    public List<GameObject> skillTranslucentTexture = new List<GameObject>();
+    [HideInInspector]
+    public List<TextMeshProUGUI> SkillTime = new List<TextMeshProUGUI>();
 
-    public bool isCheck = false;
+    [Space(10)]
+
+    //public bool isCheck = false;
     bool isSoundCheck = true;
 
-    public GameObject wPanObj;
-    public GameObject mPan;
-    public GameObject oPan;
-    public GameObject mCnt;
-    public GameObject oCnt;
-    public List<MinionButton> mBtn;
-    public List<Button> oBtn;
+    [Header("BottomPanel-Object")]
+    [Space(5)]
 
-    public GameObject bPanObj;
-    public GameObject msPan;
-    public GameObject psPan;
-    public GameObject msCnt;
-    public GameObject psCnt;
-    public List<Button> msBtn;
-    public List<Button> psBtn;
+    [Header("WaitPanel-Object")]
+    [Tooltip("(필요) WaitPanelObj")]
+    public GameObject waitPanelObj;
+    [Tooltip("(필요) MinionDeployPanel")]
+    public GameObject minionDeployPanel;
+    [Tooltip("(필요) ObjectDeployPanel")]
+    public GameObject objectDeployPanel;
+    [Tooltip("(필요) MinionDeployContent")]
+    public GameObject minionDeployContent;
+    [Tooltip("(필요) ObjectDeployContent")]
+    public GameObject objectDeployContent;
+
+    [HideInInspector]
+    public List<MinionButton> minionDeployButton;
+    [HideInInspector]
+    public List<Button> objectDeployButton;
+
+    [Header("BattlePanel-Object")]
+    [Tooltip("(필요) BattlePanelObj")]
+    public GameObject battlePanelObj;
+    [Tooltip("(필요) MinionSkillPanel")]
+    public GameObject minionSkillPanel;
+    [Tooltip("(필요) PlayerSkillPanel")]
+    public GameObject playerSkillPanel;
+    [Tooltip("(필요) MinionSkillContent")]
+    public GameObject minionSkillContent;
+    [Tooltip("(필요) PlayerSkillContent")]
+    public GameObject playerSkillContent;
+
+    [HideInInspector]
+    public List<Button> minionSkillButton;
+    [HideInInspector]
+    public List<Button> playerSkillButton;
 
     bool isDeployBtnCheck = true;
     bool isSkillBtnCheck = true;
 
     AudioSource audioSource;
 
-    public GameObject bBObj;
-    private GameObject wBtnObj;
-    private GameObject bBtnObj;
-    public List<GameObject> rBtn;
-    public List<GameObject> bBtn;
+    [Space(10)]
 
-   // [SerializeField]
-   // private Tooltip tooltip;
+    [Header("BottomButton-Object")]
+    [Tooltip("(필요) BottomButton")]
+    public GameObject bottomButton;
+    private GameObject waitButtonObj;
+    private GameObject battleButtonObj;
+    [HideInInspector]
+    public List<GameObject> waitButton;
+    [HideInInspector]
+    public List<GameObject> battleButton;
+
+    [Space(10)]
 
     //카메라 관련 변수
     Vector3 startingPoint;
     Vector3 endingPoint;
-    public int endDuration = 3, endDelay = 1, startDuration = 4, startDelay = 5;
+    [Header("Camera-MoveTime")]
+    [Tooltip("(필요) end 이동 진행시간")]
+    public int endDuration = 3;
+    [Tooltip("(필요) end 이동 딜레이")]
+    public int endDelay = 1;
+    [Tooltip("(필요) start 이동 진행시간")]
+    public int startDuration = 4;
+    [Tooltip("(필요) start 이동 딜레이")]
+    public int startDelay = 5;
+
+    [Space(10)]
 
     //fps 관련 변수
     private float fpsDeltaTime = 0;
+    [Header("FPS")]
     [SerializeField, Range(1, 100)]
     private int fpsFontSize = 25;
     [SerializeField]
@@ -112,10 +173,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
     private int fpsIndex = 0;
     public bool isFpsShow;
 
+    [Header("Upgrade-Sell")]
     public GameObject sellPanel;
     public GameObject incomeUpgradeButton;
     public TextMeshProUGUI incomeText;
-
     public GameObject minionUpgradeUI;
 
     void Start()
@@ -137,9 +198,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             if (WaitingTime[(int)State.WAIT] >= 0) Active((int)State.WAIT);
             WaitTime();
-            ////mBG.SetActive(true);
-            //wBtnObj.SetActive(true);
-            //bBtnObj.SetActive(false);
+            ////disableMinionObj.SetActive(true);
+            //waitButtonObj.SetActive(true);
+            //battleButtonObj.SetActive(false);
         }
         if (GameManager.Instance.state == State.BATTLE)
         {
@@ -157,15 +218,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
           //  if (WaitingTime[(int)Phase.Wave1] >= 0) Active((int)Phase.Wave1);
 
-            //mBG.SetActive(false);
-            //wBtnObj.SetActive(false);
-            //bBtnObj.SetActive(true);
+            //disableMinionObj.SetActive(false);
+            //waitButtonObj.SetActive(false);
+            //battleButtonObj.SetActive(true);
         }
         if (GameManager.Instance.state == State.WAVE_END)
         {
-            bPanObj.SetActive(false);
-            wPanObj.SetActive(true);
-            //mPan.SetActive(true);
+            battlePanelObj.SetActive(false);
+            waitPanelObj.SetActive(true);
+            //minionDeployPanel.SetActive(true);
         }
         else
         {
@@ -189,51 +250,51 @@ public class BattleUIManager : Singleton<BattleUIManager>
         endingPoint = new Vector3(8.55f, 16.52f, -16.04f);
 
         //
-        for (int i = 0; i < mBG.transform.childCount; i++)
+        for (int i = 0; i < disableMinionObj.transform.childCount; i++)
         {
-            tBG.Add(mBG.transform.GetChild(i).gameObject);
-            edge.Add(tBG[i].transform.GetChild(0).gameObject);
-            if (tBG[i].activeSelf) tBG[i].SetActive(false);
+            translucentTexture.Add(disableMinionObj.transform.GetChild(i).gameObject);
+            edge.Add(translucentTexture[i].transform.GetChild(0).gameObject);
+            if (translucentTexture[i].activeSelf) translucentTexture[i].SetActive(false);
             if (edge[i].activeSelf) edge[i].SetActive(false);
         }
 
-        for (int i = 0; i < sBG.transform.childCount; i++)
+        for (int i = 0; i < disableSkillObj.transform.childCount; i++)
         {
-            stBG.Add(sBG.transform.GetChild(i).gameObject);
-            wTime.Add(stBG[i].GetComponentInChildren<TextMeshProUGUI>());
-            if (stBG[i].activeSelf) stBG[i].SetActive(false);
+            skillTranslucentTexture.Add(disableSkillObj.transform.GetChild(i).gameObject);
+            SkillTime.Add(skillTranslucentTexture[i].GetComponentInChildren<TextMeshProUGUI>());
+            if (skillTranslucentTexture[i].activeSelf) skillTranslucentTexture[i].SetActive(false);
         }
 
         //미니언 버튼
-        for (int i = 0; i < mCnt.transform.childCount; i++)
-            mBtn.Add(mCnt.GetComponentsInChildren<MinionButton>()[i]);
+        for (int i = 0; i < minionDeployContent.transform.childCount; i++)
+            minionDeployButton.Add(minionDeployContent.GetComponentsInChildren<MinionButton>()[i]);
 
         //오브젝트 버튼
-        for (int i = 0; i < oCnt.transform.childCount; i++)
-            oBtn.Add(oCnt.GetComponentsInChildren<Button>()[i]);
+        for (int i = 0; i < objectDeployContent.transform.childCount; i++)
+            objectDeployButton.Add(objectDeployContent.GetComponentsInChildren<Button>()[i]);
 
         //미니언 스킬 버튼
-        for (int i = 0; i < msCnt.transform.childCount; i++)
-            msBtn.Add(msCnt.GetComponentsInChildren<Button>()[i]);
+        for (int i = 0; i < minionSkillContent.transform.childCount; i++)
+            minionSkillButton.Add(minionSkillContent.GetComponentsInChildren<Button>()[i]);
 
         //플레이어 스킬 버튼
-        for (int i = 0; i < psCnt.transform.childCount; i++)
-            psBtn.Add(psCnt.GetComponentsInChildren<Button>()[i]);
+        for (int i = 0; i < playerSkillContent.transform.childCount; i++)
+            playerSkillButton.Add(playerSkillContent.GetComponentsInChildren<Button>()[i]);
 
         //전투대비 배치
-        wBtnObj = bBObj.transform.GetChild(0).gameObject;
+        waitButtonObj = bottomButton.transform.GetChild(0).gameObject;
         //전투시작 배치
-        bBtnObj = bBObj.transform.GetChild(1).gameObject;
+        battleButtonObj = bottomButton.transform.GetChild(1).gameObject;
 
-        wBtnObj.SetActive(true);
+        waitButtonObj.SetActive(true);
 
         //전투대비 버튼
-        for (int i = 0; i < wBtnObj.transform.childCount; i++)
-            rBtn.Add(wBtnObj.transform.GetChild(i).gameObject);
+        for (int i = 0; i < waitButtonObj.transform.childCount; i++)
+            waitButton.Add(waitButtonObj.transform.GetChild(i).gameObject);
 
         //전투시작 버튼
-        for (int i = 0; i < bBtnObj.transform.childCount; i++)
-            bBtn.Add(bBtnObj.transform.GetChild(i).gameObject);
+        for (int i = 0; i < battleButtonObj.transform.childCount; i++)
+            battleButton.Add(battleButtonObj.transform.GetChild(i).gameObject);
 
         for (int i = 0; i < 3; i++)
             if (text[i].gameObject.activeSelf) text[i].gameObject.SetActive(false);
@@ -246,15 +307,15 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (wave.gameObject.activeSelf) wave.gameObject.SetActive(false);
 
-        if (mPan.activeSelf) 
+        if (minionDeployPanel.activeSelf) 
         { 
-            oPan.SetActive(false);
-            bPanObj.SetActive(false);
+            objectDeployPanel.SetActive(false);
+            battlePanelObj.SetActive(false);
         } 
         else
-            mPan.SetActive(true);
+            minionDeployPanel.SetActive(true);
 
-        if (wBtnObj.activeSelf) bBtnObj.SetActive(false);
+        if (waitButtonObj.activeSelf) battleButtonObj.SetActive(false);
 
         Camera.main.transform.DOMove(endingPoint, endDuration).SetDelay(endDelay);
         Camera.main.transform.DOMove(startingPoint, startDuration).SetDelay(startDelay);
@@ -265,7 +326,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         for (int i = 0; i < 3; i++)
             text[i].gameObject.SetActive(false);
 
-        wPanObj.SetActive(false);
+        waitPanelObj.SetActive(false);
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -285,12 +346,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
             text[0].text = 0.ToString();
             text[2].text = 0.ToString();
 
-            wPanObj.SetActive(false);
-            bPanObj.SetActive(true);
+            waitPanelObj.SetActive(false);
+            battlePanelObj.SetActive(true);
 
-            //mBG.SetActive(false);
-            wBtnObj.SetActive(false);
-            bBtnObj.SetActive(true);
+            //disableMinionObj.SetActive(false);
+            waitButtonObj.SetActive(false);
+            battleButtonObj.SetActive(true);
         }
         else
         {
@@ -304,13 +365,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
 
-                //mBG.SetActive(true);
+                //disableMinionObj.SetActive(true);
 
-                wPanObj.SetActive(true);
-                bPanObj.SetActive(false);
+                waitPanelObj.SetActive(true);
+                battlePanelObj.SetActive(false);
 
-                wBtnObj.SetActive(true);
-                bBtnObj.SetActive(false);
+                waitButtonObj.SetActive(true);
+                battleButtonObj.SetActive(false);
             }
         }
     }
@@ -329,12 +390,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
             case (int)State.WAIT:
                 WaitingTime[(int)State.WAIT] -= Time.deltaTime;
                 phaseWaitingTime = WaitingTime[(int)State.WAIT];
-                isPhaseCheck = false;
+                //isPhaseCheck = false;
                 break;
             case (int)State.BATTLE:
                 WaitingTime[(int)State.BATTLE] -= Time.deltaTime;
                 phaseWaitingTime = WaitingTime[(int)State.BATTLE];
-                isPhaseCheck = false;
+                //isPhaseCheck = false;
                 break;
             //case (int)Phase.Wave1:
             //    StartCoroutine("PhaseDelay");
@@ -409,10 +470,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
             {
-                if (!tBG[index].activeSelf)
+                if (!translucentTexture[index].activeSelf)
                 {
-                    //mBtn[index].MBtnTBGPosition();
-                    tBG[index].SetActive(true);
+                    //minionDeployButton[index].MBtntranslucentTexturePosition();
+                    translucentTexture[index].SetActive(true);
                 }
             }
         }
@@ -427,9 +488,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         skillTime -= Time.deltaTime;
 
         if (skillTime <= 0)
-            if (stBG[index].activeSelf) stBG[index].SetActive(false);
+            if (skillTranslucentTexture[index].activeSelf) skillTranslucentTexture[index].SetActive(false);
 
-        wTime[index].text = skillTime.ToString("F1") + "s".ToString();
+        SkillTime[index].text = skillTime.ToString("F1") + "s".ToString();
     }
 
     //GameManager SetGameSpeed 함수 사용
@@ -446,8 +507,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         GameManager.Instance.gameSpeed == 0 ? GameManager.Instance.gameSpeed = 1 : GameManager.Instance.gameSpeed = 0;
     */
 
-    private void OnDeployButtonCheck() => isDeployBtnCheck = mPan.activeSelf == true ? false : true;
-    private void OnSkillButtonCheck() => isSkillBtnCheck = msPan.activeSelf == true ? false : true;
+    private void OnDeployButtonCheck() => isDeployBtnCheck = minionDeployPanel.activeSelf == true ? false : true;
+    private void OnSkillButtonCheck() => isSkillBtnCheck = minionSkillPanel.activeSelf == true ? false : true;
 
     public void OnMinionDeployButtonCheck()
     {
@@ -455,14 +516,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
-            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
-            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
-            rBtn[0].transform.GetChild(1).gameObject.SetActive(true);
-            rBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+            waitButton[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            waitButton[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            waitButton[0].transform.GetChild(1).gameObject.SetActive(true);
+            waitButton[1].transform.GetChild(1).gameObject.SetActive(false);
 
-            mPan.SetActive(true);
-            oPan.SetActive(false);
-            //mBG.SetActive(true);
+            minionDeployPanel.SetActive(true);
+            objectDeployPanel.SetActive(false);
+            //disableMinionObj.SetActive(true);
         }
     }
 
@@ -472,14 +533,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (!isDeployBtnCheck && GameManager.Instance.state == State.WAIT)
         {
-            rBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
-            rBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
-            rBtn[0].transform.GetChild(1).gameObject.SetActive(false);
-            rBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+            waitButton[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            waitButton[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            waitButton[0].transform.GetChild(1).gameObject.SetActive(false);
+            waitButton[1].transform.GetChild(1).gameObject.SetActive(true);
 
-            mPan.SetActive(false);
-            oPan.SetActive(true);
-            //mBG.SetActive(false);
+            minionDeployPanel.SetActive(false);
+            objectDeployPanel.SetActive(true);
+            //disableMinionObj.SetActive(false);
         }
     }
 
@@ -489,14 +550,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (isSkillBtnCheck && GameManager.Instance.state == State.BATTLE)
         {
-            bBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
-            bBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
-            bBtn[0].transform.GetChild(1).gameObject.SetActive(true);
-            bBtn[1].transform.GetChild(1).gameObject.SetActive(false);
+            battleButton[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            battleButton[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            battleButton[0].transform.GetChild(1).gameObject.SetActive(true);
+            battleButton[1].transform.GetChild(1).gameObject.SetActive(false);
 
-            msPan.SetActive(true);
-            psPan.SetActive(false);
-            //mBG.SetActive(true);
+            minionSkillPanel.SetActive(true);
+            playerSkillPanel.SetActive(false);
+            //disableMinionObj.SetActive(true);
         }
     }
 
@@ -506,14 +567,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
         if (!isSkillBtnCheck && GameManager.Instance.state == State.BATTLE)
         {
-            bBtn[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
-            bBtn[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
-            bBtn[0].transform.GetChild(1).gameObject.SetActive(false);
-            bBtn[1].transform.GetChild(1).gameObject.SetActive(true);
+            battleButton[0].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(49, 49, 55, 255);
+            battleButton[1].transform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 255);
+            battleButton[0].transform.GetChild(1).gameObject.SetActive(false);
+            battleButton[1].transform.GetChild(1).gameObject.SetActive(true);
 
-            msPan.SetActive(false);
-            psPan.SetActive(true);
-            //mBG.SetActive(false);
+            minionSkillPanel.SetActive(false);
+            playerSkillPanel.SetActive(true);
+            //disableMinionObj.SetActive(false);
         }
     }
 

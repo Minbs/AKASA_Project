@@ -311,7 +311,7 @@ public class GameManager : Singleton<GameManager>
 
         Direction direction = Direction.RIGHT;
 
-        BattleUIManager.Instance.isCheck = true;
+        //BattleUIManager.Instance.isCheck = true;
 
 
         settingCharacter.transform.position = pos;
