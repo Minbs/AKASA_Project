@@ -138,10 +138,10 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         switch (SceneName)
         {
             case "MainScene":
-                DontDestroyable.Instance.AudioPlay(1);
+                //DontDestroyable.Instance.AudioPlay(1);
                 break;
             case "StageSelectScene":
-                DontDestroyable.Instance.AudioPlay(2);
+                //DontDestroyable.Instance.AudioPlay(2);
                 break;
             case "DefenceStageScene":
                 GameObject obj =  GameObject.Find("BackGroundAudio");
