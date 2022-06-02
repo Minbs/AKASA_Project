@@ -86,6 +86,7 @@ public class SceneLoad : MonoBehaviour
                 {
                     loadingText[i].text = 100.ToString() + "%".ToString();
                     operation.allowSceneActivation = true;
+                    Time.timeScale = 1f;
                 }
             }
         }
