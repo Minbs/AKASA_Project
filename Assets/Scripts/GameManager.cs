@@ -101,7 +101,7 @@ public class GameManager : Singleton<GameManager>
                     BattleUIManager.Instance.SetIncomeUpgradeButtonActive(true);
                 }
                 else if ((raycastHit.collider.transform.tag != "Tower"
-                    && !raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.incomeUpgradeButton))
+                    && !raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.upgradeSell.incomeUpgradeButton))
                     && (Input.GetMouseButtonUp(1)
                     || Input.GetMouseButtonUp(0)))
                 {
@@ -239,7 +239,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         cost += waveClearRewards[currentWave - 1];
-        BattleUIManager.Instance.costText.text = cost.ToString();
+        BattleUIManager.Instance.cost.costText.text = cost.ToString();
 
         StartCoroutine(WaitState());
     }
@@ -280,17 +280,17 @@ public class GameManager : Singleton<GameManager>
                     unitSetTile = raycastHit.collider.gameObject;
                 }
             }
-            else if (raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.sellPanel) && isChangePosition)
+            else if (raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.upgradeSell.sellPanel) && isChangePosition)
             {
                 if (Input.GetMouseButtonUp(0))
                 {
                     cost += settingCharacter.GetComponent<DefenceMinion>().sellCost;
-                    BattleUIManager.Instance.costText.text = cost.ToString();
+                    BattleUIManager.Instance.cost.costText.text = cost.ToString();
                     minionsList.Remove(settingCharacter);
                     Destroy(settingCharacter);
                     settingCharacter = null;
                     isChangePosition = false;
-                    BattleUIManager.Instance.sellPanel.SetActive(false);
+                    BattleUIManager.Instance.upgradeSell.sellPanel.SetActive(false);
                     deployState = DeployState.NONE;
                 }
             }
@@ -331,7 +331,7 @@ public class GameManager : Singleton<GameManager>
         settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
         settingCharacter = null;
         isChangePosition = false;
-        BattleUIManager.Instance.sellPanel.SetActive(false);
+        BattleUIManager.Instance.upgradeSell.sellPanel.SetActive(false);
 
 
         foreach (var m in minionsList)
@@ -367,7 +367,7 @@ public class GameManager : Singleton<GameManager>
         settingCharacter.transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
 
         BattleUIManager.Instance.SetSellCostText(settingCharacter.GetComponent<DefenceMinion>().sellCost);
-        BattleUIManager.Instance.sellPanel.SetActive(true);
+        BattleUIManager.Instance.upgradeSell.sellPanel.SetActive(true);
         deployState = DeployState.POSITIONING;
 
         foreach (var tile in BoardManager.Instance.minionDeployTilesList)
