@@ -34,6 +34,8 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
+        bgmClipList = Resources.LoadAll<AudioClip>("Sounds/BGM/");
+
         if (soundCanvas.activeSelf) soundCanvas.SetActive(false);
 
         ChangeMasterVolume(masterSlider.value);
