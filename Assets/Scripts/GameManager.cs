@@ -73,6 +73,7 @@ public class GameManager : Singleton<GameManager>
     public List<IncomeUpgradeData> incomeUpgradeDatas;
     public int incomeUpgradeCount { get; set; }
 
+    public GameObject turret;
     void Start()
     {
         //Time.timeScale = 2;

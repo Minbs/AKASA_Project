@@ -12,8 +12,10 @@ public enum AttackType
 {
     Bullet,
     Melee,
+    MeleeRange,
     SingleHeal,
-    HitScan
+    HitScan,
+    HitScanRange
 }
 
 public enum SkillType
@@ -80,6 +82,9 @@ public class DefenceMinion : Minion
                 case AttackType.Melee:
                     MeleeAttack();
                     break;
+                case AttackType.MeleeRange:
+                    MeleeRangeAttack();
+                    break;
                 case AttackType.SingleHeal:
                     SingleHeal();
                     break;
@@ -125,6 +130,22 @@ public class DefenceMinion : Minion
         target.GetComponent<Unit>().Deal(currentAtk);
     }
 
+    public void MeleeRangeAttack()
+    {
+        Vector3 box = new Vector3(attackRangeDistance, 1, attackRangeDistance);
+        Vector3 center = transform.position;
+        center.x = transform.position.x + attackRangeDistance / 2;
+        Collider[] targets = Physics.OverlapBox(center, box, Quaternion.identity);
+
+        foreach(var e in targets)
+        {
+            if (!e.transform.tag.Equals("Enemy")) continue;
+            Debug.Log(e.transform.parent.name);
+            e.transform.parent.GetComponent<Unit>().Deal(currentAtk);
+
+        }
+    }
+
     public void BulletAttack()
     {
         Vector3 pos = shootPivot.transform.position;
@@ -145,8 +166,13 @@ public class DefenceMinion : Minion
     {
         Handles.color = Color.red;
 
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.right, -sightAngle / 2, sightDistance);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.right, sightAngle / 2, sightDistance);
+        Vector3 box = new Vector3(attackRangeDistance , 2, attackRangeDistance );
+        Vector3 center = transform.position;
+        center.x = transform.position.x + attackRangeDistance / 2;
+        Handles.DrawWireCube(center, box);
+
+        Handles.color = Color.blue;
+        Handles.DrawWireDisc(center,Vector3.up, cognitiveRangeDistance);
     }
 
     // Update is called once per frame

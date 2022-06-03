@@ -55,15 +55,15 @@ MonoBehaviour:
   atk: 2
   currentAtk: 0
   def: 1
+  rectangleWidthRange: 0
+  rectangleHeightRange: 0
   attackRangeDistance: 1
   cognitiveRangeDistance: 3
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
   healthBar: {fileID: 6831602217341417594}
-  Level: 1
   attackType: 1
-  attackDelayDuration: 0
 --- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 3270104930051822208}
   m_Layer: 9
   m_Name: Spine GameObject (spi_ani_test_character)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -216,11 +216,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6299139124783264950}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 9.64533, y: 11.043193, z: 0.0000006582256}
-  m_Center: {x: -1.6025634, y: 5.6201825, z: 0.00000033498898}
+  m_Center: {x: 1, y: 1, z: 1}
 --- !u!1001 &3419394231967310845
 PrefabInstance:
   m_ObjectHideFlags: 0

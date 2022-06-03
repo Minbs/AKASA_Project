@@ -13,7 +13,7 @@ public enum Direction
 
 
 
-public class Unit : MonoBehaviour
+public class Unit : Object
 {
     public GameObject GameDataManager;
     public string poolItemName;
@@ -22,17 +22,19 @@ public class Unit : MonoBehaviour
     private Stat ParsingStat;
 
 
-    [Header("UnitStat")]
-    public float maxHp;
-    public float currentHp { get; set; }
-
     public Tile onTile { get; set; }
-
+    [Header("UnitStat")]
     public float atk;
     public float currentAtk; //{ get; set; }
     public float def;
-  //  public float moveSpeed;
+    [Header("사각형 공격 범위")]
+    public float rectangleWidthRange;
+    public float rectangleHeightRange;
+
+    //  public float moveSpeed;
+    [Header("단일 대상 공격 범위")]
     public float attackRangeDistance; // 유닛 공격 범위
+
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed;  //{ get; set; }
 
@@ -62,6 +64,7 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
+        
 
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {

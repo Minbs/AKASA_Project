@@ -21,12 +21,12 @@ public class UnitApproachingState : UnitBaseState
         if (stateMachine.gameObject.GetComponent<Minion>())
         {
             if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+                stateMachine.SetTargetInCognitiveRange();
             else
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+                stateMachine.SetTargetInCognitiveRange();
         }
         else if (stateMachine.gameObject.GetComponent<Enemy>())
-            stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+            stateMachine.SetTargetInCognitiveRange();
 
 
         if (stateMachine.unit.target == null || !stateMachine.unit.target.activeSelf)
