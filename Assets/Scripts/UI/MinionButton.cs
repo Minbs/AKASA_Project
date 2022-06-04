@@ -11,14 +11,17 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
-
+    public int UnitIndex;
 
     // Update is called once per frame
     void Update()
     {
       //  MBtnTBGPosition();
     }
-
+    void start()
+    {
+        UnitIndex = index;
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.state == State.BATTLE)
