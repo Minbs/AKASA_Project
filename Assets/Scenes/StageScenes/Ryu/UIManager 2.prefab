@@ -9874,6 +9874,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: -1
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -10247,14 +10248,6 @@ MonoBehaviour:
   DeployableTileImage: {fileID: 2778143685786601983, guid: 123add8dfc841f6479c6ed739b1d2da7, type: 3}
   NotDeployableTileSprite: {fileID: 21300000, guid: fd01200c0b3d9804ab4c3a14503676ca, type: 3}
   DeployableTileSprite: {fileID: 21300000, guid: b152b031698367d46bef028711e6d4c7, type: 3}
-  skeletonDataAsset: {fileID: 11400000, guid: c1539104ef375f7448f152a83402beb4, type: 2}
-  text:
-  - {fileID: 2305936707693960995}
-  - {fileID: 2305936706898117421}
-  - {fileID: 2305936707369732382}
-  - {fileID: 2305936708148036068}
-  - {fileID: 2305936707958600549}
-  - {fileID: 2305936707818121276}
   phase:
   - {fileID: 1030427570267637699}
   - {fileID: 1030427569099380455}
@@ -10273,22 +10266,7 @@ MonoBehaviour:
   - 1.5
   maxEnemyCount: 18
   waveCount: 1
-  mBG: {fileID: 1030427568645768026}
-  tBG: []
-  edge: []
-  sBG: {fileID: 4350540285336560752}
-  stBG: []
-  wTime: []
   isCheck: 0
-  mPan: {fileID: 4350540284386265292}
-  oPan: {fileID: 428642197923416873}
-  mCnt: {fileID: 4350540284178853511}
-  oCnt: {fileID: 428642197049849572}
-  mBtn: []
-  oBtn: []
-  bBObj: {fileID: 4350540283747724916}
-  rBtn: []
-  bBtn: []
   tooltip: {fileID: 0}
   fpsFontSize: 45
   fpsColor: {r: 0, g: 1, b: 0, a: 1}
@@ -10297,7 +10275,9 @@ MonoBehaviour:
   incomeUpgradeButton: {fileID: 2658906523057951152}
   incomeText: {fileID: 9158611108525588063}
   minionUpgradeUI: {fileID: 0}
-  offset: {x: 0, y: 30, z: 0}
+  SkillCutSceneObject: {fileID: 0}
+  SkillCutSceneImage: {fileID: 0}
+  SkillCutSceneIllust: {fileID: 0}
 --- !u!82 &1030427569084694762
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11410,6 +11390,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -1993006357
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -16639,21 +16620,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93986ab5bb5194ba1c633570236ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logoObj: {fileID: 9158611109027936861}
-  logoImage:
-  - {fileID: 9158611109012123124}
-  - {fileID: 9158611107548775684}
-  - {fileID: 9158611108135722002}
-  - {fileID: 9158611108016618201}
-  nameText: {fileID: 9158611107459738841}
-  InformObj: {fileID: 9158611108931320230}
-  InformImage:
-  - {fileID: 9158611108972652823}
-  - {fileID: 9158611107899973929}
-  - {fileID: 9158611108751556920}
-  - {fileID: 9158611108209531181}
-  titleText: {fileID: 4350540284584073217}
-  explanationText: {fileID: 4350540285399340043}
+  guardianSynergyIcon: {fileID: 0}
+  chaserSynergyIcon: {fileID: 0}
+  busterSynergyIcon: {fileID: 0}
+  rescueSynergyIcon: {fileID: 0}
 --- !u!225 &4350540284615437753
 CanvasGroup:
   m_ObjectHideFlags: 0
