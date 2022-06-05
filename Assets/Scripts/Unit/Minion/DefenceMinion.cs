@@ -20,14 +20,9 @@ public enum AttackType
 
 public enum SkillType
 {
-    Buff,
-    EnhanceNextAttack
-}
-
-public enum ActiveSkillType
-{
-    Auto,
-    Manual
+    Attack,
+    Defence,
+    Buff
 }
 
 public class DefenceMinion : Minion
@@ -45,6 +40,8 @@ public class DefenceMinion : Minion
     public float healAmountRate { get; set; }
 
     public GameObject shootPivot;
+
+    public SkillType skillType;
 
     private void Awake()
     {

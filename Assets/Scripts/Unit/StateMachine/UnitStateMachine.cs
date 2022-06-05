@@ -65,6 +65,9 @@ public class UnitStateMachine : MonoBehaviour
         prevState = currentState;
         currentState = state;
         currentState.Begin(this);
+
+        if(GetComponent<Minion>()
+            && GetComponent<Minion>().minionClass == MinionClass.Rescue)
         Debug.Log(currentState);
     }
 
@@ -97,6 +100,11 @@ public class UnitStateMachine : MonoBehaviour
     /// </summary>
     public void SetTargetInCognitiveRange()
     {
+        if (unit.target
+            && !unit.target.activeSelf
+            && unit.target.GetComponent<Object>().currentHp <= 0)
+            unit.target = null;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, unit.cognitiveRangeDistance, LayerMask.GetMask("Object"));
 
         if (colliders.Length <= 0)
@@ -108,21 +116,48 @@ public class UnitStateMachine : MonoBehaviour
             {
                 GameObject obj = col.transform.parent.gameObject;
 
-                if (!obj.transform.tag.Equals("Enemy")
-                    || obj.GetComponent<Object>().currentHp <= 0)
-                    continue;
 
-                if (!unit.target)
+                if (GetComponent<Minion>().minionClass != MinionClass.Rescue)
                 {
-                    unit.target = obj;
-                }
-                else
-                {
-                    if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                    if (!obj.transform.tag.Equals("Enemy")
+                    || obj.GetComponent<Object>().currentHp <= 0
+                    || !obj.activeSelf)
+                        continue;
+
+                    if (!unit.target)
                     {
                         unit.target = obj;
                     }
+                    else
+                    {
+                        if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                        {
+                            unit.target = obj;
+                        }
+                    }
                 }
+                else
+                {
+                    if (!obj.GetComponent<Minion>()
+|| obj.GetComponent<Object>().currentHp <= 0
+|| obj.GetComponent<Object>().currentHp >= obj.GetComponent<Object>().maxHp
+|| !obj.activeSelf)
+                        continue;
+
+                    if (!unit.target)
+                    {
+                        unit.target = obj;
+                    }
+                    else
+                    {
+                        if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                        {
+                            unit.target = obj;
+                        }
+                    }
+                }
+
+                
             }
         }
         else if (GetComponent<Enemy>())
@@ -138,7 +173,6 @@ public class UnitStateMachine : MonoBehaviour
                 if (!unit.target)
                 {
                     unit.target = obj;
-                    Debug.Log("1"+obj.name);
                 }
                 else
                 {
@@ -218,18 +252,24 @@ public class UnitStateMachine : MonoBehaviour
 
     public bool IsTargetInAttackRange()  // 공격, 힐 범위 안에 있는지 확인
     {
-        if (unit.target.GetComponent<Object>().currentHp <= 0)
+        if (unit.target.GetComponent<Object>().currentHp <= 0
+            && !unit.target.activeSelf)
         {
+            unit.target = null;
             return false;
         }
 
-        /*
-        if (unit.GetComponent<Minion>() != null
-        && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
+        
+        if (GetComponent<Minion>()
+            &&GetComponent<Minion>().minionClass == MinionClass.Rescue )
         {
-            if (unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
+            if (unit.target == GameManager.Instance.turret
+                || unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
+            {
+                unit.target = null;
                 return false;
-        }*/
+            }
+        }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance, LayerMask.GetMask("Object"));
 
@@ -237,10 +277,8 @@ public class UnitStateMachine : MonoBehaviour
         {
             GameObject obj = col.transform.parent.gameObject;
 
-            if (obj.Equals(gameObject))
-                continue;
-
-            if (obj.Equals(unit.target.gameObject))
+            if (obj.Equals(unit.target.gameObject)
+                && obj.GetComponent<Object>().currentHp > 0)
                 return true;
         }
         return false;//Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.attackRangeDistance;
@@ -249,14 +287,22 @@ public class UnitStateMachine : MonoBehaviour
     public bool IsTargetInCognitiveRange() // 인지 범위 안에 있는지 확인
     {
 
-        if (unit.target.GetComponent<Object>().currentHp <= 0)
+        if (unit.target.GetComponent<Object>().currentHp <= 0
+            && !unit.target.activeSelf)
+        {
+            unit.target = null;
             return false;
+        }
 
         if (unit.GetComponent<Minion>() != null
     && unit.GetComponent<Minion>().minionClass == MinionClass.Rescue)
         {
             if (unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
-                return false;
+            {
+                
+                    unit.target = null;
+                    return false;
+            }
         }
 
         return Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.cognitiveRangeDistance;
@@ -289,7 +335,9 @@ public class UnitStateMachine : MonoBehaviour
         agent.SetDestination(unit.onTile.transform.position);
         LookAtTarget(unit.onTile.transform.position);
 
-        if (Vector3.Distance(unit.transform.position, unit.onTile.transform.position) < 0.14)
+        Debug.Log(Vector3.Distance(unit.transform.position, unit.onTile.transform.position));
+
+        if (Vector3.Distance(unit.transform.position, unit.onTile.transform.position) < 0.15)
         {
             unit.transform.position = unit.onTile.transform.position;
             ChangeState(idleState);

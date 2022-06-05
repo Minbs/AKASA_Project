@@ -57,7 +57,8 @@ public class Turret : Object
     {
         if (attackTimer < attackSpeed
             || Vector3.Distance(targetPos, cannon.transform.position) > attackDistance
-            || isAttacking)
+            || isAttacking
+            || SkillManager.Instance.isSkillActing)
             yield break;
 
         Quaternion quaternion = cannon.transform.localRotation;

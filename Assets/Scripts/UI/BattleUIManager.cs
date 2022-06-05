@@ -117,6 +117,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
+    public GameObject skillAimUI;
 
     void Start()
     {
@@ -126,7 +127,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     void Update()
     {
-
         FPS();
         //OnDeployButton();
 
@@ -639,28 +639,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
         minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
         upgradeMinion = minion;
 
-        // 미니언 이름으로 데이터 쉽게 가져올 수 있게 바꾸기
-        if(minion.GetComponent<Minion>().Unitname == "Verity")
-        {
-            currentStat = CSV_Player_Status.Instance.VeriyStat_Array[minion.GetComponent<Unit>().Level - 1];
-            nextLevelStat = CSV_Player_Status.Instance.VeriyStat_Array[minion.GetComponent<Unit>().Level];
-        }
-        else if (minion.GetComponent<Minion>().Unitname == "Isabella")
-        {
-            currentStat = CSV_Player_Status.Instance.IsabellaStat_Array[minion.GetComponent<Unit>().Level - 1];
-            nextLevelStat = CSV_Player_Status.Instance.IsabellaStat_Array[minion.GetComponent<Unit>().Level];
-        }
-        else if (minion.GetComponent<Minion>().Unitname == "Wraith")
-        {
-            currentStat = CSV_Player_Status.Instance.WraithStat_Array[minion.GetComponent<Unit>().Level - 1];
-            nextLevelStat = CSV_Player_Status.Instance.WraithStat_Array[minion.GetComponent<Unit>().Level];
-        }
-        else if (minion.GetComponent<Minion>().Unitname == "Zippo")
-        {
-            currentStat = CSV_Player_Status.Instance.ZippoStat_Array[minion.GetComponent<Unit>().Level - 1];
-            nextLevelStat = CSV_Player_Status.Instance.ZippoStat_Array[minion.GetComponent<Unit>().Level];
-        }
-        
+        currentStat = CSV_Player_Status.Instance.Call_Stat_Array(minion.GetComponent<Unit>().Unitname, minion.GetComponent<Unit>().Level);
+        nextLevelStat = CSV_Player_Status.Instance.Call_Stat_Array(minion.GetComponent<Unit>().Unitname, minion.GetComponent<Unit>().Level + 1);
+
         minionUpgradeUI.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = currentStat.UpgradeCost.ToString();
         // 체력 텍스트
         minionUpgradeUI.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = currentStat.HP.ToString() + " → " + nextLevelStat.HP.ToString();

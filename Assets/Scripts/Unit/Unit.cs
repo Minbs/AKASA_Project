@@ -108,6 +108,9 @@ public class Unit : Object
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+        transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "Character2";
+        transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+
         if (GetComponent<Minion>())
         {
             transform.GetComponent<NavMeshAgent>().enabled = false;
@@ -153,40 +156,6 @@ public class Unit : Object
         
     }
 
-    public void Poison(SkillAbility skillAbility, float damage, float duration)
-    {
-        if (isPoisoned == false)
-            StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
-    }
-
-    public IEnumerator PoisionCorutine(SkillAbility skillAbility, float damage, float duration)
-    {
-        float timer = 0f;
-
-        float damageTimer = 0;
-        float damageDelay = 1;
-
-        isPoisoned = true;
-
-        EffectManager.Instance.InstantiateHomingEffect("isabella_skill", gameObject, duration);
-
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            damageTimer += Time.deltaTime;
-            if (damageTimer >= damageDelay)
-            {
-                damageTimer = 0;
-                currentHp -= (float)(damage);
-                UpdateHealthbar();
-            }
-
-            yield return null;
-        }
-
-        isPoisoned = false;
-    }
-
     /// <summary>
     /// 데미지 부여 damage가 음수일 때 회복
     /// </summary>
@@ -201,7 +170,7 @@ public class Unit : Object
                 StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
 
             damageSum = damage + (float)damage * ((float)healTakeAmount / 100);
-            Debug.Log(damageSum);
+           // Debug.Log(damageSum);
         }
         else
         {
@@ -266,12 +235,12 @@ public class Unit : Object
 
     public IEnumerator Die()
     {
-        if (!isAnimationPlaying("/knockdown"))
+        if (!isAnimationPlaying("/die"))
         {
-            spineAnimation.PlayAnimation(skinName + "/knockdown", false, GameManager.Instance.gameSpeed);
+            spineAnimation.PlayAnimation(skinName + "/die", false, GameManager.Instance.gameSpeed);
         }
 
-        if (skeletonAnimation.AnimationName == skinName + "/knockdown" && normalizedTime >= 1)
+        if (skeletonAnimation.AnimationName == skinName + "/die" && normalizedTime >= 1)
         {
             if (GetComponent<Minion>())
             {

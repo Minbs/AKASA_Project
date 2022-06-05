@@ -47,11 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943b449dcb3eefb40a30d3cc2b20145a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 15
+  currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: Enemy3
   Unitname: Enemy1
   Level: 1
-  maxHp: 15
   atk: 2
   currentAtk: 0
   def: 1
@@ -149,7 +150,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 59facab6907ac4640a58586485ee8356, type: 2}
+  - {fileID: 2100000, guid: 4de1ebf1f6b39e64a802d62bf8df2624, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 00dac8c48c6ebd840baa2fcf3253aa95, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: f0cd8e7a714a858459adb00a99674111, type: 2}
   initialSkinName: short_ernemy
   initialFlipX: 1
   initialFlipY: 0
