@@ -60,6 +60,7 @@ public class SceneLoad : MonoBehaviour
         SceneManager.LoadScene("LoadingScene");
     }
 
+    /// <summary> 비동기 씬 전환(+ 로딩 퍼센티지) </summary> <returns></returns>
     IEnumerator LoadSceneProcess()
     {
         yield return null;

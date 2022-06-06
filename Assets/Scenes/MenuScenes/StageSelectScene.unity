@@ -2509,16 +2509,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
   mainScene:
-    buttonLick: 0
-    buttonClick: 0
+    buttonClick: 
+    buttonLick: 
   stageSelectScene:
-    buttonClick01: 1
-    buttonClick02: 0
-    buttonClick03: 0
-    buttonLick01: 1
-    buttonLick02: 0
-    buttonLick03: 0
+    buttonClick: 000001
+    buttonLick: 000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &666955232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3465,6 +3470,7 @@ GameObject:
   - component: {fileID: 899688354}
   - component: {fileID: 899688353}
   - component: {fileID: 899688355}
+  - component: {fileID: 899688356}
   m_Layer: 5
   m_Name: Exit_Btn
   m_TagString: Untagged
@@ -3586,6 +3592,34 @@ MonoBehaviour:
           m_StringArgument: MainScene
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &899688356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899688351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 01
+    buttonLick: 01
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &907946960
 GameObject:
   m_ObjectHideFlags: 0
@@ -6163,16 +6197,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
   mainScene:
-    buttonLick: 0
-    buttonClick: 0
+    buttonClick: 
+    buttonLick: 
   stageSelectScene:
-    buttonClick01: 0
-    buttonClick02: 0
-    buttonClick03: 1
-    buttonLick01: 0
-    buttonLick02: 0
-    buttonLick03: 1
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &1374246420
 GameObject:
   m_ObjectHideFlags: 0
@@ -9984,16 +10023,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
   mainScene:
-    buttonLick: 0
-    buttonClick: 0
+    buttonClick: 
+    buttonLick: 
   stageSelectScene:
-    buttonClick01: 0
-    buttonClick02: 0
-    buttonClick03: 1
-    buttonLick01: 0
-    buttonLick02: 0
-    buttonLick03: 1
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &2005280232
 GameObject:
   m_ObjectHideFlags: 0
@@ -10488,16 +10532,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
   mainScene:
-    buttonLick: 0
-    buttonClick: 0
+    buttonClick: 
+    buttonLick: 
   stageSelectScene:
-    buttonClick01: 0
-    buttonClick02: 1
-    buttonClick03: 0
-    buttonLick01: 0
-    buttonLick02: 1
-    buttonLick03: 0
+    buttonClick: 00000001
+    buttonLick: 00000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &2106238336
 GameObject:
   m_ObjectHideFlags: 0

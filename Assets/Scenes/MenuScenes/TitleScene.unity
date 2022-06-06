@@ -629,6 +629,7 @@ GameObject:
   - component: {fileID: 483590129}
   - component: {fileID: 483590128}
   - component: {fileID: 483590127}
+  - component: {fileID: 483590130}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -750,6 +751,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483590125}
   m_CullTransparentMesh: 1
+--- !u!114 &483590130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483590125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 01
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &583063343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,19 +1331,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
       propertyPath: bgmClipList.Array.size
-      value: 0
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.mainLickIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.mainClickIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.titleClickIndex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
       propertyPath: bgmClipList.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: d4383fb5c30b5ca46a5b69ace8564681, type: 3}
     - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
       propertyPath: bgmClipList.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: eb70411ab7693574cafc2160ac187858, type: 3}
     - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
       propertyPath: bgmClipList.Array.data[2]
       value: 
+      objectReference: {fileID: 8300000, guid: 4cfb2c34ad6e67c46ba9b7ad5bcdadc8, type: 3}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.stageSelectLickIndex
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.defenceStageLickIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.stageSelectClickIndex
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546159, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: indexSFX.defenceStageClickIndex
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}

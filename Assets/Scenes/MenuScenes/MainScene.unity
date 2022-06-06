@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 54913440}
   - component: {fileID: 54913439}
   - component: {fileID: 54913438}
+  - component: {fileID: 54913441}
   m_Layer: 5
   m_Name: NoName_UI_4 (2)
   m_TagString: Untagged
@@ -363,6 +364,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54913436}
   m_CullTransparentMesh: 1
+--- !u!114 &54913441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54913436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 01
+    buttonLick: 01
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &151985046
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +404,7 @@ GameObject:
   - component: {fileID: 151985049}
   - component: {fileID: 151985048}
   - component: {fileID: 151985050}
+  - component: {fileID: 151985051}
   m_Layer: 5
   m_Name: Setting_btn
   m_TagString: Untagged
@@ -496,6 +526,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &151985051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151985046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 01
+    buttonLick: 01
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &159040049
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +566,7 @@ GameObject:
   - component: {fileID: 159040052}
   - component: {fileID: 159040051}
   - component: {fileID: 159040053}
+  - component: {fileID: 159040054}
   m_Layer: 5
   m_Name: NoName_UI_1
   m_TagString: Untagged
@@ -629,6 +688,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &159040054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159040049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 0001
+    buttonLick: 0001
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &192931106
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,6 +854,7 @@ GameObject:
   - component: {fileID: 223735529}
   - component: {fileID: 223735528}
   - component: {fileID: 223735530}
+  - component: {fileID: 223735531}
   m_Layer: 5
   m_Name: Unit Container
   m_TagString: Untagged
@@ -889,6 +977,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &223735531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223735526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 0001
+    buttonLick: 0001
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &270490944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,9 +1855,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
   mainScene:
-    buttonLick: 1
-    buttonClick: 1
+    buttonClick: 000001
+    buttonLick: 000001
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &804617371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,6 +1958,7 @@ GameObject:
   - component: {fileID: 873142042}
   - component: {fileID: 873142041}
   - component: {fileID: 873142043}
+  - component: {fileID: 873142044}
   m_Layer: 5
   m_Name: NoName_UI_2
   m_TagString: Untagged
@@ -1951,6 +2080,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &873142044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873142039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 0001
+    buttonLick: 0001
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &965232646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,6 +2187,7 @@ GameObject:
   - component: {fileID: 1013330600}
   - component: {fileID: 1013330599}
   - component: {fileID: 1013330598}
+  - component: {fileID: 1013330601}
   m_Layer: 5
   m_Name: NoName_UI_4 (1)
   m_TagString: Untagged
@@ -2139,6 +2297,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013330596}
   m_CullTransparentMesh: 1
+--- !u!114 &1013330601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013330596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 01
+    buttonLick: 01
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &1016804182
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,6 +2375,7 @@ GameObject:
   - component: {fileID: 1037069716}
   - component: {fileID: 1037069715}
   - component: {fileID: 1037069717}
+  - component: {fileID: 1037069718}
   m_Layer: 5
   m_Name: CharacterGacha
   m_TagString: Untagged
@@ -2310,6 +2497,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1037069718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037069713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 0001
+    buttonLick: 0001
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &1056120207
 GameObject:
   m_ObjectHideFlags: 0
@@ -2938,6 +3153,7 @@ GameObject:
   - component: {fileID: 1427763157}
   - component: {fileID: 1427763156}
   - component: {fileID: 1427763155}
+  - component: {fileID: 1427763158}
   m_Layer: 5
   m_Name: NoName_UI_4
   m_TagString: Untagged
@@ -3047,6 +3263,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427763153}
   m_CullTransparentMesh: 1
+--- !u!114 &1427763158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427763153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 01
+    buttonLick: 01
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &1477149978
 GameObject:
   m_ObjectHideFlags: 0
