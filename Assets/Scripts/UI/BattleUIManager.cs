@@ -117,7 +117,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
-    public GameObject skillAimUI;
+
 
     void Start()
     {

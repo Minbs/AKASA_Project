@@ -32,8 +32,9 @@ public class DefenceMinion : Minion
 
     public float cost;
     public float sellCost;
-    //public float minionStandbyTime { get; set; }
-    //public float minionWaitingTime;
+
+    public float skillTimer { get; set; }
+    public float skillCoolTime;
 
     public Sprite bulletSprite;
 
@@ -60,6 +61,7 @@ public class DefenceMinion : Minion
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
         healAmountRate = 100;
+        skillTimer = skillCoolTime;
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -169,7 +171,7 @@ public class DefenceMinion : Minion
         Handles.DrawWireCube(center, box);
 
         Handles.color = Color.blue;
-        Handles.DrawWireDisc(center,Vector3.up, cognitiveRangeDistance);
+        Handles.DrawWireDisc(transform.position,Vector3.up, 3);
     }
 
     // Update is called once per frame

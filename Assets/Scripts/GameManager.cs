@@ -378,11 +378,19 @@ public class GameManager : Singleton<GameManager>
 
         settingCharacter.GetComponent<Unit>().Init();
         unitSetTile = null;
-        minionsList.Add(settingCharacter);
+
+        if (!isChangePosition)
+        {
+            minionsList.Add(settingCharacter);
+        }
+
+
         settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
         settingCharacter = null;
         isChangePosition = false;
         BattleUIManager.Instance.sellPanel.SetActive(false);
+
+
 
 
         foreach (var m in minionsList)
@@ -431,16 +439,21 @@ public class GameManager : Singleton<GameManager>
 
     public void SetGameSpeed(float speed)
     {
+        if (gameSpeed.Equals(speed))
+            return;
+
         gameSpeed = speed;
 
         foreach (var e in enemiesList)
         {
             e.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
+            e.GetComponent<UnitStateMachine>().agent.velocity = e.GetComponent<UnitStateMachine>().agent.velocity * speed;
         }
 
         foreach (var m in minionsList)
         {
             m.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
+            m.GetComponent<UnitStateMachine>().agent.velocity = m.GetComponent<UnitStateMachine>().agent.velocity * speed;
         }
     }
 

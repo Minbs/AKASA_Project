@@ -38,9 +38,13 @@ public class Unit : Object
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed;  //{ get; set; }
 
-    private bool isPoisoned = false;
+
     public float damageRedution = 0;
     public float healTakeAmount = 0;
+
+    // 중독 상태용 변수
+    private bool isPoisoned = false;
+    private float poisonTimer = 0;
 
     public Direction direction { get; set; }
 
@@ -54,7 +58,7 @@ public class Unit : Object
 
     public string skinName { get; set; }
 
-    private Color initSkeletonColor; // 최초 스파인 색상
+    public Color initSkeletonColor { get; set; } // 최초 스파인 색상
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
 
@@ -210,6 +214,20 @@ public class Unit : Object
         }
     }
 
+    public void SetAimUnitColor(bool Active)
+    {
+        int id = Shader.PropertyToID("_Black");
+
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+
+        if(Active)
+            block.SetColor(id, new Color32(37, 37, 37, 1));
+        else
+            block.SetColor(id, new Color32(0, 0, 0, 1));
+
+        transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(block);
+    }
+
     public IEnumerator ChangeUnitColor(Color color, float duration)
     {
         if (gameObject != null)
@@ -218,7 +236,6 @@ public class Unit : Object
         float timer = 0f;
 
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
-
 
         while (timer < duration)
         {

@@ -133,8 +133,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 12.940332, y: 13.688801, z: 0.0000008159161}
-  m_Center: {x: -1.031002, y: 6.6891456, z: 0.0000003987042}
+  m_Size: {x: 4.857194, y: 13.688803, z: 0.00000081591617}
+  m_Center: {x: -0.33979917, y: 6.6891456, z: 0.00000033548355}
 --- !u!1 &6208362256301881235
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 15
+  currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Zippo
@@ -205,6 +206,7 @@ MonoBehaviour:
   sellCost: 6
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 0}
+  skillType: 0
   sightAngle: 0
   sightDistance: 0
 --- !u!195 &5185519813409746606

@@ -6,14 +6,16 @@ public class Turret : Object
 {
     // Start is called before the first frame update
 
+    // currentHp Object 클래스
+
     public GameObject cannon;
     public float rotateSpeed;
 
-    private float attackTimer = 0;
-    public float attackSpeed;
+    private float attackTimer = 0; // 타이머
+    public float attackSpeed; // 쿨타임
 
-    public float attackDistance;
-    public float attackRange;
+    public float attackDistance; // 공격 가능 범위
+    public float attackRange; // 폭발 범위
 
     private Ray ray;
 
@@ -73,7 +75,7 @@ public class Turret : Object
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
             rotation.eulerAngles = new Vector3(rotation.eulerAngles.x - 90, rotation.eulerAngles.y, rotation.eulerAngles.z - 90);
-            proceed += Time.deltaTime * rotateSpeed;
+            proceed += Time.deltaTime * rotateSpeed * GameManager.Instance.gameSpeed;
             cannon.transform.localRotation = Quaternion.Lerp(quaternion, rotation, proceed);
             yield return null;
         }
