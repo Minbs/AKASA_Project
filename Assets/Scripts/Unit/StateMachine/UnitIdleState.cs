@@ -18,9 +18,9 @@ public class UnitIdleState : UnitBaseState
         if (stateMachine.gameObject.GetComponent<Minion>() && GameManager.Instance.state == State.BATTLE)
         {
             if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+                stateMachine.SetTargetInCognitiveRange();
             else
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+                stateMachine.SetTargetInCognitiveRange();
 
             if(stateMachine.unit.target != null)
             {
