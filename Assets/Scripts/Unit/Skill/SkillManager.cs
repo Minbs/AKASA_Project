@@ -75,7 +75,6 @@ public class SkillManager : Singleton<SkillManager>
         GameManager.Instance.SetGameSpeed(skillAimTimeSpeed);
 
         List<GameObject> returnTargets = new List<GameObject>();
-        isSkillAimEnd = false;
 
         if (unitType.Equals("Minion"))
         {
@@ -172,6 +171,7 @@ public class SkillManager : Singleton<SkillManager>
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    Debug.Log("끝");
                     isSkillAimEnd = true;
                     skillHitpos = skillAimCircleRangeUI.transform.position;
                     skillCircleRangeUI.SetActive(false);
@@ -392,18 +392,20 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+        // 스킬 끝난 후 실행되는 함수 제작하기
+
+        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;    
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
         GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
+        Debug.Log("연출 끝"); 
 
+        isSkillAimEnd = false;
         skillBackgroundImage.SetActive(false);
 
         GameObject skillObject = Instantiate(poisonMist);
         skillObject.transform.position = skillHitpos;
         Destroy(skillObject, 5);
 
-        isSkillAimEnd = false;
     }
 
         IEnumerator AsherSkill()
@@ -443,12 +445,13 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
+        isSkillAimEnd = false;
+        skillBackgroundImage.SetActive(false);
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
         GameManager.Instance.SetGameSpeed(1);
         Debug.Log("연출 끝");
 
-        StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "def", 2, 8));
-        skillBackgroundImage.SetActive(false);
+
 
         foreach (var minion in targetsList)
         {
@@ -509,7 +512,7 @@ public class SkillManager : Singleton<SkillManager>
 
 
 
-
+        isSkillAimEnd = false;
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
         GameManager.Instance.SetGameSpeed(1);
         Debug.Log("연출 끝");
@@ -540,5 +543,29 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
+    IEnumerator EremediumSkill()
+    {
+        GameManager.Instance.SetGameSpeed(0);
+        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
+        skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
+        yield return null;
+
+        while (skillUnit.GetComponent<Unit>().normalizedTime < 1)
+        {
+            yield return null;
+        }
+
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
+        GameManager.Instance.SetGameSpeed(1);
+        Debug.Log("연출 끝");
+
+        skillBackgroundImage.SetActive(false);
+        //EffectManager.Instance.InstantiateHomingEffect("pay_effect", skillUnit, 8);
+        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
 
     }
+
+
+    // 이벤트 콜백 함수 만들기
+}

@@ -44,9 +44,6 @@ public class DefenceMinion : Minion
 
     public SkillType skillType;
 
-    private void Awake()
-    {
-    }
 
     private void OnDestroy()
     {
@@ -66,6 +63,11 @@ public class DefenceMinion : Minion
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
+        if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
+        {
+            Debug.Log(Unitname);
+        }
+
         if (target == null)
         {
             return;
@@ -93,10 +95,8 @@ public class DefenceMinion : Minion
             }
         }
 
-        if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
-        {
+  
 
-        }
     }
 
 
