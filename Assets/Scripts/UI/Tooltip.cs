@@ -6,12 +6,12 @@ using TMPro;
 
 public class Tooltip : MonoBehaviour
 {
- //   [SerializeField]
-   // private TextMeshProUGUI nameText;
- //   [SerializeField]
-  //  private TextMeshProUGUI titleText;
-   // [SerializeField]
-   // private TextMeshProUGUI explanationText;
+    [SerializeField]
+    private TextMeshProUGUI nameText;
+    [SerializeField]
+    private TextMeshProUGUI titleText;
+    [SerializeField]
+    private TextMeshProUGUI explanationText;
 
     private Sprite synergyIconSprite;
 
@@ -26,15 +26,15 @@ public class Tooltip : MonoBehaviour
 
     private void Start()
     {
-     //   halfWidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
+      //  halfWidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
         rt = GetComponent<RectTransform>();
 
-      //  nameText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        nameText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
 
-   //     InformObj = transform.GetChild(3).gameObject;
+      //  InformObj = transform.GetChild(3).gameObject;
 
-     //   titleText = transform.GetChild(4).GetComponentInChildren<TextMeshProUGUI>();
-    //    explanationText = transform.GetChild(5).GetComponentInChildren<TextMeshProUGUI>();
+        titleText = transform.GetChild(4).GetComponentInChildren<TextMeshProUGUI>();
+        explanationText = transform.GetChild(5).GetComponentInChildren<TextMeshProUGUI>();
 
         //시너지 왼쪽 아이콘 이미지
         synergyIconSprite = transform.GetChild(0).GetComponent<Image>().sprite;

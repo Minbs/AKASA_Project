@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b8b0a6afc73275418abab6289e17efc, type: 2}
+  - {fileID: 2100000, guid: 149d7ecaea3baf6428bb28d419f1b4ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,8 +81,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056034773
-  m_SortingLayer: 2
+  m_SortingLayerID: 1047900443
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6446028627423085391
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0b0741fb39c3e6c4baf3a0ae795b7312, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: e7bb6c90e0fcecf428a675247cf7682c, type: 2}
   initialSkinName: hwaseon
   initialFlipX: 1
   initialFlipY: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3513205190431346173}
   m_Layer: 9
   m_Name: hwaseon
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,14 +183,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 10
+  currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: hwaseon
   Unitname: Hwaseon
   Level: 1
-  maxHp: 10
   atk: 4
   currentAtk: 0
   def: 0
+  rectangleWidthRange: 0
+  rectangleHeightRange: 0
   attackRangeDistance: 2
   cognitiveRangeDistance: 4
   attackSpeed: 0
@@ -198,11 +201,12 @@ MonoBehaviour:
   healTakeAmount: 0
   healthBar: {fileID: 5485994177288912733}
   minionClass: 2
-  attackType: 3
+  attackType: 4
   cost: 21
   sellCost: 15
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 0}
+  skillType: 2
   sightAngle: 0
   sightDistance: 0
 --- !u!195 &3267339381733484793
@@ -256,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 706432351067167521, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_Pivot.x

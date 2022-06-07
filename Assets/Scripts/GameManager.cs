@@ -51,8 +51,6 @@ public class GameManager : Singleton<GameManager>
 
     public List<int> waveClearRewards;
 
-    //    Node rayNode = new Node();
-
     Ray ray;
 
     public Vector3 minionSetPosition;
@@ -65,7 +63,6 @@ public class GameManager : Singleton<GameManager>
     private GameObject unitSetTile;
 
     public GameObject settingCharacter { get; set; }
-    // private Vector3 unitSetCameraPos;
 
     public bool isChangePosition { get; set; }
 
@@ -73,9 +70,11 @@ public class GameManager : Singleton<GameManager>
     public List<IncomeUpgradeData> incomeUpgradeDatas;
     public int incomeUpgradeCount { get; set; }
 
+    public GameObject turret;
+
     void Start()
     {
-        Time.timeScale = 2;
+        //Time.timeScale = 2;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var e in enemies)
             enemiesList.Add(e);
@@ -139,15 +138,49 @@ public class GameManager : Singleton<GameManager>
 
         deployState = DeployState.NONE;
 
-        if (settingCharacter)
-            Destroy(settingCharacter);
 
+
+
+        if (settingCharacter)
+        {
+            if (isChangePosition)
+            {
+                Vector3 pos = settingCharacter.GetComponent<DefenceMinion>().onTile.gameObject.transform.position;
+                pos += minionSetPosition;
+                settingCharacter.transform.position = pos;
+                settingCharacter.GetComponent<DefenceMinion>().onTile.isOnUnit = true;
+                BattleUIManager.Instance.sellPanel.SetActive(false);
+            }
+            else
+            {
+                Destroy(settingCharacter);
+            }
+        }
+
+        BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
         settingCharacter = null;
         StartCoroutine(BattleState());
     }
 
     void WaitStateUpdate()
     {
+        if(BattleUIManager.Instance.minionUpgradeUI.activeSelf)
+        {
+                if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")) )
+                {
+                if (!raycastHit.collider.transform.parent.GetComponent<Minion>()
+                    && Input.GetMouseButtonUp(1))
+                    BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+                }
+               else
+            {
+                if (Input.GetMouseButtonUp(1))
+                {
+                    BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+                }
+            }
+        }
+
         switch (deployState)
         {
             case DeployState.POSITIONING:
@@ -166,6 +199,13 @@ public class GameManager : Singleton<GameManager>
         state = State.BATTLE;
         SetGameSpeed(1);
 
+        //1. 스킬 타입 2. 이름 순 오름차순 정렬
+        var tempList = minionsList.OrderBy(x => x.GetComponent<DefenceMinion>().skillType).ThenBy(x => x.GetComponent<DefenceMinion>().Unitname);
+
+        minionsList = tempList.ToList();
+
+    //    minionsList
+
         foreach (var e in enemiesList)
         {
             e.GetComponent<UnitStateMachine>().ChangeState(e.GetComponent<UnitStateMachine>().moveState);
@@ -175,6 +215,8 @@ public class GameManager : Singleton<GameManager>
         {
             tile.ShowDeployableTile(false);
         }
+
+
 
         while (enemiesList.Count > 0)
         {
@@ -187,8 +229,14 @@ public class GameManager : Singleton<GameManager>
 
     void BattleStateUpdate()
     {
-
-
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SkillManager.Instance.UseCharacterSkill(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SkillManager.Instance.UseCharacterSkill(1);
+        }
     }
 
 
@@ -253,12 +301,15 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void PositioningMinion()
     {
+        BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+
         foreach (var minion in minionsList)
         {
             if (minion.Equals(settingCharacter))
                 continue;
 
             minion.transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
+            minion.GetComponent<UnitStateMachine>().agent.enabled = false;
         }
 
         if (settingCharacter)
@@ -327,17 +378,26 @@ public class GameManager : Singleton<GameManager>
 
         settingCharacter.GetComponent<Unit>().Init();
         unitSetTile = null;
-        minionsList.Add(settingCharacter);
+
+        if (!isChangePosition)
+        {
+            minionsList.Add(settingCharacter);
+        }
+
+
         settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
         settingCharacter = null;
         isChangePosition = false;
         BattleUIManager.Instance.sellPanel.SetActive(false);
 
 
+
+
         foreach (var m in minionsList)
         {
             SynergyManager.Instance.CheckClassSynergy(m);
             m.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+            m.GetComponent<UnitStateMachine>().agent.enabled = true;
         }
 
     }
@@ -379,16 +439,21 @@ public class GameManager : Singleton<GameManager>
 
     public void SetGameSpeed(float speed)
     {
+        if (gameSpeed.Equals(speed))
+            return;
+
         gameSpeed = speed;
 
         foreach (var e in enemiesList)
         {
             e.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
+            e.GetComponent<UnitStateMachine>().agent.velocity = e.GetComponent<UnitStateMachine>().agent.velocity * speed;
         }
 
         foreach (var m in minionsList)
         {
             m.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
+            m.GetComponent<UnitStateMachine>().agent.velocity = m.GetComponent<UnitStateMachine>().agent.velocity * speed;
         }
     }
 

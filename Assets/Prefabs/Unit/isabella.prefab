@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 675713550458598133}
   m_Layer: 9
   m_Name: isabella
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,14 +79,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 10
+  currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Isabella
   Level: 1
-  maxHp: 10
   atk: 3
   currentAtk: 0
   def: 0
+  rectangleWidthRange: 0
+  rectangleHeightRange: 0
   attackRangeDistance: 2
   cognitiveRangeDistance: 4
   attackSpeed: 0
@@ -97,8 +100,10 @@ MonoBehaviour:
   attackType: 0
   cost: 14
   sellCost: 10
+  skillCoolTime: 0
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 5829380570333821707}
+  skillType: 0
   sightAngle: 0
   sightDistance: 0
 --- !u!195 &3386159740569189286
@@ -203,7 +208,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa204f4d350c3064b9362ae9603581f8, type: 2}
+  - {fileID: 2100000, guid: 1f56df5e9a8400044b0ecf9f4b4a14d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -237,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 6207b5944d6a6114c9ff689cd0fcd923, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: cfd6c6204ccefd640a3298e57e522fee, type: 2}
   initialSkinName: isabella
   initialFlipX: 1
   initialFlipY: 0
@@ -336,11 +341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8191521
+      value: 0.9396927
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5735764
+      value: 0.3420201
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.y
@@ -360,7 +365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 70
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
