@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PoisonMist : MonoBehaviour
 {
+    public float damage = 1;
+    public float duration = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +18,13 @@ public class PoisonMist : MonoBehaviour
         
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if(collision.transform.GetComponent<Enemy>())
+        if (other.transform.tag == "Enemy")
         {
+            other.transform.parent.GetComponent<Unit>().GetPoisoned(damage, duration);
 
+            Debug.Log(other.transform.parent.name);
         }
     }
 }
