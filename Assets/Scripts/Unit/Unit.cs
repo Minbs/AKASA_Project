@@ -74,7 +74,7 @@ public class Unit : Object
 
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
-            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
@@ -86,7 +86,7 @@ public class Unit : Object
         }
         else
         {
-            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
 
             maxHp = ParsingStat.HP;

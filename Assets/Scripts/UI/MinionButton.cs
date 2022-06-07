@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using Spine.Unity;
 using System.Linq;
 using TMPro;
+using DG.Tweening;
 
 public class MinionButton : MonoBehaviour, IPointerDownHandler
 {
@@ -18,6 +19,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     void Update()
     {
       //  MBtnTBGPosition();
+      
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -38,7 +40,18 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
          GameManager.Instance.settingCharacter = Instantiate(MinionManager.Instance.minionPrefabs[index], MinionManager.Instance.transform);
     }
-
+   
+    private void OnMouseOver()
+    {
+       // this.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+        this.transform.DOScale(new Vector3(1.2f, 1.2f, 1), 0.3f);
+       
+    }
+    private void OnMouseExit()
+    {
+        this.transform.DOScale(new Vector3(1.0f, 1.0f, 1), 0.3f);
+        //this.transform.localScale = new Vector3(1.0f, 1.0f, 1);
+    }
     //public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
 }
 
