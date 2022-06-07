@@ -13,7 +13,7 @@ public enum Direction
 
 
 
-public class Unit : MonoBehaviour
+public class Unit : Object
 {
     public GameObject GameDataManager;
     public string poolItemName;
@@ -22,23 +22,31 @@ public class Unit : MonoBehaviour
     private Stat ParsingStat;
 
 
-    [Header("UnitStat")]
-    public float maxHp;
-    public float currentHp { get; set; }
-
     public Tile onTile { get; set; }
-
+    [Header("UnitStat")]
     public float atk;
     public float currentAtk; //{ get; set; }
     public float def;
-  //  public float moveSpeed;
+    [Header("사각형 공격 범위")]
+    public float rectangleWidthRange;
+    public float rectangleHeightRange;
+
+    //  public float moveSpeed;
+    [Header("단일 대상 공격 범위")]
     public float attackRangeDistance; // 유닛 공격 범위
+
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed;  //{ get; set; }
 
-    private bool isPoisoned = false;
+
     public float damageRedution = 0;
     public float healTakeAmount = 0;
+
+    // 중독 상태용 변수
+    private bool isPoisoned = false;
+    private float poisonTimer = 0;
+
+    public bool isNonDamage = false;
 
     public Direction direction { get; set; }
 
@@ -52,7 +60,7 @@ public class Unit : MonoBehaviour
 
     public string skinName { get; set; }
 
-    private Color initSkeletonColor; // 최초 스파인 색상
+    public Color initSkeletonColor { get; set; } // 최초 스파인 색상
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
 
@@ -62,6 +70,7 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
+        
 
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
@@ -105,6 +114,9 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+        transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "Character2";
+        transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+
         if (GetComponent<Minion>())
         {
             transform.GetComponent<NavMeshAgent>().enabled = false;
@@ -145,43 +157,7 @@ public class Unit : MonoBehaviour
     {
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
-        
-    }
-
-    public void Poison(SkillAbility skillAbility, float damage, float duration)
-    {
-        if (isPoisoned == false)
-            StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
-    }
-
-    public IEnumerator PoisionCorutine(SkillAbility skillAbility, float damage, float duration)
-    {
-        float timer = 0f;
-
-        float damageTimer = 0;
-        float damageDelay = 1;
-
-        isPoisoned = true;
-
-        EffectManager.Instance.InstantiateHomingEffect("isabella_skill", gameObject, duration);
-
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            damageTimer += Time.deltaTime;
-            if (damageTimer >= damageDelay)
-            {
-                damageTimer = 0;
-                currentHp -= (float)(damage);
-                UpdateHealthbar();
-            }
-
-            yield return null;
-        }
-
-        isPoisoned = false;
+        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;    
     }
 
     /// <summary>
@@ -198,7 +174,7 @@ public class Unit : MonoBehaviour
                 StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
 
             damageSum = damage + (float)damage * ((float)healTakeAmount / 100);
-            Debug.Log(damageSum);
+           // Debug.Log(damageSum);
         }
         else
         {
@@ -206,8 +182,13 @@ public class Unit : MonoBehaviour
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
 
             //데미지 = (공격력 - 방어력) * N/100
+
+            if(!isNonDamage)
+            {
+
             damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
             damageSum = Mathf.Max(damageSum, 0.5f);
+            }
         }
 
         currentHp -= (float)damageSum;
@@ -238,6 +219,52 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void SetAimUnitColor(bool Active)
+    {
+        int id = Shader.PropertyToID("_Black");
+
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+
+        if(Active)
+            block.SetColor(id, new Color32(37, 37, 37, 1));
+        else
+            block.SetColor(id, new Color32(0, 0, 0, 1));
+
+        transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(block);
+    }
+
+    public void GetPoisoned(float damage,float duration)
+    {
+        if (!isPoisoned)
+        {
+            StartCoroutine(Poisoned(damage, duration));
+        }
+        else
+            poisonTimer = 0;
+    }
+
+    public IEnumerator Poisoned(float damage, float duration)
+    {
+        isPoisoned = true;
+
+        while(poisonTimer <= duration)
+        {
+
+          poisonTimer += (1 + Time.deltaTime) * GameManager.Instance.gameSpeed;
+
+
+          currentHp -= damage;
+          StartCoroutine(ChangeUnitColor(new Color(1, 0, 1), 0.2f));
+          UpdateHealthbar();
+
+            Debug.Log(poisonTimer);
+          yield return new WaitForSeconds(1);
+
+        }
+
+        isPoisoned = false;
+    }
+
     public IEnumerator ChangeUnitColor(Color color, float duration)
     {
         if (gameObject != null)
@@ -246,7 +273,6 @@ public class Unit : MonoBehaviour
         float timer = 0f;
 
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
-
 
         while (timer < duration)
         {
@@ -263,12 +289,12 @@ public class Unit : MonoBehaviour
 
     public IEnumerator Die()
     {
-        if (!isAnimationPlaying("/knockdown"))
+        if (!isAnimationPlaying("/die"))
         {
-            spineAnimation.PlayAnimation(skinName + "/knockdown", false, GameManager.Instance.gameSpeed);
+            spineAnimation.PlayAnimation(skinName + "/die", false, GameManager.Instance.gameSpeed);
         }
 
-        if (skeletonAnimation.AnimationName == skinName + "/knockdown" && normalizedTime >= 1)
+        if (skeletonAnimation.AnimationName == skinName + "/die" && normalizedTime >= 1)
         {
             if (GetComponent<Minion>())
             {
@@ -282,6 +308,38 @@ public class Unit : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    public IEnumerator ChangeStat(GameObject target, string stat, float value = 0, float duration = 0)
+    {
+        float Timer = 0;
+
+
+
+        if (stat == "ats")
+            attackSpeed += value;
+        else if (stat == "def")
+            def += value;
+        else if (stat == "non")
+            isNonDamage = true;
+
+        while (Timer <= duration)
+        {
+
+            Timer += Time.deltaTime * GameManager.Instance.gameSpeed;
+
+      
+
+            yield return null;
+        }
+
+
+        if (stat == "ats")
+            attackSpeed -= value;
+        else if (stat == "def")
+            def -= value;
+        else if (stat == "non")
+            isNonDamage = false;
     }
 
     public void SetPositionOnTile()

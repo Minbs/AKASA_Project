@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7038330258952526154}
   - component: {fileID: 4462006901306146636}
   - component: {fileID: 6446028627423085391}
+  - component: {fileID: 2338895895715975903}
   m_Layer: 9
   m_Name: Spine GameObject (sd_main_new_01)
   m_TagString: Untagged
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a23fc6b9f64a79d47aebd43afb00d8bf, type: 2}
+  - {fileID: 2100000, guid: 99a0ff84cd8a43f469aabb525186e69e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,8 +82,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056034773
-  m_SortingLayer: 2
+  m_SortingLayerID: 1047900443
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6446028627423085391
@@ -97,9 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0d4e774fc60380e4ebd0a2d97323e3e0, type: 2}
-  initialSkinName: 
-  initialFlipX: 0
+  skeletonDataAsset: {fileID: 11400000, guid: a45d9bd18af08a648ac76c35a579b6e0, type: 2}
+  initialSkinName: pardo
+  initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
@@ -119,9 +120,22 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: idle
+  _animationName: pardo/idle
   loop: 1
   timeScale: 1
+--- !u!65 &2338895895715975903
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758246430292652753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 10.48665, y: 11.923533, z: 0.000000710698}
+  m_Center: {x: 0.54739285, y: 6.195701, z: 0.00000036929262}
 --- !u!1 &5882365898886981521
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,9 +178,10 @@ GameObject:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
   - component: {fileID: 7258279807273552047}
+  - component: {fileID: 5666347693899166217}
   m_Layer: 9
-  m_Name: pardo
-  m_TagString: Untagged
+  m_Name: Pardo
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,26 +215,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 10
+  currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Pardo
   Level: 1
-  maxHp: 10
-  atk: 3
+  atk: 2
   currentAtk: 0
   def: 0
+  rectangleWidthRange: 0
+  rectangleHeightRange: 0
   attackRangeDistance: 2
-  cognitiveRangeDistance: 3
+  cognitiveRangeDistance: 4
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
   healthBar: {fileID: 5756680591819409201}
   minionClass: 2
   attackType: 0
-  cost: 14
-  sellCost: 10
+  cost: 7
+  sellCost: 5
+  skillCoolTime: 0
   bulletSprite: {fileID: 21300000, guid: 4cecd05cb0141044ea038fb559a0e799, type: 3}
   shootPivot: {fileID: 5882365898886981521}
+  skillType: 0
   sightAngle: 0
   sightDistance: 0
 --- !u!195 &7258279807273552047
@@ -244,6 +264,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &5666347693899166217
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &4492706306595069110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -309,11 +345,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8191521
+      value: 0.9396927
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5735764
+      value: 0.3420201
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.y
@@ -333,7 +369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 70
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

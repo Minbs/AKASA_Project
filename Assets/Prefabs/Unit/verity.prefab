@@ -82,8 +82,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056034773
-  m_SortingLayer: 2
+  m_SortingLayerID: 1047900443
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6446028627423085391
@@ -180,8 +180,8 @@ GameObject:
   - component: {fileID: 7258279807273552047}
   - component: {fileID: 5666347693899166217}
   m_Layer: 9
-  m_Name: verity
-  m_TagString: Untagged
+  m_Name: Verity
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,14 +215,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 10
+  currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Verity
   Level: 1
-  maxHp: 10
   atk: 2
   currentAtk: 0
   def: 0
+  rectangleWidthRange: 0
+  rectangleHeightRange: 0
   attackRangeDistance: 2
   cognitiveRangeDistance: 4
   attackSpeed: 0
@@ -235,6 +238,7 @@ MonoBehaviour:
   sellCost: 5
   bulletSprite: {fileID: 21300000, guid: 4cecd05cb0141044ea038fb559a0e799, type: 3}
   shootPivot: {fileID: 5882365898886981521}
+  skillType: 0
   sightAngle: 0
   sightDistance: 0
 --- !u!195 &7258279807273552047

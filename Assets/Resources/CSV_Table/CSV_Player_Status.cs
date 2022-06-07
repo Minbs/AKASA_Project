@@ -39,6 +39,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
     public Stat KuenStat;
     public Stat NoahStat;
     public Stat PardoStat;
+    public Stat VogueStat;
     public Stat PayStat;
     public Stat SophiaStat;
     public Stat WraithStat;
@@ -57,6 +58,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
     public Stat[] KuenStat_Array;
     public Stat[] NoahStat_Array;
     public Stat[] PardoStat_Array;
+    public Stat[] VogueStat_Array;
     public Stat[] PayStat_Array;
     public Stat[] SophiaStat_Array;
     public Stat[] WraithStat_Array;
@@ -77,14 +79,15 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList.xlsx - VerityStatus");
         List<Dictionary<string, object>> Eremediumdata = CSVReader.Read("LevelDesignDataList.xlsx - EremediumStatus");
         List<Dictionary<string, object>> Isabelladata = CSVReader.Read("LevelDesignDataList.xlsx - IsabellaStatus");
-        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - Hwaseon");
-        //List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
-        //List<Dictionary<string, object>> Asherdata = CSVReader.Read("Asher_Stat_Table");
+        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - HwaseonStatus");
+      //  List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
+        List<Dictionary<string, object>> Asherdata = CSVReader.Read("LevelDesignDataList.xlsx - AsherStatus");
         List<Dictionary<string, object>> Kuendata = CSVReader.Read("LevelDesignDataList.xlsx - KuenStatus");
         //List<Dictionary<string, object>> Noahdata = CSVReader.Read("Noah_Stat_Table");
         List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PardoStatus");
-        //List<Dictionary<string, object>> Paydata = CSVReader.Read("Pay_Stat_Table");
-        //List<Dictionary<string, object>> Sophiadata = CSVReader.Read("Sophia_Stat_Table");
+        List<Dictionary<string, object>> Voguedata = CSVReader.Read("LevelDesignDataList.xlsx - VogueStatus");
+        List<Dictionary<string, object>> Paydata = CSVReader.Read("LevelDesignDataList.xlsx - PayStatus");
+        List<Dictionary<string, object>> Sophiadata = CSVReader.Read("LevelDesignDataList.xlsx - SophiaStatus");
         List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList.xlsx - WraithStatus");
         List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList.xlsx - ZippoStatus");
         //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
@@ -96,15 +99,16 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         {
             StatUpdate(VeriyStat_Array[i], i, Veritydata);
             //StatUpdate(_AngelusStat, _saveData.AngelusLevel, Angelusdata);
-            //StatUpdate(_AsherStat, _saveData.AsherLevel, Asherdata);
+            StatUpdate(AsherStat_Array[i], i, Asherdata);
             StatUpdate(EremediumStat_Array[i], i, Eremediumdata);
             StatUpdate(HwaseonStat_Array[i], i, Hwaseondata);
             StatUpdate(IsabellaStat_Array[i], i, Isabelladata);
             StatUpdate(KuenStat_Array[i], i, Kuendata);
             //StatUpdate(_NoahStat, _saveData.NoahLevel, Noahdata);
             StatUpdate(PardoStat_Array[i],i, Pardodata);
-            //StatUpdate(_PayStat, _saveData.PayLevel, Paydata);
-            //StatUpdate(_SophiaStat, _saveData.SophiaLevel, Sophiadata);
+            StatUpdate(VogueStat_Array[i], i, Voguedata);
+            StatUpdate(PayStat_Array[i], i, Paydata);
+            StatUpdate(SophiaStat_Array[i], i, Sophiadata);
             StatUpdate(WraithStat_Array[i], i, Wratihdata);
             StatUpdate(ZippoStat_Array[i], i, Zippodata);
             //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
@@ -122,19 +126,20 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         
         string StringSavedata = File.ReadAllText(Application.dataPath + "/SaveData.json");
         SaveData _saveData = JsonUtility.FromJson<SaveData>(StringSavedata);
-        
+
 
         List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList.xlsx - VerityStatus");
         List<Dictionary<string, object>> Eremediumdata = CSVReader.Read("LevelDesignDataList.xlsx - EremediumStatus");
         List<Dictionary<string, object>> Isabelladata = CSVReader.Read("LevelDesignDataList.xlsx - IsabellaStatus");
-        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - Hwaseon");
-        //List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
-        //List<Dictionary<string, object>> Asherdata = CSVReader.Read("Asher_Stat_Table");
+        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - HwaseonStatus");
+        //  List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
+        List<Dictionary<string, object>> Asherdata = CSVReader.Read("LevelDesignDataList.xlsx - AsherStatus");
         List<Dictionary<string, object>> Kuendata = CSVReader.Read("LevelDesignDataList.xlsx - KuenStatus");
         //List<Dictionary<string, object>> Noahdata = CSVReader.Read("Noah_Stat_Table");
         List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PardoStatus");
-        //List<Dictionary<string, object>> Paydata = CSVReader.Read("Pay_Stat_Table");
-        //List<Dictionary<string, object>> Sophiadata = CSVReader.Read("Sophia_Stat_Table");
+        List<Dictionary<string, object>> Voguedata = CSVReader.Read("LevelDesignDataList.xlsx - VogueStatus");
+        List<Dictionary<string, object>> Paydata = CSVReader.Read("LevelDesignDataList.xlsx - PayStatus");
+        List<Dictionary<string, object>> Sophiadata = CSVReader.Read("LevelDesignDataList.xlsx - SophiaStatus");
         List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList.xlsx - WraithStatus");
         List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList.xlsx - ZippoStatus");
         //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
@@ -151,6 +156,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         Stat _KuenStat = new Stat();
         Stat _NoahStat = new Stat();
         Stat _PardoStat = new Stat();
+        Stat _VogueStat = new Stat();
         Stat _PayStat = new Stat();
         Stat _SophiaStat = new Stat();
         Stat _WratihStat = new Stat();
@@ -162,15 +168,16 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
 
         StatUpdate(_VeriyStat, _saveData.VertyLevel, Veritydata);
         //StatUpdate(_AngelusStat, _saveData.AngelusLevel, Angelusdata);
-        //StatUpdate(_AsherStat, _saveData.AsherLevel, Asherdata);
+        StatUpdate(_AsherStat, _saveData.AsherLevel, Asherdata);
         StatUpdate(_EremediumStat, _saveData.EremediumLevel, Eremediumdata);
         StatUpdate(_HwaseonStat, _saveData.HwaseonLevel, Hwaseondata);
         StatUpdate(_IsabellaStat, _saveData.IsabellaLevel, Isabelladata);
         StatUpdate(_KuenStat, _saveData.KuenLevel, Kuendata);
         //StatUpdate(_NoahStat, _saveData.NoahLevel, Noahdata);
         StatUpdate(_PardoStat, _saveData.PardoLevel, Pardodata);
-        //StatUpdate(_PayStat, _saveData.PayLevel, Paydata);
-        //StatUpdate(_SophiaStat, _saveData.SophiaLevel, Sophiadata);
+        StatUpdate(_VogueStat, _saveData.VogueLevel, Voguedata);
+        StatUpdate(_PayStat, _saveData.PayLevel, Paydata);
+        StatUpdate(_SophiaStat, _saveData.SophiaLevel, Sophiadata);
         StatUpdate(_WratihStat, _saveData.WratihLevel, Wratihdata);
         StatUpdate(_ZippoStat, _saveData.ZippoLevel, Zippodata);
         //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
@@ -188,6 +195,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         KuenStat = _KuenStat;
         NoahStat = _NoahStat;
         PardoStat = _PardoStat;
+        VogueStat = _VogueStat;
         PayStat = _PayStat;
         SophiaStat = _SophiaStat;
         WraithStat = _WratihStat;
@@ -276,6 +284,15 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         if (name == "Pardo")
         {
             return PardoStat_Array[level - 1];
+        }
+
+        if (name == "Vogue")
+        {
+            return VogueStat_Array[level - 1];
+        }
+        if (name == "Pay")
+        {
+            return PayStat_Array[level - 1];
         }
         if (name == "Sophia")
         {
@@ -375,6 +392,18 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
             List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PardoStatus");
             StatUpdate(PardoStat, level - 1, Pardodata);
             return PardoStat;
+        }
+        if (name == "Vogue")
+        {
+            List<Dictionary<string, object>> Voguedata = CSVReader.Read("LevelDesignDataList.xlsx - VogueStatus");
+            StatUpdate(VogueStat, level - 1, Voguedata);
+            return VogueStat;
+        }
+        if (name == "Pay")
+        {
+            List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PayStatus");
+            StatUpdate(PayStat, level - 1, Pardodata);
+            return PayStat;
         }
         if (name == "Sophia")
         {

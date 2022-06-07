@@ -22,7 +22,6 @@ public class UnitAttackState : UnitBaseState
         {
             if (!stateMachine.IsTargetInAttackRange())
             {
-                Debug.Log("¹Ù²Ù±â");
                 stateMachine.unit.target = null;
                 return;
             }
@@ -30,7 +29,7 @@ public class UnitAttackState : UnitBaseState
             if (!stateMachine.unit.isAnimationPlaying("/attack"))
             {
                 stateMachine.LookAtTarget(stateMachine.unit.target.transform.position);
-                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, GameManager.Instance.gameSpeed);
+                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, stateMachine.unit.attackSpeed * GameManager.Instance.gameSpeed);
             }
         }
     }

@@ -49,12 +49,12 @@ public class Enemy : Unit
 
     void MeleeAttack()
     {
-        target.GetComponent<Unit>().Deal(currentAtk);
+        target.GetComponent<Object>().Deal(currentAtk);
     }
 
     void HitScanAttack()
     {
-        target.GetComponent<Unit>().Deal(currentAtk);
+        target.GetComponent<Object>().Deal(currentAtk);
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -66,6 +66,7 @@ public class Enemy : Unit
 
         if (e.Data.Name == "shoot")
         {
+            if(target != GameManager.Instance.turret)
             target.GetComponent<UnitStateMachine>().SetAttackTargetInRange(gameObject);
 
             switch(attackType)

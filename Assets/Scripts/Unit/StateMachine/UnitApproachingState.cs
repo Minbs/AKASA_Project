@@ -11,9 +11,9 @@ public class UnitApproachingState : UnitBaseState
 
     public override void Update(UnitStateMachine stateMachine) 
     {
-        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move"
+        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
             && stateMachine.gameObject.GetComponent<Enemy>()) 
-            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, GameManager.Instance.gameSpeed);
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
         else if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
             && stateMachine.gameObject.GetComponent<Minion>())
             stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
@@ -21,12 +21,12 @@ public class UnitApproachingState : UnitBaseState
         if (stateMachine.gameObject.GetComponent<Minion>())
         {
             if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+                stateMachine.SetTargetInCognitiveRange();
             else
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
+                stateMachine.SetTargetInCognitiveRange();
         }
         else if (stateMachine.gameObject.GetComponent<Enemy>())
-            stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+            stateMachine.SetTargetInCognitiveRange();
 
 
         if (stateMachine.unit.target == null || !stateMachine.unit.target.activeSelf)
