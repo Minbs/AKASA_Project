@@ -11,6 +11,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
     public int index;
+    public int UnitIndex;
 
 
     // Update is called once per frame
