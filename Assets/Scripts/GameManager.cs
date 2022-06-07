@@ -237,6 +237,14 @@ public class GameManager : Singleton<GameManager>
         {
             SkillManager.Instance.UseCharacterSkill(1);
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SkillManager.Instance.UseCharacterSkill(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SkillManager.Instance.UseCharacterSkill(3);
+        }
     }
 
 

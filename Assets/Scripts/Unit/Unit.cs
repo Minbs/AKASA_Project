@@ -155,9 +155,7 @@ public class Unit : Object
     {
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
-        
+        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;    
     }
 
     /// <summary>
@@ -228,6 +226,38 @@ public class Unit : Object
         transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(block);
     }
 
+    public void GetPoisoned(float damage,float duration)
+    {
+        if (!isPoisoned)
+        {
+            StartCoroutine(Poisoned(damage, duration));
+        }
+        else
+            poisonTimer = 0;
+    }
+
+    public IEnumerator Poisoned(float damage, float duration)
+    {
+        isPoisoned = true;
+
+        while(poisonTimer <= duration)
+        {
+
+          poisonTimer += (1 + Time.deltaTime) * GameManager.Instance.gameSpeed;
+
+
+          currentHp -= damage;
+          StartCoroutine(ChangeUnitColor(new Color(1, 0, 1), 0.2f));
+          UpdateHealthbar();
+
+            Debug.Log(poisonTimer);
+          yield return new WaitForSeconds(1);
+
+        }
+
+        isPoisoned = false;
+    }
+
     public IEnumerator ChangeUnitColor(Color color, float duration)
     {
         if (gameObject != null)
@@ -271,6 +301,34 @@ public class Unit : Object
         }
 
         yield return null;
+    }
+
+    public IEnumerator ChangeStat(GameObject target, string stat, float value, float duration)
+    {
+        float Timer = 0;
+
+
+
+        if (stat == "ats")
+            attackSpeed += value;
+        else if(stat == "def")
+            def += value;
+
+        while (Timer <= duration)
+        {
+
+            Timer += Time.deltaTime * GameManager.Instance.gameSpeed;
+
+      
+
+            yield return null;
+        }
+
+
+        if (stat == "ats")
+            attackSpeed -= value;
+        else if (stat == "def")
+            def -= value;
     }
 
     public void SetPositionOnTile()

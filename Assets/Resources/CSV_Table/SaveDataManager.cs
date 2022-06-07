@@ -15,6 +15,7 @@ public class SaveData
     public int ZippoLevel;
     public int KuenLevel;
     public int PardoLevel;
+    public int VogueLevel;
     public int WratihLevel;
     public int HwaseonLevel;
     public int AsherLevel;

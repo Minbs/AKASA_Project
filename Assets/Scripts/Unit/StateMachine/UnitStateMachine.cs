@@ -105,7 +105,7 @@ public class UnitStateMachine : MonoBehaviour
             && unit.target.GetComponent<Object>().currentHp <= 0)
             unit.target = null;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.cognitiveRangeDistance, LayerMask.GetMask("Object"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.cognitiveRangeDistance);
 
         if (colliders.Length <= 0)
             return;
@@ -235,7 +235,7 @@ public class UnitStateMachine : MonoBehaviour
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance, LayerMask.GetMask("Object"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance);
 
         foreach(var col in colliders)
         {
