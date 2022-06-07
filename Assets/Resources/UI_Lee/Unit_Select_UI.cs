@@ -17,17 +17,18 @@ public class Unit_Select_UI : MonoBehaviour
     bool UnitToggle8 = false;
     bool UnitToggle9 = false;
 
-    int Button_interval = 165; //카드 간격
+    int Button_interval =165; //카드 간격
     int Unit_Maximum_Number = 9;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         for(int i = 0; i < Unit_Maximum_Number; i++)
         {
             //MinionButton[i].GetComponent<MinionButton>().UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex + 1;
             int UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex;
-            MinionButton[i].transform.DOMoveX(420 + Button_interval * UnitIndex, 0.5f, false); 
+            MinionButton[i].transform.DOLocalMoveX(100 + Button_interval * UnitIndex, 0.5f, false); 
         }
     }
 
@@ -35,24 +36,25 @@ public class Unit_Select_UI : MonoBehaviour
     {
         MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex-1;
         int UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex;
-        MinionButton[character_Number].transform.DOMoveX(470 + Button_interval*UnitIndex, 0.5f, false);
+        MinionButton[character_Number].transform.DOLocalMoveX(100+Button_interval * UnitIndex, 0.5f,false);
+        //MinionButton[character_Number].transform.DOMoveX(470 + Button_interval*UnitIndex, 0.5f, false);
     }
     void moveButtonRight(int character_Number)
     {
         MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex + 1;
         int UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex;
-        MinionButton[character_Number].transform.DOMoveX(470 + Button_interval * UnitIndex, 0.5f, false);
+        MinionButton[character_Number].transform.DOLocalMoveX(100+Button_interval * UnitIndex, 0.5f, false);
 
 
     }
     public void DownButton(int character_Number)
     {
-        MinionButton[character_Number].transform.DOMoveY(-77, 0.3f);
+        MinionButton[character_Number].transform.DOLocalMoveY(-350, 0.3f);
     }
 
     public void UpButton(int character_Number)
     {
-        MinionButton[character_Number].transform.DOMoveY(103, 0.3f);
+       MinionButton[character_Number].transform.DOLocalMoveY(-150, 0.3f);
     }
 
     public void Hide_Unit_Button(int character_Number)
