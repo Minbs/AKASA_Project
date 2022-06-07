@@ -46,6 +46,8 @@ public class Unit : Object
     private bool isPoisoned = false;
     private float poisonTimer = 0;
 
+    public bool isNonDamage = false;
+
     public Direction direction { get; set; }
 
     public SpineAnimation spineAnimation { get; set; }
@@ -180,8 +182,13 @@ public class Unit : Object
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
 
             //데미지 = (공격력 - 방어력) * N/100
+
+            if(!isNonDamage)
+            {
+
             damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
             damageSum = Mathf.Max(damageSum, 0.5f);
+            }
         }
 
         currentHp -= (float)damageSum;
@@ -303,7 +310,7 @@ public class Unit : Object
         yield return null;
     }
 
-    public IEnumerator ChangeStat(GameObject target, string stat, float value, float duration)
+    public IEnumerator ChangeStat(GameObject target, string stat, float value = 0, float duration = 0)
     {
         float Timer = 0;
 
@@ -311,8 +318,10 @@ public class Unit : Object
 
         if (stat == "ats")
             attackSpeed += value;
-        else if(stat == "def")
+        else if (stat == "def")
             def += value;
+        else if (stat == "non")
+            isNonDamage = true;
 
         while (Timer <= duration)
         {
@@ -329,6 +338,8 @@ public class Unit : Object
             attackSpeed -= value;
         else if (stat == "def")
             def -= value;
+        else if (stat == "non")
+            isNonDamage = false;
     }
 
     public void SetPositionOnTile()

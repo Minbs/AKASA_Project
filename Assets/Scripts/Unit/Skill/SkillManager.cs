@@ -458,7 +458,8 @@ public class SkillManager : Singleton<SkillManager>
         foreach (var target in skillTargets)
         {
             target.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-            EffectManager.Instance.InstantiateHomingEffect("asher_barrier", target, 5);
+            EffectManager.Instance.InstantiateHomingEffect("asher_barrier", target, 3);
+            StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "non", 0, 3));
         }
         
 
