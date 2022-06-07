@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Unit_Select_UI : MonoBehaviour
 {
     public GameObject[] MinionButton;
+    public bool[] UnitOnOff;
     bool UnitToggle1 = false;            //시연 버그 방지용 토글
     bool UnitToggle2 = false;
     bool UnitToggle3 = false;
@@ -23,7 +24,6 @@ public class Unit_Select_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         for(int i = 0; i < Unit_Maximum_Number; i++)
         {
             //MinionButton[i].GetComponent<MinionButton>().UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex + 1;
@@ -32,12 +32,30 @@ public class Unit_Select_UI : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        Debug.Log("reset");
+        for(int i = 0; i < Unit_Maximum_Number; i++)
+        {
+            if (UnitOnOff[i] == true)
+            {
+                int UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex;
+                MinionButton[i].transform.DOLocalMoveX(100 + Button_interval * UnitIndex, 0.5f, false);
+            }
+            else
+            {
+                int UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex;
+                MinionButton[i].transform.DOLocalMoveX(100 + Button_interval * UnitIndex, 0.5f, false);
+                //MinionButton[i].transform.DOLocalMoveY(-350, 0.3f);
+            }
+        }
+        
+    }
     void moveButtonLeft(int character_Number)
     {
         MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex-1;
         int UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex;
         MinionButton[character_Number].transform.DOLocalMoveX(100+Button_interval * UnitIndex, 0.5f,false);
-        //MinionButton[character_Number].transform.DOMoveX(470 + Button_interval*UnitIndex, 0.5f, false);
     }
     void moveButtonRight(int character_Number)
     {
@@ -49,12 +67,15 @@ public class Unit_Select_UI : MonoBehaviour
     }
     public void DownButton(int character_Number)
     {
+        Debug.Log("버튼 다운");
         MinionButton[character_Number].transform.DOLocalMoveY(-350, 0.3f);
     }
 
     public void UpButton(int character_Number)
     {
-       MinionButton[character_Number].transform.DOLocalMoveY(-150, 0.3f);
+        Debug.Log("버튼 업");
+        MinionButton[character_Number].transform.DOLocalMoveY(-150, 0.3f);
+
     }
 
     public void Hide_Unit_Button(int character_Number)
@@ -86,13 +107,18 @@ public class Unit_Select_UI : MonoBehaviour
         {
             if (UnitToggle1 == false)
             {
+                Debug.Log("Hide");
                 Hide_Unit_Button(0);
                 UnitToggle1 = true;
+                UnitOnOff[0] = true;
             }
             else
             {
+                Debug.Log("Display");
                 Display_Unit_Button(0);
                 UnitToggle1 = false;
+                UnitOnOff[0] = false;
+
             }
         }
         if (Input.GetKeyDown(KeyCode.W))
@@ -101,11 +127,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(1);
                 UnitToggle2 = true;
+                UnitOnOff[1] = true;
             }
             else
             {
                 Display_Unit_Button(1);
                 UnitToggle2 = false;
+                UnitOnOff[1] = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
@@ -114,11 +142,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(2);
                 UnitToggle3 = true;
+                UnitOnOff[2] = true;
             }
             else
             {
                 Display_Unit_Button(2);
                 UnitToggle3 = false;
+                UnitOnOff[2] = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.R))
@@ -127,11 +157,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(3);
                 UnitToggle4 = true;
+                UnitOnOff[3] = true;
             }
             else
             {
                 Display_Unit_Button(3);
                 UnitToggle4 = false;
+                UnitOnOff[3] = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.T))
@@ -140,11 +172,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(4);
                 UnitToggle5 = true;
+                UnitOnOff[4] = true;
             }
             else
             {
                 Display_Unit_Button(4);
                 UnitToggle5 = false;
+                UnitOnOff[4] = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.Y))
@@ -153,11 +187,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(5);
                 UnitToggle6 = true;
+                UnitOnOff[5] = true;
             }
             else
             {
                 Display_Unit_Button(5);
                 UnitToggle6 = false;
+                UnitOnOff[5] = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.U))
@@ -166,11 +202,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(6);
                 UnitToggle7 = true;
+                UnitOnOff[6] = true;
             }
             else
             {
                 Display_Unit_Button(6);
                 UnitToggle7 = false;
+                UnitOnOff[6] = true;
             }
         }
         if (Input.GetKeyDown(KeyCode.I))
@@ -179,11 +217,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(7);
                 UnitToggle8 = true;
+                UnitOnOff[7] = true;
             }
             else
             {
                 Display_Unit_Button(7);
                 UnitToggle8 = false;
+                UnitOnOff[7] = true;
             }
         }
 
@@ -193,11 +233,13 @@ public class Unit_Select_UI : MonoBehaviour
             {
                 Hide_Unit_Button(8);
                 UnitToggle9 = true;
+                UnitOnOff[8] = true;
             }
             else
             {
                 Display_Unit_Button(8);
                 UnitToggle9 = false;
+                UnitOnOff[8] = false;
             }
         }
 
