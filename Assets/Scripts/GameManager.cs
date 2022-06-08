@@ -149,7 +149,7 @@ public class GameManager : Singleton<GameManager>
                 pos += minionSetPosition;
                 settingCharacter.transform.position = pos;
                 settingCharacter.GetComponent<DefenceMinion>().onTile.isOnUnit = true;
-                BattleUIManager.Instance.sellPanel.SetActive(false);
+                BattleUIManager.Instance.upgradeSell.sellPanel.SetActive(false);
             }
             else
             {
@@ -157,26 +157,26 @@ public class GameManager : Singleton<GameManager>
             }
         }
 
-        BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+        BattleUIManager.Instance.upgradeSell.minionUpgradeUI.SetActive(false);
         settingCharacter = null;
         StartCoroutine(BattleState());
     }
 
     void WaitStateUpdate()
     {
-        if(BattleUIManager.Instance.minionUpgradeUI.activeSelf)
+        if(BattleUIManager.Instance.upgradeSell.minionUpgradeUI.activeSelf)
         {
                 if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")) )
                 {
                 if (!raycastHit.collider.transform.parent.GetComponent<Minion>()
                     && Input.GetMouseButtonUp(1))
-                    BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+                    BattleUIManager.Instance.upgradeSell.minionUpgradeUI.SetActive(false);
                 }
                else
             {
                 if (Input.GetMouseButtonUp(1))
                 {
-                    BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+                    BattleUIManager.Instance.upgradeSell.minionUpgradeUI.SetActive(false);
                 }
             }
         }
@@ -309,7 +309,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void PositioningMinion()
     {
-        BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+        BattleUIManager.Instance.upgradeSell.minionUpgradeUI.SetActive(false);
 
         foreach (var minion in minionsList)
         {
