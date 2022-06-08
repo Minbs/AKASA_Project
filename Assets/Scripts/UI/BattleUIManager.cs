@@ -87,6 +87,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     bool isDeployBtnCheck = true;
     bool isSkillBtnCheck = true;
     bool UnitBar_oneTimeResetTrigger = false;
+    bool SkillBar_oneTimeResetTrigger = false;
 
 
     AudioSource audioSource;
@@ -269,6 +270,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
             text[i].gameObject.SetActive(false);
         UnitBar_oneTimeResetTrigger = false;
         wPanObj.SetActive(false);
+        if (SkillBar_oneTimeResetTrigger == false)
+        {
+            this.GetComponent<Unit_Select_UI>().SkillReset();
+            SkillBar_oneTimeResetTrigger = true;
+        }
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -306,7 +312,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
-
+                SkillBar_oneTimeResetTrigger = false;
                 //mBG.SetActive(true);
 
                 wPanObj.SetActive(true);
@@ -316,6 +322,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
                     this.GetComponent<Unit_Select_UI>().Reset();
                     UnitBar_oneTimeResetTrigger = true;
                 }
+
+               
                 
                 bPanObj.SetActive(false);
 

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Unit_Select_UI : MonoBehaviour
 {
     public GameObject[] MinionButton;
+    public GameObject[] SkillButton;
     public bool[] UnitOnOff;
 
 
@@ -31,29 +32,51 @@ public class Unit_Select_UI : MonoBehaviour
             if (UnitOnOff[i] == false)
             {
                 int UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex;
-                MinionButton[i].transform.DOLocalMoveY(50,0.5f,false);
-                MinionButton[i].transform.DOLocalMoveX(100 + Button_interval * UnitIndex, 0.5f, false);
+                MinionButton[i].transform.DOLocalMoveY(47,0.5f,false);
+                MinionButton[i].transform.DOLocalMoveX(120 + Button_interval * UnitIndex, 0.5f, false);
 
             }
             else
             {
                 int UnitIndex = MinionButton[i].GetComponent<MinionButton>().UnitIndex;
-                MinionButton[i].transform.DOLocalMoveX(100 + Button_interval * UnitIndex, 0.5f, false);
+                MinionButton[i].transform.DOLocalMoveX(120 + Button_interval * UnitIndex, 0.5f, false);
             }
         }
         
     }
+
+    public void SkillReset()
+    {
+        int UnitIndex = 0;
+        for (int i = 0; i < Unit_Maximum_Number; i++)
+        {
+           
+            if (UnitOnOff[i] == true)
+            {
+                SkillButton[i].transform.DOLocalMoveY(47, 0.5f, false);
+                SkillButton[i].transform.DOLocalMoveX(120 + Button_interval * UnitIndex, 0.5f, false);
+                UnitIndex++;
+
+            }
+            else
+            {
+                //int UnitIndex = SkillButton[i].GetComponent<MinionButton>().UnitIndex;
+                SkillButton[i].transform.DOLocalMoveX(120 + Button_interval * UnitIndex, 0.5f, false);
+            }
+        }
+    }
+
     void moveButtonLeft(int character_Number)
     {
         MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex-1;
         int UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex;
-        MinionButton[character_Number].transform.DOLocalMoveX(100+Button_interval * UnitIndex, 0.5f,false);
+        MinionButton[character_Number].transform.DOLocalMoveX(120+Button_interval * UnitIndex, 0.5f,false);
     }
     void moveButtonRight(int character_Number)
     {
         MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex + 1;
         int UnitIndex = MinionButton[character_Number].GetComponent<MinionButton>().UnitIndex;
-        MinionButton[character_Number].transform.DOLocalMoveX(100+Button_interval * UnitIndex, 0.5f, false);
+        MinionButton[character_Number].transform.DOLocalMoveX(120+Button_interval * UnitIndex, 0.5f, false);
 
 
     }
