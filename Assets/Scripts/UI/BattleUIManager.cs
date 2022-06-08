@@ -216,9 +216,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     [Serializable]
     public class UpgradeSell
     {
+        [Tooltip("(필요) sellPanel")]
         public GameObject sellPanel;
+        [Tooltip("(필요) IncomeUpgradeImage")]
         public GameObject incomeUpgradeButton;
+        [Tooltip("(필요) CostAcquisitionText")]
         public TextMeshProUGUI incomeText;
+        [Tooltip("(필요) UpgradeImage")]
         public GameObject minionUpgradeUI;
     }
 
