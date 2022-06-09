@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4498833398311536320}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: kuen_effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,10 +39,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4498833398311536320}
     m_Modifications:
+    - target: {fileID: 1415498583437609633, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1796886936634546630, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
       propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2004677979986857521, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004677979986857521, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 624b1717b7cb6314a86bff3f8da60ff4, type: 2}
     - target: {fileID: 2595976075913359168, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.5
@@ -67,9 +79,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2595976075913359174, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595976075913359174, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1047900443
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595976075913359175, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4281053063580950357, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
       propertyPath: m_Name
       value: kuen_sting
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281053063580950357, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186430968111362750, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186430968111362750, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1047900443
       objectReference: {fileID: 0}
     - target: {fileID: 6599319048735550144, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
       propertyPath: m_RootOrder
@@ -115,7 +151,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7221933527081906374, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221933527081906374, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1047900443
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017906443666887989, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 151f5a044be370045bf095720b4c60f0, type: 2}
+    m_RemovedComponents:
+    - {fileID: 9017906443666887989, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
+    - {fileID: 2004677979986857521, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8d6b7b6e20bf1894ab01c149d81356c0, type: 3}
 --- !u!4 &7348305134891572334 stripped
 Transform:

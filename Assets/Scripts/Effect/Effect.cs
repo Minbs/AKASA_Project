@@ -48,7 +48,7 @@ public class Effect : MonoBehaviour
             }
 
 
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * GameManager.Instance.gameSpeed;
             transform.position = target.transform.position;
             yield return null;
         }

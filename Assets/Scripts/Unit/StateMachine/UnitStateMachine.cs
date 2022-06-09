@@ -275,6 +275,9 @@ public class UnitStateMachine : MonoBehaviour
 
     public void LookAtTarget(Vector3 targetPos)
     {
+        if (GameManager.Instance.gameSpeed.Equals(0))
+            return;
+
         Vector3 scale = transform.GetChild(0).localScale;
         Vector3 prevScale = scale;
 

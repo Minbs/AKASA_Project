@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3ba088b2c939e3b4b89bf401264e8968, type: 2}
+  - {fileID: 2100000, guid: 9ab7263da48074d47bffe30204590e52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 1d9fe4ee305af104f9bbe5751aa7a20a, type: 2}
-  initialSkinName: sopia
+  skeletonDataAsset: {fileID: 11400000, guid: a4494ca71159aae4ca53c2727657c050, type: 2}
+  initialSkinName: sophia
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1394970959969739886}
   - component: {fileID: 5133784606395381597}
   m_Layer: 9
-  m_Name: Sophia
+  m_Name: sophia
   m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -199,6 +199,7 @@ MonoBehaviour:
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 1609300146875696240}
   minionClass: 3
   attackType: 3

@@ -320,6 +320,8 @@ public class Unit : Object
             attackSpeed += value;
         else if (stat == "def")
             def += value;
+        else if (stat == "atk")
+            currentAtk += value;
         else if (stat == "non")
             isNonDamage = true;
 
@@ -338,6 +340,8 @@ public class Unit : Object
             attackSpeed -= value;
         else if (stat == "def")
             def -= value;
+        else if (stat == "atk")
+            currentAtk -= value;
         else if (stat == "non")
             isNonDamage = false;
     }
