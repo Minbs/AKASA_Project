@@ -54,7 +54,7 @@ public class EditList : Singleton<EditList>
     public void SetEdit()
     {
         myList.Clear();
-        EditMax = 10;
+        //EditMax = 10;
         if (EditMax / 2 == 1)       // 무조건 짝수로 변환해줘야 함.
             EditMax++;
         for (int i = 0; i < EditMax; i++)
@@ -87,6 +87,8 @@ public class EditList : Singleton<EditList>
     public void LoadData()
     {
         Debug.Log("데이터 로드");
+        if (UserData.Instance == null)
+            return;
         int m_count = UserData.Instance.LoadUnitData().Count;
         if (m_count > 0)
         {
