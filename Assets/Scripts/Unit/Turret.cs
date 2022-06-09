@@ -11,7 +11,7 @@ public class Turret : Object
     public GameObject cannon;
     public float rotateSpeed;
 
-    private float attackTimer = 0; // 타이머
+    public float attackTimer = 0; // 타이머
     public float attackSpeed; // 쿨타임
 
     public float attackDistance; // 공격 가능 범위
@@ -44,9 +44,9 @@ public class Turret : Object
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Default")))
         {
+
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log(hit.point);
                 StartCoroutine(Shoot(hit.point));
             }
         }
@@ -67,7 +67,7 @@ public class Turret : Object
         float proceed = 0;
         isAttacking = true;
 
-
+        
 
         while (proceed < 1)
         {

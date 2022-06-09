@@ -32,7 +32,7 @@ public class DefenceMinion : Minion
 
     public float cost;
     public float sellCost;
-
+    public GameObject UImanager;
     public float skillTimer { get; set; }
     public float skillCoolTime;
 
@@ -44,7 +44,13 @@ public class DefenceMinion : Minion
 
     public SkillType skillType;
 
-
+    private void Awake()
+    {
+    }
+    public void resetUnitCard()
+    {
+        UImanager.GetComponent<Unit_Select_UI>().Display_Unit_Button(this.GetComponent<DefenceMinion>().Unitname);
+    }
     private void OnDestroy()
     {
         if (GameManager.Instance != null)
@@ -63,15 +69,6 @@ public class DefenceMinion : Minion
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
-        if (e.Data.Name == "shoot" && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill"
-           || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill1"
-           || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skil2"
-           || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill3"))
-        {
-            Debug.Log(e.Data.Name);
-                    SkillManager.Instance.MinionSkillEvent(Unitname);
-        }
-
         if (target == null)
         {
             return;
@@ -99,8 +96,10 @@ public class DefenceMinion : Minion
             }
         }
 
-  
+        if (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
+        {
 
+        }
     }
 
 
@@ -181,10 +180,6 @@ public class DefenceMinion : Minion
     // Update is called once per frame
     protected override void Update()
     {
-        skillTimer += Time.deltaTime * GameManager.Instance.gameSpeed;
-
-        
-
         base.Update();
     }
 }

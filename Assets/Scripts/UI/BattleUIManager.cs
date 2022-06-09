@@ -22,6 +22,7 @@ using DG.Tweening;
 public class BattleUIManager : Singleton<BattleUIManager>
 {
     public GameObject worldCanvas;
+    public GameObject TurretAtkRedCircle;
 
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
@@ -86,8 +87,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     bool isDeployBtnCheck = true;
     bool isSkillBtnCheck = true;
+    bool UnitBar_oneTimeResetTrigger = false;
+    bool SkillBar_oneTimeResetTrigger = false;
+
 
     AudioSource audioSource;
+
 
     public GameObject bBObj;
     private GameObject wBtnObj;
@@ -264,8 +269,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         for (int i = 0; i < 3; i++)
             text[i].gameObject.SetActive(false);
-
+        UnitBar_oneTimeResetTrigger = false;
         wPanObj.SetActive(false);
+        if (SkillBar_oneTimeResetTrigger == false)
+        {
+            this.GetComponent<Unit_Select_UI>().SkillReset();
+            SkillBar_oneTimeResetTrigger = true;
+        }
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -303,10 +313,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
-
+                SkillBar_oneTimeResetTrigger = false;
                 //mBG.SetActive(true);
 
                 wPanObj.SetActive(true);
+
+                if (UnitBar_oneTimeResetTrigger == false)
+                {
+                    this.GetComponent<Unit_Select_UI>().Reset();
+                    UnitBar_oneTimeResetTrigger = true;
+                }
+
+               
+                
                 bPanObj.SetActive(false);
 
                 wBtnObj.SetActive(true);
@@ -405,6 +424,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary> 미니언 배치 </summary> <param name="index"></param>
     public void DeploymentMinion(int index)
     {
+
         if (GameManager.Instance.cost >= 0)
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)

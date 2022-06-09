@@ -62,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemySpawnDatas.Count <= 0
             || enemySpawnDatas[0].wave != wave)
-            yield break;
+        yield break;
 
         yield return null;
         GameObject enemy = ObjectPool.Instance.PopFromPool(enemySpawnDatas[0].name);
@@ -71,5 +71,6 @@ public class EnemySpawner : MonoBehaviour
         GameManager.Instance.enemiesList.Add(enemy);
         enemy.SetActive(true);
         enemySpawnDatas.RemoveAt(0);
+
     }
 }

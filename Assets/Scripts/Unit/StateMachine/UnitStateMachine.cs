@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class UnitStateMachine : MonoBehaviour
 {
     public UnitBaseState currentState { get; set; }
     private UnitBaseState prevState;
-
     public UnitIdleState idleState = new UnitIdleState(); //대기 상태
     public UnitMoveState moveState = new UnitMoveState(); //행동선택
     public UnitApproachingState approachingState = new UnitApproachingState(); //명령 대기 상태
     public UnitAttackState AttackState = new UnitAttackState();
     public UnitSkillPerformState SkillPerformState = new UnitSkillPerformState();
-
+    GameObject UImanager;
+ 
     public Unit unit { get; set; }
     public NavMeshAgent agent { get; set; }
 
     private float speed;
+    bool onetimetrigger = true;
 
     public bool isDeploying { get; set; }
 
     private void Awake()
     {
+        UImanager = GameObject.FindGameObjectWithTag("UIManager");
         currentState = idleState;
         unit = GetComponent<Unit>();
         agent = GetComponent<NavMeshAgent>();
@@ -48,10 +51,26 @@ public class UnitStateMachine : MonoBehaviour
 
         if (unit.currentHp <= 0)
         {
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            StartCoroutine(unit.Die());
-            return;
+            
+                if (this.name == "Enemy1" || this.name == "Enemy2" || this.name == "Enemy3" || this.name == "Enemy4")
+                {
+                    agent.isStopped = true;
+                    agent.velocity = Vector3.zero;
+                    StartCoroutine(unit.Die());
+                    onetimetrigger = false;
+                    return;
+                }
+
+                if (onetimetrigger == true)
+                {
+                    UImanager.GetComponent<Unit_Select_UI>().Display_Unit_Button(this.GetComponent<DefenceMinion>().Unitname);
+                    onetimetrigger = false;
+                 }
+                agent.isStopped = true;
+                agent.velocity = Vector3.zero;
+                StartCoroutine(unit.Die());
+                return;
+            
         }
 
         agent.speed = speed * GameManager.Instance.gameSpeed;
@@ -302,7 +321,7 @@ public class UnitStateMachine : MonoBehaviour
         agent.SetDestination(unit.onTile.transform.position);
         LookAtTarget(unit.onTile.transform.position);
 
-        Debug.Log(Vector3.Distance(unit.transform.position, unit.onTile.transform.position));
+        //Debug.Log(Vector3.Distance(unit.transform.position, unit.onTile.transform.position));
 
         if (Vector3.Distance(unit.transform.position, unit.onTile.transform.position) < 0.15)
         {
