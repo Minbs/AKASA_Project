@@ -68,12 +68,12 @@ public class SkillManager : Singleton<SkillManager>
 
         skillUnit = GameManager.Instance.minionsList[index];
 
-        if (skillUnit.GetComponent<DefenceMinion>().skillTimer < skillUnit.GetComponent<DefenceMinion>().skillCoolTime)
-        {
-            return;
-            Debug.Log(skillUnit.GetComponent<DefenceMinion>().skillTimer);
-        }
-
+     //   if (skillUnit.GetComponent<DefenceMinion>().skillTimer < skillUnit.GetComponent<DefenceMinion>().skillCoolTime)
+    //    {
+   //         return;
+     //       Debug.Log(skillUnit.GetComponent<DefenceMinion>().skillTimer);
+    //    }
+//
         minionName = skillUnit.GetComponent<DefenceMinion>().Unitname;
         isSkillActing = true;
         skillBackgroundImage.SetActive(true);

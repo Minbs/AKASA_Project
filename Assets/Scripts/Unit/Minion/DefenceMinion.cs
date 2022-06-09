@@ -69,10 +69,20 @@ public class DefenceMinion : Minion
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
-        if (target == null)
+        if (e.Data.Name == "shoot" && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill"
+            || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill1"
+            || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill2"
+            || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill3"))
+        {
+            SkillManager.Instance.MinionSkillEvent(Unitname);
+        }
+
+            if (target == null)
         {
             return;
         }
+
+
 
         if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
         {
@@ -180,6 +190,8 @@ public class DefenceMinion : Minion
     // Update is called once per frame
     protected override void Update()
     {
+        skillTimer += Time.deltaTime * GameManager.Instance.gameSpeed;
+
         base.Update();
     }
 }
