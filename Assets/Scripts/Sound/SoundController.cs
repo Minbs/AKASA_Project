@@ -7,14 +7,20 @@ using System;
 
 enum SoundSequence
 {
+    DefenceStageSceneButtonClick01,
+    DefenceStageSceneButtonClick02,
+    DefenceStageSceneButtonClick03,
     MainSceneButtonClick01,
     MainSceneButtonClick02,
+    MainSceneButtonClick03,
     MainSceneButtonLick01,
     MainSceneButtonLick02,
     MainSceneButtonLick03,
     StageSelectSceneButtonClick01,
     StageSelectSceneButtonClick02,
     StageSelectSceneButtonClick03,
+    StageSelectSceneButtonClick04,
+    StageSelectSceneButtonClick05,
     StageSelectSceneButtonLick01,
     StageSelectSceneButtonLick02,
     StageSelectSceneButtonLick03,
@@ -27,7 +33,7 @@ enum SoundSequence
 
 public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [HideInInspector]
+    //[HideInInspector]
     public AudioClip[] uiClip;
 
     [Space(10)]
@@ -131,6 +137,11 @@ public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             
         }
+
+        if (SceneManager.GetActiveScene().name == "DefenceStageScene")
+        {
+
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -158,6 +169,9 @@ public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
                 if (mainScene.buttonClick[1])
                     SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.MainSceneButtonClick02]);
+
+                if (mainScene.buttonClick[2])
+                    SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.MainSceneButtonClick03]);
             }
         }
 
@@ -173,6 +187,12 @@ public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
                 if (stageSelectScene.buttonClick[2])
                     SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.StageSelectSceneButtonClick03]);
+
+                if (stageSelectScene.buttonClick[3])
+                    SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.StageSelectSceneButtonClick04]);
+
+                if (stageSelectScene.buttonClick[4])
+                    SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.StageSelectSceneButtonClick05]);
             }
         }
 
@@ -192,7 +212,11 @@ public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
+                if (defenceStageScene.buttonClick[0])
+                    SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.DefenceStageSceneButtonClick01]);
 
+                if (defenceStageScene.buttonClick[1])
+                    SoundManager.Instance.PlayEffectsSound(uiClip[(int)SoundSequence.DefenceStageSceneButtonClick02]);
             }
         }
     }
