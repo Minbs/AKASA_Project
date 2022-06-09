@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7038330258952526154}
   - component: {fileID: 4462006901306146636}
   - component: {fileID: 6446028627423085391}
+  - component: {fileID: 5547054607244885435}
   m_Layer: 9
   m_Name: Spine GameObject (sd_main_new_01)
   m_TagString: Untagged
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: aa33a5ee965121946b16c4ffb2bf7e1c, type: 2}
+  - {fileID: 2100000, guid: 758bf82a821f297428af387b3afa2717, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,9 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: a7e20c9e4956f4146bfe50ca636e4648, type: 2}
-  initialSkinName: 
-  initialFlipX: 0
+  skeletonDataAsset: {fileID: 11400000, guid: f53c517a6412adc4d98d5be2d9b3c1f4, type: 2}
+  initialSkinName: kuen
+  initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
@@ -118,9 +119,22 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: kuen/run
+  _animationName: kuen/idle
   loop: 1
   timeScale: 1
+--- !u!65 &5547054607244885435
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758246430292652753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.857194, y: 13.688803, z: 0.00000081591617}
+  m_Center: {x: -0.33979917, y: 6.6891456, z: 0.00000033548355}
 --- !u!1 &6208362256301881235
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,9 +145,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
-  - component: {fileID: 952972306829411379}
+  - component: {fileID: 5185519813409746606}
+  - component: {fileID: 1482157049147480234}
   m_Layer: 9
-  m_Name: Kuen
+  m_Name: kuen
   m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +167,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3156137467378285153}
-  - {fileID: 6717993523047367701}
+  - {fileID: 8617756268334212626}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -174,28 +189,29 @@ MonoBehaviour:
   poolItemName: 
   Unitname: Kuen
   Level: 1
-  atk: 6
+  atk: 2
   currentAtk: 0
   def: 0
   rectangleWidthRange: 0
   rectangleHeightRange: 0
   attackRangeDistance: 1
-  cognitiveRangeDistance: 5
+  cognitiveRangeDistance: 3
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
-  healthBar: {fileID: 5814845813638632022}
-  minionClass: 0
+  isNonDamage: 0
+  healthBar: {fileID: 8795824034042409041}
+  minionClass: 1
   attackType: 1
-  cost: 18
-  sellCost: 13
+  cost: 9
+  sellCost: 6
   skillCoolTime: 0
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 0}
   skillType: 0
   sightAngle: 0
   sightDistance: 0
---- !u!195 &952972306829411379
+--- !u!195 &5185519813409746606
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +233,23 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!1001 &2380400476443150801
+--- !u!54 &1482157049147480234
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1001 &840925948386307030
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -282,11 +314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8191521
+      value: 0.9396927
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5735764
+      value: 0.3420201
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.y
@@ -306,7 +338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 70
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -318,10 +350,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
---- !u!114 &5814845813638632022 stripped
+--- !u!224 &8617756268334212626 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
+  m_PrefabInstance: {fileID: 840925948386307030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8795824034042409041 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8195032804384938887, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
-  m_PrefabInstance: {fileID: 2380400476443150801}
+  m_PrefabInstance: {fileID: 840925948386307030}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -329,8 +366,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &6717993523047367701 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
-  m_PrefabInstance: {fileID: 2380400476443150801}
-  m_PrefabAsset: {fileID: 0}

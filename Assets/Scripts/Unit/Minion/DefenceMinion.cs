@@ -65,7 +65,7 @@ public class DefenceMinion : Minion
     {
         if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill")
         {
-            Debug.Log(Unitname);
+                    SkillManager.Instance.MinionSkillEvent(Unitname);
         }
 
         if (target == null)
