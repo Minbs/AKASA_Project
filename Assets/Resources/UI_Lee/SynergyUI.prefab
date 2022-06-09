@@ -148,6 +148,8 @@ GameObject:
   - component: {fileID: 438512717310662293}
   - component: {fileID: 438512717310662290}
   - component: {fileID: 438512717310662291}
+  - component: {fileID: 9129262623477821310}
+  - component: {fileID: 2739440812699908275}
   m_Layer: 5
   m_Name: OnButton
   m_TagString: Untagged
@@ -269,6 +271,31 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9129262623477821310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438512717310662289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdea63e07a5a7214d9fc7a4cd6730f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &2739440812699908275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438512717310662289}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 218.12244, y: 102.36554, z: 174.13054}
+  m_Center: {x: 20.711945, y: -50.68277, z: -5.1864243}
 --- !u!1 &438512717324840618
 GameObject:
   m_ObjectHideFlags: 0

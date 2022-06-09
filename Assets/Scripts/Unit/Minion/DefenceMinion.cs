@@ -32,7 +32,7 @@ public class DefenceMinion : Minion
 
     public float cost;
     public float sellCost;
-
+    public GameObject UImanager;
     public float skillTimer { get; set; }
     public float skillCoolTime;
 
@@ -47,7 +47,10 @@ public class DefenceMinion : Minion
     private void Awake()
     {
     }
-
+    public void resetUnitCard()
+    {
+        UImanager.GetComponent<Unit_Select_UI>().Display_Unit_Button(this.GetComponent<DefenceMinion>().Unitname);
+    }
     private void OnDestroy()
     {
         if (GameManager.Instance != null)

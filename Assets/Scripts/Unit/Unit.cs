@@ -5,6 +5,7 @@ using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.Events;
 public enum Direction
 {
     LEFT,
@@ -20,7 +21,7 @@ public class Unit : Object
     public string Unitname;
     public int Level = 1;
     private Stat ParsingStat;
-
+    public UnityEvent UnitDisplay;
 
     public Tile onTile { get; set; }
     [Header("UnitStat")]
@@ -79,7 +80,7 @@ public class Unit : Object
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
-            attackRangeDistance = ParsingStat.AtkRange;
+            attackRangeDistance = ParsingStat.AtkRange1;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
 
@@ -92,7 +93,7 @@ public class Unit : Object
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
-            attackRangeDistance = ParsingStat.AtkRange;
+            attackRangeDistance = ParsingStat.AtkRange1;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
         }
@@ -355,7 +356,7 @@ public class Unit : Object
       currentAtk = atk;
       def = stat.Def;
       attackSpeed = stat.AtkSpeed;
-      attackRangeDistance = stat.AtkRange;
+      attackRangeDistance = stat.AtkRange1;
 
       if (GetComponent<DefenceMinion>())
       {

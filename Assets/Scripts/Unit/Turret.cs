@@ -11,7 +11,7 @@ public class Turret : Object
     public GameObject cannon;
     public float rotateSpeed;
 
-    private float attackTimer = 0; // 타이머
+    public float attackTimer = 0; // 타이머
     public float attackSpeed; // 쿨타임
 
     public float attackDistance; // 공격 가능 범위

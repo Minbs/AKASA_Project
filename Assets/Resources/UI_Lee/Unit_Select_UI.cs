@@ -9,7 +9,7 @@ public class Unit_Select_UI : MonoBehaviour
     public GameObject[] MinionButton;
     public GameObject[] SkillButton;
     public bool[] UnitOnOff;
-
+    public GameObject TurretAktCircle;
 
     int Button_interval =165; //카드 간격
     int Unit_Maximum_Number = 12;
@@ -25,9 +25,10 @@ public class Unit_Select_UI : MonoBehaviour
         }
     }
 
-    public void Reset()
+    public void Reset() //배치시간
     {
-        for(int i = 0; i < Unit_Maximum_Number; i++)
+        TurretAktCircle.SetActive(false);
+        for (int i = 0; i < Unit_Maximum_Number; i++)
         {
             if (UnitOnOff[i] == false)
             {
@@ -45,23 +46,25 @@ public class Unit_Select_UI : MonoBehaviour
         
     }
 
-    public void SkillReset()
+    public void SkillReset() //전투시간
     {
+
         int UnitIndex = 0;
+        TurretAktCircle.SetActive(true);
         for (int i = 0; i < Unit_Maximum_Number; i++)
         {
            
             if (UnitOnOff[i] == true)
             {
                 SkillButton[i].transform.DOLocalMoveY(47, 0.5f, false);
-                SkillButton[i].transform.DOLocalMoveX(120 + Button_interval * UnitIndex, 0.5f, false);
+                SkillButton[i].transform.DOLocalMoveX(230 + Button_interval * UnitIndex, 0.5f, false);
                 UnitIndex++;
 
             }
             else
             {
                 //int UnitIndex = SkillButton[i].GetComponent<MinionButton>().UnitIndex;
-                SkillButton[i].transform.DOLocalMoveX(120 + Button_interval * UnitIndex, 0.5f, false);
+                SkillButton[i].transform.DOLocalMoveX(230 + Button_interval * UnitIndex, 0.5f, false);
             }
         }
     }
@@ -82,13 +85,11 @@ public class Unit_Select_UI : MonoBehaviour
     }
     public void DownButton(int character_Number)
     {
-        Debug.Log("버튼 다운");
         MinionButton[character_Number].transform.DOLocalMoveY(-150, 0.3f);
     }
 
     public void UpButton(int character_Number)
-    {
-        Debug.Log("버튼 업");
+    { 
         MinionButton[character_Number].transform.DOLocalMoveY(50, 0.3f);
 
     }
@@ -111,6 +112,114 @@ public class Unit_Select_UI : MonoBehaviour
             moveButtonRight(i);
         }
     }
+
+    public void Hide_Unit_Button(string character_Name)
+    {
+        int Character_Number = -1;
+        switch (character_Name)
+        {
+            case "Verity":
+                Character_Number = 0;
+                break;
+            case "Zippo":
+                Character_Number = 1;
+                break;
+            case "Asher":
+                Character_Number = 2;
+                break;
+            case "Pay":
+                Character_Number = 3;
+                break;
+            case "Isabella":
+                Character_Number = 4;
+                break;
+            case "Kuen":
+                Character_Number = 5;
+                break;
+            case "Pardo":
+                Character_Number = 6;
+                break;
+            case "Sophia":
+                Character_Number = 7;
+                break;
+            case "Vogue":
+                Character_Number = 8;
+                break;
+            case "Eremedium":
+                Character_Number = 9;
+                break;
+            case "Wraith":
+                Character_Number = 10;
+                break;
+            case "Hwaseon":
+                Character_Number = 11;
+                break;
+            default:
+                break;
+
+        }
+        DownButton(Character_Number);
+        UnitOnOff[Character_Number] = true;
+        for (int i = Character_Number + 1; i < Unit_Maximum_Number; i++)
+        {
+            moveButtonLeft(i);
+        }
+    }
+
+    public void Display_Unit_Button(string character_Name)
+    {
+        int Character_Number = -1;
+        switch (character_Name)
+        {
+            case "Verity":
+                Character_Number = 0;
+                break;
+            case "Zippo":
+                Character_Number = 1;
+                break;
+            case "Asher":
+                Character_Number = 2;
+                break;
+            case "Pay":
+                Character_Number = 3;
+                break;
+            case "Isabella":
+                Character_Number = 4;
+                break;
+            case "Kuen":
+                Character_Number = 5;
+                break;
+            case "Pardo":
+                Character_Number = 6;
+                break;
+            case "Sophia":
+                Character_Number = 7;
+                break;
+            case "Vogue":
+                Character_Number = 8;
+                break;
+            case "Eremedium":
+                Character_Number = 9;
+                break;
+            case "Wraith":
+                Character_Number = 10;
+                break;
+            case "Hwaseon":
+                Character_Number = 11;
+                break;
+            default:
+                break;
+
+        }
+
+        UpButton(Character_Number);
+        UnitOnOff[Character_Number] = false;
+        for (int i = Character_Number + 1; i < Unit_Maximum_Number; i++)
+        {
+            moveButtonRight(i);
+        }
+    }
+
 
 
     // Update is called once per frame

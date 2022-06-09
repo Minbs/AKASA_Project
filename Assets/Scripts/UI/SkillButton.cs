@@ -11,9 +11,10 @@ using DG.Tweening;
 public class SkillButton : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
-    public Image SkillIcon;
     public int index;
     public int UnitIndex;
+    public GameObject SkillTextUI;
+    public GameObject SelectdImage;
 
 
     // Update is called once per frame
@@ -44,16 +45,16 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
 
     private void OnMouseOver()
     {
-        // this.transform.localScale = new Vector3(1.2f, 1.2f, 1);
         this.transform.DOScale(new Vector3(1.2f, 1.2f, 1), 0.3f);
-        SkillIcon.gameObject.SetActive(true);
+        SkillTextUI.SetActive(true);
+        SelectdImage.SetActive(true);
 
-}
+    }
     private void OnMouseExit()
     {
         this.transform.DOScale(new Vector3(1.0f, 1.0f, 1), 0.3f);
-        SkillIcon.gameObject.SetActive(false);
-        //this.transform.localScale = new Vector3(1.0f, 1.0f, 1);
+        SkillTextUI.SetActive(false);
+        SelectdImage.SetActive(false);
     }
     //public void MBtnTBGPosition() => BattleUIManager.Instance.tBG[index].transform.position = transform.position;
 }

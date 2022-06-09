@@ -22,6 +22,7 @@ using DG.Tweening;
 public class BattleUIManager : Singleton<BattleUIManager>
 {
     public GameObject worldCanvas;
+    public GameObject TurretAtkRedCircle;
 
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
@@ -423,6 +424,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     /// <summary> 미니언 배치 </summary> <param name="index"></param>
     public void DeploymentMinion(int index)
     {
+
         if (GameManager.Instance.cost >= 0)
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)

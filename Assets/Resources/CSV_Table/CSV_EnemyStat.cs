@@ -42,11 +42,12 @@ public class CSV_EnemyStat : MonoBehaviour
         charactor.Atk = float.Parse(ListData[charactorlevel]["Atk"].ToString());
         charactor.AtkSpeed = float.Parse(ListData[charactorlevel]["AtkSpeed"].ToString());
         charactor.MoveSpeed = float.Parse(ListData[charactorlevel]["MoveSpeed"].ToString());
-        charactor.AtkRange = float.Parse(ListData[charactorlevel]["AtkRange"].ToString());
+        charactor.AtkRange1 = float.Parse(ListData[charactorlevel]["AtkRange"].ToString());
         charactor.CognitiveRange = float.Parse(ListData[charactorlevel]["CognitiveRange"].ToString());
         charactor.RewardCost = float.Parse(ListData[charactorlevel]["RewardCost"].ToString());
 
     }
+
     public Stat Call_Stat(string name, int Level)
     {
 
