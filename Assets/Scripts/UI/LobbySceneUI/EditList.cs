@@ -54,7 +54,6 @@ public class EditList : Singleton<EditList>
     public void SetEdit()
     {
         myList.Clear();
-        EditMax = 10;
         if (EditMax / 2 == 1)       // 무조건 짝수로 변환해줘야 함.
             EditMax++;
         for (int i = 0; i < EditMax; i++)
