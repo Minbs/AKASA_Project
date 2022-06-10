@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        Time.timeScale = 2;
+        //Time.timeScale = 2;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var e in enemies)
             enemiesList.Add(e);
