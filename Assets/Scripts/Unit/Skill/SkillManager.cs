@@ -116,9 +116,6 @@ public class SkillManager : Singleton<SkillManager>
         if (index > GameManager.Instance.minionsList.Count - 1 || skillBackgroundImage.activeSelf)
             return;
 
-        
-
-
         string minionName;
 
         skillUnit = GameManager.Instance.minionsList[index];
@@ -127,18 +124,14 @@ public class SkillManager : Singleton<SkillManager>
            {
         Debug.Log(skillUnit.GetComponent<DefenceMinion>().skillTimer);
               return;
-            
          }
        
         minionName = skillUnit.GetComponent<DefenceMinion>().Unitname;
         isSkillActing = true;
         skillBackgroundImage.SetActive(true);
         skillTargets.Clear();
-        
-       
 
         Debug.Log(minionName + "Skill");
-
         StartCoroutine(minionName + "Skill");
     }
 

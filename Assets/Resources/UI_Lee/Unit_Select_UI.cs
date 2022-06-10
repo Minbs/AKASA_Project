@@ -59,14 +59,34 @@ public class Unit_Select_UI : MonoBehaviour
                 SkillButton[i].transform.DOLocalMoveY(47, 0.5f, false);
                 SkillButton[i].transform.DOLocalMoveX(230 + Button_interval * UnitIndex, 0.5f, false);
                 UnitIndex++;
-
+                Debug.Log(SkillButton[i].name+UnitIndex);
             }
             else
             {
-                //int UnitIndex = SkillButton[i].GetComponent<MinionButton>().UnitIndex;
                 SkillButton[i].transform.DOLocalMoveX(230 + Button_interval * UnitIndex, 0.5f, false);
             }
+        }   
+
+        for(int i = 0; i < Unit_Maximum_Number; i++)
+        {
+            if (UnitOnOff[i] == true)
+            {
+                int nameIndex = 0;
+                for (int j = 0; j < Unit_Maximum_Number; j++)
+                {
+                    if (UnitOnOff[j] == true)
+                    {
+                        if (SkillButton[i].GetComponent<SkillButton>().NameIndex > SkillButton[j].GetComponent<SkillButton>().NameIndex)
+                        {
+                            nameIndex++;
+                        }
+                    }
+
+                }
+                SkillButton[i].GetComponent<SkillButton>().CurrntIndex = nameIndex;
+            }
         }
+
     }
 
     void moveButtonLeft(int character_Number)
@@ -225,178 +245,6 @@ public class Unit_Select_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (UnitOnOff[0] == false)
-            {
-                Hide_Unit_Button(0);
-                UnitOnOff[0] = true;
- 
-            }
-            else
-            {
-                Display_Unit_Button(0);
-                UnitOnOff[0] = false;
-            }
-        }
-        
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            if (UnitOnOff[1] == false)
-            {
-                Hide_Unit_Button(1);
-                UnitOnOff[1] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(1);
-                UnitOnOff[1] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (UnitOnOff[2] == false)
-            {
-                Hide_Unit_Button(2);
-                UnitOnOff[2] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(2);
-                UnitOnOff[2] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (UnitOnOff[3] == false)
-            {
-                Hide_Unit_Button(3);
-                UnitOnOff[3] = true;
-            }
-            else
-            {
-                Display_Unit_Button(3);
-                UnitOnOff[3] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (UnitOnOff[4] == false)
-            {
-                Hide_Unit_Button(4);
-                UnitOnOff[4] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(4);
-                UnitOnOff[4] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            if (UnitOnOff[5] == false)
-            {
-                Hide_Unit_Button(5);
-                UnitOnOff[5] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(5);
-                UnitOnOff[5] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            if (UnitOnOff[6] == false)
-            {
-                Hide_Unit_Button(6);
-                UnitOnOff[6] = true;
-            }
-            else
-            {
-                Display_Unit_Button(6);
-                UnitOnOff[6] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (UnitOnOff[7] == false)
-            {
-                Hide_Unit_Button(7);
-                UnitOnOff[7] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(7);
-                UnitOnOff[7] = false;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            if (UnitOnOff[8] == false)
-            {
-                Hide_Unit_Button(8);
-                UnitOnOff[8] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(8);
-                UnitOnOff[8] = false;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (UnitOnOff[9] == false)
-            {
-                Hide_Unit_Button(9);
-                UnitOnOff[9] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(9);
-                UnitOnOff[9] = false;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (UnitOnOff[10] == false)
-            {
-                Hide_Unit_Button(10);
-                UnitOnOff[10] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(10);
-                UnitOnOff[10] = false;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (UnitOnOff[11] == false)
-            {
-                Hide_Unit_Button(11);
-                UnitOnOff[11] = true;
-
-            }
-            else
-            {
-                Display_Unit_Button(11);
-                UnitOnOff[11] = false;
-            }
-        }
 
 
     }

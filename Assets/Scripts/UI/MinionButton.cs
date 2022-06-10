@@ -21,6 +21,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
     public TextMeshProUGUI DefText;
     public TextMeshProUGUI AtkText;
     public TextMeshProUGUI AtkSpeedText;
+    public TextMeshProUGUI CostText;
 
 
     private void Start()
@@ -30,6 +31,7 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
         DefText.text = GamedataManager.GetComponent<CSV_Player_Status>().Call_Stat_CSV(this.name, 1).Def.ToString();
         AtkText.text = GamedataManager.GetComponent<CSV_Player_Status>().Call_Stat_CSV(this.name, 1).Atk.ToString();
         AtkSpeedText.text = GamedataManager.GetComponent<CSV_Player_Status>().Call_Stat_CSV(this.name, 1).AtkSpeed.ToString();
+        CostText.text = GamedataManager.GetComponent<CSV_Player_Status>().Call_Stat_CSV(this.name, 1).BuyCost.ToString();
     }
     // Update is called once per frame
     void Update()

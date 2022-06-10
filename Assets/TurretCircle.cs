@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TurretCircle : MonoBehaviour
 {
+    public GameObject skillBG;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class TurretCircle : MonoBehaviour
     {
         this.transform.position = Input.mousePosition;
 
-        if (this.transform.position.y < 200f)
+        if (this.transform.position.y < 200f || skillBG.activeSelf == true)
         {
             this.gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 0);
         }
@@ -24,5 +25,6 @@ public class TurretCircle : MonoBehaviour
         {
             this.gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 255);
         }
+
     }
 }

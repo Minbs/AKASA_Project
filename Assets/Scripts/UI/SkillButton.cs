@@ -13,23 +13,35 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
     // Start is called before the first frame update
     public int index;
     public int UnitIndex;
+    public int NameIndex;
+    public int CurrntIndex;
+    public Image Cardilust;
     public GameObject SkillTextUI;
     public GameObject SelectdImage;
+    public GameObject SkillManager;
+    public GameObject UIManager;
+
 
 
     // Update is called once per frame
     void Update()
     {
-        //  MBtnTBGPosition();
 
+        Cardilust.GetComponent<Image>().fillAmount = GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillTimer /
+           GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime;
+        //Debug.Log(GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime);
     }
 
+    public void OnSkillButton()
+    {
+        Debug.Log(this.name + " :  " + CurrntIndex);
+        SkillManager.GetComponent<SkillManager>().UseCharacterSkill(CurrntIndex);
+    }
+    
     public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.state == State.BATTLE)
             return;
-
-
 
         if (GameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
             return;
