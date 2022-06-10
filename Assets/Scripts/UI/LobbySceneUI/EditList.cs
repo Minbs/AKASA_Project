@@ -58,11 +58,11 @@ public class EditList : Singleton<EditList>
             EditMax++;
         for (int i = 0; i < EditMax; i++)
         {
-        //    MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
+            MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
 
-        //    myList.Add(go);
+            myList.Add(go);
 
-         //   go.transform.parent = pro_Contents.transform;
+            go.transform.parent = pro_Contents.transform;
         }
         // 여기서 로드!
         //LoadJson();
