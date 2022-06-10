@@ -73,6 +73,7 @@ public class Unit : Object
 
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
+            Level = GameManager.Instance.currentWave;
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
@@ -116,28 +117,7 @@ public class Unit : Object
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "Character2";
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
 
-        if (GetComponent<Minion>())
-        {
-            transform.GetComponent<NavMeshAgent>().enabled = false;
-            UpdateHealthbar();
-
-            if (GetComponent<Minion>().Unitname == "Verity")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.VeriyStat_Array[0]);
-            }
-            else if (GetComponent<Minion>().Unitname == "Isabella")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.IsabellaStat_Array[0]);
-            }
-            else if (GetComponent<Minion>().Unitname == "Wraith")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.WraithStat_Array[0]);
-            }
-            else if (GetComponent<Minion>().Unitname == "Zippo")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.ZippoStat_Array[0]);
-            }
-        }
+   
     }
 
     public void Init()

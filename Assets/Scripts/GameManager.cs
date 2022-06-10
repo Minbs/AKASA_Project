@@ -257,15 +257,30 @@ public class GameManager : Singleton<GameManager>
         state = State.WAVE_END;
         SetGameSpeed(1);
 
+        int count = 0;
+
+        while(count < minionsList.Count)
+        {
+            if (minionsList[count].activeSelf
+       && minionsList[count].GetComponent<Unit>().currentHp > 0)
+            {
+                minionsList[count].GetComponent<UnitStateMachine>().ChangeState(minionsList[count].GetComponent<UnitStateMachine>().moveState);
+                minionsList[count].GetComponent<Unit>().currentHp = minionsList[count].GetComponent<Unit>().maxHp;
+                minionsList[count].GetComponent<Unit>().UpdateHealthbar();
+                minionsList[count].GetComponent<Unit>().target = null;
+                count++;
+            }
+            else
+            {
+                minionsList[count].GetComponent<Unit>().onTile.isOnUnit = false;
+                minionsList.RemoveAt(count);
+            }
+        }
+
         foreach (var m in minionsList)
         {
-            if (m.activeSelf)
-            {
-                m.GetComponent<UnitStateMachine>().ChangeState(m.GetComponent<UnitStateMachine>().moveState);
-                m.GetComponent<Unit>().currentHp = m.GetComponent<Unit>().maxHp;
-                m.GetComponent<Unit>().UpdateHealthbar();
-                m.GetComponent<Unit>().target = null;
-            }
+   
+
         }
 
         /**

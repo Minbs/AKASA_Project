@@ -113,18 +113,19 @@ public class SkillManager : Singleton<SkillManager>
 
     public void UseCharacterSkill(int index)
     {
-        if (index > GameManager.Instance.minionsList.Count - 1 || skillBackgroundImage.activeSelf)
+        if (index > GameManager.Instance.minionsList.Count - 1 || skillBackgroundImage.activeSelf
+            || GameManager.Instance.state != State.BATTLE)
             return;
 
         string minionName;
 
         skillUnit = GameManager.Instance.minionsList[index];
 
-          if (skillUnit.GetComponent<DefenceMinion>().skillTimer < skillUnit.GetComponent<DefenceMinion>().skillCoolTime)
+          if (skillUnit.GetComponent<DefenceMinion>().skillTimer < skillUnit.GetComponent<DefenceMinion>().skillCoolTime
+            || skillUnit.GetComponent<Unit>().currentHp <= 0)
            {
-        Debug.Log(skillUnit.GetComponent<DefenceMinion>().skillTimer);
               return;
-         }
+             }
        
         minionName = skillUnit.GetComponent<DefenceMinion>().Unitname;
         isSkillActing = true;
