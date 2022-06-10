@@ -45,7 +45,7 @@ public class EditList : Singleton<EditList>
     // Start is called before the first frame update
     void Start()
     {
-        if (myList.Count == 0)
+        if (objList.Count == 0)
         {
             SetEdit();
         }
@@ -54,19 +54,51 @@ public class EditList : Singleton<EditList>
     public void SetEdit()
     {
         myList.Clear();
-        EditMax = 10;
         if (EditMax / 2 == 1)       // 무조건 짝수로 변환해줘야 함.
             EditMax++;
         for (int i = 0; i < EditMax; i++)
         {
-        //    MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
+            MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
 
-        //    myList.Add(go);
+            myList.Add(go);
 
-         //   go.transform.parent = pro_Contents.transform;
+            go.transform.parent = pro_Contents.transform;
         }
         // 여기서 로드!
         //LoadJson();
+        LoadData();
+        
+    }
+
+    public void SaveMinionsData()
+    {
+        if(myList.Count >0 )
+        {
+            Debug.Log("저장 시도");
+            UserData.Instance.SaveUnitData(myList);
+        }
+        else
+        {
+            Debug.Log("저장하기엔 리스트가 비었습니다.");
+        }
+    }
+
+    public void LoadData()
+    {
+        Debug.Log("데이터 로드");
+        int m_count = UserData.Instance.LoadUnitData().Count;
+        if (m_count > 0)
+        {
+            for(int i = 0; i < m_count; i++)
+            {
+                myList[i].updateInfo(UserData.Instance.LoadUnitData()[i]);
+            }
+        }
+        else
+        {
+            Debug.Log("데이터 없음");
+        }
+        
     }
 
     public void ListClear()
