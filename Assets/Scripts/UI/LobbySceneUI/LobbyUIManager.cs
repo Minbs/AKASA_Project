@@ -143,35 +143,16 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             case "StageSelectScene":
                 DontDestroyable.Instance.AudioPlay(2);
                 break;
-            case "DefenceStageScene":
-                GameObject obj =  GameObject.Find("BackGroundAudio");
-                Destroy(obj);
-                    break;
             default:
                 break;
         }
-        SceneLoad.LoadScene(SceneName);
-        //SceneManager.LoadScene(SceneName);
+        SceneManager.LoadScene(SceneName);
         Debug.Log(SceneName + "씬으로 이동");
     }
 
-    public void LoadMainScene()
-    {
-        SceneLoad.LoadScene("MainScene");
-        //SceneManager.LoadScene("MainScene");
-        Debug.Log("메인 씬으로 이동");
-    }
     public void LoadGachaScene()
     {
         Debug.Log("뽑기 씬 출력");
-    }
-
-    public void LoadUnitContainerScene()
-    {
-        SceneLoad.LoadScene("UnitContainerScene");
-        //SceneManager.LoadScene("UnitContainerScene");
-        Debug.Log("유닛 관리 씬 출력");
-
     }
 
     public void ShowSettingScene()
@@ -181,15 +162,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadStageSelectScene()
     {
-        SceneLoad.LoadScene("StageSelectScene");
-        //SceneManager.LoadScene("StageSelectScene");
-        Debug.Log("스테이지 선택 씬 보여주기");
-    }
-
-    public void LoadStageScene()
-    {
-        SceneLoad.LoadScene("DefenceStage");
-        //SceneManager.LoadScene("DefenceStage");
+        SceneManager.LoadScene("StageSelectScene");
         Debug.Log("스테이지 선택 씬 보여주기");
     }
 
@@ -249,7 +222,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         PanelCancel();
     }
 
-    public void ExitContainer()
+    public void ExitScene()
     {
         PopupPanel.SetActive(true);
         PanelEdit("나가기", "정말로 나가시겠습니까?");
@@ -260,7 +233,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
     {
         Debug.Log("나가기!");
         PanelCancel();
-        LoadMainScene();
+        LoadScene("MainScene");
     }
 
     public void ShowPanel(GameObject obj)
