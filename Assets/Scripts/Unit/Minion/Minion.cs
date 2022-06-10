@@ -6,22 +6,25 @@ public enum MinionClass
 {
     //근거리 클래스
     Buster,
-    Paladin,
     Guardian,
-    Assassin,
 
     //원거리 클래스
     Chaser,
-    Mage,
-    Rescue,
-    TacticalSupport
+    Rescue
 }
 
 public class Minion : Unit
 {
     public MinionClass minionClass;
 
+
     // Start is called before the first frame update
+
+    protected override void Awake()
+    {
+
+        base.Awake();
+    }
     protected override void Start()
     {
         base.Start();
@@ -31,5 +34,30 @@ public class Minion : Unit
     protected override void Update()
     {
         base.Update();
+
+        
     }
+  
+
+    private void OnMouseOver()
+    {
+        if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+        {
+            if (Input.GetMouseButtonUp(1))
+            {
+                BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
+            }
+        }
+    }
+
+    private void OnMouseUp()
+    {
+        if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+        {
+                GameManager.Instance.minionChangePos(gameObject);
+        }
+    }
+
+    
+  
 }

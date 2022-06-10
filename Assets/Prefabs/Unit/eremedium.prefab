@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7038330258952526154}
   - component: {fileID: 4462006901306146636}
   - component: {fileID: 6446028627423085391}
+  - component: {fileID: 3449007725692640760}
   m_Layer: 9
   m_Name: Spine GameObject (sd_main_new_01)
   m_TagString: Untagged
@@ -26,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758246430292652753}
-  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 0, z: -0.15}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6208362256301881260}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!33 &7038330258952526154
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f80b757ca503e3440991cce3e1b6a6e4, type: 2}
+  - {fileID: 2100000, guid: da67b2a884a073c4d8fb9e46910c29be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,9 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 8934d52a9487d2445b838a79f1395194, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 18e091dfa677a9f46b6aa5ef9d24cc11, type: 2}
   initialSkinName: eremedium
-  initialFlipX: 0
+  initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
   separatorSlotNames: []
@@ -121,6 +122,19 @@ MonoBehaviour:
   _animationName: eremedium/idle
   loop: 1
   timeScale: 1
+--- !u!65 &3449007725692640760
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758246430292652753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 9.998781, y: 11.178037, z: 0.0000006662629}
+  m_Center: {x: -0.5771346, y: 5.635231, z: 0.000000335886}
 --- !u!1 &6208362256301881235
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,9 +146,10 @@ GameObject:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
   - component: {fileID: 1394970959969739886}
+  - component: {fileID: 5133784606395381597}
   m_Layer: 9
   m_Name: eremedium
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,30 +183,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 7
+  currentHp: 0
+  GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
-  maxHp: 60
-  atk: 10
+  Unitname: Eremedium
+  Level: 1
+  atk: 2.5
+  currentAtk: 0
   def: 0
-  attackRangeDistance: 4
-  cognitiveRangeDistance: 5
+  rectangleWidthRange: 0
+  rectangleHeightRange: 0
+  attackRangeDistance: 2
+  cognitiveRangeDistance: 4
+  attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 1609300146875696240}
-  minionClass: 6
-  attackType: 2
-  stopCount: 0
-  cost: 9
-  minionWaitingTime: 60
-  maxSkillGauge: 20
-  activeSkillAbilities:
-  - abilityType: {fileID: 11400000, guid: be71190df5dd62d41b7231278e46260c, type: 2}
-    power: 130
-    duration: 10
-    statType: 5
-    rangeNodes: []
-    excludeSelf: 0
-  activeSkillType: 0
+  minionClass: 3
+  attackType: 3
+  cost: 12
+  sellCost: 9
+  UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+  skillCoolTime: 0
   bulletSprite: {fileID: 21300000, guid: c4819ffcc87ff6d4795099953b7113eb, type: 3}
-  skillType: 0
   shootPivot: {fileID: 0}
+  skillType: 0
+  sightAngle: 0
+  sightDistance: 0
 --- !u!195 &1394970959969739886
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -199,11 +219,11 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208362256301881235}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 0.5
-  m_Acceleration: 8
+  m_Speed: 1
+  m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
@@ -214,6 +234,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &5133784606395381597
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &7489480818512568311
 PrefabInstance:
   m_ObjectHideFlags: 0

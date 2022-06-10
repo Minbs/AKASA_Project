@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
-
+using UnityEngine.AI;
+using UnityEngine.Events;
 public enum Direction
 {
     LEFT,
@@ -13,23 +14,38 @@ public enum Direction
 
 
 
-public class Unit : MonoBehaviour
+public class Unit : Object
 {
+    public GameObject GameDataManager;
     public string poolItemName;
+    public string Unitname;
+    public int Level = 1;
+    private Stat ParsingStat;
+    public UnityEvent UnitDisplay;
 
+    public Tile onTile { get; set; }
     [Header("UnitStat")]
-    public int maxHp;
-    public int currentHp { get; set; }
-
-
-    public int atk;
+    public float atk;
+    public float currentAtk; //{ get; set; }
     public float def;
-  //  public float moveSpeed;
-    public float attackRangeDistance; // 유닛 공격 범위
-    public float cognitiveRangeDistance; // 유닛 인지 범위
-    public float attackSpeed { get; set; }
 
+    //  public float moveSpeed;
+
+    public float attackRangeDistance; // 유닛 공격 범위
+    public float attackRange2;
+
+    public float cognitiveRangeDistance; // 유닛 인지 범위
+    public float attackSpeed;  //{ get; set; }
+
+
+    public float damageRedution = 0;
+    public float healTakeAmount = 0;
+
+    // 중독 상태용 변수
     private bool isPoisoned = false;
+    private float poisonTimer = 0;
+
+    public bool isNonDamage = false;
 
     public Direction direction { get; set; }
 
@@ -43,14 +59,46 @@ public class Unit : MonoBehaviour
 
     public string skinName { get; set; }
 
-    private Color initSkeletonColor; // 최초 스파인 색상
+    public Color initSkeletonColor { get; set; } // 최초 스파인 색상
 
     public float normalizedTime { get; set; }  //스파인 애니메이션 진행도 0~1
 
-
+    protected virtual void Awake()
+    {
+    }
 
     protected virtual void Start()
     {
+        
+
+        if (Unitname == "Enemy1" || Unitname == "Enemy2")
+        {
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
+            maxHp = ParsingStat.HP;
+            atk = ParsingStat.Atk;
+            def = ParsingStat.Def;
+            attackRangeDistance = ParsingStat.AtkRange1;
+            cognitiveRangeDistance = ParsingStat.CognitiveRange;
+            attackSpeed = ParsingStat.AtkSpeed;
+
+        }
+        else
+        {
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
+            ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
+
+            maxHp = ParsingStat.HP;
+            atk = ParsingStat.Atk;
+            def = ParsingStat.Def;
+            attackRangeDistance = ParsingStat.AtkRange1;
+            cognitiveRangeDistance = ParsingStat.CognitiveRange;
+            attackSpeed = ParsingStat.AtkSpeed;
+        }
+
+
+
+
         if (!GetComponent<UnitStateMachine>())
         {
             gameObject.AddComponent<UnitStateMachine>();
@@ -65,8 +113,42 @@ public class Unit : MonoBehaviour
         skinName = transform.GetChild(0).GetComponent<SkeletonAnimation>().initialSkinName;
         initSkeletonColor = transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.GetColor();
 
+        transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "Character2";
+        transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+
+        if (GetComponent<Minion>())
+        {
+            transform.GetComponent<NavMeshAgent>().enabled = false;
+            UpdateHealthbar();
+
+            if (GetComponent<Minion>().Unitname == "Verity")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.VeriyStat_Array[0]);
+            }
+            else if (GetComponent<Minion>().Unitname == "Isabella")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.IsabellaStat_Array[0]);
+            }
+            else if (GetComponent<Minion>().Unitname == "Wraith")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.WraithStat_Array[0]);
+            }
+            else if (GetComponent<Minion>().Unitname == "Zippo")
+            {
+                SetUnitStat(CSV_Player_Status.Instance.ZippoStat_Array[0]);
+            }
+        }
+    }
+
+    public void Init()
+    {
+        currentAtk = atk;
         currentHp = maxHp;
         attackSpeed = 1;
+        damageRedution = 0;
+        healthBar.transform.parent.gameObject.SetActive(true);
+        transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+        transform.GetComponent<NavMeshAgent>().enabled = true;
         UpdateHealthbar();
     }
 
@@ -74,69 +156,41 @@ public class Unit : MonoBehaviour
     {
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-    }
-
-    public void Poison(SkillAbility skillAbility, int damage, float duration)
-    {
-        if (isPoisoned == false)
-            StartCoroutine(PoisionCorutine(skillAbility, damage, duration));
-    }
-
-    public IEnumerator PoisionCorutine(SkillAbility skillAbility, int damage, float duration)
-    {
-        float timer = 0f;
-
-        float damageTimer = 0;
-        float damageDelay = 1;
-
-        isPoisoned = true;
-
-        EffectManager.Instance.InstantiateHomingEffect("isabella_skill", gameObject, duration);
-
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            damageTimer += Time.deltaTime;
-            if (damageTimer >= damageDelay)
-            {
-                damageTimer = 0;
-                currentHp -= (int)(damage);
-                UpdateHealthbar();
-            }
-
-            yield return null;
-        }
-
-        isPoisoned = false;
+        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;    
     }
 
     /// <summary>
     /// 데미지 부여 damage가 음수일 때 회복
     /// </summary>
     /// <param name="damage"></param>
-    public void Deal(int damage)
+    public void Deal(float damage)
     {
         float damageSum = 0;
-        damageSum = damage;
-
-
 
         if (damage < 0) //heal
         {
             if (gameObject.activeInHierarchy)
                 StartCoroutine(ChangeUnitColor(Color.green, 0.2f));
+
+            damageSum = damage + (float)damage * ((float)healTakeAmount / 100);
+           // Debug.Log(damageSum);
         }
         else
         {
             if (gameObject.activeInHierarchy)
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
-            damageSum *= (1 / (1 + def));
+
+            //데미지 = (공격력 - 방어력) * N/100
+
+            if(!isNonDamage)
+            {
+
+            damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
+            damageSum = Mathf.Max(damageSum, 0.5f);
+            }
         }
 
-
-
-        currentHp -= (int)damageSum;
+        currentHp -= (float)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
 
         UpdateHealthbar();
@@ -154,14 +208,60 @@ public class Unit : MonoBehaviour
 
         if (direction == Direction.LEFT)
         {
-            scale.x = 1;
+            scale.x = -1;
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
         else if (direction == Direction.RIGHT)
         {
-            scale.x = -1;
+            scale.x = 1;
             transform.GetChild(0).localScale = new Vector3(Mathf.Abs(transform.GetChild(0).localScale.x) * scale.x, transform.GetChild(0).localScale.y, transform.GetChild(0).localScale.z);
         }
+    }
+
+    public void SetAimUnitColor(bool Active)
+    {
+        int id = Shader.PropertyToID("_Black");
+
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+
+        if(Active)
+            block.SetColor(id, new Color32(37, 37, 37, 1));
+        else
+            block.SetColor(id, new Color32(0, 0, 0, 1));
+
+        transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(block);
+    }
+
+    public void GetPoisoned(float damage,float duration)
+    {
+        if (!isPoisoned)
+        {
+            StartCoroutine(Poisoned(damage, duration));
+        }
+        else
+            poisonTimer = 0;
+    }
+
+    public IEnumerator Poisoned(float damage, float duration)
+    {
+        isPoisoned = true;
+
+        while(poisonTimer <= duration)
+        {
+
+          poisonTimer += (1 + Time.deltaTime) * GameManager.Instance.gameSpeed;
+
+
+          currentHp -= damage;
+          StartCoroutine(ChangeUnitColor(new Color(1, 0, 1), 0.2f));
+          UpdateHealthbar();
+
+            Debug.Log(poisonTimer);
+          yield return new WaitForSeconds(1);
+
+        }
+
+        isPoisoned = false;
     }
 
     public IEnumerator ChangeUnitColor(Color color, float duration)
@@ -172,7 +272,6 @@ public class Unit : MonoBehaviour
         float timer = 0f;
 
         transform.GetChild(0).GetComponent<SkeletonAnimation>().skeleton.SetColor(color);
-
 
         while (timer < duration)
         {
@@ -189,21 +288,87 @@ public class Unit : MonoBehaviour
 
     public IEnumerator Die()
     {
-        if (!isAnimationPlaying("/knockdown"))
+        if (!isAnimationPlaying("/die"))
         {
-            spineAnimation.PlayAnimation(skinName + "/knockdown", false, 1);
+            spineAnimation.PlayAnimation(skinName + "/die", false, GameManager.Instance.gameSpeed);
         }
 
-        if (skeletonAnimation.AnimationName == skinName + "/knockdown" && normalizedTime >= 1)
+        if (skeletonAnimation.AnimationName == skinName + "/die" && normalizedTime >= 1)
         {
-            Destroy(gameObject);
+            if (GetComponent<Minion>())
+            {
+                gameObject.SetActive(false);
+            }
+            else if(GetComponent<Enemy>())
+            {
+                ObjectPool.Instance.PushToPool(poolItemName, gameObject);
+                GameManager.Instance.enemiesList.Remove(gameObject);
+            }
         }
 
         yield return null;
     }
 
+    public IEnumerator ChangeStat(GameObject target, string stat, float value = 0, float duration = 0)
+    {
+        float Timer = 0;
+
+
+
+        if (stat == "ats")
+            attackSpeed += value;
+        else if (stat == "def")
+            def += value;
+        else if (stat == "atk")
+            currentAtk += value;
+        else if (stat == "non")
+            isNonDamage = true;
+
+        while (Timer <= duration)
+        {
+
+            Timer += Time.deltaTime * GameManager.Instance.gameSpeed;
+
+      
+
+            yield return null;
+        }
+
+
+        if (stat == "ats")
+            attackSpeed -= value;
+        else if (stat == "def")
+            def -= value;
+        else if (stat == "atk")
+            currentAtk -= value;
+        else if (stat == "non")
+            isNonDamage = false;
+    }
+
+    public void SetPositionOnTile()
+    {
+        transform.position = onTile.gameObject.transform.position + GameManager.Instance.minionSetPosition;
+    }
+
+    public void SetUnitStat(Stat stat)
+    {
+      maxHp = stat.HP;
+      currentHp = maxHp;
+      atk = stat.Atk;
+      currentAtk = atk;
+      def = stat.Def;
+      attackSpeed = stat.AtkSpeed;
+      attackRangeDistance = stat.AtkRange1;
+        attackRange2 = stat.AtkRange2;
+
+      if (GetComponent<DefenceMinion>())
+      {
+        GetComponent<DefenceMinion>().cost = stat.BuyCost;
+        GetComponent<DefenceMinion>().sellCost = stat.CellCost;
+      }
+    }
     /// <summary>
-   /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
-   /// </summary>
+    /// 스파인 애니메이션 종료 확인 함수 </summary> <param name="animationName"> 스파인 애니메이션 이름</param>
+    /// </summary>
     public bool isAnimationPlaying(string animationName) =>  skeletonAnimation.AnimationName == skinName + animationName && normalizedTime< 1;  // 실행중인 애니메이션의 이름이 animationName과 다르거나 끝나지 않았을 때
 }

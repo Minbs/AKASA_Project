@@ -9,15 +9,27 @@ public class UnitApproachingState : UnitBaseState
 
     }
 
-    public override void Update(UnitStateMachine stateMachine)
+    public override void Update(UnitStateMachine stateMachine) 
     {
-        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
-            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
+        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
+            && stateMachine.gameObject.GetComponent<Enemy>()) 
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
+        else if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
+            && stateMachine.gameObject.GetComponent<Minion>())
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
+
+        if (stateMachine.gameObject.GetComponent<Minion>())
+        {
+            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
+                stateMachine.SetTargetInCognitiveRange();
+            else
+                stateMachine.SetTargetInCognitiveRange();
+        }
+        else if (stateMachine.gameObject.GetComponent<Enemy>())
+            stateMachine.SetTargetInCognitiveRange();
 
 
-
-
-        if (stateMachine.unit.target == null)
+        if (stateMachine.unit.target == null || !stateMachine.unit.target.activeSelf)
             stateMachine.ChangeState(stateMachine.moveState);
         else
         {
@@ -26,8 +38,6 @@ public class UnitApproachingState : UnitBaseState
 
             if (stateMachine.IsTargetInAttackRange())
                 stateMachine.ChangeState(stateMachine.AttackState);
-            if (!stateMachine.IsTargetInCognitiveRange())
-                stateMachine.unit.target = null;
         }
     }
 

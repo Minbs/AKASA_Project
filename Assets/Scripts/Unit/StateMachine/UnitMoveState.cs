@@ -11,23 +11,24 @@ public class UnitMoveState : UnitBaseState
 
     public override void Update(UnitStateMachine stateMachine)
     {
-        stateMachine.MoveToDirection(stateMachine.unit.direction);
+        if (stateMachine.gameObject.GetComponent<Enemy>())
+            stateMachine.MoveToDirection(stateMachine.unit.direction);
+        else if(stateMachine.gameObject.GetComponent<Minion>() && stateMachine.unit.target == null)
+            stateMachine.ReturnToTilePosition();
 
-        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/move")
-            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/move", true, 1);
 
-        if(stateMachine.gameObject.GetComponent<Minion>())
-        {
-            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
-            else
-                stateMachine.SetTargetInCognitiveRange(GameManager.Instance.enemiesList);
-        }
-        else if(stateMachine.gameObject.GetComponent<Enemy>())
-            stateMachine.SetTargetInCognitiveRange(GameManager.Instance.minionsList);
+        
+        if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
+            && stateMachine.gameObject.GetComponent<Enemy>())
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
+        else if (stateMachine.unit.spineAnimation.skeletonAnimation.AnimationName != stateMachine.unit.skinName + "/run"
+            && stateMachine.gameObject.GetComponent<Minion>())
+            stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/run", true, GameManager.Instance.gameSpeed);
 
-        if (stateMachine.unit.target != null)
-            stateMachine.ChangeState(stateMachine.approachingState);
+        if (GameManager.Instance.state == State.BATTLE)
+            BattleMove(stateMachine);
+        else if (GameManager.Instance.state == State.WAVE_END)
+            stateMachine.ReturnToTilePosition();
     }
 
     public override void End(UnitStateMachine stateMachine)
@@ -35,5 +36,22 @@ public class UnitMoveState : UnitBaseState
 
     }
 
+    public void BattleMove(UnitStateMachine stateMachine)
+    {
+        if (stateMachine.gameObject.GetComponent<Minion>())
+        {
+                stateMachine.SetTargetInCognitiveRange();
 
+            if (stateMachine.unit.target)
+                stateMachine.ChangeState(stateMachine.approachingState);
+        }
+        else if (stateMachine.gameObject.GetComponent<Enemy>())
+        {
+
+            stateMachine.SetTargetInCognitiveRange();
+
+            if (stateMachine.unit.target)
+                stateMachine.ChangeState(stateMachine.approachingState);
+        }
+    }
 }

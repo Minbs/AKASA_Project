@@ -10,22 +10,21 @@ public class Enemy : Unit
 {
     // Start is called before the first frame update
     List<Tile> moveTiles = new List<Tile>();
-
     [Header("EnemyStat")]
 
     public AttackType attackType;
 
-
-    public float attackDelayTimer { get; set; }
-    public float attackDelayDuration;
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void Start()
     {
         base.Start();
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
-
-      //  moveTiles = BoardManager.Instance.FinalList.ToList();
-        attackDelayTimer = attackDelayDuration;
+        Init();
+        UpdateHealthbar();
     }
 
     private void OnDestroy()
@@ -39,8 +38,6 @@ public class Enemy : Unit
     {
         base.Update();
 
-  
-
         if (currentHp <= 0)
         {
             StartCoroutine(Die());
@@ -50,20 +47,14 @@ public class Enemy : Unit
 
     }
 
-
-
-
-
-
-
     void MeleeAttack()
     {
-        target.GetComponent<Unit>().Deal(atk);
+        target.GetComponent<Object>().Deal(currentAtk);
     }
 
     void HitScanAttack()
     {
-        target.GetComponent<Unit>().Deal(atk);
+        target.GetComponent<Object>().Deal(currentAtk);
     }
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
@@ -75,6 +66,9 @@ public class Enemy : Unit
 
         if (e.Data.Name == "shoot")
         {
+            if(target != GameManager.Instance.turret)
+            target.GetComponent<UnitStateMachine>().SetAttackTargetInRange(gameObject);
+
             switch(attackType)
             {
                 case AttackType.Melee:
@@ -90,10 +84,6 @@ public class Enemy : Unit
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.name == "Cube")
-        {
-            GameManager.Instance.isLineOver = true;
-        }
 
         if (other.transform.tag == "Finish")
         {

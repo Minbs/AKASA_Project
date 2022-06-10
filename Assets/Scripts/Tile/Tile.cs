@@ -47,6 +47,8 @@ public class Tile : MonoBehaviour
     {
         if (isOnUnit)
             GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
+        else
+            GetComponent<Image>().sprite = BattleUIManager.Instance.DeployableTileSprite;
 
         gameObject.SetActive(isActive);
     }
