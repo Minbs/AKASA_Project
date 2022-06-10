@@ -135,17 +135,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadScene(string SceneName)
     {
-        switch (SceneName)
-        {
-            case "MainScene":
-                DontDestroyable.Instance.AudioPlay(1);
-                break;
-            case "StageSelectScene":
-                DontDestroyable.Instance.AudioPlay(2);
-                break;
-            default:
-                break;
-        }
+
         SceneManager.LoadScene(SceneName);
         Debug.Log(SceneName + "씬으로 이동");
     }
@@ -162,7 +152,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadStageSelectScene()
     {
-        SceneManager.LoadScene("StageSelectScene");
+        SceneManager.LoadScene("StageSelectScene_2");
         Debug.Log("스테이지 선택 씬 보여주기");
     }
 
