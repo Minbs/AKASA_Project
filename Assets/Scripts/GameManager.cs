@@ -82,6 +82,8 @@ public class GameManager : Singleton<GameManager>
             enemiesList.Add(e);
 
         currentWave = 0;
+
+
         totalIncome = incomeUpgradeDatas[0].income;
         incomeUpgradeCount = 0;
         isChangePosition = false;
@@ -393,6 +395,7 @@ public class GameManager : Singleton<GameManager>
         if (!isChangePosition)
         {
             minionsList.Add(settingCharacter);
+            BattleUIManager.Instance.UseCost(settingCharacter.GetComponent<DefenceMinion>().cost);
         }
 
         UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);

@@ -28,13 +28,11 @@ public class Unit : Object
     public float atk;
     public float currentAtk; //{ get; set; }
     public float def;
-    [Header("사각형 공격 범위")]
-    public float rectangleWidthRange;
-    public float rectangleHeightRange;
 
     //  public float moveSpeed;
-    [Header("단일 대상 공격 범위")]
+
     public float attackRangeDistance; // 유닛 공격 범위
+    public float attackRange2;
 
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed;  //{ get; set; }
@@ -361,6 +359,7 @@ public class Unit : Object
       def = stat.Def;
       attackSpeed = stat.AtkSpeed;
       attackRangeDistance = stat.AtkRange1;
+        attackRange2 = stat.AtkRange2;
 
       if (GetComponent<DefenceMinion>())
       {

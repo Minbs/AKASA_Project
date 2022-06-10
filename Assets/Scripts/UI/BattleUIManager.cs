@@ -411,13 +411,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     }
 
     /// <summary> 캐릭터 배치후 코스트 소모 </summary>
-    public void UseCost(int index)
+    public void UseCost(float cost)
     {
-        if (MinionManager.Instance.minionPrefabs.Count <= index
-            || GameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost) return;
-        GameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
+        if (GameManager.Instance.cost < cost) return;
 
-        Debug.Log(MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost);
+        GameManager.Instance.cost -= cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
 
@@ -543,11 +541,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
    //     isPhaseCheck = true;
 //    }
 
-    public void SkillButton()
-    {
-        GameObject wraith = GameObject.Find("wraith(Clone)");
-        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState);
-    }
+
 
     private void FPS()
     {
@@ -677,6 +671,10 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public void MinionUpgradeButton()
     {
+        if (GameManager.Instance.cost < currentStat.UpgradeCost)
+            return;
+
+        UseCost(currentStat.UpgradeCost);
        upgradeMinion.GetComponent<Unit>().Level++;
        upgradeMinion.GetComponent<Unit>().SetUnitStat(nextLevelStat);
        SetMinionUpgradeUI(upgradeMinion);

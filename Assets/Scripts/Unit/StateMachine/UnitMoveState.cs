@@ -40,9 +40,6 @@ public class UnitMoveState : UnitBaseState
     {
         if (stateMachine.gameObject.GetComponent<Minion>())
         {
-            if (stateMachine.gameObject.GetComponent<Minion>().minionClass == MinionClass.Rescue)
-                stateMachine.SetTargetInCognitiveRange();
-            else
                 stateMachine.SetTargetInCognitiveRange();
 
             if (stateMachine.unit.target)

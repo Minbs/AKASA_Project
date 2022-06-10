@@ -35,7 +35,7 @@ public class HealDrone : MonoBehaviour
     IEnumerator HealTargets()
     {
         EffectManager.Instance.InstantiateHomingEffect("ground_heal", target, duration);
-        Collider[] colliders = Physics.OverlapSphere(target.transform.position, healRange);
+
         float healTermTimer = 0;
 
         while (timer <= duration)
@@ -45,8 +45,8 @@ public class HealDrone : MonoBehaviour
 
 
             healTermTimer += Time.deltaTime * GameManager.Instance.gameSpeed;
-
-            if(healTermTimer >= healTerm)
+            Collider[] colliders = Physics.OverlapSphere(target.transform.position, healRange);
+            if (healTermTimer >= healTerm)
             {
                 foreach (var col in colliders)
                 {

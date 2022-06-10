@@ -122,10 +122,24 @@ public class DefenceMinion : Minion
             return;
         }
 
-
-        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit", target.transform.position);
         target.GetComponent<Unit>().Deal(currentAtk);
     }
+
+    public void HitScanRangeAttack()
+    {
+        Collider[] targets = Physics.OverlapSphere(target.transform.position, attackRange2);
+
+        foreach (var e in targets)
+        {
+            if (!e.transform.tag.Equals("Enemy")) continue;
+            Debug.Log(e.transform.parent.name);
+            e.transform.parent.GetComponent<Unit>().Deal(currentAtk);
+
+        }
+
+        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit", target.transform.position);
+    }
+
     public void SingleHeal()
     {
         Vector3 pos = transform.position;
@@ -144,7 +158,7 @@ public class DefenceMinion : Minion
 
     public void MeleeRangeAttack()
     {
-        Vector3 box = new Vector3(attackRangeDistance, 1, attackRangeDistance);
+        Vector3 box = new Vector3(attackRangeDistance, 1, attackRange2);
         Vector3 center = transform.position;
         center.x = transform.position.x + attackRangeDistance / 2;
         Collider[] targets = Physics.OverlapBox(center, box, Quaternion.identity);
@@ -176,15 +190,17 @@ public class DefenceMinion : Minion
 
     private void OnDrawGizmos()
     {
+        /*
         Handles.color = Color.red;
 
-        Vector3 box = new Vector3(attackRangeDistance , 2, attackRangeDistance );
+        Vector3 box = new Vector3(attackRangeDistance , 2, ra );
         Vector3 center = transform.position;
         center.x = transform.position.x + attackRangeDistance / 2;
         Handles.DrawWireCube(center, box);
 
         Handles.color = Color.blue;
         Handles.DrawWireDisc(transform.position,Vector3.up, 3);
+        */
     }
 
     // Update is called once per frame

@@ -44,6 +44,61 @@ public class SkillManager : Singleton<SkillManager>
 
     private List<GameObject> skillTargets = new List<GameObject>();
 
+    [Header("페이 스킬")]
+    public float paySkillValue;
+    public float paySkillDuration;
+
+    [Header("소피아 스킬")]
+    public float sophiaSkillValue;
+    public float sophiaSkillDuration;
+
+    [Header("화선 스킬")]
+    public float hwaseonSkillValue;
+    public float hwaseonSkillDuration;
+    public float hwaseonSkillAimRange;
+
+    [Header("베리티 스킬")]
+    public float veritySkillValue;
+    public float veritySkillAimRange;
+
+    [Header("파르도 스킬")]
+    public float pardoSkillValue;
+    public float pardoSkillAimRange;
+    public float pardoSkillRange;
+    public float pardoSkillDuration;
+
+    [Header("어셔 스킬")]
+    public float asherSkillAimRange;
+    public float asherSkillRange;
+    public float asherSkillDuration;
+
+    [Header("보그 스킬")]
+    public float vogueSkillValue;
+    public float vogueSkillAimRange;
+    public float vogueSkillRange;
+
+    [Header("레이스 스킬")]
+    public float wraithSkillValue;
+    public float wraithSkillRangeWidth;
+    public float wraithSkillRangeHeight;
+
+    [Header("이자벨라 스킬")]
+    public float isabellaSkillValue;
+    public float isabellaSkillRange;
+
+    [Header("지포 스킬")]
+    public float zippoSkillValue;
+    public float zippoSkillRangeWidth;
+    public float zippoSkillRangeHeight;
+
+    [Header("코우엔 스킬")]
+    public float kuenSkillValue;
+    public float kuenSkillRangeWidth;
+    public float kuenSkillRangeHeight;
+
+    [Header("에레메디움 스킬")]
+    public float eremediumSkillValue;
+    public float eremediumSkillDuration;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,12 +123,13 @@ public class SkillManager : Singleton<SkillManager>
 
         skillUnit = GameManager.Instance.minionsList[index];
 
-     //   if (skillUnit.GetComponent<DefenceMinion>().skillTimer < skillUnit.GetComponent<DefenceMinion>().skillCoolTime)
-    //    {
-   //         return;
-     //       Debug.Log(skillUnit.GetComponent<DefenceMinion>().skillTimer);
-    //    }
-//
+          if (skillUnit.GetComponent<DefenceMinion>().skillTimer < skillUnit.GetComponent<DefenceMinion>().skillCoolTime)
+           {
+        Debug.Log(skillUnit.GetComponent<DefenceMinion>().skillTimer);
+              return;
+            
+         }
+       
         minionName = skillUnit.GetComponent<DefenceMinion>().Unitname;
         isSkillActing = true;
         skillBackgroundImage.SetActive(true);
@@ -268,14 +324,10 @@ public class SkillManager : Singleton<SkillManager>
                 yield return null;
             }
 
-            skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-            GameManager.Instance.SetGameSpeed(1);
-            Debug.Log("연출 끝");
+        StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "def", skillUnit.GetComponent<DefenceMinion>().def * (paySkillValue / 100), paySkillDuration));
+        EffectManager.Instance.InstantiateHomingEffect("pay_effect", skillUnit, paySkillDuration);
 
-        skillBackgroundImage.SetActive(false);
-        EffectManager.Instance.InstantiateHomingEffect("pay_effect", skillUnit, 8);
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-
+        SkillEnd();
     }
 
         IEnumerator SophiaSkill()
@@ -293,14 +345,12 @@ public class SkillManager : Singleton<SkillManager>
                 yield return null;
             }
 
-            skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-            GameManager.Instance.SetGameSpeed(1);
-            Debug.Log("연출 끝");
 
-        skillBackgroundImage.SetActive(false);
-        StartCoroutine( skillUnit.GetComponent<Unit>().ChangeStat(skillUnit ,"ats", 1,8));
-        EffectManager.Instance.InstantiateHomingEffect("sophia_effect", skillUnit, 8);
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+        StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "ats", skillUnit.GetComponent<DefenceMinion>().def * (sophiaSkillValue / 100), sophiaSkillDuration));
+        EffectManager.Instance.InstantiateHomingEffect("sophia_effect", skillUnit, sophiaSkillDuration);
+
+        SkillEnd();
+
     }
 
         IEnumerator HwaseonSkill()
@@ -309,7 +359,7 @@ public class SkillManager : Singleton<SkillManager>
 
             while (skillTargets.Count <= 0)
             {
-                skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Single, "Minion", 3);
+                skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Single, "Minion", hwaseonSkillAimRange);
                 yield return null;
             }
 
@@ -363,14 +413,10 @@ public class SkillManager : Singleton<SkillManager>
                 yield return null;
             }
 
-            skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-            GameManager.Instance.SetGameSpeed(1);
-            Debug.Log("연출 끝");
 
-        skillBackgroundImage.SetActive(false);
-        StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "atk", skillUnit.GetComponent<Unit>().currentAtk * 0.4f, 8)) ;
-        EffectManager.Instance.InstantiateHomingEffect("hwaseon_effect", skillTargets[0], 8);
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+        StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillTargets[0], "atk", skillUnit.GetComponent<DefenceMinion>().currentAtk * (hwaseonSkillValue / 100), hwaseonSkillDuration));
+        EffectManager.Instance.InstantiateHomingEffect("sophia_effect", skillTargets[0], hwaseonSkillDuration);
+        SkillEnd();
     }
 
         IEnumerator VeritySkill()
@@ -379,7 +425,7 @@ public class SkillManager : Singleton<SkillManager>
 
         while (skillTargets.Count <= 0)
         {
-            skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Single, "Enemy", 10);
+            skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Single, "Enemy", veritySkillAimRange);
             yield return null;
         }
 
@@ -404,17 +450,8 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
+        SkillEnd();
 
-
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-
-        skillBackgroundImage.SetActive(false);
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-        isSkillActing = false;
-        
-        skillUnit.GetComponent<DefenceMinion>().skillTimer = 0;
     }
 
         IEnumerator PardoSkill()
@@ -423,7 +460,7 @@ public class SkillManager : Singleton<SkillManager>
 
             while (!isSkillAimEnd)
             {
-                skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Circle, "Enemy", 5, 1);
+                skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Circle, "Enemy", pardoSkillAimRange, pardoSkillRange);
                 yield return null;
             }
 
@@ -437,8 +474,8 @@ public class SkillManager : Singleton<SkillManager>
             foreach (var target in skillTargets)
             {
                 target.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
-           target.GetComponent<Unit>().SetAimUnitColor(false);
-        }
+                target.GetComponent<Unit>().SetAimUnitColor(false);
+           }
 
 
         GameManager.Instance.SetGameSpeed(0);
@@ -452,20 +489,15 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
-        // 스킬 끝난 후 실행되는 함수 제작하기
-
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;    
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝"); 
-
-        isSkillAimEnd = false;
-        skillBackgroundImage.SetActive(false);
 
         GameObject skillObject = Instantiate(poisonMist);
         skillObject.transform.position = skillHitpos;
-        Destroy(skillObject, 5);
+        skillObject.GetComponent<PoisonMist>().duration = pardoSkillDuration;
+        skillObject.GetComponent<PoisonMist>().damage = skillUnit.GetComponent<Unit>().currentAtk * (pardoSkillValue / 100);
+         
+        Destroy(skillObject, pardoSkillDuration);
 
+        SkillEnd();
     }
 
         IEnumerator AsherSkill()
@@ -474,7 +506,7 @@ public class SkillManager : Singleton<SkillManager>
 
         while (skillTargets.Count <= 0)
         {
-            skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Circle, "Minion", 5, 3);
+            skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Circle, "Minion", asherSkillAimRange, asherSkillRange);
             yield return null;
         }
 
@@ -503,27 +535,15 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
-        isSkillAimEnd = false;
-        skillBackgroundImage.SetActive(false);
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-
-
-
-        foreach (var minion in targetsList)
-        {
-            minion.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-        }
 
         foreach (var target in skillTargets)
         {
             target.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-            EffectManager.Instance.InstantiateHomingEffect("asher_barrier", target, 3);
-            StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "non", 0, 3));
+            EffectManager.Instance.InstantiateHomingEffect("asher_barrier", target, asherSkillDuration);
+            StartCoroutine(skillUnit.GetComponent<Unit>().ChangeStat(skillUnit, "non", 0, asherSkillDuration));
         }
-        
 
+        SkillEnd();
 
     }
 
@@ -533,7 +553,7 @@ public class SkillManager : Singleton<SkillManager>
 
         while (!isSkillAimEnd)
         {
-            skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Circle, "Enemy", 5, 2);
+            skillTargets = AimSkillTargetsInRange(SkilRangeType.Circle, SkillAimType.Circle, "Enemy", vogueSkillAimRange, vogueSkillRange);
             yield return null;
         }
 
@@ -582,13 +602,7 @@ public class SkillManager : Singleton<SkillManager>
         }
 
 
-
-        isSkillAimEnd = false;
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().moveState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-
-        skillBackgroundImage.SetActive(false);
+        SkillEnd();
     }
 
         IEnumerator WraithSkill()
@@ -598,7 +612,7 @@ public class SkillManager : Singleton<SkillManager>
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
 
-        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", 3, 1);
+        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", wraithSkillRangeWidth, wraithSkillRangeHeight);
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
@@ -612,12 +626,8 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-        isSkillAimEnd = false;
-        skillBackgroundImage.SetActive(false);
+
+        SkillEnd();
 
         yield return null;
         }
@@ -627,7 +637,7 @@ public class SkillManager : Singleton<SkillManager>
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
 
-        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", 3, 1);
+        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", isabellaSkillRange, 1);
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
@@ -646,16 +656,9 @@ public class SkillManager : Singleton<SkillManager>
             target.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
 
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-        isSkillAimEnd = false;
-        skillBackgroundImage.SetActive(false);
+        SkillEnd();
 
         yield return null;
-
-
     }
 
         IEnumerator ZippoSkill()
@@ -664,7 +667,7 @@ public class SkillManager : Singleton<SkillManager>
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
 
-        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", 3, 1);
+        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", zippoSkillRangeWidth, zippoSkillRangeHeight);
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         EffectManager.Instance.InstantiateAttackEffect("zippo_skill", skillUnit.transform.position);
@@ -680,12 +683,7 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-        isSkillAimEnd = false;
-        skillBackgroundImage.SetActive(false);
+        SkillEnd();
 
         yield return null;
     }
@@ -696,7 +694,7 @@ public class SkillManager : Singleton<SkillManager>
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
 
-        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", 3, 1);
+        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", kuenSkillRangeWidth, kuenSkillRangeHeight);
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill1", false, 1);
 
@@ -718,7 +716,7 @@ public class SkillManager : Singleton<SkillManager>
         skillUnit.transform.position = new Vector3(1000, 1000, 1000);
         foreach (var target in skillTargets)
         {
-            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * 0.5f);
+            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * kuenSkillValue / 100);
         }
 
         yield return new WaitForSeconds(0.4f);
@@ -726,7 +724,7 @@ public class SkillManager : Singleton<SkillManager>
 
         foreach (var target in skillTargets)
         {
-            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * 0.5f);
+            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * kuenSkillValue / 100);
         }
 
         yield return new WaitForSeconds(0.4f);
@@ -740,12 +738,7 @@ public class SkillManager : Singleton<SkillManager>
             yield return null;
         }
 
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
-        skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
-        isSkillAimEnd = false;
-        skillBackgroundImage.SetActive(false);
+        SkillEnd();
 
         yield return null;
     }
@@ -756,24 +749,31 @@ public class SkillManager : Singleton<SkillManager>
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
-        //Vector3 startPos = skillUnit.transform.position;
 
         while (skillUnit.GetComponent<Unit>().normalizedTime < 1)
         {
             yield return null;
         }
 
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
-        GameManager.Instance.SetGameSpeed(1);
-        Debug.Log("연출 끝");
+        SkillEnd();
+    }
 
+    private void SkillEnd()
+    {
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().moveState);
+        GameManager.Instance.SetGameSpeed(1);
         skillBackgroundImage.SetActive(false);
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
 
+        foreach(var target in skillTargets)
+        {
+            target.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+        }
         isSkillActing = false;
+        isSkillAimEnd = false;
+        skillUnit.GetComponent<DefenceMinion>().skillTimer = 0;
+        Debug.Log("연출 끝");
     }
-
-
 
     public void MinionSkillEvent(string MinionName)
     {
@@ -797,7 +797,18 @@ public class SkillManager : Singleton<SkillManager>
 
         foreach(var target in skillTargets)
         {
-            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * 0.5f);
+            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * wraithSkillValue / 100);
+        }
+
+        yield return null;
+    }
+    IEnumerator VogueSkillEvent()
+    {
+//        EffectManager.Instance.InstantiateAttackEffect("wraith_skill", skillUnit.transform.position);
+
+        foreach (var target in skillTargets)
+        {
+            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * vogueSkillValue / 100);
         }
 
         yield return null;
@@ -808,7 +819,7 @@ public class SkillManager : Singleton<SkillManager>
 
         foreach (var target in skillTargets)
         {
-            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * 0.5f);
+            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * isabellaSkillValue / 100);
             target.GetComponent<Rigidbody>().AddExplosionForce(100, skillUnit.transform.position, 3, 0, ForceMode.Impulse);
             target.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().idleState);
         }
@@ -822,7 +833,7 @@ public class SkillManager : Singleton<SkillManager>
 
         foreach (var target in skillTargets)
         {
-            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * 0.5f);
+            target.GetComponent<Unit>().Deal(skillUnit.GetComponent<Unit>().currentAtk * zippoSkillValue / 100);
             EffectManager.Instance.InstantiateAttackEffect("zippo_skillHit", target.transform.position);
         }
 
@@ -852,9 +863,9 @@ public class SkillManager : Singleton<SkillManager>
         skillObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 1;
 
         skillObject.GetComponent<HealDrone>().target = skillUnit;
-        skillObject.GetComponent<HealDrone>().duration = 4;
-        skillObject.GetComponent<HealDrone>().healAmount = skillUnit.GetComponent<Unit>().atk;
-        skillObject.GetComponent<HealDrone>().healRange = 3;
+        skillObject.GetComponent<HealDrone>().duration = eremediumSkillDuration;
+        skillObject.GetComponent<HealDrone>().healAmount = skillUnit.GetComponent<Unit>().atk* eremediumSkillValue / 100;
+        skillObject.GetComponent<HealDrone>().healRange = 2;
 
 
     }
@@ -874,7 +885,7 @@ public class SkillManager : Singleton<SkillManager>
 
         skillObject.GetComponent<VerityShot>().target = skillTargets[0];
         skillObject.GetComponent<VerityShot>().speed = 30;
-        skillObject.GetComponent<VerityShot>().damage = 3;
+        skillObject.GetComponent<VerityShot>().damage = skillUnit.GetComponent<Unit>().currentAtk * (veritySkillValue / 100);
 
 
     }
