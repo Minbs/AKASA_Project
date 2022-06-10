@@ -221,12 +221,14 @@ MonoBehaviour:
   poolItemName: 
   Unitname: Pardo
   Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls: []
   atk: 2
   currentAtk: 0
   def: 0
-  rectangleWidthRange: 0
-  rectangleHeightRange: 0
   attackRangeDistance: 2
+  attackRange2: 0
   cognitiveRangeDistance: 4
   attackSpeed: 0
   damageRedution: 0
@@ -235,10 +237,10 @@ MonoBehaviour:
   healthBar: {fileID: 5756680591819409201}
   minionClass: 2
   attackType: 0
-  cost: 7
-  sellCost: 5
+  cost: 14
+  sellCost: 10
   UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
-  skillCoolTime: 0
+  skillCoolTime: 90
   bulletSprite: {fileID: 21300000, guid: 4cecd05cb0141044ea038fb559a0e799, type: 3}
   shootPivot: {fileID: 5882365898886981521}
   skillType: 0
