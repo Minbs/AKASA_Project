@@ -146,7 +146,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             default:
                 break;
         }
-        SceneManager.LoadScene(SceneName);
+        SceneLoad.LoadScene(SceneName);
         Debug.Log(SceneName + "씬으로 이동");
     }
 
@@ -162,7 +162,7 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadStageSelectScene()
     {
-        SceneManager.LoadScene("StageSelectScene");
+        SceneLoad.LoadScene("StageSelectScene");
         Debug.Log("스테이지 선택 씬 보여주기");
     }
 
