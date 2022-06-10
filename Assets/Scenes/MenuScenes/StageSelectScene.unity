@@ -2547,6 +2547,7 @@ GameObject:
   - component: {fileID: 649372631}
   - component: {fileID: 649372633}
   - component: {fileID: 649372634}
+  - component: {fileID: 649372635}
   m_Layer: 5
   m_Name: Stage_1
   m_TagString: Untagged
@@ -2691,6 +2692,34 @@ MonoBehaviour:
   TargetMark: {fileID: 1619235015}
   StageName: 1-1
   BestLevel: 1
+--- !u!114 &649372635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649372629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 000001
+    buttonLick: 000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &666955232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3637,6 +3666,7 @@ GameObject:
   - component: {fileID: 899688354}
   - component: {fileID: 899688353}
   - component: {fileID: 899688355}
+  - component: {fileID: 899688356}
   m_Layer: 5
   m_Name: Exit_Btn
   m_TagString: Untagged
@@ -3758,6 +3788,34 @@ MonoBehaviour:
           m_StringArgument: MainScene
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &899688356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899688351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 01
+    buttonLick: 01
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &907946960
 GameObject:
   m_ObjectHideFlags: 0
@@ -6089,6 +6147,7 @@ GameObject:
   - component: {fileID: 1331954386}
   - component: {fileID: 1331954385}
   - component: {fileID: 1331954387}
+  - component: {fileID: 1331954388}
   m_Layer: 5
   m_Name: EnemyInfo
   m_TagString: Untagged
@@ -6198,6 +6257,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1331954388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331954383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &1374246420
 GameObject:
   m_ObjectHideFlags: 0
@@ -8703,7 +8790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1787216278
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8844,6 +8931,7 @@ GameObject:
   - component: {fileID: 1823837413}
   - component: {fileID: 1823837415}
   - component: {fileID: 1823837416}
+  - component: {fileID: 1823837417}
   m_Layer: 5
   m_Name: Stage_3
   m_TagString: Untagged
@@ -8988,6 +9076,34 @@ MonoBehaviour:
   TargetMark: {fileID: 1304145590}
   StageName: 1-3
   BestLevel: 11
+--- !u!114 &1823837417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823837411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 000001
+    buttonLick: 000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &1834044939
 GameObject:
   m_ObjectHideFlags: 0
@@ -9939,6 +10055,7 @@ GameObject:
   - component: {fileID: 1997306829}
   - component: {fileID: 1997306828}
   - component: {fileID: 1997306830}
+  - component: {fileID: 1997306831}
   m_Layer: 5
   m_Name: PartyEditBtn
   m_TagString: Untagged
@@ -10060,6 +10177,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1997306831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997306826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &2005280232
 GameObject:
   m_ObjectHideFlags: 0
@@ -10136,6 +10281,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005280232}
   m_CullTransparentMesh: 1
+--- !u!1001 &2076333704
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4801347544323615528, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: eb70411ab7693574cafc2160ac187858, type: 3}
+    - target: {fileID: 4801347545788546152, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
 --- !u!1 &2078686693
 GameObject:
   m_ObjectHideFlags: 0
@@ -10358,6 +10564,7 @@ GameObject:
   - component: {fileID: 2082986210}
   - component: {fileID: 2082986209}
   - component: {fileID: 2082986211}
+  - component: {fileID: 2082986212}
   m_Layer: 5
   m_Name: Sortie
   m_TagString: Untagged
@@ -10479,6 +10686,34 @@ MonoBehaviour:
           m_StringArgument: DefenceStageScene
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2082986212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082986207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 00000001
+    buttonLick: 00000001
+  unitContainerScene:
+    buttonClick: 
+    buttonLick: 
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
 --- !u!1 &2106238336
 GameObject:
   m_ObjectHideFlags: 0
