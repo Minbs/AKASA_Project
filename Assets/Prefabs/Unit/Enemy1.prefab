@@ -68,7 +68,7 @@ MonoBehaviour:
   healTakeAmount: 0
   isNonDamage: 0
   healthBar: {fileID: 6831602217341417594}
-  attackType: 1
+  attackType: 2
 --- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -170,7 +170,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4de1ebf1f6b39e64a802d62bf8df2624, type: 2}
+  - {fileID: 2100000, guid: b58ec4337ec9aab4eb6a2631a25d32ad, type: 2}
+  - {fileID: 2100000, guid: 1685cc95a2865c24eb57eed6a7176615, type: 2}
+  - {fileID: 2100000, guid: b58ec4337ec9aab4eb6a2631a25d32ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -204,8 +206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: f0cd8e7a714a858459adb00a99674111, type: 2}
-  initialSkinName: short_ernemy
+  skeletonDataAsset: {fileID: 11400000, guid: da18c8f3c0e86ae41a805bc9572e7743, type: 2}
+  initialSkinName: enemy_tanker
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -226,7 +228,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: short_ernemy/run
+  _animationName: enemy_tanker/idle
   loop: 1
   timeScale: 1
 --- !u!65 &3270104930051822208
