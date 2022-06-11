@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7038330258952526154}
   - component: {fileID: 4462006901306146636}
   - component: {fileID: 6446028627423085391}
+  - component: {fileID: 5493527324248377260}
   m_Layer: 9
   m_Name: Spine GameObject (sd_main_new_01)
   m_TagString: Untagged
@@ -26,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2758246430292652753}
-  m_LocalRotation: {x: -0.4730121, y: 0, z: 0, w: 0.88105595}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 0, z: -0.15}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6208362256301881260}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -56.46, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!33 &7038330258952526154
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ca7212d9459532d448003383101c4f4e, type: 2}
+  - {fileID: 2100000, guid: feeef58bd8fa451478e6abaab4002717, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 437a98c47d4c3034496b80734881c902, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 68cb58bff73268c4bb26e62b89bc9fc3, type: 2}
   initialSkinName: wraith
   initialFlipX: 1
   initialFlipY: 0
@@ -121,6 +122,19 @@ MonoBehaviour:
   _animationName: wraith/idle
   loop: 1
   timeScale: 1
+--- !u!65 &5493527324248377260
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758246430292652753}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 11.806875, y: 11.156484, z: 0.00000066497824}
+  m_Center: {x: 2.9474165, y: 5.7905264, z: 0.00000034514233}
 --- !u!1 &6208362256301881235
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,9 +145,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6208362256301881260}
   - component: {fileID: 1494345181048627980}
+  - component: {fileID: 952972306829411379}
+  - component: {fileID: 7619595108123393261}
   m_Layer: 9
   m_Name: wraith
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,33 +183,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045c4ddbcc3783b4eb6512f4d7cf897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 20
+  currentHp: 0
+  GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
-  maxHp: 120
-  atk: 20
-  def: 0
+  Unitname: Wraith
+  Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls: []
+  atk: 2
+  currentAtk: 0
+  def: 1
+  attackRangeDistance: 1
+  attackRange2: 0
+  cognitiveRangeDistance: 3
+  attackSpeed: 0
+  damageRedution: 0
+  healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 5814845813638632022}
   minionClass: 0
-  attackRangeNodes:
-  - row: 0
-    column: 0
-  - row: -1
-    column: 0
-  attackType: 1
+  attackType: 2
+  cost: 27
+  sellCost: 19
+  UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+  skillCoolTime: 72
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
-  stopCount: 2
-  cost: 6
-  minionWaitingTime: 25
-  maxSkillGauge: 10
-  activeSkillAbilities:
-  - abilityType: {fileID: 11400000, guid: 67833d8fc1aa7084eba5b5e34dbbab1e, type: 2}
-    power: 150
-    duration: 0
-    statType: 1
-    rangeNodes: []
-    excludeSelf: 0
-  activeSkillType: 0
-  skillType: 1
   shootPivot: {fileID: 0}
+  skillType: 0
+  sightAngle: 0
+  sightDistance: 0
+--- !u!195 &952972306829411379
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 1
+  m_Acceleration: 1
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!54 &7619595108123393261
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208362256301881235}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &2380400476443150801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,6 +262,10 @@ PrefabInstance:
     - target: {fileID: 706432351067167521, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356473088215446937, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_Pivot.x
@@ -219,27 +281,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.7
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -251,15 +313,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.88105595
+      value: 0.9396927
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4730121
+      value: 0.3420201
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalRotation.y
@@ -275,11 +337,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.34
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -56.46
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

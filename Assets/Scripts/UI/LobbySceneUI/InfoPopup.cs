@@ -56,6 +56,8 @@ public class InfoPopup : Singleton<InfoPopup>
     public TextMeshProUGUI skillName;
 
 
+	public int lineSpace = 30;
+
     [Space(10f)]
     [Header("Image Sprite")]
     [SerializeField]
@@ -95,9 +97,11 @@ public class InfoPopup : Singleton<InfoPopup>
         if (ComentText != null)
             ComentText.text = Infos[key].Coment;
         if (StoryText != null)
-            StoryText.text = Infos[key].Story;
+            StoryText.text = Infos[key].Story.Replace("\\n", "\n");
         if (skillName != null)
             skillName.text = Infos[key].skillname;
+
+	StoryText.lineSpacing = lineSpace;
     }
 
     public void InitSimbol(string key)

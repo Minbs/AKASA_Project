@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -14,29 +15,12 @@ public class Tile : MonoBehaviour
     public bool isOnUnit = false;
 
     public bool ImpossibleUnitSetTile = false;
-    //타일 타입 추가
 
-
-    //길찾기 알고리즘
-
-    public int G { get; set; }
-    public int H { get; set; }
-    public Tile parentTile { get; set; }
-
-    Vector3 center;
     Vector3 size;
-    Renderer renderer;
     List<Color> colors = new List<Color>();
     void Start()
     {
-        renderer = GetComponent<MeshRenderer>();
-        center = renderer.bounds.center;
-        size = renderer.bounds.size;
 
-        for (int i = 0; i < renderer.materials.Length; i++)
-        {
-            colors.Add(renderer.materials[i].color);
-        }
 
     }
 
@@ -45,56 +29,37 @@ public class Tile : MonoBehaviour
     {
     }
 
-    public bool IsCanSetUnit(MinionClass minionClass)
+    /// <summary>
+    /// 해당 클래스 미니언을 배치할 수 있는 타일인지 확인
+    /// </summary>
+    /// <returns>true일시 배치 가능</returns>
+    public bool IsDeployableMinionTile()
     {
-
-        if (!isBlock && !isOnUnit && !ImpossibleUnitSetTile)
-        {
-            if (minionClass == MinionClass.Buster || minionClass == MinionClass.Paladin || minionClass == MinionClass.Guardian || minionClass == MinionClass.Assassin)
-            {
-                if (height == 0)
-                    return true;
-                else
-                    return false;
-            }
-            else if (minionClass == MinionClass.Chaser || minionClass == MinionClass.Mage || minionClass == MinionClass.TacticalSupport || minionClass == MinionClass.Rescue)
-            {
-                if (height != 0)
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                Debug.Log(minionClass);
-            }
-        }
-
-
-        return false;
+        return (!isBlock && !isOnUnit && !ImpossibleUnitSetTile);
     }
 
-
-    public void canUnitSetTile(MinionClass minionClass, bool isActive)
+    /// <summary>
+    /// 배치가능한 타일 녹색으로 표시
+    /// </summary>
+    /// <param name="isActive"></param>
+    /// <param name="minionClass"></param>
+    public void ShowDeployableTile(bool isActive)
     {
+        if (isOnUnit)
+            GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
+        else
+            GetComponent<Image>().sprite = BattleUIManager.Instance.DeployableTileSprite;
 
-        for (int i = 0; i < renderer.materials.Length; i++)
-        {
-            renderer.materials[i].color = colors[i];
-        }
+        gameObject.SetActive(isActive);
+    }
 
-        if (!isActive)
-            return;
-
-        for (int i = 0; i < renderer.materials.Length; i++)
-        {
-            if (IsCanSetUnit(minionClass))
-                renderer.materials[i].color = Color.Lerp(colors[i], new Color(0, 1, 0), 0.3f);
-            else
-                renderer.materials[i].color = colors[i];
-        }
-
-
+    /// <summary>
+    /// 배치가능한 타일 녹색으로 표시
+    /// </summary>
+    /// <param name="minionClass"></param>
+    /// <param name="isActive"></param>
+    public void ShowOffenceModeDeployableTile(MinionClass minionClass, bool isActive)
+    {
 
     }
 
@@ -105,7 +70,6 @@ public class Tile : MonoBehaviour
             enemy.transform.position.z > transform.position.z - size.z / 2 &&
             enemy.transform.position.z < transform.position.z + size.z / 2)
         {
-            //renderer.material.color = new Color(255, 0, 0);
             return true;
         }
         else
@@ -117,15 +81,7 @@ public class Tile : MonoBehaviour
 
     public void on(bool b)
     {
-        if (b)
-            renderer.material.color = new Color(255, 0, 0);
-        else
-        {
-            for (int i = 0; i < renderer.materials.Length; i++)
-            {
-                renderer.materials[i].color = colors[i];
-            }
-        }
+
     }
 
     public void SetTileInfo(string[] s)

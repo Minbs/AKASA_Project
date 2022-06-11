@@ -9,205 +9,484 @@ public enum State
 {
     WAIT, //전투 시작 전
     BATTLE, //전투 진행
+    SKILL_PERFORM, //스킬 시전
+    WAVE_END,
     END //전투 종료
+}
+
+public enum DeployState
+{
+    NONE,
+    POSITIONING, // 배치 위치 결정
+    Deploying // 배치 방향 결정
+}
+
+[Serializable]
+public struct IncomeUpgradeData
+{
+    public int upgradeCost;
+    public int income;
 }
 
 public class GameManager : Singleton<GameManager>
 {
-    public int cost = 20;
+    public GameObject UImanager;
 
-    public float waitTimer = 20; // 대기 시간
+    public float cost = 20; // 초기 보유 코스트
+    public float costTime = 10; // 초기 코스트 획득량
 
-    public float battleTime = 180; //전투 시간
+    public float waitTime = 30; // 대기 시간
+    public float clearTimeTerm = 30;
+    public float currentWaitTimer { get; set; }
 
-    public State state;
+    public State state { get; set; }
+    public DeployState deployState { get; set; } // 배치 상태
 
     public EnemySpawner spawner;
-
-    bool tileSetMode = false;
 
     public Camera tileCamera;
     public Camera characterCamera;
 
-    public float gameSpeed = 1;
+    public float gameSpeed { get; set; }
 
-    public int currentWave = 1;
+    public int currentWave { get; set; }
 
-    Node rayNode = new Node();
+    public List<int> waveClearRewards;
 
     Ray ray;
 
-    public Vector3 heroSetPosition;
+    public Vector3 minionSetPosition;
 
     public List<GameObject> enemiesList = new List<GameObject>();
     public List<GameObject> minionsList = new List<GameObject>();
 
-    public int heroesListIndex = 0;
-
-    public bool unitSetMode = false;
+    public int minionsListIndex { get; set; }
 
     private GameObject unitSetTile;
 
-    private Vector3 unitSetCameraPos;
+    public GameObject settingCharacter { get; set; }
+
+    public bool isChangePosition { get; set; }
+
+    public int totalIncome { get; set; }
+    public List<IncomeUpgradeData> incomeUpgradeDatas;
+    public int incomeUpgradeCount { get; set; }
+
+    public GameObject turret;
 
     void Start()
     {
-        state = State.WAIT;
+        //Time.timeScale = 2;
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var e in enemies)
+            enemiesList.Add(e);
+
+        currentWave = 0;
+
+
+        totalIncome = incomeUpgradeDatas[0].income;
+        incomeUpgradeCount = 0;
+        isChangePosition = false;
+        StartCoroutine(WaitState());
     }
 
     void Update()
     {
-        Time.timeScale = gameSpeed;
-
         ray = tileCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (waitTimer <= 0 && state == State.WAIT)
-        {
-            state = State.BATTLE;
-            StartCoroutine(spawner.Spawn());
-        }
-        else
-        {
-            waitTimer -= Time.deltaTime;
-        }
-
-        if (tileSetMode)
-        {
-            ShowAttackRangeTiles();
-        }
-
-        if (battleTime <= 0 && state == State.BATTLE)
-        {
-            battleTime -= Time.deltaTime;
-        }
-    }
-
-    public void ShowAttackRangeTiles()
-    {
-        if (unitSetMode)
-        {
-            Vector3 pos = unitSetTile.transform.position;
-            pos += heroSetPosition;
-
-            BattleUIManager.Instance.isSettingCharacterOn = false;
-            BattleUIManager.Instance.settingCharacter.GetComponent<RectTransform>().anchoredPosition = characterCamera.WorldToScreenPoint(pos);
-            Vector2 vec = Input.mousePosition - unitSetCameraPos;
-
-            float dot = Vector2.Dot(vec.normalized, new Vector2(0, 1)); //앞뒤 판별
-            Vector3 cross = Vector3.Cross(vec.normalized, new Vector2(0, 1)); //좌우 판별
-
-            List<Node> temp = new List<Node>();
-            Direction direction = Direction.LEFT;
-
-            Vector3 scale = BattleUIManager.Instance.settingCharacter.transform.localScale;
-            if (dot > 0 && cross.z < 0.5f && cross.z > -0.5f)
-            {
-                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.UP).ToList();
-                direction = Direction.UP;
-                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-            }
-            if (dot < 0 && cross.z < 0.5f && cross.z > -0.5f)
-            {
-                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.DOWN).ToList();
-                direction = Direction.DOWN;
-                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-            }
-            if (cross.z > 0 && dot < 0.5f && dot > -0.5f)
-            {
-                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.RIGHT).ToList();
-                direction = Direction.RIGHT;
-                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-
-                scale.x = -Mathf.Abs(scale.x);
-                BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-            }
-            if (cross.z < 0 && dot < 0.5f && dot > -0.5f)
-            {
-                temp = BattleUIManager.Instance.GetAttackRangeNodesList(Direction.LEFT).ToList();
-                direction = Direction.LEFT;
-                BattleUIManager.Instance.ShowAttackRangeTiles(true, unitSetTile.GetComponent<Tile>(), direction);
-
-                scale.x = Mathf.Abs(scale.x);
-                BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
-                    .GetComponent<Minion>().minionStandbyTime =
-                    MinionManager.Instance.heroPrefabs[BattleUIManager.Instance.mBtn[heroesListIndex].index]
-                    .GetComponent<Minion>().minionWaitingTime;
-                BattleUIManager.Instance.DeploymentMinion(BattleUIManager.Instance.mBtn[heroesListIndex].index);
-                BattleUIManager.Instance.isCostCheck = true;
-
-                GameObject hero = Instantiate(MinionManager.Instance.heroPrefabs[heroesListIndex]);
-                hero.transform.position = pos;
-                unitSetTile.GetComponent<Tile>().isOnUnit = true;
-                unitSetMode = false;
-                tileSetMode = false;
-                BattleUIManager.Instance.settingCharacter.SetActive(false);
-                BattleUIManager.Instance.isSettingCharacterOn = true;
-                hero.GetComponent<Unit>().SetDirection(direction);
-                //  hero.GetComponent<Minion>().onTile.no
-                scale.x = Mathf.Abs(scale.x);
-                BattleUIManager.Instance.settingCharacter.transform.localScale = scale;
-                foreach (var tile in temp)
-                {
-                    if (BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile) != null)
-                        hero.GetComponent<Minion>().attackRangeTiles.Add(BoardManager.Instance.GetTile(unitSetTile.GetComponent<Tile>().node + tile));
-                }
-
-                foreach (var tile in BoardManager.Instance.tilesList)
-                {
-                    tile.canUnitSetTile(hero.GetComponent<Minion>().minionClass, false);
-                }
-                BattleUIManager.Instance.ShowAttackRangeTiles(false);
-                unitSetTile = null;
-                minionsList.Add(hero);
-                hero.SetActive(true);
-            }
-        }
-        else
+        if (!settingCharacter)
         {
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
-                if (raycastHit.collider.transform.tag == "Tile" && !unitSetMode)
+                if (raycastHit.collider.transform.tag == "Tower"
+                    && Input.GetMouseButtonUp(1))
                 {
-                    if (Input.GetMouseButtonDown(0) && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
-                    {
-                        //  tileSetMode = false;
-                        unitSetMode = true;
-                        unitSetTile = raycastHit.collider.gameObject;
-                        unitSetCameraPos = tileCamera.WorldToScreenPoint(raycastHit.collider.transform.position);
-                    }
-                    if (rayNode != raycastHit.collider.GetComponent<Tile>().node && raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
-                    {
-                        BattleUIManager.Instance.ShowAttackRangeTiles(true, raycastHit.collider.GetComponent<Tile>());
-                    }
-                    else if (!raycastHit.collider.GetComponent<Tile>().IsCanSetUnit(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass))
-                    {
-                        BattleUIManager.Instance.ShowAttackRangeTiles(false);
-                    }
-
-                    rayNode = raycastHit.collider.GetComponent<Tile>().node;
+                    BattleUIManager.Instance.SetIncomeUpgradeButtonActive(true);
+                }
+                else if ((raycastHit.collider.transform.tag != "Tower"
+                    && !raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.incomeUpgradeButton))
+                    && (Input.GetMouseButtonUp(1)
+                    || Input.GetMouseButtonUp(0)))
+                {
+                    BattleUIManager.Instance.SetIncomeUpgradeButtonActive(false);
                 }
             }
             else
             {
-                BattleUIManager.Instance.ShowAttackRangeTiles(false);
+                if (Input.GetMouseButtonUp(1)
+                    || Input.GetMouseButtonUp(0))
+                {
+                    BattleUIManager.Instance.SetIncomeUpgradeButtonActive(false);
+                }
             }
         }
     }
 
-    public void CanSetTile()
+    IEnumerator WaitState()
     {
-        tileSetMode = true;
+        state = State.WAIT;
+        deployState = DeployState.NONE;
+        SetGameSpeed(1);
+        currentWaitTimer = waitTime;
+        currentWave++;
 
-        foreach (var tile in BoardManager.Instance.tilesList)
+
+
+        while (currentWaitTimer > 0)
         {
-            tile.canUnitSetTile(MinionManager.Instance.heroPrefabs[heroesListIndex].GetComponent<Minion>().minionClass, true);
+            StartCoroutine(spawner.Spawn(currentWave));
+            currentWaitTimer -= Time.deltaTime;
+            WaitStateUpdate();
+            yield return null;
+        }
+
+        deployState = DeployState.NONE;
+
+
+
+
+        if (settingCharacter)
+        {
+            if (isChangePosition)
+            {
+                Vector3 pos = settingCharacter.GetComponent<DefenceMinion>().onTile.gameObject.transform.position;
+                pos += minionSetPosition;
+                settingCharacter.transform.position = pos;
+                settingCharacter.GetComponent<DefenceMinion>().onTile.isOnUnit = true;
+                BattleUIManager.Instance.sellPanel.SetActive(false);
+            }
+            else
+            {
+                Destroy(settingCharacter);
+            }
+        }
+
+        BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+        settingCharacter = null;
+        StartCoroutine(BattleState());
+    }
+
+    void WaitStateUpdate()
+    {
+        if(BattleUIManager.Instance.minionUpgradeUI.activeSelf)
+        {
+                if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")) )
+                {
+                if (!raycastHit.collider.transform.parent.GetComponent<Minion>()
+                    && Input.GetMouseButtonUp(1))
+                    BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+            }
+               else
+            {
+                if (Input.GetMouseButtonUp(1))
+                {
+                    BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+                }
+            }
+        }
+
+        switch (deployState)
+        {
+            case DeployState.POSITIONING:
+                PositioningMinion();
+                break;
+            case DeployState.Deploying:
+                DeployingMinion();
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator BattleState()
+    {
+        state = State.BATTLE;
+        SetGameSpeed(1);
+
+        //1. 스킬 타입 2. 이름 순 오름차순 정렬
+        var tempList = minionsList.OrderBy(x => x.GetComponent<DefenceMinion>().skillType).ThenBy(x => x.GetComponent<DefenceMinion>().Unitname);
+
+        minionsList = tempList.ToList();
+
+    //    minionsList
+
+        foreach (var e in enemiesList)
+        {
+            e.GetComponent<UnitStateMachine>().ChangeState(e.GetComponent<UnitStateMachine>().moveState);
+        }
+
+        foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+        {
+            tile.ShowDeployableTile(false);
+        }
+
+
+
+        while (enemiesList.Count > 0)
+        {
+            BattleStateUpdate();
+            yield return null;
+        }
+
+        StartCoroutine(WaveEndState());
+    }
+
+    void BattleStateUpdate()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SkillManager.Instance.UseCharacterSkill(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SkillManager.Instance.UseCharacterSkill(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SkillManager.Instance.UseCharacterSkill(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SkillManager.Instance.UseCharacterSkill(3);
+        }
+    }
+
+
+    IEnumerator WaveEndState()
+    {
+        state = State.WAVE_END;
+        SetGameSpeed(1);
+
+        int count = 0;
+
+        while(count < minionsList.Count)
+        {
+            if (minionsList[count].activeSelf
+       && minionsList[count].GetComponent<Unit>().currentHp > 0)
+            {
+                minionsList[count].GetComponent<UnitStateMachine>().ChangeState(minionsList[count].GetComponent<UnitStateMachine>().moveState);
+                minionsList[count].GetComponent<Unit>().currentHp = minionsList[count].GetComponent<Unit>().maxHp;
+                minionsList[count].GetComponent<Unit>().UpdateHealthbar();
+                minionsList[count].GetComponent<Unit>().target = null;
+                count++;
+            }
+            else
+            {
+                minionsList[count].GetComponent<Unit>().onTile.isOnUnit = false;
+                minionsList.RemoveAt(count);
+            }
+        }
+
+        foreach (var m in minionsList)
+        {
+   
+
+        }
+
+        /**
+        //웨이브 클리어 후 간격
+
+        float timer = clearTimeTerm;
+
+        while (timer > 0)
+        {
+            WaveEndStateUpdate();
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        */
+
+        while (true)
+        {
+            WaveEndStateUpdate();
+
+            bool isAllMinionReturn = true;
+            foreach (var m in minionsList)
+            {
+                if (!m.GetComponent<UnitStateMachine>().currentState.Equals(m.GetComponent<UnitStateMachine>().idleState) && m.activeSelf)
+                    isAllMinionReturn = false;
+            }
+
+            if (isAllMinionReturn)
+                break;
+
+            yield return null;
+        }
+
+        cost += waveClearRewards[currentWave - 1];
+        BattleUIManager.Instance.costText.text = cost.ToString();
+
+        StartCoroutine(WaitState());
+    }
+
+    void WaveEndStateUpdate()
+    {
+
+    }
+    /// <summary>
+    /// 유닛 배치 타일 결정
+    /// </summary>
+    private void PositioningMinion()
+    {
+        BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+
+        foreach (var minion in minionsList)
+        {
+            if (minion.Equals(settingCharacter))
+                continue;
+            minion.transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
+            minion.GetComponent<UnitStateMachine>().agent.enabled = false;
+        }
+
+        if (settingCharacter)
+        {
+            Vector3 mousePosition
+           = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 22);
+            settingCharacter.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit raycastHit))
+        {
+            if (raycastHit.collider.transform.tag == "Tile" && raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile())
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    deployState = DeployState.Deploying;
+                    unitSetTile = raycastHit.collider.gameObject;
+                    //Debug.Log("소환성공");
+
+                }
+            }
+            else if (raycastHit.collider.gameObject.Equals(BattleUIManager.Instance.sellPanel) && isChangePosition)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    
+                    cost += settingCharacter.GetComponent<DefenceMinion>().sellCost;
+                    BattleUIManager.Instance.costText.text = cost.ToString();
+                    minionsList.Remove(settingCharacter);
+                    //판매
+                    UImanager.GetComponent<Unit_Select_UI>().Display_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
+                    Destroy(settingCharacter);
+                    settingCharacter = null;
+                    isChangePosition = false;
+                    BattleUIManager.Instance.sellPanel.SetActive(false);
+                    deployState = DeployState.NONE;
+                }
+            }
+        }
+        else
+        {
+            
+        }
+    }
+
+    /// <summary>
+    /// 유닛 배치
+    /// </summary>
+    public void DeployingMinion()
+    {
+        Vector3 pos = unitSetTile.transform.position;
+        pos += minionSetPosition;
+
+        Direction direction = Direction.RIGHT;
+
+        BattleUIManager.Instance.isCheck = true;
+
+        settingCharacter.transform.position = pos;
+        unitSetTile.GetComponent<Tile>().isOnUnit = true;
+        settingCharacter.GetComponent<DefenceMinion>().onTile = unitSetTile.GetComponent<Tile>();
+        deployState = DeployState.NONE;
+        settingCharacter.GetComponent<Unit>().SetDirection(direction);
+
+        foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+        {
+            tile.ShowDeployableTile(false);
+        }
+
+        settingCharacter.GetComponent<Unit>().Init();
+        unitSetTile = null;
+
+        if (!isChangePosition)
+        {
+            minionsList.Add(settingCharacter);
+            BattleUIManager.Instance.UseCost(settingCharacter.GetComponent<DefenceMinion>().cost);
+        }
+
+        UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
+
+        settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
+        settingCharacter = null;
+        isChangePosition = false;
+        BattleUIManager.Instance.sellPanel.SetActive(false);
+
+        
+
+
+        foreach (var m in minionsList)
+        {
+            SynergyManager.Instance.CheckClassSynergy(m);
+            m.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+            m.GetComponent<UnitStateMachine>().agent.enabled = true;
         }
 
     }
+
+    /// <summary>
+    /// 버튼 클릭 콜백 이벤트 함수 유닛배치모드로 전환
+    /// </summary>
+    public void ChangeMinionPositioningState()
+    {
+        deployState = DeployState.POSITIONING;
+
+        foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+        {
+            tile.ShowDeployableTile(true);
+        }
+    }
+
+    public void minionChangePos(GameObject minion)
+    {
+        if (settingCharacter)
+        {
+            return;
+        }
+
+        isChangePosition = true;
+        settingCharacter = minion;
+        settingCharacter.GetComponent<Unit>().healthBar.transform.parent.gameObject.SetActive(false);
+        settingCharacter.GetComponent<Unit>().onTile.isOnUnit = false;
+        settingCharacter.transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
+        BattleUIManager.Instance.SetSellCostText(settingCharacter.GetComponent<DefenceMinion>().sellCost);
+        BattleUIManager.Instance.sellPanel.SetActive(true);
+        deployState = DeployState.POSITIONING;
+
+        foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+        {
+            tile.ShowDeployableTile(true);
+        }
+    }
+
+
+    public void SetGameSpeed(float speed)
+    {
+        if (gameSpeed.Equals(speed))
+            return;
+
+        gameSpeed = speed;
+
+        foreach (var e in enemiesList)
+        {
+            e.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
+            e.GetComponent<UnitStateMachine>().agent.velocity = e.GetComponent<UnitStateMachine>().agent.velocity * speed;
+        }
+
+        foreach (var m in minionsList)
+        {
+            m.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
+            m.GetComponent<UnitStateMachine>().agent.velocity = m.GetComponent<UnitStateMachine>().agent.velocity * speed;
+        }
+    }
+
 }
 
