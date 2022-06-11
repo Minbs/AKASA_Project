@@ -12,7 +12,6 @@ public class EditList : Singleton<EditList>
     // GraphicRaycaster gr;
     // 이 곳은 파티 편집기에 등록한 파티를 저장하고 초기화하는 기능
     public List<MinionsPortrait> myList = new List<MinionsPortrait>();
-    public List<MinionsPortrait> objList = new List<MinionsPortrait>();
     public GameObject Contents;
     public int EditMax = 10;
     //public MainObjectDataa ArrayItem = new MainObjectDataa();
@@ -45,10 +44,8 @@ public class EditList : Singleton<EditList>
     // Start is called before the first frame update
     void Start()
     {
-        if (objList.Count == 0)
-        {
-            SetEdit();
-        }
+        SetEdit();
+
     }
 
     public void SetEdit()
@@ -99,6 +96,23 @@ public class EditList : Singleton<EditList>
             Debug.Log("데이터 없음");
         }
         
+    }
+
+    public void ListOut(MinionsInfo p)
+    {
+        for(int i = 0; i < myList.Count; i++)
+        {
+            if(myList[i].m_info.pro_k_name == p.pro_k_name)
+            {
+                // 이름이 같은 것을 찾아 그 곳을 비워줌
+                MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
+                Destroy(myList[i].gameObject);
+                //myList.Add(go);
+                myList[i] = go;
+                go.transform.parent = this.transform;
+                return;
+            }
+        }
     }
 
     public void ListClear()

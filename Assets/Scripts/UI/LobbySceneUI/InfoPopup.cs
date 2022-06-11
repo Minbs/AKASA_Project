@@ -124,7 +124,7 @@ public class InfoPopup : Singleton<InfoPopup>
             {
                 InitText(key);
                 InitSimbol(key);
-                Debug.Log("Hello World!");
+                //Debug.Log("Hello World!");
             }
         }
         catch(System.Exception e)

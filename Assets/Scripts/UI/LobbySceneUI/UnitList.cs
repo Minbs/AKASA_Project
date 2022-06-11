@@ -26,36 +26,6 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         myCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         myCanves = GameObject.Find("Canvas").GetComponent<Canvas>();
         gr = GameObject.Find("Canvas").GetComponent<GraphicRaycaster>();
-
-        //ListSave();
-
-        //LoadList();
-    }
-    public void ListLoad()
-    {
-
-    }
-
-    public void ListSave()
-    {
-        //string path;
-        //string filename;
-        //string json;
-        //for (int i = 0; i < MinionList.Count; i++)
-        //{
-        //    filename = MinionList[i].pro_Minion_e_Name;
-        //    path = Application.dataPath + "/" + filename + ".Json";
-
-        //    json = JsonUtility.ToJson(MinionList[i]);
-
-        //    File.WriteAllText(path, json);
-        //    Debug.Log(filename + "생성");
-        //    myUnits.Add(filename);
-        //}
-        //path = Application.dataPath + "/" + UnitListFile + ".Json";
-        //string[] a = myUnits.ToArray();
-        //json = JsonUtility.ToJson(a);
-        //File.WriteAllText(path, json);
     }
 
     private void Update()
@@ -74,8 +44,6 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
                 //EditList.Instance.e_NameList.Add(up.pro_Minion_e_Name);
                 up.updateInfo(Dummy.GetComponent<MinionsPortrait>().pro_info);
                 up.init();
-                //up.GetData(ref dummy);
-                EditList.Instance.objList.Add(up);
             }
             else
             {
@@ -91,7 +59,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
     public void CreateDummy(Collider2D other)
     {
-        Debug.Log("활성화");
+        //Debug.Log("활성화");
         if (!SelectUnit)
         {
             SelectUnit = true;
@@ -104,7 +72,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
 
     private void DestroyDummy()
     {
-        Debug.Log("비활성화");
+        //Debug.Log("비활성화");
         if (SelectUnit)
         {
             Destroy(Dummy);
@@ -122,13 +90,20 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         {
             Debug.Log(e.Message);
         }
+        if (eventData.button == PointerEventData.InputButton.Left)
+            Debug.Log("Left");
+        else if (eventData.button == PointerEventData.InputButton.Right)
+            Debug.Log("Right");
+        else if (eventData.button == PointerEventData.InputButton.Middle)
+            Debug.Log("Middle");
     }
+    
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         try
         {
-            Debug.Log("비긴드래그");
+            //Debug.Log("비긴드래그");
             var ped = new PointerEventData(null);
             ped.position = Input.mousePosition;
             List<RaycastResult> results = new List<RaycastResult>();
@@ -156,7 +131,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
         try
         {
             DestroyDummy();
-            Debug.Log("엔드 드래그");
+            //Debug.Log("엔드 드래그");
             var ped = new PointerEventData(null);
             ped.position = Input.mousePosition;
             List<RaycastResult> results = new List<RaycastResult>();
@@ -178,7 +153,7 @@ public class UnitList : Singleton<UnitList>, IPointerDownHandler, IBeginDragHand
     {
         try
         {
-            Debug.Log("드래그");
+            //Debug.Log("드래그");
             if (SelectUnit)
             {
                 MousePos = Input.mousePosition;
