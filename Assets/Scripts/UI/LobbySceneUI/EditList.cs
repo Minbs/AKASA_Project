@@ -83,19 +83,25 @@ public class EditList : Singleton<EditList>
     public void LoadData()
     {
         Debug.Log("데이터 로드");
-        int m_count = UserData.Instance.LoadUnitData().Count;
-        if (m_count > 0)
+        try
         {
-            for(int i = 0; i < m_count; i++)
+            int m_count = UserData.Instance.LoadUnitData().Count;
+            if (m_count > 0)
             {
-                myList[i].updateInfo(UserData.Instance.LoadUnitData()[i]);
+                for (int i = 0; i < m_count; i++)
+                {
+                    myList[i].updateInfo(UserData.Instance.LoadUnitData()[i]);
+                }
+            }
+            else
+            {
+                Debug.Log("데이터 없음");
             }
         }
-        else
+        catch
         {
-            Debug.Log("데이터 없음");
+            Debug.Log("Not Have A UserData");
         }
-        
     }
 
     public void ListOut(MinionsInfo p)
