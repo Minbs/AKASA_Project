@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 201675959092706450}
   - component: {fileID: 4743684597772665506}
   m_Layer: 9
-  m_Name: Enemy3
+  m_Name: EnemyHealer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,8 +51,8 @@ MonoBehaviour:
   maxHp: 10
   currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
-  poolItemName: Enemy1
-  Unitname: Enemy1
+  poolItemName: EnemyHealer
+  Unitname: EnemyHealer
   Level: 1
   UnitDisplay:
     m_PersistentCalls:
@@ -68,7 +68,7 @@ MonoBehaviour:
   healTakeAmount: 0
   isNonDamage: 0
   healthBar: {fileID: 6831602217341417594}
-  attackType: 1
+  attackType: 4
 --- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: f0cd8e7a714a858459adb00a99674111, type: 2}
-  initialSkinName: short_ernemy
+  initialSkinName: healer_enemy
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -226,7 +226,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: short_ernemy/run
+  _animationName: healer_enemy/run
   loop: 1
   timeScale: 1
 --- !u!65 &3270104930051822208

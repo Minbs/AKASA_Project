@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6299139124071220317}
   - component: {fileID: 6299139124071220316}
-  - component: {fileID: 8383545571456269890}
-  - component: {fileID: 9004243214345113514}
+  - component: {fileID: 201675959092706450}
+  - component: {fileID: 4743684597772665506}
   m_Layer: 9
-  m_Name: Enemy2
+  m_Name: EnemyBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,19 +48,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943b449dcb3eefb40a30d3cc2b20145a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 7
+  maxHp: 10
   currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
-  poolItemName: Enemy2
-  Unitname: Enemy2
+  poolItemName: EnemyBoss
+  Unitname: EnemyBoss
   Level: 1
   UnitDisplay:
     m_PersistentCalls:
       m_Calls: []
-  atk: 1
+  atk: 1.2
   currentAtk: 0
-  def: 0
-  attackRangeDistance: 2
+  def: 1
+  attackRangeDistance: 1
   attackRange2: 0
   cognitiveRangeDistance: 3
   attackSpeed: 0
@@ -68,8 +68,8 @@ MonoBehaviour:
   healTakeAmount: 0
   isNonDamage: 0
   healthBar: {fileID: 6831602217341417594}
-  attackType: 3
---- !u!195 &8383545571456269890
+  attackType: 2
+--- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +91,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &9004243214345113514
+--- !u!54 &4743684597772665506
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 6299139124783264946}
   - component: {fileID: 6299139124783264947}
   - component: {fileID: 6299139124783264944}
-  - component: {fileID: 5457827478705239241}
+  - component: {fileID: 3270104930051822208}
   m_Layer: 9
   m_Name: Spine GameObject (spi_ani_test_character)
   m_TagString: Enemy
@@ -170,7 +170,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4de1ebf1f6b39e64a802d62bf8df2624, type: 2}
+  - {fileID: 2100000, guid: a6db1e9aa70a08c4baba90b16ec3f88f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -204,8 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: f0cd8e7a714a858459adb00a99674111, type: 2}
-  initialSkinName: sniper_enemy
+  skeletonDataAsset: {fileID: 11400000, guid: 2f2919e5e508428428b752a4cd10e663, type: 2}
+  initialSkinName: boss
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -226,10 +226,10 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: sniper_enemy/run
+  _animationName: boss/idle
   loop: 1
   timeScale: 1
---- !u!65 &5457827478705239241
+--- !u!65 &3270104930051822208
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,8 +240,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.379667, y: 11.465472, z: 0.0000006833954}
-  m_Center: {x: 1, y: 1, z: 1}
+  m_Size: {x: 9.64533, y: 11.043193, z: 1}
+  m_Center: {x: -1.6025634, y: 5.6201825, z: 1}
 --- !u!1001 &3419394231967310845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -271,27 +271,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_LocalPosition.x

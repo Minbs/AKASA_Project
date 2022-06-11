@@ -14,6 +14,7 @@ public enum AttackType
     Melee,
     MeleeRange,
     SingleHeal,
+    HealRange,
     HitScan,
     HitScanRange
 }
