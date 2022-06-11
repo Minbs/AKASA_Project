@@ -5,6 +5,7 @@ using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.Events;
 public enum Direction
 {
     LEFT,
@@ -20,20 +21,18 @@ public class Unit : Object
     public string Unitname;
     public int Level = 1;
     private Stat ParsingStat;
-
+    public UnityEvent UnitDisplay;
 
     public Tile onTile { get; set; }
     [Header("UnitStat")]
     public float atk;
     public float currentAtk; //{ get; set; }
     public float def;
-    [Header("사각형 공격 범위")]
-    public float rectangleWidthRange;
-    public float rectangleHeightRange;
 
     //  public float moveSpeed;
-    [Header("단일 대상 공격 범위")]
+
     public float attackRangeDistance; // 유닛 공격 범위
+    public float attackRange2;
 
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed;  //{ get; set; }
@@ -74,25 +73,25 @@ public class Unit : Object
 
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
-            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
-            attackRangeDistance = ParsingStat.AtkRange;
+            attackRangeDistance = ParsingStat.AtkRange1;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
 
         }
         else
         {
-            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
 
             maxHp = ParsingStat.HP;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
-            attackRangeDistance = ParsingStat.AtkRange;
+            attackRangeDistance = ParsingStat.AtkRange1;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
         }
@@ -320,6 +319,8 @@ public class Unit : Object
             attackSpeed += value;
         else if (stat == "def")
             def += value;
+        else if (stat == "atk")
+            currentAtk += value;
         else if (stat == "non")
             isNonDamage = true;
 
@@ -338,6 +339,8 @@ public class Unit : Object
             attackSpeed -= value;
         else if (stat == "def")
             def -= value;
+        else if (stat == "atk")
+            currentAtk -= value;
         else if (stat == "non")
             isNonDamage = false;
     }
@@ -355,7 +358,8 @@ public class Unit : Object
       currentAtk = atk;
       def = stat.Def;
       attackSpeed = stat.AtkSpeed;
-      attackRangeDistance = stat.AtkRange;
+      attackRangeDistance = stat.AtkRange1;
+        attackRange2 = stat.AtkRange2;
 
       if (GetComponent<DefenceMinion>())
       {

@@ -48,7 +48,7 @@ public class MapCreator
                 tileImage.transform.eulerAngles = new Vector3(90, 0, 0);
                 tileImage.AddComponent<Tile>();
                 tileImage.GetComponent<Tile>().node = new Node(row, col);
-                tileImage.SetActive(true);
+                tileImage.SetActive(false);
                 BoardManager.Instance.enemyDeployTilesList.Add(tileImage.GetComponent<Tile>());
             }
     }
