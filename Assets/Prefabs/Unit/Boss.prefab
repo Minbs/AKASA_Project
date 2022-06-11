@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8383545571456269890}
   - component: {fileID: 3924089413698333958}
   m_Layer: 9
-  m_Name: Enemy4
+  m_Name: Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,12 +54,14 @@ MonoBehaviour:
   poolItemName: Enemy4
   Unitname: Enemy4
   Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls: []
   atk: 2
   currentAtk: 0
   def: 0
-  rectangleWidthRange: 0
-  rectangleHeightRange: 0
   attackRangeDistance: 2
+  attackRange2: 0
   cognitiveRangeDistance: 3
   attackSpeed: 0
   damageRedution: 0
@@ -165,7 +167,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4de1ebf1f6b39e64a802d62bf8df2624, type: 2}
+  - {fileID: 2100000, guid: a6db1e9aa70a08c4baba90b16ec3f88f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -199,8 +201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: f0cd8e7a714a858459adb00a99674111, type: 2}
-  initialSkinName: sniper_enemy
+  skeletonDataAsset: {fileID: 11400000, guid: 082294c22327ad74687208e5cc9bf769, type: 2}
+  initialSkinName: boss
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -221,7 +223,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: sniper_enemy/move
+  _animationName: boss/idle
   loop: 1
   timeScale: 1
 --- !u!65 &5457827478705239241

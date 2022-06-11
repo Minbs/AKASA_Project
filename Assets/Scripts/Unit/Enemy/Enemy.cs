@@ -57,6 +57,22 @@ public class Enemy : Unit
         target.GetComponent<Object>().Deal(currentAtk);
     }
 
+    public void MeleeRangeAttack()
+    {
+        Vector3 box = new Vector3(attackRangeDistance, 1, attackRange2);
+        Vector3 center = transform.position;
+        center.x = transform.position.x + attackRangeDistance / 2;
+        Collider[] targets = Physics.OverlapBox(center, box, Quaternion.identity);
+
+        foreach (var e in targets)
+        {
+            if (e.transform.tag.Equals("Enemy")) continue;
+            Debug.Log(e.transform.parent.name);
+            e.transform.parent.GetComponent<Unit>().Deal(currentAtk);
+
+        }
+    }
+
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
         if (target == null)
@@ -77,8 +93,10 @@ public class Enemy : Unit
                 case AttackType.HitScan:
                     HitScanAttack();
                     break;
+                case AttackType.MeleeRange:
+                    MeleeRangeAttack();
+                    break;
             }
-
         }
     }
 
