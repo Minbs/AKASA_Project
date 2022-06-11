@@ -8,6 +8,8 @@ public class Setting : MonoBehaviour
     [Header("페이지")]
     public List<GameObject> FuncPage;
 
+    public Slider MasterSlive;
+
 
     [Space(10f)]
     [Header("ButtonSprite")]
@@ -17,7 +19,16 @@ public class Setting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        try
+        {
+            MasterSlive.onValueChanged.AddListener(val => SoundManager.Instance.ChangeMasterVolume(val));
 
+        }
+        catch
+        {
+            Debug.Log("SoundManager가 존재하지 않습니다.");
+        }
+        
     }
 
     public void ChangeSettingPage(int number)
