@@ -103,7 +103,7 @@ public class InfoPopup : Singleton<InfoPopup>
         if (skillName != null)
             skillName.text = Infos[key].skillname;
         if (skillText != null)
-            skillText.text = Infos[key].skillFlavorText;
+            skillText.text = Infos[key].skillFlavorText.Replace("\\n", "\n");
 
 	    StoryText.lineSpacing = lineSpace;
     }

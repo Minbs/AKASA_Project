@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3313,7 +3313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1035, y: -196.3}
+  m_AnchoredPosition: {x: 1033, y: -189}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &711749464
@@ -3338,8 +3338,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skill Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cc957f46bc579d64581712cf7328425f, type: 2}
-  m_sharedMaterial: {fileID: 1503304261271780368, guid: cc957f46bc579d64581712cf7328425f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 054adc22353322544b9aa0fced90c759, type: 2}
+  m_sharedMaterial: {fileID: 1166857937258430307, guid: 054adc22353322544b9aa0fced90c759, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5860,9 +5860,10 @@ MonoBehaviour:
         \uC720\uC77C\uD55C \uAC83\uC778 \uBBF8\uB798\uB97C \uC9C0\uD0A4\uAE30 \uC704\uD574
         \uAD73\uC740 \uB2E4\uC9D0\uC744 \uD55C\uB2E4."
       skillname: "\uCC28\uC9D5 \uC0F7"
-      skillFlavorText: "\uD14C"
+      skillFlavorText: "\uB300\uC0C1 \uD55C\uBA85\uC5D0\uAC8C \uACF5\uACA9\uB825\uC758\\n480%\uB9CC\uD07C
+        \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 2b97b21e8c3b70648b7680ccb0cd9d47, type: 3}
     - Codename: Bonitatis
       k_name: "\uC5D0\uB808\uBA54\uB514\uC6C0"
       e_name: Remedium
@@ -5887,9 +5888,10 @@ MonoBehaviour:
         \uBCF4\uC874\uACFC \uBC88\uC601\uC774 \uD544\uC694\uD558\uB2E4 \uB290\uAEF4
         \uADF8\uB4E4\uC744 \uC9C0\uD0A4\uACE0\uC790 \uD55C\uB2E4."
       skillname: "A.R.A \uCE58\uC720\uB4DC\uB860"
-      skillFlavorText: "\uD14C\uC2A4"
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uC544\uAD70\uC5D0\uAC8C 5\uCD08\uAC04\\n\uACF5\uACA9\uB825\uC758
+        450%\uB9CC\uD07C \uD68C\uBCF5\uC2DC\uD0A8\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: c7248e6f4bb688e46a8abb106492c64c, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 6bf03e4ace6b5544d93d51890c4c820c, type: 3}
     - Codename: Wraith
       k_name: "\uB808\uC774\uC2A4"
       e_name: Wraith
@@ -5913,7 +5915,8 @@ MonoBehaviour:
         \uAE30\uADFC \uBB38\uC81C\uB97C \uC9C0\uC6D0\uD558\uB294 \uC2A4\uCE74\uC774\uD638\uD06C\uC5D0
         \uB808\uC774\uC2A4\uB294 \uD798\uC774 \uB418\uC5B4\uC904 \uAC83\uC744 \uC57D\uC18D\uD588\uB2E4. "
       skillname: "\uB2EC\uBE5B \uAC00\uB974\uAE30"
-      skillFlavorText: "\uD14C\uC2A4\uD2B8"
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uB300\uC0C1\uC5D0\uAC8C \uACF5\uACA9\uB825\uC758\\n420%\uB9CC\uD07C
+        \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
       SkillSImbol: {fileID: 21300000, guid: 6bf03e4ace6b5544d93d51890c4c820c, type: 3}
     - Codename: Hwaseon
@@ -5939,9 +5942,10 @@ MonoBehaviour:
         \uBC18\uBCF5\uB418\uC9C0 \uC54A\uB3C4\uB85D \uD504\uB85C\uC81D\uD2B8 \uC544\uCE74\uC0AC\uC5D0
         \uCC38\uC5EC\uD588\uB2E4."
       skillname: "\uC815\uC2E0 \uCC28\uB9AC\uC138\uC6A7!"
-      skillFlavorText: "\uD14C\uC2A4\uD2B8\uC2A4"
+      skillFlavorText: "\uC544\uAD70 \uD55C\uBA85\uC744 \uB300\uC0C1\uC73C\uB85C
+        2\uCD08\uAC04\\n\uACF5\uACA9\uB825\uC744 30%\uB9CC\uD07C \uC99D\uAC00\uC2DC\uD0A8\uB2E4. "
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 0ae7645358c01614e9fc35cd9e151c42, type: 3}
     - Codename: Underlock
       k_name: "\uC9C0\uD3EC"
       e_name: ZIPPO
@@ -5966,9 +5970,10 @@ MonoBehaviour:
         \uC774\uC0C1\uC758 \uC131\uACFC\uB97C \uAC70\uB46C\uC654\uAE30\uC5D0 \uC778\uC815\uBC1B\uACE0
         \uC788\uB2E4."
       skillname: "\uC9C0\uD3EC\uB77C\uC774\uD2B8\uB2DD"
-      skillFlavorText: "\uD14C\uC2A4\uD2B8\uC2A4\uD06C"
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uB300\uC0C1\uC5D0\uAC8C \uACF5\uACA9\uB825\uC758\\n360%\uB9CC\uD07C
+        \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: f973216c82c9c0e4e9c3d0fabe0b7b5f, type: 3}
     - Codename: 'Glorify '
       k_name: "\uC774\uC790\uBCA8\uB77C"
       e_name: Isabella
@@ -5991,9 +5996,10 @@ MonoBehaviour:
         \uC655\uC871\uC73C\uB85C\uC11C\uC758 \uCC45\uBB34\uB97C \uB2E4\uD558\uAE30
         \uC704\uD574 \uC804\uC7A5\uC5D0 \uC130\uB2E4. "
       skillname: "\uBC85\uC0F7"
-      skillFlavorText: "\uD14C\uC2A4\uD2B8\uC2A4\uD06C\uB9BD"
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uB300\uC0C1\uC744 \uB109\uBC31\uC2DC\uD0A4\uACE0\\n\uACF5\uACA9\uB825\uC758
+        130%\uB9CC\uD07C \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 9f2ab8ca1a6894744b0e9ccf1a220d12, type: 3}
     - Codename: Samurai
       k_name: "\uCF54\uC6B0\uC5D4"
       e_name: kuen
@@ -6018,10 +6024,11 @@ MonoBehaviour:
         \uAC10\uB3D9\uD55C \uCF54\uC6B0\uC5D4\uC740 \uD3C9\uC0DD \uADF8\uC758 \uACC1\uC744
         \uC9C0\uD0A4\uAE30\uB85C \uB2E4\uC9D0\uD55C\uB2E4. "
       skillname: "\uBC1C\uB3C4"
-      skillFlavorText: 
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uB300\uC0C1\uC5D0\uAC8C \uACF5\uACA9\uB825\uC758\\n360%\uB9CC\uD07C
+        \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
-      SkillSImbol: {fileID: 0}
-    - Codename: "\u0411\u043E\u0433"
+      SkillSImbol: {fileID: 21300000, guid: 52f54eee29c8e0f4dbbc868e1aad83ff, type: 3}
+    - Codename: Loner
       k_name: "\uBCF4\uADF8"
       e_name: Vogue
       Coment: "\uB098\uB791 \uCE5C\uAD6C\uD574\uC904\uB798?"
@@ -6044,9 +6051,10 @@ MonoBehaviour:
         \uC783\uC790, \uC678\uD1A8\uC774\uAC00 \uB41C \uBCF4\uADF8\uB294 \uC0C8\uB85C\uC6B4
         \uCE5C\uAD6C\uB97C \uCC3E\uAE30 \uC704\uD574 \uC5EC\uC815\uC744 \uB5A0\uB09C\uB2E4."
       skillname: "\uC9C0\uBA74 \uBD84\uC1C4"
-      skillFlavorText: 
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uB300\uC0C1\uC744 \uAC10\uC804\uC2DC\uD0A4\uACE0\\n\uACF5\uACA9\uB825\uC758
+        240%\uB9CC\uD07C \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 70b0107dbcedaa048a2cbc5655c680df, type: 3}
     - Codename: Shut-in
       k_name: "\uC18C\uD53C\uC544"
       e_name: Sophia
@@ -6070,9 +6078,10 @@ MonoBehaviour:
         \uC5F0\uAD6C\uC5D0\uB9CC \uBAB0\uB450\uD55C \uB098\uBA38\uC9C0 \uAC74\uAC15\uC0C1\uD0DC\uAC00
         \uC545\uD654\uB418\uC5B4 \uB9C1\uAC70\uB300\uB97C \uB4E4\uACE0 \uB2E4\uB2CC\uB2E4."
       skillname: "\uD790\uB9C1 \uBC1C\uCE78"
-      skillFlavorText: 
+      skillFlavorText: "\uC790\uC2E0\uC758 \uACF5\uACA9\uC18D\uB3C4\uB97C 2\uCD08\uAC04\\n30%\uB9CC\uD07C
+        \uC99D\uAC00\uC2DC\uD0A8\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: c7248e6f4bb688e46a8abb106492c64c, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 31dae6beeaa06f24ebddfa2357481bbd, type: 3}
     - Codename: Pardosa
       k_name: "\uD30C\uB974\uB3C4"
       e_name: Pardo
@@ -6096,12 +6105,13 @@ MonoBehaviour:
         \uC790\uC2E0\uC758 7\uBC88\uC9F8 \uB208\uC744 \uCC14\uB7EC \uC4F0\uB77C\uB9B0
         \uADF8\uB0A0\uC758 \uAE30\uC5B5\uC744 \uB418\uC0C8\uACBC\uB2E4."
       skillname: "\uD3EC\uC774\uC98C \uBBF8\uC2A4\uD2B8"
-      skillFlavorText: 
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uB300\uC0C1\uC5D0\uAC8C 5\uCD08\uAC04\\n\uACF5\uACA9\uB825\uC758
+        220%\uB9CC\uD07C \uD53C\uD574\uB97C \uC785\uD78C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 194f3f07077ebf54cbf30a175bfa5b66, type: 3}
     - Codename: Caecus
-      k_name: "\uC5B4\uC154 \uBC18\uC6E8\uBCA4"
-      e_name: Asher Van Warren
+      k_name: "\uC5B4\uC154"
+      e_name: Asher
       Coment: "\uC774 \uC804\uC7A5\uC5D0 \uC11C\uAC8C \uB418\uC5B4 \uC601\uAD11\uC785\uB2C8\uB2E4."
       privacy:
         age: "25\uC138"
@@ -6121,9 +6131,10 @@ MonoBehaviour:
         \uC704\uD55C \uC601\uAD11\uB41C \uC804\uD22C\uAC00 \uB420 \uAC83\uC774\uAE30\uC5D0
         \uB9DD\uC124\uC784 \uC5C6\uC774 \uCC38\uC5EC\uD588\uB2E4."
       skillname: "\uC218\uD638\uC758 \uBC29\uD328"
-      skillFlavorText: 
+      skillFlavorText: "\uBC94\uC704 \uB0B4 \uC544\uAD70\uC5D0\uAC8C 2\uCD08\uAC04\\n\uBB34\uC801\uC744
+        \uBD80\uC5EC\uD55C\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 2586aad08ba25244eb5a9a167d632fc5, type: 3}
     - Codename: Surgeon
       k_name: "\uD398\uC774"
       e_name: Pay
@@ -6147,9 +6158,10 @@ MonoBehaviour:
         \uC8FD\uC74C\uC744 \uAC16\uAC8C \uD558\uB294 \uAC83\uC774 \uC0DD\uBA85\uC5D0
         \uB300\uD55C \uC874\uC5C4\uC774\uB77C \uBBFF\uACE0 \uC788\uB2E4. "
       skillname: "\uC5F4\uC815\uD398\uC774"
-      skillFlavorText: 
+      skillFlavorText: "\uC790\uC2E0\uC758 \uBC29\uC5B4\uB825\uC744 2\uCD08\uAC04\\n30%\uB9CC\uD07C
+        \uC99D\uAC00\uC2DC\uD0A8\uB2E4."
       ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
-      SkillSImbol: {fileID: 0}
+      SkillSImbol: {fileID: 21300000, guid: 520f133dd0c44b44cb39fb4b177dc1dd, type: 3}
 --- !u!224 &1419002793 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
@@ -6329,8 +6341,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uCE90\uB9AD\uD130\uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cc957f46bc579d64581712cf7328425f, type: 2}
-  m_sharedMaterial: {fileID: 1503304261271780368, guid: cc957f46bc579d64581712cf7328425f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee7884d39eb4d484bb45f302cd7708ed, type: 2}
+  m_sharedMaterial: {fileID: -3475243513615155634, guid: ee7884d39eb4d484bb45f302cd7708ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6360,7 +6372,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -8170,8 +8182,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1055, y: -261}
-  m_SizeDelta: {x: 290, y: 80}
+  m_AnchoredPosition: {x: 1057, y: -254}
+  m_SizeDelta: {x: 299, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1909453562
 MonoBehaviour:
@@ -8195,8 +8207,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ad3060a8d0e017740b7a49731088d5cf, type: 2}
-  m_sharedMaterial: {fileID: -2017501935918927776, guid: ad3060a8d0e017740b7a49731088d5cf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ee7884d39eb4d484bb45f302cd7708ed, type: 2}
+  m_sharedMaterial: {fileID: -3475243513615155634, guid: ee7884d39eb4d484bb45f302cd7708ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
