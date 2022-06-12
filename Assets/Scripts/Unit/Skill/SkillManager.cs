@@ -125,7 +125,7 @@ public class SkillManager : Singleton<SkillManager>
             || skillUnit.GetComponent<Unit>().currentHp <= 0)
            {
               return;
-             }
+           }
        
         minionName = skillUnit.GetComponent<DefenceMinion>().Unitname;
         isSkillActing = true;

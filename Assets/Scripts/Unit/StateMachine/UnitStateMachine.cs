@@ -52,7 +52,7 @@ public class UnitStateMachine : MonoBehaviour
         if (unit.currentHp <= 0)
         {
             
-                if (this.name == "Enemy1" || this.name == "Enemy2" || this.name == "Enemy3" || this.name == "Enemy4")
+                if (this.name == "Enemy1" || this.name == "Enemy2" || this.name == "EnemyTank" || this.name == "EnemyHealer" || this.name == "EnemyBoss")
                 {
                     agent.isStopped = true;
                     agent.velocity = Vector3.zero;
@@ -92,12 +92,12 @@ public class UnitStateMachine : MonoBehaviour
 
     public void MoveToDirection(Direction direction)
     {
-        int desX = 1;
+        float desX = 1;
 
         switch (direction)
         {
             case Direction.LEFT:
-                desX = -10;
+                desX = -5.4f;
                 break;
             case Direction.RIGHT:
                 desX = 10;
@@ -181,26 +181,52 @@ public class UnitStateMachine : MonoBehaviour
         }
         else if (GetComponent<Enemy>())
         {
+
             foreach (var col in colliders)
             {
                 GameObject obj = col.transform.parent.gameObject;
 
-                if (!obj.transform.tag.Equals("Ally")
-                    || obj.GetComponent<Object>().currentHp <= 0)
-                    continue;
+                if (unit.attackType.Equals(AttackType.HealRange))
+                {
+                    if (!obj.GetComponent<Enemy>()
+                || obj.GetComponent<Object>().currentHp <= 0
+                || obj.GetComponent<Object>().currentHp >= obj.GetComponent<Object>().maxHp
+                || !obj.activeSelf)
+                        continue;
 
-                if (!unit.target)
-                {
-                    unit.target = obj;
-                }
-                else
-                {
-                    if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                    if (!unit.target)
                     {
                         unit.target = obj;
                     }
+                    else
+                    {
+                        if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                        {
+                            unit.target = obj;
+                        }
+                    }
+                }
+                else
+                {
+                    if (!obj.transform.tag.Equals("Ally")
+      || obj.GetComponent<Object>().currentHp <= 0)
+                        continue;
+
+                    if (!unit.target)
+                    {
+                        unit.target = obj;
+                    }
+                    else
+                    {
+                        if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                        {
+                            unit.target = obj;
+                        }
+                    }
                 }
             }
+            
+
         }
 
       
@@ -254,7 +280,33 @@ public class UnitStateMachine : MonoBehaviour
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance);
+        if (GetComponent<Enemy>()
+    && GetComponent<Enemy>().attackType == AttackType.HealRange)
+        {
+            if (unit.target == GameManager.Instance.turret
+                || unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
+            {
+                unit.target = null;
+                return false;
+            }
+        }
+
+        Collider[] colliders;
+
+        if(unit.attackType.Equals(AttackType.MeleeRange))
+        {
+            Vector3 box = new Vector3(unit.attackRangeDistance, 1, unit.attackRange2);
+            Vector3 center = unit.transform.position;
+            center.x = unit.transform.position.x + unit.attackRangeDistance / 2;
+            colliders = Physics.OverlapBox(center, box, Quaternion.identity);
+
+
+        }
+        else
+        {
+            colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance);
+        }
+
 
         foreach(var col in colliders)
         {
@@ -262,9 +314,11 @@ public class UnitStateMachine : MonoBehaviour
 
             if (obj.Equals(unit.target.gameObject)
                 && obj.GetComponent<Object>().currentHp > 0)
+            {
                 return true;
+            }
         }
-        return false;//Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.attackRangeDistance;
+        return false;
     }
 
     public bool IsTargetInCognitiveRange() // 인지 범위 안에 있는지 확인
