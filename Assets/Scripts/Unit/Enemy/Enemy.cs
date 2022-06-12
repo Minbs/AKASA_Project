@@ -9,10 +9,6 @@ using Event = Spine.Event;
 public class Enemy : Unit
 {
     // Start is called before the first frame update
-    List<Tile> moveTiles = new List<Tile>();
-    [Header("EnemyStat")]
-
-    public AttackType attackType;
 
     protected override void Awake()
     {
@@ -57,6 +53,42 @@ public class Enemy : Unit
         target.GetComponent<Object>().Deal(currentAtk);
     }
 
+    public void MeleeRangeAttack()
+    {
+   //     Debug.Log(attackRange2);
+        Vector3 box = new Vector3(attackRangeDistance, 1, attackRange2);
+        Vector3 center = transform.position;
+        center.x = transform.position.x + attackRangeDistance / 2;
+        Collider[] targets = Physics.OverlapBox(center, box, Quaternion.identity);
+
+        foreach (var e in targets)
+        {
+            if (!e.transform.parent.tag.Equals("Ally")) continue;
+
+            e.transform.parent.GetComponent<Unit>().Deal(currentAtk);
+
+        }
+    }
+
+    public void HealRangeAttack()
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, attackRangeDistance);
+
+        foreach (var e in targets)
+        {
+            if (!e.transform.tag.Equals("Enemy")
+                || e.transform.parent .GetComponent<Object>().currentHp <= 0
+                || e.transform.parent. GetComponent<Object>().currentHp >= e.transform.parent. GetComponent<Object>().maxHp) continue;
+
+
+
+            e.transform.parent.GetComponent<Unit>().Deal(-currentAtk);
+
+            EffectManager.Instance.InstantiateHomingEffect("heal", e.transform.parent.gameObject, 2);
+        }
+    }
+
+
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
         if (target == null)
@@ -77,8 +109,13 @@ public class Enemy : Unit
                 case AttackType.HitScan:
                     HitScanAttack();
                     break;
+                case AttackType.MeleeRange:
+                    MeleeRangeAttack();
+                    break;
+                case AttackType.HealRange:
+                    HealRangeAttack();
+                    break;
             }
-
         }
     }
 

@@ -3,29 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class Wave_UI_Script : MonoBehaviour
 {
 
     public Image[] Logo;
     public TextMeshProUGUI StageText;
+    public TextMeshProUGUI TimeText;
+    public TextMeshProUGUI CostUpText;
+    public TextMeshProUGUI CostUpText2;
 
     // Start is called before the first frame update
     void Start()
     {
-        Wave_Logo_ColorChange(0, "Yellow");
-        Wave_Logo_ColorChange(1, "Red");
-        Wave_Logo_ColorChange(2, "Blue");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log("키입력");
-            StageText_Next();
-        }
+
+    }
+
+    public void CostUpUI(int cost)
+    {
+        CostUpText.text = cost.ToString();
+        CostUpText.GetComponent<TextMeshProUGUI>().color = new Color(255, 255, 255, 255);
+        CostUpText.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+
+        CostUpText2.GetComponent<TextMeshProUGUI>().color = new Color(255, 255, 255, 255);
+        CostUpText2.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+    }
+    public void TimerText(float time)
+    {
+        int inttime = (int)time;
+        TimeText.text = inttime.ToString();
     }
 
     public void Wave_Logo_ColorChange(int logoindex, string Color) //logoindex = 로고인텍스, Color = 변할색깔 {Yellow, Blue, Red}
@@ -51,8 +64,12 @@ public class Wave_UI_Script : MonoBehaviour
 
     public void StageText_Next()
     {
-      
-        if(StageText.text == "1-1")
+
+        if(StageText.text == "1-0")
+        {
+            StageText.text = "1-1";
+        }
+        else if(StageText.text == "1-1")
         {
             StageText.text = "1-2";
         }

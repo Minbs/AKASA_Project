@@ -49,7 +49,9 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
     public Stat VogueStat;
     public Stat EnemyAStat;
     public Stat EnemyBStat;
-    public Stat EnemyCStat;
+    public Stat EnemyBossStat;
+    public Stat EnemyHealerStat;
+    public Stat EnemyTankStat;
 
     public Stat[] VeriyStat_Array;
     public Stat[] AngelusStat_Array;
@@ -68,7 +70,9 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
     public Stat[] VogueStat_Array;
     public Stat[] EnemyAStat_Array;
     public Stat[] EnemyBStat_Array;
-    public Stat[] EnemyCStat_Array;
+    public Stat[] EnemyBossStat_Array;
+    public Stat[] EnemyHealerStat_Array;
+    public Stat[] EnemyTankStat_Array;
 
 
     
@@ -92,8 +96,11 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
         List<Dictionary<string, object>> EnemyA = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_AStatus");
         List<Dictionary<string, object>> EnemyB = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BStatus");
-        List<Dictionary<string, object>> EnemyC = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_CStatus");
-        
+        List<Dictionary<string, object>> EnemyBoss = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BossStatus");
+        List<Dictionary<string, object>> EnemyHealer = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_HealerStatus");
+        List<Dictionary<string, object>> EnemyTank = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_TankStatus");
+
+
         StatUpdate(AsherStat,0,Asherdata);
         StatUpdate(EremediumStat, 0,Eremediumdata);
         StatUpdate(IsabellaStat, 0,Isabelladata);
@@ -106,9 +113,12 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         StatUpdate(ZippoStat, 0,Zippodata);
         StatUpdate(VogueStat, 0,Voguedata);
         StatUpdate(HwaseonStat, 0, Hwaseondata);
+        StatUpdate_Enemy(EnemyBossStat, 0, EnemyBoss);
+        StatUpdate_Enemy(EnemyHealerStat, 0, EnemyHealer);
+        StatUpdate_Enemy(EnemyTankStat, 0, EnemyTank);
 
-        
-        for(int i = 0; i < 15; i++)
+
+        for (int i = 0; i < 15; i++)
         {
             StatUpdate(VeriyStat_Array[i], i, Veritydata);
             //StatUpdate(_AngelusStat, _saveData.AngelusLevel, Angelusdata);
@@ -127,8 +137,10 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
             //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
             StatUpdate_Enemy(EnemyAStat_Array[i], i, EnemyA);
             StatUpdate_Enemy(EnemyBStat_Array[i], i, EnemyB);
-            StatUpdate_Enemy(EnemyCStat_Array[i], i, EnemyC);
-
+            StatUpdate_Enemy(EnemyBossStat_Array[i], i, EnemyBoss);
+            StatUpdate_Enemy(EnemyHealerStat_Array[i], i, EnemyHealer);
+            StatUpdate_Enemy(EnemyTankStat_Array[i], i, EnemyTank);
+            //StatUpdate_Enemy(EnemyCStat_Array[i], i, EnemyC);
         }
 
         
@@ -338,7 +350,8 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         charactor.Atk = float.Parse(ListData[charactorlevel]["Atk"].ToString());
         charactor.AtkSpeed = float.Parse(ListData[charactorlevel]["AtkSpeed"].ToString());
         charactor.MoveSpeed = float.Parse(ListData[charactorlevel]["MoveSpeed"].ToString());
-        charactor.AtkRange1 = float.Parse(ListData[charactorlevel]["AtkRange"].ToString());
+        charactor.AtkRange1 = float.Parse(ListData[charactorlevel]["AtkRange1"].ToString());
+        charactor.AtkRange2 = float.Parse(ListData[charactorlevel]["AtkRange2"].ToString());
         charactor.CognitiveRange = float.Parse(ListData[charactorlevel]["CognitiveRange"].ToString());
         charactor.RewardCost = float.Parse(ListData[charactorlevel]["RewardCost"].ToString());
     }
@@ -424,9 +437,17 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
         {
             return EnemyBStat_Array[level - 1];
         }
-        if (name == "Enemy3")
+        if (name == "EnemyBoss")
         {
-            return EnemyCStat_Array[level - 1];
+            return EnemyBossStat_Array[level - 1];
+        }
+        if (name == "EnemyHealer")
+        {
+            return EnemyBossStat_Array[level - 1];
+        }
+        if (name == "EnemyTank")
+        {
+            return EnemyBossStat_Array[level - 1];
         }
 
         return errerStat;
@@ -552,12 +573,26 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
             StatUpdate_Enemy(EnemyBStat, level - 1, EnemyBdata);
             return EnemyBStat;
         }
-        if (name == "Enemy3")
+        if (name == "EnemyBoss")
         {
-            List<Dictionary<string, object>> EnemyCdata = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_CStatus");
-            StatUpdate_Enemy(EnemyCStat, level - 1, EnemyCdata);
-            return EnemyCStat;
+            List<Dictionary<string, object>> EnemyBossdata = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BossStatus");
+            StatUpdate_Enemy(EnemyBossStat, level - 1, EnemyBossdata);
+            return EnemyBossStat;
         }
+        if (name == "EnemyHealer")
+        {
+            List<Dictionary<string, object>> EnemyHealerdata = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_HealerStatus");
+            StatUpdate_Enemy(EnemyHealerStat, level - 1, EnemyHealerdata);
+            return EnemyHealerStat;
+        }
+
+        if (name == "EnemyTank")
+        {
+            List<Dictionary<string, object>> EnemyTankdata = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_TankStatus");
+            StatUpdate_Enemy(EnemyTankStat, level - 1, EnemyTankdata);
+            return EnemyTankStat;
+        }
+
 
         Debug.Log("Call_Stat_이름 잘못입력함");
         return errerStat;
