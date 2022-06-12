@@ -55,11 +55,16 @@ public class Enemy : Unit
 
     public void MeleeRangeAttack()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, attackRangeDistance, LayerMask.NameToLayer("Object"));
+   //     Debug.Log(attackRange2);
+        Vector3 box = new Vector3(attackRangeDistance, 1, attackRange2);
+        Vector3 center = transform.position;
+        center.x = transform.position.x + attackRangeDistance / 2;
+        Collider[] targets = Physics.OverlapBox(center, box, Quaternion.identity);
 
         foreach (var e in targets)
         {
-            if (!e.transform.tag.Equals("Ally")) continue;
+            if (!e.transform.parent.tag.Equals("Ally")) continue;
+
             e.transform.parent.GetComponent<Unit>().Deal(currentAtk);
 
         }
