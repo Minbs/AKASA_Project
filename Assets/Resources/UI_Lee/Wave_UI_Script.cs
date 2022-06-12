@@ -17,20 +17,13 @@ public class Wave_UI_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Wave_Logo_ColorChange(0, "Yellow");
-        Wave_Logo_ColorChange(1, "Red");
-        Wave_Logo_ColorChange(2, "Blue");
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log("Å°ÀÔ·Â");
-            StageText_Next();
-        }
+
     }
 
     public void CostUpUI(int cost)
