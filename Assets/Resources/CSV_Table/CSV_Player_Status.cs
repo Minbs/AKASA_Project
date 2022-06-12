@@ -586,7 +586,7 @@ public class CSV_Player_Status : Singleton<CSV_Player_Status>
             return EnemyHealerStat;
         }
 
-        if (name == "EnemyBoss")
+        if (name == "EnemyTank")
         {
             List<Dictionary<string, object>> EnemyTankdata = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_TankStatus");
             StatUpdate_Enemy(EnemyTankStat, level - 1, EnemyTankdata);

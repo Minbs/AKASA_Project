@@ -25,6 +25,8 @@ public class Unit : Object
 
     public Tile onTile { get; set; }
     [Header("UnitStat")]
+    public AttackType attackType;
+
     public float atk;
     public float currentAtk; //{ get; set; }
     public float def;
@@ -80,6 +82,7 @@ public class Unit : Object
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
             attackRangeDistance = ParsingStat.AtkRange1;
+            attackRange2 = ParsingStat.AtkRange2;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
 
@@ -93,6 +96,7 @@ public class Unit : Object
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
             attackRangeDistance = ParsingStat.AtkRange1;
+            attackRange2 = ParsingStat.AtkRange2;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
         }
@@ -124,6 +128,7 @@ public class Unit : Object
     {
         currentAtk = atk;
         currentHp = maxHp;
+
         attackSpeed = 1;
         damageRedution = 0;
         healthBar.transform.parent.gameObject.SetActive(true);
@@ -339,7 +344,7 @@ public class Unit : Object
       def = stat.Def;
       attackSpeed = stat.AtkSpeed;
       attackRangeDistance = stat.AtkRange1;
-        attackRange2 = stat.AtkRange2;
+      attackRange2 = stat.AtkRange2;
 
       if (GetComponent<DefenceMinion>())
       {
