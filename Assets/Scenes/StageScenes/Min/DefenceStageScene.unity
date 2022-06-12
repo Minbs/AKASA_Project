@@ -466,6 +466,14 @@ MonoBehaviour:
     prefab: {fileID: 6299139124071220322, guid: c7bda6b27c1b76943a7701d054b84193, type: 3}
     poolCount: 30
     poolList: []
+  - poolItemName: EnemyHealer
+    prefab: {fileID: 6299139124071220322, guid: 6fdc05d242fba5b40a0cd2b08bf2264b, type: 3}
+    poolCount: 10
+    poolList: []
+  - poolItemName: EnemyTank
+    prefab: {fileID: 6299139124071220322, guid: 182925f5ad66efc489be90db07ab39c2, type: 3}
+    poolCount: 10
+    poolList: []
 --- !u!4 &98037801
 Transform:
   m_ObjectHideFlags: 0
@@ -1156,6 +1164,11 @@ CanvasRenderer:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8622471063949661186, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
   m_PrefabInstance: {fileID: 838464349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &304670863 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7191988482254207917, guid: ffb81975d99bf844dbe224594d350820, type: 3}
+  m_PrefabInstance: {fileID: 1494407391}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &318685588
 GameObject:
@@ -2016,6 +2029,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552997569}
   m_CullTransparentMesh: 1
+--- !u!1 &573841703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7137010443556998834, guid: 3921281307667e74bbe806bc6027e29d, type: 3}
+  m_PrefabInstance: {fileID: 1368134991}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &573841704
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573841703}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 7.214, y: 7.214, z: 7.214}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &576852132
 GameObject:
   m_ObjectHideFlags: 0
@@ -3819,6 +3853,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8147679647043039515, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+      propertyPath: minionUpgradeUI
+      value: 
+      objectReference: {fileID: 1736944471}
     - target: {fileID: 8147679647043039516, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -7346,6 +7384,115 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82755791c151a12469801ac19fae0ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1346524010
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8501931964776489140, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 425513901}
+    - target: {fileID: 8501931964776489140, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MinionUpgradeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915722, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8501931964814915723, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 304670863}
+    - target: {fileID: 8501931964814915726, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+      propertyPath: m_Name
+      value: MinionUpgradeUI
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
 --- !u!1 &1361283128
 GameObject:
   m_ObjectHideFlags: 0
@@ -8709,6 +8856,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 150, y: 200, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1736944471 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8501931964220545675, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
+  m_PrefabInstance: {fileID: 1346524010}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1740242962 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1840828670922393324, guid: e87cf409eaa79324ca363f92ef1cdc7c, type: 3}
