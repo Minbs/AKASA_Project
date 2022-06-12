@@ -22,6 +22,7 @@ public class Unit : Object
     public int Level = 1;
     private Stat ParsingStat;
     public UnityEvent UnitDisplay;
+    public bool OneTimeSummon = false;
 
     public Tile onTile { get; set; }
     [Header("UnitStat")]

@@ -421,9 +421,12 @@ public class GameManager : Singleton<GameManager>
             minionsList.Add(settingCharacter);
             BattleUIManager.Instance.UseCost(settingCharacter.GetComponent<DefenceMinion>().cost);
         }
-
-        UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
-
+        if (settingCharacter.GetComponent<DefenceMinion>().OneTimeSummon == false)
+        {
+            settingCharacter.GetComponent<DefenceMinion>().OneTimeSummon = true;
+            UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
+        }
+        
         settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
         settingCharacter = null;
         isChangePosition = false;
