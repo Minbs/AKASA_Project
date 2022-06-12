@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
     public float waitTime = 30; // 대기 시간
     public float clearTimeTerm = 30;
     public float currentWaitTimer { get; set; }
+    public GameObject WaveUI;
 
     public State state { get; set; }
     public DeployState deployState { get; set; } // 배치 상태
@@ -128,6 +129,9 @@ public class GameManager : Singleton<GameManager>
         deployState = DeployState.NONE;
         SetGameSpeed(1);
         currentWaitTimer = waitTime;
+        WaveUI.GetComponent<Wave_UI_Script>().StageText_Next();
+        WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave, "Yellow");
+        WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer);
         currentWave++;
 
 
@@ -136,6 +140,7 @@ public class GameManager : Singleton<GameManager>
         {
             StartCoroutine(spawner.Spawn(currentWave));
             currentWaitTimer -= Time.deltaTime;
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer);
             WaitStateUpdate();
             yield return null;
         }
@@ -208,7 +213,7 @@ public class GameManager : Singleton<GameManager>
 
         minionsList = tempList.ToList();
 
-    //    minionsList
+        //    minionsList
 
         foreach (var e in enemiesList)
         {
@@ -269,11 +274,14 @@ public class GameManager : Singleton<GameManager>
                 minionsList[count].GetComponent<Unit>().UpdateHealthbar();
                 minionsList[count].GetComponent<Unit>().target = null;
                 count++;
+                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave, "Blue");   //현재 스테이지 로고 Blue로 변경
             }
             else
             {
+                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave, "Red");    //현재 스테이지 로고 Red로 변경
                 minionsList[count].GetComponent<Unit>().onTile.isOnUnit = false;
                 minionsList.RemoveAt(count);
+
             }
         }
 
@@ -306,7 +314,7 @@ public class GameManager : Singleton<GameManager>
                 if (!m.GetComponent<UnitStateMachine>().currentState.Equals(m.GetComponent<UnitStateMachine>().idleState) && m.activeSelf)
                     isAllMinionReturn = false;
             }
-
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer);
             if (isAllMinionReturn)
                 break;
 
@@ -314,6 +322,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         cost += waveClearRewards[currentWave - 1];
+        //클리어 코스트 증가
         BattleUIManager.Instance.costText.text = cost.ToString();
 
         StartCoroutine(WaitState());
