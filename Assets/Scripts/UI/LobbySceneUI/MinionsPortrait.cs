@@ -325,7 +325,6 @@ public class MinionsPortrait : MonoBehaviour, IPointerDownHandler
                 }
                 else if (this.tag == "Minions_EditList") // 에딧 리스트의 portrait을 누를 시 적용되는 기능 
                 {
-                    Debug.Log("EditList 기능 미구현");
 
                     obj_Standing = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
                     this.gameObject.GetComponent<Button>().onClick.AddListener(() => obj_Standing.ShowStanding(this.m_info));      // 스탠딩에 정보를 보여주는 기능
@@ -351,16 +350,22 @@ public class MinionsPortrait : MonoBehaviour, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(obj_Standing == null)
-            obj_Standing = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
-
-        if (eventData.button == PointerEventData.InputButton.Left)
+        try
         {
-            obj_Standing.ShowStanding(this.m_info);
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                if (obj_Standing == null)
+                    obj_Standing = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
+                obj_Standing.ShowStanding(this.m_info);
+            }
+            if (eventData.button == PointerEventData.InputButton.Right && this.tag == "Minions_EditList")
+            {
+                EditList.Instance.ListOut(this.m_info);
+            }
         }
-        else if(eventData.button == PointerEventData.InputButton.Right && this.tag == "Minions_EditList")
+        catch
         {
-            EditList.Instance.ListOut(this.m_info);
+            Debug.Log("portrait One Click Error. if don't using standing Illust GameObject");
         }
     }
 
