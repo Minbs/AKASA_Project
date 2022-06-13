@@ -286,7 +286,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024591138425302202, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.9999695
+      value: -65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024591138425302202, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 481
       objectReference: {fileID: 0}
     - target: {fileID: 6024591138546644746, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_RootOrder
@@ -294,7 +298,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024591138546644746, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 120.99997
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024591138546644746, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 481
       objectReference: {fileID: 0}
     - target: {fileID: 6024591138558970324, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_RootOrder
@@ -322,7 +330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024591139262338715, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 41.000046
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024591139262338715, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 481
       objectReference: {fileID: 0}
     - target: {fileID: 6024591139342317884, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_text
@@ -342,7 +354,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024591139412833900, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 81.00006
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024591139412833900, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 481
       objectReference: {fileID: 0}
     - target: {fileID: 6024591139453256518, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_RootOrder
@@ -350,7 +366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024591139453256518, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -38.999985
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024591139453256518, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 481
       objectReference: {fileID: 0}
     - target: {fileID: 6024591139513069005, guid: bf1c2d3cd2ad7024faeb9dfef8b4d6dd, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1062,7 +1082,7 @@ MonoBehaviour:
   - {fileID: 1266941957}
   - {fileID: 3783624}
   - {fileID: 171047135}
-  cost: 40
+  cost: 35
   costTime: 10
   waitTime: 30
   clearTimeTerm: 5
@@ -1070,17 +1090,27 @@ MonoBehaviour:
   spawner: {fileID: 1367259471}
   tileCamera: {fileID: 1780990819}
   characterCamera: {fileID: 1082993434}
-  waveClearRewards: 0a0000000e00000012000000160000001a000000
+  waveClearRewards: 0a0000000e00000012000000160000001a0000001e00000022000000260000002a0000002e000000320000003200000032000000
   minionSetPosition: {x: 0, y: 0, z: 0}
   enemiesList: []
   minionsList: []
   incomeUpgradeDatas:
   - upgradeCost: 0
     income: 1
-  - upgradeCost: 10
+  - upgradeCost: 5
+    income: 2
+  - upgradeCost: 7
     income: 3
-  - upgradeCost: 10
+  - upgradeCost: 14
     income: 5
+  - upgradeCost: 20
+    income: 7
+  - upgradeCost: 25
+    income: 10
+  - upgradeCost: 30
+    income: 13
+  - upgradeCost: 60
+    income: 19
   turret: {fileID: 1633916579}
 --- !u!4 &285796146
 Transform:
@@ -2441,6 +2471,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9083301479255456871, guid: 01a1dc06a16f3aa458051695edba0a57, type: 3}
   m_PrefabInstance: {fileID: 1224830672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &755924044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9083301479255456870, guid: 01a1dc06a16f3aa458051695edba0a57, type: 3}
+  m_PrefabInstance: {fileID: 1224830672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755924041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952df4f083615bb44a79a72acafca001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &804443180 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8792666666787699332, guid: 5ae5911016563224c9a702dea27572f1, type: 3}
@@ -2580,6 +2621,10 @@ PrefabInstance:
       propertyPath: BarrierBar
       value: 
       objectReference: {fileID: 804443180}
+    - target: {fileID: 301465249604412476, guid: f1af75e492105d343bd45fe16d2b31cc, type: 3}
+      propertyPath: attackDamage
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 301465249886395085, guid: f1af75e492105d343bd45fe16d2b31cc, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -4936,7 +4981,7 @@ PrefabInstance:
     - target: {fileID: 8501931964776489140, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 755924044}
     - target: {fileID: 8501931964776489140, guid: f7a3d17ec8a06684b8c764c4ab571d70, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: MinionUpgradeButton
