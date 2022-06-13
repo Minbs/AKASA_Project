@@ -7160,10 +7160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b68dea8ba1788942a57eddf85e9262b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UImanager: {fileID: 0}
+  StageFailUi: {fileID: 0}
+  StageVictoryUI: {fileID: 0}
+  Victory: []
+  Fail: []
   cost: 40
   costTime: 10
   waitTime: 15
   clearTimeTerm: 5
+  WaveUI: {fileID: 0}
   spawner: {fileID: 1367259471}
   tileCamera: {fileID: 1780990819}
   characterCamera: {fileID: 1082993434}
@@ -7512,7 +7518,8 @@ MonoBehaviour:
     AtkSpeed: 0
     AtkSpeedUp: 0
     MoveSpeed: 0
-    AtkRange: 0
+    AtkRange1: 0
+    AtkRange2: 0
     CognitiveRange: 0
     UpgradeCost: 0
     BuyCost: 0
@@ -7533,13 +7540,14 @@ MonoBehaviour:
     AtkSpeed: 0
     AtkSpeedUp: 0
     MoveSpeed: 0
-    AtkRange: 0
+    AtkRange1: 0
+    AtkRange2: 0
     CognitiveRange: 0
     UpgradeCost: 0
     BuyCost: 0
     CellCost: 0
     RewardCost: 0
-  Enemy_C:
+  Enemy_Boss:
     Name: 
     Grade: 
     Class: 
@@ -7554,7 +7562,52 @@ MonoBehaviour:
     AtkSpeed: 0
     AtkSpeedUp: 0
     MoveSpeed: 0
-    AtkRange: 0
+    AtkRange1: 0
+    AtkRange2: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  Enemy_Healer:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange1: 0
+    AtkRange2: 0
+    CognitiveRange: 0
+    UpgradeCost: 0
+    BuyCost: 0
+    CellCost: 0
+    RewardCost: 0
+  Enemy_Tank:
+    Name: 
+    Grade: 
+    Class: 
+    Brood: 
+    Belong: 
+    HP: 0
+    HPUP: 0
+    Def: 0
+    DefUP: 0
+    Atk: 0
+    AtkAdd: 0
+    AtkSpeed: 0
+    AtkSpeedUp: 0
+    MoveSpeed: 0
+    AtkRange1: 0
+    AtkRange2: 0
     CognitiveRange: 0
     UpgradeCost: 0
     BuyCost: 0
@@ -18190,6 +18243,42 @@ MonoBehaviour:
   skillBackgroundImage: {fileID: 251299188}
   skillCircleRangeUI: {fileID: 2018370903}
   skillAimCircleRangeUI: {fileID: 2133973260}
+  poisonMist: {fileID: 0}
+  healDrone: {fileID: 0}
+  verityShot: {fileID: 0}
+  skillCutScene: {fileID: 0}
+  paySkillValue: 0
+  paySkillDuration: 0
+  sophiaSkillValue: 0
+  sophiaSkillDuration: 0
+  hwaseonSkillValue: 0
+  hwaseonSkillDuration: 0
+  hwaseonSkillAimRange: 0
+  veritySkillValue: 0
+  veritySkillAimRange: 0
+  pardoSkillValue: 0
+  pardoSkillAimRange: 0
+  pardoSkillRange: 0
+  pardoSkillDuration: 0
+  asherSkillAimRange: 0
+  asherSkillRange: 0
+  asherSkillDuration: 0
+  vogueSkillValue: 0
+  vogueSkillAimRange: 0
+  vogueSkillRange: 0
+  wraithSkillValue: 0
+  wraithSkillRangeWidth: 0
+  wraithSkillRangeHeight: 0
+  isabellaSkillValue: 0
+  isabellaSkillRange: 0
+  zippoSkillValue: 0
+  zippoSkillRangeWidth: 0
+  zippoSkillRangeHeight: 0
+  kuenSkillValue: 0
+  kuenSkillRangeWidth: 0
+  kuenSkillRangeHeight: 0
+  eremediumSkillValue: 0
+  eremediumSkillDuration: 0
 --- !u!4 &675234010
 Transform:
   m_ObjectHideFlags: 0
