@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 using System;
 public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [HideInInspector]
+    //[HideInInspector]
     public AudioClip[] uiClip;
-    [HideInInspector]
+    //[HideInInspector]
     public string[] uiClipName;
-    [HideInInspector]
+    //[HideInInspector]
     public AudioClip[] skillClip;
-    [HideInInspector]
+    //[HideInInspector]
     public string[] skillClipName;
 
     [Space(10)]

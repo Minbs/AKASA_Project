@@ -39,13 +39,12 @@ public class SoundManager : MonoBehaviour
         if (soundCanvas.activeSelf) soundCanvas.SetActive(false);
 
         if (SceneManager.GetActiveScene().name != "DefenceStageScene")
-        {
-            ChangeMasterVolume(masterSlider.value);
-        }
+            ChangeMasterVolume(masterSlider.value);   
         ChangeBGMVolume(bgmSlider.value);
         ChangeEffectsVolume(effectsSlider.value);
 
-        masterSlider.onValueChanged.AddListener(val => ChangeMasterVolume(val));
+        if (SceneManager.GetActiveScene().name != "DefenceStageScene")
+            masterSlider.onValueChanged.AddListener(val => ChangeMasterVolume(val));
         bgmSlider.onValueChanged.AddListener(val => ChangeBGMVolume(val));
         effectsSlider.onValueChanged.AddListener(val => ChangeEffectsVolume(val));
     }

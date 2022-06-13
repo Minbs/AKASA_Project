@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 37486933}
   - component: {fileID: 37486932}
   - component: {fileID: 37486934}
+  - component: {fileID: 37486935}
   m_Layer: 5
   m_Name: Sort_Btn
   m_TagString: Untagged
@@ -280,6 +281,44 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &37486935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37486930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 00000001
+    buttonLick: 00000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
+--- !u!1 &44633560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 1031798200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &49563479
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +718,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75042251}
   m_CullTransparentMesh: 1
+--- !u!1 &86621683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 58158577}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &116143976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1287,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253278072}
   m_CullTransparentMesh: 1
+--- !u!1 &257701311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 555968957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &353361712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1683,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387099015}
   m_CullTransparentMesh: 1
+--- !u!1 &390673899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 932154000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &411708665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,6 +2621,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 555968957}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &555968964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257701311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &576514280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2666,7 @@ GameObject:
   - component: {fileID: 576514284}
   - component: {fileID: 576514283}
   - component: {fileID: 576514282}
+  - component: {fileID: 576514285}
   m_Layer: 5
   m_Name: Exit_Btn
   m_TagString: Untagged
@@ -2700,6 +2788,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576514280}
   m_CullTransparentMesh: 1
+--- !u!114 &576514285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576514280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 000001
+    buttonLick: 000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &652139294
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,6 +3042,7 @@ GameObject:
   - component: {fileID: 668866761}
   - component: {fileID: 668866760}
   - component: {fileID: 668866759}
+  - component: {fileID: 668866762}
   m_Layer: 5
   m_Name: Save_Btn
   m_TagString: Untagged
@@ -3042,6 +3164,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668866757}
   m_CullTransparentMesh: 1
+--- !u!114 &668866762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668866757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 000001
+    buttonLick: 000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &673370542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3278,6 +3433,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681441056}
   m_CullTransparentMesh: 1
+--- !u!1 &695597385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 1644733522}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &711749462
 GameObject:
   m_ObjectHideFlags: 0
@@ -3729,6 +3889,7 @@ GameObject:
   - component: {fileID: 880318833}
   - component: {fileID: 880318835}
   - component: {fileID: 880318834}
+  - component: {fileID: 880318836}
   m_Layer: 5
   m_Name: Unit_List_UI
   m_TagString: Untagged
@@ -3794,6 +3955,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880318832}
   m_CullTransparentMesh: 1
+--- !u!114 &880318836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880318832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 00000001
+    buttonLick: 00000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!224 &923099803 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
@@ -3928,11 +4122,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+--- !u!1 &951294305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 1079042171}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &990449282 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 1079042171}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &990449288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951294305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &991790448
 GameObject:
   m_ObjectHideFlags: 0
@@ -4329,6 +4561,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 1644733522}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1022529054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695597385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1001 &1031798200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4463,6 +4728,44 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 845002210}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1077021384 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 1306443520}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1077021390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077021384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1001 &1079042171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5113,6 +5416,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187539917}
   m_CullTransparentMesh: 1
+--- !u!1 &1218695065 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 2028060987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1222173290 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
@@ -5316,6 +5624,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 932154000}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1287288987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390673899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1296896046
 GameObject:
   m_ObjectHideFlags: 0
@@ -5642,6 +5983,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338853233}
   m_CullTransparentMesh: 1
+--- !u!1 &1374788703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 845002210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1374788709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374788703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1382564656
 GameObject:
   m_ObjectHideFlags: 0
@@ -6577,6 +6956,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 58158577}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1579041538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86621683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1585283409
 GameObject:
   m_ObjectHideFlags: 0
@@ -6704,6 +7116,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585283409}
   m_CullTransparentMesh: 1
+--- !u!1 &1591118996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 655444765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1591119002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591118996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1597059205
 GameObject:
   m_ObjectHideFlags: 0
@@ -7344,6 +7794,7 @@ GameObject:
   - component: {fileID: 1675117946}
   - component: {fileID: 1675117945}
   - component: {fileID: 1675117944}
+  - component: {fileID: 1675117947}
   m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
@@ -7459,6 +7910,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675117942}
   m_CullTransparentMesh: 1
+--- !u!114 &1675117947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675117942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 000000000001
+    buttonLick: 000000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1685658502
 GameObject:
   m_ObjectHideFlags: 0
@@ -7535,6 +8019,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685658502}
   m_CullTransparentMesh: 1
+--- !u!1 &1710489585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 496510604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1723060374
 GameObject:
   m_ObjectHideFlags: 0
@@ -7725,6 +8214,7 @@ GameObject:
   - component: {fileID: 1742823049}
   - component: {fileID: 1742823048}
   - component: {fileID: 1742823047}
+  - component: {fileID: 1742823050}
   m_Layer: 5
   m_Name: Clear_Btn
   m_TagString: Untagged
@@ -7846,6 +8336,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742823045}
   m_CullTransparentMesh: 1
+--- !u!114 &1742823050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742823045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 000001
+    buttonLick: 000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1768031529
 GameObject:
   m_ObjectHideFlags: 0
@@ -7940,6 +8463,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 496510604}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1779134697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710489585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1791034706
 GameObject:
   m_ObjectHideFlags: 0
@@ -8073,6 +8629,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791034706}
   m_CullTransparentMesh: 1
+--- !u!1 &1832194955 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 207801179}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1832194961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832194955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1868967937
 GameObject:
   m_ObjectHideFlags: 0
@@ -8270,11 +8864,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909453560}
   m_CullTransparentMesh: 1
+--- !u!1001 &1940381184
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4801347545788546152, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
 --- !u!224 &1946711743 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 1031798200}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1946711749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44633560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &1958549622
 GameObject:
   m_ObjectHideFlags: 0
@@ -8566,6 +9250,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 2028060987}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2028060994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218695065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0000000001
+    buttonLick: 0000000001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &2039105034
 GameObject:
   m_ObjectHideFlags: 0
@@ -8725,6 +9442,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b8f9d70c8e9ea42b790e043d664f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2079346240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079346233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 01
+    buttonLick: 01
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &2092949720
 GameObject:
   m_ObjectHideFlags: 0
