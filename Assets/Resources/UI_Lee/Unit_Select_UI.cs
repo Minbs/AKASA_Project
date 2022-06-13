@@ -189,6 +189,7 @@ public class Unit_Select_UI : MonoBehaviour
     public void Display_Unit_Button(string character_Name)
     {
         int Character_Number = -1;
+        Debug.Log(character_Name+ "디스플레이유닛버튼");
         switch (character_Name)
         {
             case "Verity":
@@ -229,6 +230,7 @@ public class Unit_Select_UI : MonoBehaviour
                 break;
             default:
                 break;
+
 
         }
 
