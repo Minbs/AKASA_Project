@@ -98,7 +98,7 @@ public class Turret : Object
         {
             if (e.tag != "Enemy")
                 continue;
-
+            
             e.transform.parent.GetComponent<Unit>().Deal(attackDamage);
         }
 
