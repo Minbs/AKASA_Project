@@ -25,7 +25,11 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject TurretAtkRedCircle;
 
     public GameObject DeployableTileImage;
-    public Sprite NotDeployableTileSprite;
+    // public Sprite NotDeployableTileSprite;
+    public Sprite chaserTileSprite;
+    public Sprite guardianTileSprite;
+    public Sprite rescueTileSprite;
+    public Sprite busterTileSprite;
     public Sprite DeployableTileSprite;
     
 

@@ -351,6 +351,10 @@ public class GameManager : Singleton<GameManager>
                 continue;
             minion.transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
             minion.GetComponent<UnitStateMachine>().agent.enabled = false;
+
+
+            minion.GetComponent<Unit>().onTile.SetTileClassImage(minion.GetComponent<Minion>().minionClass);
+            
         }
 
         if (settingCharacter)
@@ -364,6 +368,8 @@ public class GameManager : Singleton<GameManager>
         {
             if (raycastHit.collider.transform.tag == "Tile" && raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile())
             {
+                Debug.Log("dd");
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     deployState = DeployState.Deploying;
@@ -484,6 +490,8 @@ public class GameManager : Singleton<GameManager>
         BattleUIManager.Instance.SetSellCostText(settingCharacter.GetComponent<DefenceMinion>().sellCost);
         BattleUIManager.Instance.sellPanel.SetActive(true);
         deployState = DeployState.POSITIONING;
+
+     
 
         foreach (var tile in BoardManager.Instance.minionDeployTilesList)
         {
