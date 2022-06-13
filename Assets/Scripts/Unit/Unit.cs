@@ -16,6 +16,7 @@ public enum Direction
 
 public class Unit : Object
 {
+    public GameObject CostUimanager;
     public GameObject GameDataManager;
     public string poolItemName;
     public string Unitname;
@@ -48,6 +49,8 @@ public class Unit : Object
     private bool isPoisoned = false;
     private float poisonTimer = 0;
 
+    private float rewardCost;
+
     public bool isNonDamage = false;
 
     public Direction direction { get; set; }
@@ -72,7 +75,7 @@ public class Unit : Object
 
     protected virtual void Start()
     {
-        
+        CostUimanager = GameObject.FindGameObjectWithTag("WaveUI");
 
         if (Unitname == "Enemy1" || Unitname == "Enemy2")
         {
@@ -86,7 +89,7 @@ public class Unit : Object
             attackRange2 = ParsingStat.AtkRange2;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
-
+            rewardCost = ParsingStat.RewardCost;
         }
         else
         {
@@ -289,6 +292,12 @@ public class Unit : Object
             {
                 ObjectPool.Instance.PushToPool(poolItemName, gameObject);
                 GameManager.Instance.enemiesList.Remove(gameObject);
+
+                GameManager.Instance.cost += rewardCost;
+                BattleUIManager.Instance.costText.text = GameManager.Instance.cost.ToString();
+
+                CostUimanager.GetComponent<Wave_UI_Script>().CostUpUI(((int)rewardCost));
+
             }
         }
 

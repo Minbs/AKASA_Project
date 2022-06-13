@@ -59,6 +59,7 @@ public class SaveDataManager : MonoBehaviour
         data.IsabellaLevel = 0;
         data.EilgosLevel = 0;
         data.ZippoLevel = 0;
+
         data.KuenLevel = 0;
         //data.PardoLevel = 0;
         data.WratihLevel = 0;
