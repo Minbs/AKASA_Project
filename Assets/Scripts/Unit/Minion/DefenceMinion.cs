@@ -14,6 +14,7 @@ public enum AttackType
     Melee,
     MeleeRange,
     SingleHeal,
+    HealRange,
     HitScan,
     HitScanRange
 }
@@ -28,11 +29,10 @@ public enum SkillType
 public class DefenceMinion : Minion
 {
     [Header("MinionStat")]
-    public AttackType attackType;
 
     public float cost;
     public float sellCost;
-
+    public GameObject UImanager;
     public float skillTimer { get; set; }
     public float skillCoolTime;
 
@@ -47,7 +47,10 @@ public class DefenceMinion : Minion
     private void Awake()
     {
     }
-
+    public void resetUnitCard()
+    {
+        UImanager.GetComponent<Unit_Select_UI>().Display_Unit_Button(this.GetComponent<DefenceMinion>().Unitname);
+    }
     private void OnDestroy()
     {
         if (GameManager.Instance != null)
@@ -66,10 +69,20 @@ public class DefenceMinion : Minion
 
     public void AnimationSatateOnEvent(TrackEntry trackEntry, Event e)
     {
-        if (target == null)
+        if (e.Data.Name == "shoot" && (transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill"
+            || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill1"
+            || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill2"
+            || transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/skill3"))
+        {
+            SkillManager.Instance.MinionSkillEvent(Unitname);
+        }
+
+            if (target == null)
         {
             return;
         }
+
+
 
         if (e.Data.Name == "shoot" && transform.GetChild(0).GetComponent<SkeletonAnimation>().AnimationName == skinName + "/attack")
         {
@@ -90,6 +103,9 @@ public class DefenceMinion : Minion
                 case AttackType.HitScan:
                     HitScanAttack();
                     break;
+                case AttackType.HitScanRange:
+                    HitScanRangeAttack();
+                    break;
             }
         }
 
@@ -109,10 +125,24 @@ public class DefenceMinion : Minion
             return;
         }
 
-
-        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit", target.transform.position);
         target.GetComponent<Unit>().Deal(currentAtk);
     }
+
+    public void HitScanRangeAttack()
+    {
+        Collider[] targets = Physics.OverlapSphere(target.transform.position, attackRange2);
+
+        foreach (var e in targets)
+        {
+            if (!e.transform.tag.Equals("Enemy")) continue;
+            Debug.Log(e.transform.parent.name);
+            e.transform.parent.GetComponent<Unit>().Deal(currentAtk);
+
+        }
+
+        EffectManager.Instance.InstantiateAttackEffect("hwaseon_hit", target.transform.position);
+    }
+
     public void SingleHeal()
     {
         Vector3 pos = transform.position;
@@ -131,7 +161,8 @@ public class DefenceMinion : Minion
 
     public void MeleeRangeAttack()
     {
-        Vector3 box = new Vector3(attackRangeDistance, 1, attackRangeDistance);
+        Debug.Log(attackRange2);
+        Vector3 box = new Vector3(attackRangeDistance, 1, attackRange2);
         Vector3 center = transform.position;
         center.x = transform.position.x + attackRangeDistance / 2;
         Collider[] targets = Physics.OverlapBox(center, box, Quaternion.identity);
@@ -163,20 +194,24 @@ public class DefenceMinion : Minion
 
     private void OnDrawGizmos()
     {
+        /*
         Handles.color = Color.red;
 
-        Vector3 box = new Vector3(attackRangeDistance , 2, attackRangeDistance );
+        Vector3 box = new Vector3(attackRangeDistance , 2, ra );
         Vector3 center = transform.position;
         center.x = transform.position.x + attackRangeDistance / 2;
         Handles.DrawWireCube(center, box);
 
         Handles.color = Color.blue;
         Handles.DrawWireDisc(transform.position,Vector3.up, 3);
+        */
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        skillTimer += Time.deltaTime * GameManager.Instance.gameSpeed;
+
         base.Update();
     }
 }

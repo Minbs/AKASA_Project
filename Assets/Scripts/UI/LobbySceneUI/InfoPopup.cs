@@ -27,6 +27,7 @@ public class FlavorText
     public string className;
     public string Story;
     public string skillname;
+    public string skillFlavorText;
 
     public Sprite ClassSimbol;
     public Sprite SkillSImbol;
@@ -54,7 +55,10 @@ public class InfoPopup : Singleton<InfoPopup>
     //public TextMeshProUGUI StoryTitleText;
     public TextMeshProUGUI StoryText;
     public TextMeshProUGUI skillName;
+    public TextMeshProUGUI skillText;
 
+
+    public int lineSpace = 30;
 
     [Space(10f)]
     [Header("Image Sprite")]
@@ -95,9 +99,13 @@ public class InfoPopup : Singleton<InfoPopup>
         if (ComentText != null)
             ComentText.text = Infos[key].Coment;
         if (StoryText != null)
-            StoryText.text = Infos[key].Story;
+            StoryText.text = Infos[key].Story.Replace("\\n", "\n");
         if (skillName != null)
             skillName.text = Infos[key].skillname;
+        if (skillText != null)
+            skillText.text = Infos[key].skillFlavorText;
+
+	    StoryText.lineSpacing = lineSpace;
     }
 
     public void InitSimbol(string key)
@@ -120,7 +128,7 @@ public class InfoPopup : Singleton<InfoPopup>
             {
                 InitText(key);
                 InitSimbol(key);
-                Debug.Log("Hello World!");
+                //Debug.Log("Hello World!");
             }
         }
         catch(System.Exception e)

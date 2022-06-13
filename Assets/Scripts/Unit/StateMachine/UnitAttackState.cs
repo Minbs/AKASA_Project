@@ -12,7 +12,7 @@ public class UnitAttackState : UnitBaseState
 
     public override void Update(UnitStateMachine stateMachine)
     {
-        if (stateMachine.unit.isAnimationPlaying("/attack"))
+        if (stateMachine.unit.isAnimationPlaying("/attack") || stateMachine.unit.isAnimationPlaying("/skill"))
             return;
 
 
@@ -26,10 +26,21 @@ public class UnitAttackState : UnitBaseState
                 return;
             }
 
-            if (!stateMachine.unit.isAnimationPlaying("/attack"))
+
+            if(stateMachine.GetComponent<Enemy>() 
+                && !stateMachine.unit.isAnimationPlaying("/skill")
+                && stateMachine.unit.Unitname.Equals("EnemyBoss")
+                && stateMachine.GetComponent<Enemy>().skillTimer >= stateMachine.GetComponent<Enemy>().skillCoolTime)
             {
                 stateMachine.LookAtTarget(stateMachine.unit.target.transform.position);
-                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, GameManager.Instance.gameSpeed);
+                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/skill", false, GameManager.Instance.gameSpeed);
+                Debug.Log(stateMachine.GetComponent<Enemy>().skillTimer);
+                stateMachine.GetComponent<Enemy>().skillTimer = 0;
+            }
+            else if (!stateMachine.unit.isAnimationPlaying("/attack"))
+            {
+                stateMachine.LookAtTarget(stateMachine.unit.target.transform.position);
+                stateMachine.unit.spineAnimation.PlayAnimation(stateMachine.unit.skinName + "/attack", false, stateMachine.unit.attackSpeed * GameManager.Instance.gameSpeed);
             }
         }
     }

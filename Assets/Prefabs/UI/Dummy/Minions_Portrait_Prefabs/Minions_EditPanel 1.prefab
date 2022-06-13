@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1270045404674901798}
   - component: {fileID: 3545259287802778161}
   - component: {fileID: 1270045404674901819}
+  - component: {fileID: -1825153401184208334}
   m_Layer: 5
   m_Name: Minions_EditPanel 1
   m_TagString: Minions_EditList
@@ -92,7 +93,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270045404674901796}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b8f9d70c8e9ea42b790e043d664f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pppp: {fileID: 0}
+  obj_Standing: {fileID: 0}
   NoneBG: {fileID: 21300000, guid: 9a946bc8abc7608458955f4a0dde4399, type: 3}
   PortraitBg: {fileID: 21300000, guid: f1e59b152e006a54797e590cad313872, type: 3}
   CampText: {fileID: 6463431604546513322}
@@ -161,37 +162,73 @@ MonoBehaviour:
     - Hwaseon
     - Zippo
     - Isabella
+    - kuen
+    - vogue
+    - sophia
+    - pardo
+    - asher
+    - pay
     values:
     - Illusts: {fileID: 21300000, guid: 20ba92c8cea51fa43ab356ff67cb6c4d, type: 3}
       LvFrame: {fileID: 21300000, guid: 9575577653a22194e8ef42ff6ee50e84, type: 3}
       RankFrame: {fileID: 0}
       RankStar: {fileID: 21300000, guid: b9515d476bdf1cd40a2605a775f83821, type: 3}
-      ClassSimbol: {fileID: 21300000, guid: 40d7cb0f2290e0b4592d1fe99f7ec0f6, type: 3}
-    - Illusts: {fileID: 21300000, guid: 970c4ef666154f54fb3abd037c733462, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
+    - Illusts: {fileID: 21300000, guid: dee9772a91bd6f0489d28c8d94f428d3, type: 3}
       LvFrame: {fileID: 21300000, guid: 5ddeb7fc3948b624c96d2d5afacf050f, type: 3}
       RankFrame: {fileID: 0}
       RankStar: {fileID: 21300000, guid: 28e9ff3c761c95c40ae24a1e187f4a17, type: 3}
-      ClassSimbol: {fileID: 21300000, guid: 0b9497cfbe4db9d4ebd48f84938cb994, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: c7248e6f4bb688e46a8abb106492c64c, type: 3}
     - Illusts: {fileID: 21300000, guid: fafefb5ef1057ae4a90a2b6069238e5a, type: 3}
       LvFrame: {fileID: 21300000, guid: 5ddeb7fc3948b624c96d2d5afacf050f, type: 3}
       RankFrame: {fileID: 0}
       RankStar: {fileID: 21300000, guid: 28e9ff3c761c95c40ae24a1e187f4a17, type: 3}
-      ClassSimbol: {fileID: 21300000, guid: 64fa92ec9c36abf4984ff4561a2e3b8a, type: 3}
-    - Illusts: {fileID: 21300000, guid: 94fd34b6f3b36bf4785b823245c82a1b, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
+    - Illusts: {fileID: 21300000, guid: 9e3e5cb11b674334392d512d84044064, type: 3}
       LvFrame: {fileID: 21300000, guid: 5ddeb7fc3948b624c96d2d5afacf050f, type: 3}
       RankFrame: {fileID: 0}
       RankStar: {fileID: 21300000, guid: 28e9ff3c761c95c40ae24a1e187f4a17, type: 3}
-      ClassSimbol: {fileID: 21300000, guid: f296a76ddf893384da815d921532c70f, type: 3}
-    - Illusts: {fileID: 21300000, guid: f506901fb4952a14593101a634198316, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
+    - Illusts: {fileID: 21300000, guid: 96b1cbed99d034b439cc4b04ded30751, type: 3}
       LvFrame: {fileID: 21300000, guid: 9575577653a22194e8ef42ff6ee50e84, type: 3}
       RankFrame: {fileID: 0}
       RankStar: {fileID: 21300000, guid: b9515d476bdf1cd40a2605a775f83821, type: 3}
-      ClassSimbol: {fileID: 21300000, guid: 089f1f00428e1fc4ea793b8aa88d4799, type: 3}
-    - Illusts: {fileID: 21300000, guid: f0f9ff2250d6ee94f8f9d30900c87b53, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
+    - Illusts: {fileID: 21300000, guid: 2bedbc281fd2a4c4280af3369d05838d, type: 3}
       LvFrame: {fileID: 21300000, guid: 4349b54c11f920b45be07b592fd61fc6, type: 3}
       RankFrame: {fileID: 0}
       RankStar: {fileID: 21300000, guid: 007ee16f1823153499efd4c1ead911cd, type: 3}
-      ClassSimbol: {fileID: 21300000, guid: 40d7cb0f2290e0b4592d1fe99f7ec0f6, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
+    - Illusts: {fileID: 21300000, guid: 33ab7be907a9bf74e923a94699f3c4c0, type: 3}
+      LvFrame: {fileID: 21300000, guid: 4349b54c11f920b45be07b592fd61fc6, type: 3}
+      RankFrame: {fileID: 0}
+      RankStar: {fileID: 21300000, guid: 007ee16f1823153499efd4c1ead911cd, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
+    - Illusts: {fileID: 21300000, guid: 5212783de07614d43a78c1ab973b52bd, type: 3}
+      LvFrame: {fileID: 21300000, guid: 4349b54c11f920b45be07b592fd61fc6, type: 3}
+      RankFrame: {fileID: 0}
+      RankStar: {fileID: 21300000, guid: 007ee16f1823153499efd4c1ead911cd, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
+    - Illusts: {fileID: 21300000, guid: ad14982d0d237e944a11dea9a97ea7d6, type: 3}
+      LvFrame: {fileID: 21300000, guid: 4349b54c11f920b45be07b592fd61fc6, type: 3}
+      RankFrame: {fileID: 0}
+      RankStar: {fileID: 21300000, guid: 007ee16f1823153499efd4c1ead911cd, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: c7248e6f4bb688e46a8abb106492c64c, type: 3}
+    - Illusts: {fileID: 21300000, guid: 5e1e232439db8784c890ea20c374ece3, type: 3}
+      LvFrame: {fileID: 21300000, guid: 4349b54c11f920b45be07b592fd61fc6, type: 3}
+      RankFrame: {fileID: 0}
+      RankStar: {fileID: 21300000, guid: 007ee16f1823153499efd4c1ead911cd, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
+    - Illusts: {fileID: 21300000, guid: dbd782c9e3c8ff44f83d38185a21a901, type: 3}
+      LvFrame: {fileID: 21300000, guid: 4349b54c11f920b45be07b592fd61fc6, type: 3}
+      RankFrame: {fileID: 0}
+      RankStar: {fileID: 21300000, guid: 007ee16f1823153499efd4c1ead911cd, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
+    - Illusts: {fileID: 21300000, guid: f906adf1c73dffc45b1513b5bd02f422, type: 3}
+      LvFrame: {fileID: 21300000, guid: 9575577653a22194e8ef42ff6ee50e84, type: 3}
+      RankFrame: {fileID: 0}
+      RankStar: {fileID: 21300000, guid: b9515d476bdf1cd40a2605a775f83821, type: 3}
+      ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
   m_info:
     Num: -1
     k_name: 
@@ -200,6 +237,39 @@ MonoBehaviour:
     Class: 
     Camp: 
     rank: 0
+--- !u!114 &-1825153401184208334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270045404674901796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiClip: []
+  uiClipName: []
+  skillClip: []
+  skillClipName: []
+  titleScene:
+    buttonClick: 
+    buttonLick: 
+  mainScene:
+    buttonClick: 
+    buttonLick: 
+  stageSelectScene:
+    buttonClick: 
+    buttonLick: 
+  unitContainerScene:
+    buttonClick: 0001
+    buttonLick: 0001
+  defenceStageScene:
+    buttonClick: 
+    buttonLick: 
+  skill:
+    sound: 
 --- !u!1 &4324160290985462952
 GameObject:
   m_ObjectHideFlags: 0

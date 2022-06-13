@@ -5,6 +5,7 @@ using UnityEngine;
 using Spine.Unity;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.Events;
 public enum Direction
 {
     LEFT,
@@ -15,25 +16,27 @@ public enum Direction
 
 public class Unit : Object
 {
+    public GameObject CostUimanager;
     public GameObject GameDataManager;
     public string poolItemName;
     public string Unitname;
     public int Level = 1;
     private Stat ParsingStat;
-
+    public UnityEvent UnitDisplay;
+    public bool OneTimeSummon = false;
 
     public Tile onTile { get; set; }
     [Header("UnitStat")]
+    public AttackType attackType;
+
     public float atk;
     public float currentAtk; //{ get; set; }
     public float def;
-    [Header("사각형 공격 범위")]
-    public float rectangleWidthRange;
-    public float rectangleHeightRange;
 
     //  public float moveSpeed;
-    [Header("단일 대상 공격 범위")]
+
     public float attackRangeDistance; // 유닛 공격 범위
+    public float attackRange2;
 
     public float cognitiveRangeDistance; // 유닛 인지 범위
     public float attackSpeed;  //{ get; set; }
@@ -45,6 +48,10 @@ public class Unit : Object
     // 중독 상태용 변수
     private bool isPoisoned = false;
     private float poisonTimer = 0;
+
+    private float rewardCost;
+
+    public bool isNonDamage = false;
 
     public Direction direction { get; set; }
 
@@ -68,29 +75,36 @@ public class Unit : Object
 
     protected virtual void Start()
     {
-        
+        CostUimanager = GameObject.FindGameObjectWithTag("WaveUI");
 
-        if (Unitname == "Enemy1" || Unitname == "Enemy2")
+        if (Unitname == "Enemy1" || Unitname == "Enemy2"
+            || Unitname == "EnemyTank" || Unitname == "EnemyHealer"
+            || Unitname == "EnemyBoss")
         {
-            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            Level = GameManager.Instance.currentWave;
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
+            maxHpStat = maxHp;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
-            attackRangeDistance = ParsingStat.AtkRange;
+            attackRangeDistance = ParsingStat.AtkRange1;
+            attackRange2 = ParsingStat.AtkRange2;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
-
+            rewardCost = ParsingStat.RewardCost;
         }
         else
         {
-            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing();
+            GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
 
             maxHp = ParsingStat.HP;
+            maxHpStat = maxHp;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
-            attackRangeDistance = ParsingStat.AtkRange;
+            attackRangeDistance = ParsingStat.AtkRange1;
+            attackRange2 = ParsingStat.AtkRange2;
             cognitiveRangeDistance = ParsingStat.CognitiveRange;
             attackSpeed = ParsingStat.AtkSpeed;
         }
@@ -115,34 +129,14 @@ public class Unit : Object
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingLayerName = "Character2";
         transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
 
-        if (GetComponent<Minion>())
-        {
-            transform.GetComponent<NavMeshAgent>().enabled = false;
-            UpdateHealthbar();
-
-            if (GetComponent<Minion>().Unitname == "Verity")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.VeriyStat_Array[0]);
-            }
-            else if (GetComponent<Minion>().Unitname == "Isabella")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.IsabellaStat_Array[0]);
-            }
-            else if (GetComponent<Minion>().Unitname == "Wraith")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.WraithStat_Array[0]);
-            }
-            else if (GetComponent<Minion>().Unitname == "Zippo")
-            {
-                SetUnitStat(CSV_Player_Status.Instance.ZippoStat_Array[0]);
-            }
-        }
+   
     }
 
     public void Init()
     {
         currentAtk = atk;
         currentHp = maxHp;
+
         attackSpeed = 1;
         damageRedution = 0;
         healthBar.transform.parent.gameObject.SetActive(true);
@@ -155,9 +149,7 @@ public class Unit : Object
     {
         Spine.TrackEntry trackEntry = new Spine.TrackEntry();
         trackEntry = spineAnimation.skeletonAnimation.AnimationState.Tracks.ElementAt(0);
-        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;
-
-        
+        normalizedTime = trackEntry.AnimationLast / trackEntry.AnimationEnd;    
     }
 
     /// <summary>
@@ -182,8 +174,13 @@ public class Unit : Object
                 StartCoroutine(ChangeUnitColor(Color.red, 0.2f));
 
             //데미지 = (공격력 - 방어력) * N/100
+
+            if(!isNonDamage)
+            {
+
             damageSum = (float)((float)damage - def) * (float)(100 - damageRedution) / 100;
             damageSum = Mathf.Max(damageSum, 0.5f);
+            }
         }
 
         currentHp -= (float)damageSum;
@@ -228,6 +225,38 @@ public class Unit : Object
         transform.GetChild(0).GetComponent<MeshRenderer>().SetPropertyBlock(block);
     }
 
+    public void GetPoisoned(float damage,float duration)
+    {
+        if (!isPoisoned)
+        {
+            StartCoroutine(Poisoned(damage, duration));
+        }
+        else
+            poisonTimer = 0;
+    }
+
+    public IEnumerator Poisoned(float damage, float duration)
+    {
+        isPoisoned = true;
+
+        while(poisonTimer <= duration)
+        {
+
+          poisonTimer += (1 + Time.deltaTime) * GameManager.Instance.gameSpeed;
+
+
+          currentHp -= damage;
+          StartCoroutine(ChangeUnitColor(new Color(1, 0, 1), 0.2f));
+          UpdateHealthbar();
+
+            Debug.Log(poisonTimer);
+          yield return new WaitForSeconds(1);
+
+        }
+
+        isPoisoned = false;
+    }
+
     public IEnumerator ChangeUnitColor(Color color, float duration)
     {
         if (gameObject != null)
@@ -267,10 +296,52 @@ public class Unit : Object
             {
                 ObjectPool.Instance.PushToPool(poolItemName, gameObject);
                 GameManager.Instance.enemiesList.Remove(gameObject);
+
+                GameManager.Instance.cost += rewardCost;
+                BattleUIManager.Instance.costText.text = GameManager.Instance.cost.ToString();
+
+                CostUimanager.GetComponent<Wave_UI_Script>().CostUpUI(((int)rewardCost));
+
             }
         }
 
         yield return null;
+    }
+
+    public IEnumerator ChangeStat(GameObject target, string stat, float value = 0, float duration = 0)
+    {
+        float Timer = 0;
+
+
+
+        if (stat == "ats")
+            attackSpeed += value;
+        else if (stat == "def")
+            def += value;
+        else if (stat == "atk")
+            currentAtk += value;
+        else if (stat == "non")
+            isNonDamage = true;
+
+        while (Timer <= duration)
+        {
+
+            Timer += Time.deltaTime * GameManager.Instance.gameSpeed;
+
+      
+
+            yield return null;
+        }
+
+
+        if (stat == "ats")
+            attackSpeed -= value;
+        else if (stat == "def")
+            def -= value;
+        else if (stat == "atk")
+            currentAtk -= value;
+        else if (stat == "non")
+            isNonDamage = false;
     }
 
     public void SetPositionOnTile()
@@ -286,7 +357,8 @@ public class Unit : Object
       currentAtk = atk;
       def = stat.Def;
       attackSpeed = stat.AtkSpeed;
-      attackRangeDistance = stat.AtkRange;
+      attackRangeDistance = stat.AtkRange1;
+      attackRange2 = stat.AtkRange2;
 
       if (GetComponent<DefenceMinion>())
       {

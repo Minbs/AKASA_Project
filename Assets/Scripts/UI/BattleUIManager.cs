@@ -22,6 +22,7 @@ using DG.Tweening;
 public class BattleUIManager : Singleton<BattleUIManager>
 {
     public GameObject worldCanvas;
+    public GameObject TurretAtkRedCircle;
 
     public GameObject DeployableTileImage;
     public Sprite NotDeployableTileSprite;
@@ -86,8 +87,12 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     bool isDeployBtnCheck = true;
     bool isSkillBtnCheck = true;
+    bool UnitBar_oneTimeResetTrigger = false;
+    bool SkillBar_oneTimeResetTrigger = false;
+
 
     AudioSource audioSource;
+
 
     public GameObject bBObj;
     private GameObject wBtnObj;
@@ -117,7 +122,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
-
+    public GameObject ProgressBar;
 
     void Start()
     {
@@ -264,8 +269,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     {
         for (int i = 0; i < 3; i++)
             text[i].gameObject.SetActive(false);
-
+        UnitBar_oneTimeResetTrigger = false;
         wPanObj.SetActive(false);
+        if (SkillBar_oneTimeResetTrigger == false)
+        {
+            this.GetComponent<Unit_Select_UI>().SkillReset();
+            SkillBar_oneTimeResetTrigger = true;
+        }
 
         wave.gameObject.SetActive(true);
         wave.text = "Wave ".ToString() + waveCount.ToString();
@@ -303,10 +313,19 @@ public class BattleUIManager : Singleton<BattleUIManager>
             {
                 text[0].text = min.ToString();
                 text[2].text = sec.ToString();
-
+                SkillBar_oneTimeResetTrigger = false;
                 //mBG.SetActive(true);
 
                 wPanObj.SetActive(true);
+
+                if (UnitBar_oneTimeResetTrigger == false)
+                {
+                    this.GetComponent<Unit_Select_UI>().Reset();
+                    UnitBar_oneTimeResetTrigger = true;
+                }
+
+               
+                
                 bPanObj.SetActive(false);
 
                 wBtnObj.SetActive(true);
@@ -381,30 +400,30 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void RegenCost()
     {
         time += Time.deltaTime;
-
+        ProgressBar.GetComponent<Image>().fillAmount = time/GameManager.Instance.costTime;
         if (time >= GameManager.Instance.costTime)
         {
             GameManager.Instance.cost += GameManager.Instance.totalIncome;
 
             costText.text = GameManager.Instance.cost.ToString();
             time = 0;
+
         }
     }
 
     /// <summary> 캐릭터 배치후 코스트 소모 </summary>
-    public void UseCost(int index)
+    public void UseCost(float cost)
     {
-        if (MinionManager.Instance.minionPrefabs.Count <= index
-            || GameManager.Instance.cost < MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost) return;
-        GameManager.Instance.cost -= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost;
+        if (GameManager.Instance.cost < cost) return;
 
-        Debug.Log(MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost);
+        GameManager.Instance.cost -= cost;
         costText.text = GameManager.Instance.cost.ToString();
     }
 
     /// <summary> 미니언 배치 </summary> <param name="index"></param>
     public void DeploymentMinion(int index)
     {
+
         if (GameManager.Instance.cost >= 0)
         {
             if (GameManager.Instance.cost >= MinionManager.Instance.minionPrefabs[index].GetComponent<DefenceMinion>().cost)
@@ -523,11 +542,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
    //     isPhaseCheck = true;
 //    }
 
-    public void SkillButton()
-    {
-        GameObject wraith = GameObject.Find("wraith(Clone)");
-        wraith.GetComponent<UnitStateMachine>().ChangeState(wraith.GetComponent<UnitStateMachine>().SkillPerformState);
-    }
+
 
     private void FPS()
     {
@@ -657,8 +672,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
     public void MinionUpgradeButton()
     {
+        if (GameManager.Instance.cost < currentStat.UpgradeCost)
+            return;
+
+        UseCost(currentStat.UpgradeCost);
        upgradeMinion.GetComponent<Unit>().Level++;
        upgradeMinion.GetComponent<Unit>().SetUnitStat(nextLevelStat);
+       SynergyManager.Instance.CheckClassSynergy(upgradeMinion);
        SetMinionUpgradeUI(upgradeMinion);
     }
 

@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class UnitStateMachine : MonoBehaviour
 {
     public UnitBaseState currentState { get; set; }
     private UnitBaseState prevState;
-
     public UnitIdleState idleState = new UnitIdleState(); //대기 상태
     public UnitMoveState moveState = new UnitMoveState(); //행동선택
     public UnitApproachingState approachingState = new UnitApproachingState(); //명령 대기 상태
     public UnitAttackState AttackState = new UnitAttackState();
     public UnitSkillPerformState SkillPerformState = new UnitSkillPerformState();
-
+    GameObject UImanager;
+ 
     public Unit unit { get; set; }
     public NavMeshAgent agent { get; set; }
 
     private float speed;
+    bool onetimetrigger = true;
 
     public bool isDeploying { get; set; }
 
     private void Awake()
     {
+        UImanager = GameObject.FindGameObjectWithTag("UIManager");
         currentState = idleState;
         unit = GetComponent<Unit>();
         agent = GetComponent<NavMeshAgent>();
@@ -48,10 +51,26 @@ public class UnitStateMachine : MonoBehaviour
 
         if (unit.currentHp <= 0)
         {
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            StartCoroutine(unit.Die());
-            return;
+            
+                if (this.name == "Enemy1" || this.name == "Enemy2" || this.name == "EnemyTank" || this.name == "EnemyHealer" || this.name == "EnemyBoss")
+                {
+                    agent.isStopped = true;
+                    agent.velocity = Vector3.zero;
+                    StartCoroutine(unit.Die());
+                    onetimetrigger = false;
+                    return;
+                }
+
+                if (onetimetrigger == true)
+                {
+                    UImanager.GetComponent<Unit_Select_UI>().Display_Unit_Button(this.GetComponent<DefenceMinion>().Unitname);
+                    onetimetrigger = false;
+                 }
+                agent.isStopped = true;
+                agent.velocity = Vector3.zero;
+                StartCoroutine(unit.Die());
+                return;
+            
         }
 
         agent.speed = speed * GameManager.Instance.gameSpeed;
@@ -73,12 +92,12 @@ public class UnitStateMachine : MonoBehaviour
 
     public void MoveToDirection(Direction direction)
     {
-        int desX = 1;
+        float desX = 1;
 
         switch (direction)
         {
             case Direction.LEFT:
-                desX = -10;
+                desX = -5.4f;
                 break;
             case Direction.RIGHT:
                 desX = 10;
@@ -105,7 +124,7 @@ public class UnitStateMachine : MonoBehaviour
             && unit.target.GetComponent<Object>().currentHp <= 0)
             unit.target = null;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.cognitiveRangeDistance, LayerMask.GetMask("Object"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.cognitiveRangeDistance);
 
         if (colliders.Length <= 0)
             return;
@@ -162,26 +181,52 @@ public class UnitStateMachine : MonoBehaviour
         }
         else if (GetComponent<Enemy>())
         {
+
             foreach (var col in colliders)
             {
                 GameObject obj = col.transform.parent.gameObject;
 
-                if (!obj.transform.tag.Equals("Ally")
-                    || obj.GetComponent<Object>().currentHp <= 0)
-                    continue;
+                if (unit.attackType.Equals(AttackType.HealRange))
+                {
+                    if (!obj.GetComponent<Enemy>()
+                || obj.GetComponent<Object>().currentHp <= 0
+                || obj.GetComponent<Object>().currentHp >= obj.GetComponent<Object>().maxHp
+                || !obj.activeSelf)
+                        continue;
 
-                if (!unit.target)
-                {
-                    unit.target = obj;
-                }
-                else
-                {
-                    if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                    if (!unit.target)
                     {
                         unit.target = obj;
                     }
+                    else
+                    {
+                        if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                        {
+                            unit.target = obj;
+                        }
+                    }
+                }
+                else
+                {
+                    if (!obj.transform.tag.Equals("Ally")
+      || obj.GetComponent<Object>().currentHp <= 0)
+                        continue;
+
+                    if (!unit.target)
+                    {
+                        unit.target = obj;
+                    }
+                    else
+                    {
+                        if (Mathf.Abs(Vector3.Distance(transform.position, obj.transform.position)) < Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)))
+                        {
+                            unit.target = obj;
+                        }
+                    }
                 }
             }
+            
+
         }
 
       
@@ -235,7 +280,33 @@ public class UnitStateMachine : MonoBehaviour
             }
         }
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance, LayerMask.GetMask("Object"));
+        if (GetComponent<Enemy>()
+    && GetComponent<Enemy>().attackType == AttackType.HealRange)
+        {
+            if (unit.target == GameManager.Instance.turret
+                || unit.target.GetComponent<Unit>().currentHp >= unit.target.GetComponent<Unit>().maxHp)
+            {
+                unit.target = null;
+                return false;
+            }
+        }
+
+        Collider[] colliders;
+
+        if(unit.attackType.Equals(AttackType.MeleeRange))
+        {
+            Vector3 box = new Vector3(unit.attackRangeDistance, 1, unit.attackRange2);
+            Vector3 center = unit.transform.position;
+            center.x = unit.transform.position.x + unit.attackRangeDistance / 2;
+            colliders = Physics.OverlapBox(center, box, Quaternion.identity);
+
+
+        }
+        else
+        {
+            colliders = Physics.OverlapSphere(transform.position, unit.attackRangeDistance);
+        }
+
 
         foreach(var col in colliders)
         {
@@ -243,9 +314,11 @@ public class UnitStateMachine : MonoBehaviour
 
             if (obj.Equals(unit.target.gameObject)
                 && obj.GetComponent<Object>().currentHp > 0)
+            {
                 return true;
+            }
         }
-        return false;//Mathf.Abs(Vector3.Distance(transform.position, unit.target.transform.position)) <= unit.attackRangeDistance;
+        return false;
     }
 
     public bool IsTargetInCognitiveRange() // 인지 범위 안에 있는지 확인
@@ -275,6 +348,9 @@ public class UnitStateMachine : MonoBehaviour
 
     public void LookAtTarget(Vector3 targetPos)
     {
+        if (GameManager.Instance.gameSpeed.Equals(0))
+            return;
+
         Vector3 scale = transform.GetChild(0).localScale;
         Vector3 prevScale = scale;
 
@@ -299,7 +375,7 @@ public class UnitStateMachine : MonoBehaviour
         agent.SetDestination(unit.onTile.transform.position);
         LookAtTarget(unit.onTile.transform.position);
 
-        Debug.Log(Vector3.Distance(unit.transform.position, unit.onTile.transform.position));
+        //Debug.Log(Vector3.Distance(unit.transform.position, unit.onTile.transform.position));
 
         if (Vector3.Distance(unit.transform.position, unit.onTile.transform.position) < 0.15)
         {

@@ -85,22 +85,38 @@ MonoBehaviour:
   poolItemName: 
   Unitname: Isabella
   Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   atk: 3
   currentAtk: 0
   def: 0
-  rectangleWidthRange: 0
-  rectangleHeightRange: 0
   attackRangeDistance: 2
+  attackRange2: 0
   cognitiveRangeDistance: 4
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 7644924621521741393}
   minionClass: 2
   attackType: 0
   cost: 14
   sellCost: 10
-  skillCoolTime: 0
+  UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+  skillCoolTime: 55
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 5829380570333821707}
   skillType: 0

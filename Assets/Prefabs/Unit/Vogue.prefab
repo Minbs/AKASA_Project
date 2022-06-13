@@ -187,23 +187,28 @@ MonoBehaviour:
   currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
-  Unitname: Wraith
+  Unitname: Vogue
   Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls: []
   atk: 2
   currentAtk: 0
   def: 1
-  rectangleWidthRange: 1
-  rectangleHeightRange: 1
   attackRangeDistance: 1
+  attackRange2: 0
   cognitiveRangeDistance: 3
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 5814845813638632022}
   minionClass: 1
   attackType: 2
-  cost: 15
-  sellCost: 11
+  cost: 30
+  sellCost: 21
+  UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+  skillCoolTime: 67
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 0}
   skillType: 0

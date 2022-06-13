@@ -47,11 +47,8 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(transform.position, target.transform.position) <= 0.01f )
+        if (Vector3.Distance(transform.position, target.transform.position) <= 0.1f )
         {
-
-
-            
             ObjectPool.Instance.PushToPool("Bullet", gameObject);
 
             if(target.GetComponent<Unit>().currentHp > 0)

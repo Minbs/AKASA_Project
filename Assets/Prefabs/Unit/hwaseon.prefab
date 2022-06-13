@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 149d7ecaea3baf6428bb28d419f1b4ac, type: 2}
+  - {fileID: 2100000, guid: 8bf2657904cfe5b48a507f04c36daa45, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: e7bb6c90e0fcecf428a675247cf7682c, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 44ea830fe207b5c4a9e5e6d09c646836, type: 2}
   initialSkinName: hwaseon
   initialFlipX: 1
   initialFlipY: 0
@@ -189,21 +189,26 @@ MonoBehaviour:
   poolItemName: hwaseon
   Unitname: Hwaseon
   Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls: []
   atk: 4
   currentAtk: 0
   def: 0
-  rectangleWidthRange: 0
-  rectangleHeightRange: 0
   attackRangeDistance: 2
+  attackRange2: 0
   cognitiveRangeDistance: 4
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 5485994177288912733}
   minionClass: 2
-  attackType: 4
+  attackType: 6
   cost: 21
   sellCost: 15
+  UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+  skillCoolTime: 80
   bulletSprite: {fileID: 21300000, guid: d6cbdfa21d533cd44805300077774b9c, type: 3}
   shootPivot: {fileID: 0}
   skillType: 2

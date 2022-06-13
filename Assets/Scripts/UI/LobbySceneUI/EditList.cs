@@ -12,7 +12,6 @@ public class EditList : Singleton<EditList>
     // GraphicRaycaster gr;
     // 이 곳은 파티 편집기에 등록한 파티를 저장하고 초기화하는 기능
     public List<MinionsPortrait> myList = new List<MinionsPortrait>();
-    public List<MinionsPortrait> objList = new List<MinionsPortrait>();
     public GameObject Contents;
     public int EditMax = 10;
     //public MainObjectDataa ArrayItem = new MainObjectDataa();
@@ -45,28 +44,81 @@ public class EditList : Singleton<EditList>
     // Start is called before the first frame update
     void Start()
     {
-        if (myList.Count == 0)
-        {
-            SetEdit();
-        }
+        SetEdit();
+
     }
 
     public void SetEdit()
     {
         myList.Clear();
-        EditMax = 10;
         if (EditMax / 2 == 1)       // 무조건 짝수로 변환해줘야 함.
             EditMax++;
         for (int i = 0; i < EditMax; i++)
         {
-        //    MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
+            MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
 
-        //    myList.Add(go);
+            myList.Add(go);
 
-         //   go.transform.parent = pro_Contents.transform;
+            go.transform.parent = pro_Contents.transform;
         }
         // 여기서 로드!
         //LoadJson();
+        LoadData();
+        
+    }
+
+    public void SaveMinionsData()
+    {
+        if(myList.Count >0 )
+        {
+            Debug.Log("저장 시도");
+            UserData.Instance.SaveUnitData(myList);
+        }
+        else
+        {
+            Debug.Log("저장하기엔 리스트가 비었습니다.");
+        }
+    }
+
+    public void LoadData()
+    {
+        Debug.Log("데이터 로드");
+        try
+        {
+            int m_count = UserData.Instance.LoadUnitData().Count;
+            if (m_count > 0)
+            {
+                for (int i = 0; i < m_count; i++)
+                {
+                    myList[i].updateInfo(UserData.Instance.LoadUnitData()[i]);
+                }
+            }
+            else
+            {
+                Debug.Log("데이터 없음");
+            }
+        }
+        catch
+        {
+            Debug.Log("Not Have A UserData");
+        }
+    }
+
+    public void ListOut(MinionsInfo p)
+    {
+        for(int i = 0; i < myList.Count; i++)
+        {
+            if(myList[i].m_info.pro_k_name == p.pro_k_name)
+            {
+                // 이름이 같은 것을 찾아 그 곳을 비워줌
+                MinionsPortrait go = Instantiate<MinionsPortrait>(EditPanelPrefab);
+                Destroy(myList[i].gameObject);
+                //myList.Add(go);
+                myList[i] = go;
+                go.transform.parent = this.transform;
+                return;
+            }
+        }
     }
 
     public void ListClear()

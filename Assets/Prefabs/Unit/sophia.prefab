@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3ba088b2c939e3b4b89bf401264e8968, type: 2}
+  - {fileID: 2100000, guid: 9ab7263da48074d47bffe30204590e52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 1d9fe4ee305af104f9bbe5751aa7a20a, type: 2}
-  initialSkinName: sopia
+  skeletonDataAsset: {fileID: 11400000, guid: a4494ca71159aae4ca53c2727657c050, type: 2}
+  initialSkinName: sophia
   initialFlipX: 1
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -119,7 +119,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: sopia/idle
+  _animationName: sophia/idle
   loop: 1
   timeScale: 1
 --- !u!65 &3449007725692640760
@@ -189,22 +189,27 @@ MonoBehaviour:
   poolItemName: 
   Unitname: Sophia
   Level: 1
+  UnitDisplay:
+    m_PersistentCalls:
+      m_Calls: []
+  OneTimeSummon: 0
+  attackType: 3
   atk: 2.5
   currentAtk: 0
   def: 0
-  rectangleWidthRange: 0
-  rectangleHeightRange: 0
   attackRangeDistance: 2
+  attackRange2: 0
   cognitiveRangeDistance: 4
   attackSpeed: 0
   damageRedution: 0
   healTakeAmount: 0
+  isNonDamage: 0
   healthBar: {fileID: 1609300146875696240}
   minionClass: 3
-  attackType: 3
-  cost: 12
+  cost: 24
   sellCost: 9
-  skillCoolTime: 0
+  UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
+  skillCoolTime: 55
   bulletSprite: {fileID: 21300000, guid: c4819ffcc87ff6d4795099953b7113eb, type: 3}
   shootPivot: {fileID: 0}
   skillType: 0
