@@ -57,6 +57,8 @@ MonoBehaviour:
   UnitDisplay:
     m_PersistentCalls:
       m_Calls: []
+  OneTimeSummon: 0
+  attackType: 2
   atk: 1.2
   currentAtk: 0
   def: 1
@@ -68,7 +70,10 @@ MonoBehaviour:
   healTakeAmount: 0
   isNonDamage: 0
   healthBar: {fileID: 6831602217341417594}
-  attackType: 2
+  skillCoolTime: 15
+  skillRangeWidth: 3
+  skillRangeHeight: 1
+  skillValue: 20
 --- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0

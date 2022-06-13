@@ -51,12 +51,14 @@ MonoBehaviour:
   maxHp: 10
   currentHp: 0
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
-  poolItemName: Enemy4
-  Unitname: EnemyHealer
+  poolItemName: EnemyBoss
+  Unitname: EnemyBoss
   Level: 1
   UnitDisplay:
     m_PersistentCalls:
       m_Calls: []
+  OneTimeSummon: 0
+  attackType: 2
   atk: 2
   currentAtk: 0
   def: 0
@@ -68,7 +70,9 @@ MonoBehaviour:
   healTakeAmount: 0
   isNonDamage: 0
   healthBar: {fileID: 6831602217341417594}
-  attackType: 3
+  skillCoolTime: 20
+  skillRangeWidth: 3
+  skillRangeHeight: 1
 --- !u!195 &8383545571456269890
 NavMeshAgent:
   m_ObjectHideFlags: 0
