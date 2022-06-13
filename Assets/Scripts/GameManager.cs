@@ -479,9 +479,12 @@ public class GameManager : Singleton<GameManager>
     {
         deployState = DeployState.POSITIONING;
 
+
+
         foreach (var tile in BoardManager.Instance.minionDeployTilesList)
         {
             tile.ShowDeployableTile(true);
+
         }
     }
 
@@ -501,9 +504,15 @@ public class GameManager : Singleton<GameManager>
         BattleUIManager.Instance.sellPanel.SetActive(true);
         deployState = DeployState.POSITIONING;
 
+        foreach(var m in minionsList)
+        {
+            m.GetComponent<Unit>().onTile.SetClassTileImage(m.GetComponent<DefenceMinion>().minionClass);
+        }
+
         foreach (var tile in BoardManager.Instance.minionDeployTilesList)
         {
             tile.ShowDeployableTile(true);
+
         }
     }
 

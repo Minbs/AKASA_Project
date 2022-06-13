@@ -38,58 +38,41 @@ public class Tile : MonoBehaviour
         return (!isBlock && !isOnUnit && !ImpossibleUnitSetTile);
     }
 
+    public void SetClassTileImage(MinionClass minionClass)
+    {
+        Sprite tileSprite;
+
+        switch(minionClass)
+        {
+            case MinionClass.Buster:
+                tileSprite = BattleUIManager.Instance.BusterTileSprite;
+                break;
+            case MinionClass.Chaser:
+                tileSprite = BattleUIManager.Instance.ChaserTileSprite;
+                break;
+            case MinionClass.Guardian:
+                tileSprite = BattleUIManager.Instance.GuardianTileSprite;
+                break;
+            case MinionClass.Rescue:
+                tileSprite = BattleUIManager.Instance.RescueTileSprite;
+                break;
+            default:
+                tileSprite = null;
+                break;
+        }
+
+        GetComponent<Image>().sprite = tileSprite;
+    }
+
     /// <summary>
-    /// 배치가능한 타일 녹색으로 표시
+    /// 배치가능한 타일 표시
     /// </summary>
     /// <param name="isActive"></param>
     /// <param name="minionClass"></param>
     public void ShowDeployableTile(bool isActive)
     {
-        if (isOnUnit)
-            GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
-        else
-            GetComponent<Image>().sprite = BattleUIManager.Instance.DeployableTileSprite;
-
         gameObject.SetActive(isActive);
     }
 
-    /// <summary>
-    /// 배치가능한 타일 녹색으로 표시
-    /// </summary>
-    /// <param name="minionClass"></param>
-    /// <param name="isActive"></param>
-    public void ShowOffenceModeDeployableTile(MinionClass minionClass, bool isActive)
-    {
 
-    }
-
-    public bool onTile(Transform enemy)
-    {
-        if (enemy.transform.position.x > transform.position.x - size.x / 2 &&
-            enemy.transform.position.x < transform.position.x + size.x / 2 &&
-            enemy.transform.position.z > transform.position.z - size.z / 2 &&
-            enemy.transform.position.z < transform.position.z + size.z / 2)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-
-        }
-    }
-
-    public void on(bool b)
-    {
-
-    }
-
-    public void SetTileInfo(string[] s)
-    {
-        node.row = int.Parse(s[1]);
-        node.column = int.Parse(s[2]);
-        height = int.Parse(s[3]);
-
-        isBlock = (s[4] == "BLOCK") ? true : false;
-    }
 }
