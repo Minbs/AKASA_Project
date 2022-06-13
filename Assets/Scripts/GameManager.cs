@@ -208,6 +208,12 @@ public class GameManager : Singleton<GameManager>
         state = State.BATTLE;
         SetGameSpeed(1);
 
+        foreach (var minion in minionsList)
+        {
+            minion.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+            minion.GetComponent<UnitStateMachine>().agent.enabled = true;
+        }
+
         //1. 스킬 타입 2. 이름 순 오름차순 정렬
         var tempList = minionsList.OrderBy(x => x.GetComponent<DefenceMinion>().skillType).ThenBy(x => x.GetComponent<DefenceMinion>().Unitname);
 

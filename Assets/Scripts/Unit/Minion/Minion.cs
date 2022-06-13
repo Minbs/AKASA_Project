@@ -35,12 +35,15 @@ public class Minion : Unit
     {
         base.Update();
 
-        
+
     }
-  
+
 
     private void OnMouseOver()
     {
+
+        
+
         if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
         {
             if (Input.GetMouseButtonUp(1))
@@ -48,15 +51,33 @@ public class Minion : Unit
                 BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
             }
         }
-    }
+    
 
-    private void OnMouseUp()
-    {
-        if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+
+
+
+}
+
+private void OnMouseUp()
+{
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit))
         {
-                GameManager.Instance.minionChangePos(gameObject);
+
+
+            if (raycastHit.collider.transform.tag == "UI")
+            {
+                Debug.Log(raycastHit.collider.transform.tag);
+                return;
+            }
         }
+
+
+            if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
+    {
+        GameManager.Instance.minionChangePos(gameObject);
     }
+}
 
     
   

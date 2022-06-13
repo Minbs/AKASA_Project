@@ -103,6 +103,9 @@ public class DefenceMinion : Minion
                 case AttackType.HitScan:
                     HitScanAttack();
                     break;
+                case AttackType.HitScanRange:
+                    HitScanRangeAttack();
+                    break;
             }
         }
 
