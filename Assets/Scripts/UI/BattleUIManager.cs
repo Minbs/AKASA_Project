@@ -122,7 +122,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
-
+    public GameObject ProgressBar;
 
     void Start()
     {
@@ -400,13 +400,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void RegenCost()
     {
         time += Time.deltaTime;
-
+        ProgressBar.GetComponent<Image>().fillAmount = time/GameManager.Instance.costTime;
         if (time >= GameManager.Instance.costTime)
         {
             GameManager.Instance.cost += GameManager.Instance.totalIncome;
 
             costText.text = GameManager.Instance.cost.ToString();
             time = 0;
+
         }
     }
 
