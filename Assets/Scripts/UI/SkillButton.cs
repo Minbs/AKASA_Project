@@ -26,10 +26,11 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-
-        Cardilust.GetComponent<Image>().fillAmount = GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillTimer /
+        if (!GameManager.Instance.minionsList.IsEmpty())
+        { 
+            Cardilust.GetComponent<Image>().fillAmount = GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillTimer /
            GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime;
-        //Debug.Log(GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime);
+        }
     }
 
     public void OnSkillButton()

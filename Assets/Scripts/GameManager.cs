@@ -106,7 +106,8 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetKey(KeyCode.T))
         {
-           StageVictoryEvent();
+            StageVictoryEvent();
+
         }
         ray = tileCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -146,7 +147,7 @@ public class GameManager : Singleton<GameManager>
         currentWaitTimer = waitTime;
         WaveUI.GetComponent<Wave_UI_Script>().StageText_Next();
         WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave, "Yellow");
-        WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer);
+        WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
         currentWave++;
 
 
@@ -155,7 +156,7 @@ public class GameManager : Singleton<GameManager>
         {
             StartCoroutine(spawner.Spawn(currentWave));
             currentWaitTimer -= Time.deltaTime;
-            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer);
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
             WaitStateUpdate();
             yield return null;
         }
@@ -329,7 +330,7 @@ public class GameManager : Singleton<GameManager>
                 if (!m.GetComponent<UnitStateMachine>().currentState.Equals(m.GetComponent<UnitStateMachine>().idleState) && m.activeSelf)
                     isAllMinionReturn = false;
             }
-            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer);
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
             if (isAllMinionReturn)
                 break;
 
@@ -520,7 +521,8 @@ public class GameManager : Singleton<GameManager>
         StageVictoryUI.SetActive(true);
         for(int i = 0; i < 4; i++)
         {
-            Victory[i].GetComponent<Image>().DOFade(1, 1f);
+           
+            Victory[i].GetComponent<Image>().DOFade(1,1f);
         }
 
     }
