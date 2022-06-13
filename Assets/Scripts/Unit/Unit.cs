@@ -74,7 +74,9 @@ public class Unit : Object
     {
         
 
-        if (Unitname == "Enemy1" || Unitname == "Enemy2")
+        if (Unitname == "Enemy1" || Unitname == "Enemy2"
+            || Unitname == "EnemyTank" || Unitname == "EnemyHealer"
+            || Unitname == "EnemyBoss")
         {
             Level = GameManager.Instance.currentWave;
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
