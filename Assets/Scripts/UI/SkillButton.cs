@@ -22,7 +22,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
     public GameObject SelectdImage;
     public GameObject SkillManager;
     public GameObject UIManager;
-
+    public GameObject CooltimePanel;
 
 
     // Update is called once per frame
@@ -36,12 +36,14 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
 
             if(Cooltime <= 0)
             {
+                CooltimePanel.SetActive(false);
                 CardcooltimeImage.gameObject.SetActive(false);
                 CooltimeText.gameObject.SetActive(false);
             }
 
             else
             {
+                CooltimePanel.SetActive(true);
                 CardcooltimeImage.gameObject.SetActive(true);
                 CooltimeText.gameObject.SetActive(true);
             }
@@ -75,6 +77,7 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
 
     private void OnMouseOver()
     {
+
         this.transform.DOScale(new Vector3(1.2f, 1.2f, 1), 0.3f);
         SkillTextUI.SetActive(true);
         SelectdImage.SetActive(true);
