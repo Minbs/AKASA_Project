@@ -122,7 +122,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
-
+    public GameObject ProgressBar;
+    public GameObject WaveUI;
 
     void Start()
     {
@@ -400,13 +401,14 @@ public class BattleUIManager : Singleton<BattleUIManager>
     void RegenCost()
     {
         time += Time.deltaTime;
-
+        ProgressBar.GetComponent<Image>().fillAmount = time/GameManager.Instance.costTime;
         if (time >= GameManager.Instance.costTime)
         {
             GameManager.Instance.cost += GameManager.Instance.totalIncome;
-
+            WaveUI.GetComponent<Wave_UI_Script>().CostUpUI(GameManager.Instance.totalIncome, "Blue");
             costText.text = GameManager.Instance.cost.ToString();
             time = 0;
+
         }
     }
 

@@ -14,7 +14,8 @@ public class SaveData
     public int EremediumLevel;
     public int ZippoLevel;
     public int KuenLevel;
-    public int PardoLevel;
+    public int 
+        Level;
     public int VogueLevel;
     public int WratihLevel;
     public int HwaseonLevel;
@@ -58,8 +59,9 @@ public class SaveDataManager : MonoBehaviour
         data.IsabellaLevel = 0;
         data.EilgosLevel = 0;
         data.ZippoLevel = 0;
+
         data.KuenLevel = 0;
-        data.PardoLevel = 0;
+        //data.PardoLevel = 0;
         data.WratihLevel = 0;
         data.HwaseonLevel = 0;
         data.AsherLevel = 0;
