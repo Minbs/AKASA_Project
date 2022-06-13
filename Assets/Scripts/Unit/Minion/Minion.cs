@@ -22,6 +22,7 @@ public class Minion : Unit
 
     protected override void Awake()
     {
+
         base.Awake();
     }
     protected override void Start()
@@ -42,7 +43,7 @@ public class Minion : Unit
     {
         if (GameManager.Instance.state == State.WAIT && GameManager.Instance.deployState == DeployState.NONE)
         {
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButtonUp(1))
             {
                 BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
             }

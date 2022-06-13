@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
     private float damage;
     private GameObject target;
 
-    public SkillAbility skillAbility;
     public float duration;
     public bool isPoison = false;
     public float power;
@@ -57,7 +56,6 @@ public class Bullet : MonoBehaviour
 
             if(target.GetComponent<Unit>().currentHp > 0)
             {
-               target.GetComponent<Unit>().Poison(skillAbility, damage, duration);
                target.GetComponent<Unit>().Deal(damage);
 
                 if (damage > 0)

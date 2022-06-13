@@ -22,7 +22,6 @@ public class UnitAttackState : UnitBaseState
         {
             if (!stateMachine.IsTargetInAttackRange())
             {
-                Debug.Log("¹Ù²Ù±â");
                 stateMachine.unit.target = null;
                 return;
             }

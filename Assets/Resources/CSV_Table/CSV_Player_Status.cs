@@ -29,7 +29,7 @@ public class Stat
     public float RewardCost;
 }
 
-public class CSV_Player_Status : MonoBehaviour
+public class CSV_Player_Status : Singleton<CSV_Player_Status>
 {
     public Stat VeriyStat;
     public Stat AngelusStat;
@@ -49,28 +49,42 @@ public class CSV_Player_Status : MonoBehaviour
     public Stat EnemyBStat;
     public Stat EnemyCStat;
 
+    public Stat[] VeriyStat_Array;
+    public Stat[] AngelusStat_Array;
+    public Stat[] AsherStat_Array;
+    public Stat[] EremediumStat_Array;
+    public Stat[] IsabellaStat_Array;
+    public Stat[] KuenStat_Array;
+    public Stat[] NoahStat_Array;
+    public Stat[] PardoStat_Array;
+    public Stat[] PayStat_Array;
+    public Stat[] SophiaStat_Array;
+    public Stat[] WraithStat_Array;
+    public Stat[] ZippoStat_Array;
+    public Stat[] EilgosStat_Array;
+    public Stat[] HwaseonStat_Array;
+    public Stat[] EnemyAStat_Array;
+    public Stat[] EnemyBStat_Array;
+    public Stat[] EnemyCStat_Array;
+
     void Awake()
     {
         StartParsing();
     }
-    public void StartParsing()
+    
+    void Start()
     {
-        
-        string StringSavedata = File.ReadAllText(Application.dataPath + "/SaveData.json");
-        SaveData _saveData = JsonUtility.FromJson<SaveData>(StringSavedata);
-        
-
         List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList.xlsx - VerityStatus");
         List<Dictionary<string, object>> Eremediumdata = CSVReader.Read("LevelDesignDataList.xlsx - EremediumStatus");
         List<Dictionary<string, object>> Isabelladata = CSVReader.Read("LevelDesignDataList.xlsx - IsabellaStatus");
-        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - Hwaseon");
-        //List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
-        //List<Dictionary<string, object>> Asherdata = CSVReader.Read("Asher_Stat_Table");
+        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - HwaseonStatus");
+      //  List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
+        List<Dictionary<string, object>> Asherdata = CSVReader.Read("LevelDesignDataList.xlsx - AsherStatus");
         List<Dictionary<string, object>> Kuendata = CSVReader.Read("LevelDesignDataList.xlsx - KuenStatus");
         //List<Dictionary<string, object>> Noahdata = CSVReader.Read("Noah_Stat_Table");
         List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PardoStatus");
-        //List<Dictionary<string, object>> Paydata = CSVReader.Read("Pay_Stat_Table");
-        //List<Dictionary<string, object>> Sophiadata = CSVReader.Read("Sophia_Stat_Table");
+        List<Dictionary<string, object>> Paydata = CSVReader.Read("LevelDesignDataList.xlsx - PayStatus");
+        List<Dictionary<string, object>> Sophiadata = CSVReader.Read("LevelDesignDataList.xlsx - SophiaStatus");
         List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList.xlsx - WraithStatus");
         List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList.xlsx - ZippoStatus");
         //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
@@ -78,6 +92,55 @@ public class CSV_Player_Status : MonoBehaviour
         List<Dictionary<string, object>> EnemyB = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BStatus");
         List<Dictionary<string, object>> EnemyC = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_CStatus");
 
+        for(int i = 0; i < 15; i++)
+        {
+            StatUpdate(VeriyStat_Array[i], i, Veritydata);
+            //StatUpdate(_AngelusStat, _saveData.AngelusLevel, Angelusdata);
+            StatUpdate(AsherStat_Array[i], i, Asherdata);
+            StatUpdate(EremediumStat_Array[i], i, Eremediumdata);
+            StatUpdate(HwaseonStat_Array[i], i, Hwaseondata);
+            StatUpdate(IsabellaStat_Array[i], i, Isabelladata);
+            StatUpdate(KuenStat_Array[i], i, Kuendata);
+            //StatUpdate(_NoahStat, _saveData.NoahLevel, Noahdata);
+            StatUpdate(PardoStat_Array[i],i, Pardodata);
+            StatUpdate(PayStat_Array[i], i, Paydata);
+            StatUpdate(SophiaStat_Array[i], i, Sophiadata);
+            StatUpdate(WraithStat_Array[i], i, Wratihdata);
+            StatUpdate(ZippoStat_Array[i], i, Zippodata);
+            //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
+            StatUpdate_Enemy(EnemyAStat_Array[i], i, EnemyA);
+            StatUpdate_Enemy(EnemyBStat_Array[i], i, EnemyB);
+            StatUpdate_Enemy(EnemyCStat_Array[i], i, EnemyC);
+        }
+
+
+    }
+
+    
+    public void StartParsing()
+    {
+        
+        string StringSavedata = File.ReadAllText(Application.dataPath + "/SaveData.json");
+        SaveData _saveData = JsonUtility.FromJson<SaveData>(StringSavedata);
+
+
+        List<Dictionary<string, object>> Veritydata = CSVReader.Read("LevelDesignDataList.xlsx - VerityStatus");
+        List<Dictionary<string, object>> Eremediumdata = CSVReader.Read("LevelDesignDataList.xlsx - EremediumStatus");
+        List<Dictionary<string, object>> Isabelladata = CSVReader.Read("LevelDesignDataList.xlsx - IsabellaStatus");
+        List<Dictionary<string, object>> Hwaseondata = CSVReader.Read("LevelDesignDataList.xlsx - HwaseonStatus");
+        //  List<Dictionary<string, object>> Angelusdata = CSVReader.Read("Angelus_Stat_Table");
+        List<Dictionary<string, object>> Asherdata = CSVReader.Read("LevelDesignDataList.xlsx - AsherStatus");
+        List<Dictionary<string, object>> Kuendata = CSVReader.Read("LevelDesignDataList.xlsx - KuenStatus");
+        //List<Dictionary<string, object>> Noahdata = CSVReader.Read("Noah_Stat_Table");
+        List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PardoStatus");
+        List<Dictionary<string, object>> Paydata = CSVReader.Read("LevelDesignDataList.xlsx - PayStatus");
+        List<Dictionary<string, object>> Sophiadata = CSVReader.Read("LevelDesignDataList.xlsx - SophiaStatus");
+        List<Dictionary<string, object>> Wratihdata = CSVReader.Read("LevelDesignDataList.xlsx - WraithStatus");
+        List<Dictionary<string, object>> Zippodata = CSVReader.Read("LevelDesignDataList.xlsx - ZippoStatus");
+        //List<Dictionary<string, object>> Eilgosdata = CSVReader.Read("Eilgos_Stat_Table");
+        List<Dictionary<string, object>> EnemyA = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_AStatus");
+        List<Dictionary<string, object>> EnemyB = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_BStatus");
+        List<Dictionary<string, object>> EnemyC = CSVReader.Read("LevelDesignDataList.xlsx - Enemy_CStatus");
 
         Stat _VeriyStat = new Stat();
         Stat _AngelusStat = new Stat();
@@ -97,18 +160,17 @@ public class CSV_Player_Status : MonoBehaviour
         Stat _EnemyB = new Stat();
         Stat _EnemyC = new Stat();
 
-
         StatUpdate(_VeriyStat, _saveData.VertyLevel, Veritydata);
         //StatUpdate(_AngelusStat, _saveData.AngelusLevel, Angelusdata);
-        //StatUpdate(_AsherStat, _saveData.AsherLevel, Asherdata);
+        StatUpdate(_AsherStat, _saveData.AsherLevel, Asherdata);
         StatUpdate(_EremediumStat, _saveData.EremediumLevel, Eremediumdata);
         StatUpdate(_HwaseonStat, _saveData.HwaseonLevel, Hwaseondata);
         StatUpdate(_IsabellaStat, _saveData.IsabellaLevel, Isabelladata);
         StatUpdate(_KuenStat, _saveData.KuenLevel, Kuendata);
         //StatUpdate(_NoahStat, _saveData.NoahLevel, Noahdata);
         StatUpdate(_PardoStat, _saveData.PardoLevel, Pardodata);
-        //StatUpdate(_PayStat, _saveData.PayLevel, Paydata);
-        //StatUpdate(_SophiaStat, _saveData.SophiaLevel, Sophiadata);
+        StatUpdate(_PayStat, _saveData.PayLevel, Paydata);
+        StatUpdate(_SophiaStat, _saveData.SophiaLevel, Sophiadata);
         StatUpdate(_WratihStat, _saveData.WratihLevel, Wratihdata);
         StatUpdate(_ZippoStat, _saveData.ZippoLevel, Zippodata);
         //StatUpdate(_EilgosStat, _saveData.EilgosLevel, Eilgosdata);
@@ -137,12 +199,6 @@ public class CSV_Player_Status : MonoBehaviour
         
     }
     // Start is called before the first frame update
-    void Start()
-    {
-
-
-    }
-
     public void StatUpdate(Stat charactor, int charactorlevel, List<Dictionary<string, object>> ListData)
     {
         charactor.Name = ListData[charactorlevel]["Name"].ToString();
@@ -180,7 +236,91 @@ public class CSV_Player_Status : MonoBehaviour
         charactor.RewardCost = float.Parse(ListData[charactorlevel]["RewardCost"].ToString());
     }
 
-    public Stat Call_Stat(string name, int level)
+
+    public Stat Call_Stat_Array(string name, int level)
+    {
+        Stat errerStat = new Stat();
+        if (name == "Verity")
+        {
+            return VeriyStat_Array[level-1];
+        }
+
+        if (name == "Angelus")
+        {
+            return AngelusStat_Array[level - 1];
+        }
+        if (name == "Asher")
+        {
+            return AsherStat_Array[level - 1];
+        }
+        if (name == "Eremedium")
+        {
+            return EremediumStat_Array[level - 1];
+        }
+
+        if (name == "Isabella")
+        {
+            return IsabellaStat_Array[level - 1];
+        }
+
+        if (name == "Kuen")
+        {
+            return KuenStat_Array[level - 1];
+        }
+
+        if (name == "Noah")
+        {
+            return NoahStat_Array[level - 1];
+        }
+
+        if (name == "Pardo")
+        {
+            return PardoStat_Array[level - 1];
+        }
+        if (name == "Pay")
+        {
+            return PayStat_Array[level - 1];
+        }
+        if (name == "Sophia")
+        {
+            return SophiaStat_Array[level - 1];
+        }
+
+        if (name == "Wraith")
+        {
+            return WraithStat_Array[level - 1];
+        }
+        if (name == "Zippo")
+        {
+            return ZippoStat_Array[level - 1];
+        }
+        if (name == "Eilgos")
+        {
+            return EilgosStat_Array[level - 1];
+        }
+        if (name == "Hwaseon")
+        {
+            return HwaseonStat_Array[level - 1];
+        }
+
+        if (name == "Enemy1")
+        {
+            return EnemyAStat_Array[level - 1];
+        }
+        if (name == "Enemy2")
+        {
+            return EnemyBStat_Array[level - 1];
+        }
+        if (name == "Enemy3")
+        {
+            return EnemyCStat_Array[level - 1];
+        }
+
+        return errerStat;
+
+    }
+
+    public Stat Call_Stat_CSV(string name, int level)
     {
 
         Stat errerStat = new Stat();
@@ -240,6 +380,12 @@ public class CSV_Player_Status : MonoBehaviour
             StatUpdate(PardoStat, level - 1, Pardodata);
             return PardoStat;
         }
+        if (name == "Pay")
+        {
+            List<Dictionary<string, object>> Pardodata = CSVReader.Read("LevelDesignDataList.xlsx - PayStatus");
+            StatUpdate(PayStat, level - 1, Pardodata);
+            return PayStat;
+        }
         if (name == "Sophia")
         {
             List<Dictionary<string, object>> Sophiadata = CSVReader.Read("LevelDesignDataList.xlsx - SophiaStatus");
@@ -291,7 +437,8 @@ public class CSV_Player_Status : MonoBehaviour
             StatUpdate_Enemy(EnemyCStat, level - 1, EnemyCdata);
             return EnemyCStat;
         }
-        
+
+        Debug.Log("Call_Stat_이름 잘못입력함");
         return errerStat;
     }
 
