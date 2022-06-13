@@ -38,7 +38,10 @@ public class SoundManager : MonoBehaviour
 
         if (soundCanvas.activeSelf) soundCanvas.SetActive(false);
 
-        ChangeMasterVolume(masterSlider.value);
+        if (SceneManager.GetActiveScene().name != "DefenceStageScene")
+        {
+            ChangeMasterVolume(masterSlider.value);
+        }
         ChangeBGMVolume(bgmSlider.value);
         ChangeEffectsVolume(effectsSlider.value);
 
@@ -49,10 +52,13 @@ public class SoundManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (SceneManager.GetActiveScene().name != "DefenceStageScene")
         {
-            OnKeyCheck();
-            soundCanvas.SetActive(canvasCheck);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnKeyCheck();
+                soundCanvas.SetActive(canvasCheck);
+            }
         }
     }
 

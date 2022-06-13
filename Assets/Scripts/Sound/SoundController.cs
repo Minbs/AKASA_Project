@@ -4,39 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System;
-
-enum SoundSequence
-{
-    DefenceStageSceneButtonClick01,
-    DefenceStageSceneButtonClick02,
-    DefenceStageSceneButtonClick03,
-    MainSceneButtonClick01,
-    MainSceneButtonClick02,
-    MainSceneButtonClick03,
-    MainSceneButtonLick01,
-    MainSceneButtonLick02,
-    MainSceneButtonLick03,
-    StageSelectSceneButtonClick01,
-    StageSelectSceneButtonClick02,
-    StageSelectSceneButtonClick03,
-    StageSelectSceneButtonClick04,
-    StageSelectSceneButtonClick05,
-    StageSelectSceneButtonLick01,
-    StageSelectSceneButtonLick02,
-    StageSelectSceneButtonLick03,
-    StageSelectSceneButtonLick04,
-    StageSelectSceneButtonLick05,
-    TitleSceneButtonClick01,
-    UnitContainerSceneButtonClick01,
-    UnitContainerSceneButtonClick02
-}
-
 public class SoundController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    //[HideInInspector]
+    [HideInInspector]
     public AudioClip[] uiClip;
+    [HideInInspector]
     public string[] uiClipName;
+    [HideInInspector]
     public AudioClip[] skillClip;
+    [HideInInspector]
     public string[] skillClipName;
 
     [Space(10)]
