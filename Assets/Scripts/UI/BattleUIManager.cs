@@ -677,6 +677,7 @@ public class BattleUIManager : Singleton<BattleUIManager>
         UseCost(currentStat.UpgradeCost);
        upgradeMinion.GetComponent<Unit>().Level++;
        upgradeMinion.GetComponent<Unit>().SetUnitStat(nextLevelStat);
+       SynergyManager.Instance.CheckClassSynergy(upgradeMinion);
        SetMinionUpgradeUI(upgradeMinion);
     }
 

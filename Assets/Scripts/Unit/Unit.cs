@@ -82,6 +82,7 @@ public class Unit : Object
             GameDataManager.gameObject.GetComponent<CSV_Player_Status>().StartParsing(this.Unitname);
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname, Level);
             maxHp = ParsingStat.HP;
+            maxHpStat = maxHp;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
             attackRangeDistance = ParsingStat.AtkRange1;
@@ -96,6 +97,7 @@ public class Unit : Object
             ParsingStat = GameDataManager.gameObject.GetComponent<CSV_Player_Status>().Call_Stat_CSV(Unitname,Level);
 
             maxHp = ParsingStat.HP;
+            maxHpStat = maxHp;
             atk = ParsingStat.Atk;
             def = ParsingStat.Def;
             attackRangeDistance = ParsingStat.AtkRange1;

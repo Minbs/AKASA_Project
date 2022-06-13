@@ -46,7 +46,6 @@ public class SynergyManager : Singleton<SynergyManager>
                     ActiveRescueSynergy(minion);
                     break;
             }
-       
     }
 
     void ActiveBusterSynergy(GameObject minion)
@@ -67,9 +66,11 @@ public class SynergyManager : Singleton<SynergyManager>
             }
         }
 
+
         Debug.Log((int)(minion.GetComponent<Unit>().atk * (float)(busterCoefficient * synergyCount) / 100));
-        minion.GetComponent<Unit>().currentAtk = minion.GetComponent<Unit>().atk + (int)(minion.GetComponent<Unit>().atk * (float)(busterCoefficient * synergyCount) / 100);
-        minion.GetComponent<Unit>().maxHp = minion.GetComponent<Unit>().maxHp + (int)(minion.GetComponent<Unit>().maxHp * (float)(busterCoefficient * synergyCount) / 100);
+        minion.GetComponent<Unit>().currentAtk = minion.GetComponent<Unit>().atk + (minion.GetComponent<Unit>().atk * (busterCoefficient * synergyCount) / 100);
+        
+        minion.GetComponent<Unit>().maxHp = minion.GetComponent<Unit>().maxHpStat + (minion.GetComponent<Unit>().maxHpStat * (busterCoefficient * synergyCount) / 100);
         minion.GetComponent<Unit>().currentHp = minion.GetComponent<Unit>().maxHp;
     }
 

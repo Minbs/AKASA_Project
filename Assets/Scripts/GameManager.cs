@@ -386,6 +386,12 @@ public class GameManager : Singleton<GameManager>
                     settingCharacter = null;
                     isChangePosition = false;
                     BattleUIManager.Instance.sellPanel.SetActive(false);
+
+                    foreach (var minion in minionsList)
+                    {
+                        SynergyManager.Instance.CheckClassSynergy(minion);
+                    }
+
                     deployState = DeployState.NONE;
                 }
             }
@@ -443,7 +449,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var m in minionsList)
         {
-            SynergyManager.Instance.CheckClassSynergy(m);
+           // SynergyManager.Instance.CheckClassSynergy(m);
             m.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             m.GetComponent<UnitStateMachine>().agent.enabled = true;
         }

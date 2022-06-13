@@ -295,9 +295,6 @@ public class SkillManager : Singleton<SkillManager>
                     returnTargets.Add(target);
                 }
             }
-
-
-
         }
 
 
