@@ -9,12 +9,13 @@ public class PauseScript : MonoBehaviour
     public GameObject Canvas;
     public Image[] Victory;
     public Image[] Fail;
-
+    public Slider masterSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SoundManager.Instance.ChangeMasterVolume(masterSlider.value);
+        masterSlider.onValueChanged.AddListener(val => SoundManager.Instance.ChangeMasterVolume(val));
     }
 
     // Update is called once per frame

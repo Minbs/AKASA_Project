@@ -16,39 +16,43 @@ public class SceneLoad : MonoBehaviour
     public Slider[] progressbar;
     public Text[] loadingText;
 
-    [Header("Illust")]
-    public GameObject illust;
+    [Header("LoadingObj")]
+    public GameObject LoadingObj;
     [SerializeField]
-    List<GameObject> illustObj;
-    [SerializeField]
-    List<Image> illustImage;
+    List<GameObject> LoadingImage;
 
     static string nextSceneName;
-    int random;
+    int random1, random2;
 
     // Start is called before the first frame update
     private void Start()
     {
         Init();
 
-        for (int i = 0; i < illust.transform.childCount; i++)
-            illustImage[i].gameObject.SetActive(false);
-        illustImage[random].gameObject.SetActive(true);
+        for (int i = 0; i < LoadingObj.transform.childCount; i++)
+            LoadingImage[i].gameObject.SetActive(false);
+        LoadingImage[random1].gameObject.SetActive(true);
+        LoadingImage[random2].gameObject.SetActive(true);
 
         StartCoroutine(LoadSceneProcess());
+    }
+
+    private void Update()
+    {
+        OnLoadingSceneClick();
     }
 
     /// <summary> 초기화 </summary>
     private void Init()
     {
-        random = Random.Range(0, illust.transform.childCount);
-        for (int i = (int)ProgressbarDirection.Left; i < (int)ProgressbarDirection.Right + 1; i++)
+        random1 = Random.Range(0, LoadingObj.transform.childCount - 5);
+        random2 = Random.Range(LoadingObj.transform.childCount - 5, LoadingObj.transform.childCount);
+        for (int i = (int)ProgressbarDirection.Left; i <= (int)ProgressbarDirection.Right; i++)
             progressbar[i].value = 0;
 
-        for (int i = 0; i < illust.transform.childCount; i++)
+        for (int i = 0; i < LoadingObj.transform.childCount; i++)
         {
-            illustObj.Add(illust.transform.GetChild(i).gameObject);
-            illustImage.Add(illustObj[i].GetComponentInChildren<Image>());
+            LoadingImage.Add(LoadingObj.transform.GetChild(i).gameObject);
         }
         Time.timeScale = 0.2f;
     }
@@ -58,6 +62,19 @@ public class SceneLoad : MonoBehaviour
     {
         nextSceneName = sceneName;
         SceneManager.LoadScene("LoadingScene");
+    }
+
+    public void OnLoadingSceneClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            random1 = Random.Range(0, LoadingObj.transform.childCount - 5);
+            random2 = Random.Range(LoadingObj.transform.childCount - 5, LoadingObj.transform.childCount);
+            for (int i = 0; i < LoadingObj.transform.childCount; i++)
+                LoadingImage[i].gameObject.SetActive(false);
+            LoadingImage[random1].gameObject.SetActive(true);
+            LoadingImage[random2].gameObject.SetActive(true);
+        }
     }
 
     /// <summary> 비동기 씬 전환(+ 로딩 퍼센티지) </summary> <returns></returns>

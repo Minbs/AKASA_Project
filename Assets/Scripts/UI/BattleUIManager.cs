@@ -162,9 +162,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
             //에너미 카운트수 체크
             EnemeyCount();
             //배경음악 재생
-            if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
+            //if (isSoundCheck) audioSource.Play(); isSoundCheck = false;
             //일시정지시 배경음악 일시중지, 일시정지 해제시 배경음악 재생
-            if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); else audioSource.UnPause();
+            //if (GameManager.Instance.gameSpeed == 0) audioSource.Pause(); else audioSource.UnPause();
             //스타트 페이즈 대기시간만큼 팝업UI 출력 후 해제
             if (WaitingTime[(int)State.BATTLE] >= 0) Active((int)State.BATTLE);
             //웨이브1 페이즈 대기시간만큼 팝업UI 출력 후 해제
