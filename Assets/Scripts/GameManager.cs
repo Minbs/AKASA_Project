@@ -474,7 +474,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var m in minionsList)
         {
-           // SynergyManager.Instance.CheckClassSynergy(m);
+            SynergyManager.Instance.CheckClassSynergy(m);
             m.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             m.GetComponent<UnitStateMachine>().agent.enabled = true;
         }

@@ -72,5 +72,12 @@ public class MinionButton : MonoBehaviour, IPointerDownHandler
 
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("마우스트리거 on collider");
+    }
+
+
+
 }
 
