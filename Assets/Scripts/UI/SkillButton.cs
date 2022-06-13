@@ -16,6 +16,8 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
     public int NameIndex;
     public int CurrntIndex;
     public Image Cardilust;
+    public Image CardcooltimeImage;
+    public TextMeshProUGUI CooltimeText;
     public GameObject SkillTextUI;
     public GameObject SelectdImage;
     public GameObject SkillManager;
@@ -27,9 +29,24 @@ public class SkillButton : MonoBehaviour, IPointerDownHandler
     void Update()
     {
         if (!GameManager.Instance.minionsList.IsEmpty())
-        { 
-            Cardilust.GetComponent<Image>().fillAmount = GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillTimer /
-           GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime;
+        {
+
+            int Cooltime = ((int)GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime) - (int)GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillTimer;
+            CooltimeText.text = Cooltime.ToString();
+
+            if(Cooltime <= 0)
+            {
+                CardcooltimeImage.gameObject.SetActive(false);
+                CooltimeText.gameObject.SetActive(false);
+            }
+
+            else
+            {
+                CardcooltimeImage.gameObject.SetActive(true);
+                CooltimeText.gameObject.SetActive(true);
+            }
+            //Cardilust.GetComponent<Image>().fillAmount = GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillTimer /
+            //GameManager.Instance.minionsList[CurrntIndex].GetComponent<DefenceMinion>().skillCoolTime;
         }
     }
 

@@ -32,6 +32,7 @@ public struct IncomeUpgradeData
 
 public class GameManager : Singleton<GameManager>
 {
+
     public GameObject UImanager;
     public GameObject StageFailUi;
     public GameObject StageVictoryUI;
@@ -80,6 +81,7 @@ public class GameManager : Singleton<GameManager>
     public int incomeUpgradeCount { get; set; }
 
     public GameObject turret;
+
 
     void Start()
     {
@@ -338,6 +340,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         cost += waveClearRewards[currentWave - 1];
+        WaveUI.GetComponent<Wave_UI_Script>().CostUpUI((waveClearRewards[currentWave - 1]),"temp");
         //클리어 코스트 증가
         BattleUIManager.Instance.costText.text = cost.ToString();
 

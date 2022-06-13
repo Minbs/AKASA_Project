@@ -296,7 +296,7 @@ public class Unit : Object
                 GameManager.Instance.cost += rewardCost;
                 BattleUIManager.Instance.costText.text = GameManager.Instance.cost.ToString();
 
-                CostUimanager.GetComponent<Wave_UI_Script>().CostUpUI(((int)rewardCost));
+                CostUimanager.GetComponent<Wave_UI_Script>().CostUpUI(((int)rewardCost),"temp");
 
             }
         }

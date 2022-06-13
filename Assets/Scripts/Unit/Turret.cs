@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Turret : Object
 {
     // Start is called before the first frame update
@@ -16,6 +16,9 @@ public class Turret : Object
 
     public float attackDistance; // 공격 가능 범위
     public float attackRange; // 폭발 범위
+
+    public Image HPBar;
+    public Image BarrierBar;
 
     private Ray ray;
 
@@ -35,7 +38,8 @@ public class Turret : Object
     void Update()
     {
         attackTimer += Time.deltaTime;
-
+        HPBar.GetComponent<Image>().fillAmount = currentHp / maxHp;
+        BarrierBar.GetComponent<Image>().fillAmount = barrierHp / 48;
 
         if (!GameManager.Instance.state.Equals(State.BATTLE))
             return;

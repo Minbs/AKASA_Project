@@ -28,14 +28,28 @@ public class Wave_UI_Script : MonoBehaviour
 
     }
 
-    public void CostUpUI(int cost)
+    public void CostUpUI(int cost, string textColor)
     {
-        CostUpText.text = cost.ToString();
-        CostUpText.GetComponent<TextMeshProUGUI>().color = new Color(255, 255, 255, 255);
-        CostUpText.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+        if(textColor == "Blue")
+        {
+            CostUpText.text = cost.ToString();
 
-        CostUpText2.GetComponent<TextMeshProUGUI>().color = new Color(255, 255, 255, 255);
-        CostUpText2.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+            CostUpText.color = new Color32(92, 151, 255, 255);
+            CostUpText.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+            CostUpText2.color = new Color32(92, 151, 255, 255);
+            CostUpText2.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+        }
+
+        else
+        {
+            CostUpText.text = cost.ToString();
+            CostUpText.color = new Color32(255, 255, 255, 255);
+            CostUpText.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+
+            CostUpText2.color = new Color32(255, 255, 255, 255);
+            CostUpText2.GetComponent<TextMeshProUGUI>().DOFade(0, 2f);
+        }
+
     }
 
     public void TimerText(float time,float maxtime)
@@ -49,19 +63,19 @@ public class Wave_UI_Script : MonoBehaviour
     {   
         if(Color == "Yellow")
         {
-            Logo[logoindex].color = UnityEngine.Color.yellow;
+            Logo[logoindex].color = new Color32(255,224,106,255);
 
         }
 
         else if(Color == "Blue")
         {
-            Logo[logoindex].color = UnityEngine.Color.blue ;
+            Logo[logoindex].color = new Color32(92,151,255,255);
 
         }
 
         else if (Color == "Red")
         {
-            Logo[logoindex].color = UnityEngine.Color.red;
+            Logo[logoindex].color = new Color32(255,117,92,255);
 
         }
     }
