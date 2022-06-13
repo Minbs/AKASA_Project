@@ -145,25 +145,25 @@ public class Unit_Select_UI : MonoBehaviour
                 Character_Number = 1;
                 break;
             case "Asher":
-                Character_Number = 2;
+                Character_Number = 8;
                 break;
             case "Pay":
-                Character_Number = 3;
+                Character_Number = 2;
                 break;
             case "Isabella":
-                Character_Number = 4;
+                Character_Number = 3;
                 break;
             case "Kuen":
-                Character_Number = 5;
+                Character_Number = 4;
                 break;
             case "Pardo":
-                Character_Number = 6;
+                Character_Number = 5;
                 break;
             case "Sophia":
-                Character_Number = 7;
+                Character_Number = 6;
                 break;
             case "Vogue":
-                Character_Number = 8;
+                Character_Number = 7;
                 break;
             case "Eremedium":
                 Character_Number = 9;
@@ -189,6 +189,7 @@ public class Unit_Select_UI : MonoBehaviour
     public void Display_Unit_Button(string character_Name)
     {
         int Character_Number = -1;
+        Debug.Log(character_Name+ "디스플레이유닛버튼");
         switch (character_Name)
         {
             case "Verity":
@@ -198,25 +199,25 @@ public class Unit_Select_UI : MonoBehaviour
                 Character_Number = 1;
                 break;
             case "Asher":
-                Character_Number = 2;
+                Character_Number = 8;
                 break;
             case "Pay":
-                Character_Number = 3;
+                Character_Number = 2;
                 break;
             case "Isabella":
-                Character_Number = 4;
+                Character_Number = 3;
                 break;
             case "Kuen":
-                Character_Number = 5;
+                Character_Number = 4;
                 break;
             case "Pardo":
-                Character_Number = 6;
+                Character_Number = 5;
                 break;
             case "Sophia":
-                Character_Number = 7;
+                Character_Number = 6;
                 break;
             case "Vogue":
-                Character_Number = 8;
+                Character_Number = 7;
                 break;
             case "Eremedium":
                 Character_Number = 9;
@@ -229,6 +230,7 @@ public class Unit_Select_UI : MonoBehaviour
                 break;
             default:
                 break;
+
 
         }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.UI;
+using DG.Tweening;
 
 [Serializable]
 public enum State
@@ -30,7 +32,12 @@ public struct IncomeUpgradeData
 
 public class GameManager : Singleton<GameManager>
 {
+
     public GameObject UImanager;
+    public GameObject StageFailUi;
+    public GameObject StageVictoryUI;
+    public Image[] Victory;
+    public Image[] Fail;
 
     public float cost = 20; // 초기 보유 코스트
     public float costTime = 10; // 초기 코스트 획득량
@@ -38,6 +45,7 @@ public class GameManager : Singleton<GameManager>
     public float waitTime = 30; // 대기 시간
     public float clearTimeTerm = 30;
     public float currentWaitTimer { get; set; }
+    public GameObject WaveUI;
 
     public State state { get; set; }
     public DeployState deployState { get; set; } // 배치 상태
@@ -74,8 +82,14 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject turret;
 
+
     void Start()
     {
+        //StageFailEvent();
+        //StageVictoryEvent();
+
+
+
         //Time.timeScale = 2;
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var e in enemies)
@@ -92,6 +106,11 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+        if(Input.GetKey(KeyCode.T))
+        {
+            StageVictoryEvent();
+
+        }
         ray = tileCamera.ScreenPointToRay(Input.mousePosition);
 
         if (!settingCharacter)
@@ -128,6 +147,9 @@ public class GameManager : Singleton<GameManager>
         deployState = DeployState.NONE;
         SetGameSpeed(1);
         currentWaitTimer = waitTime;
+        WaveUI.GetComponent<Wave_UI_Script>().StageText_Next();
+        WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave, "Yellow");
+        WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
         currentWave++;
 
 
@@ -136,6 +158,7 @@ public class GameManager : Singleton<GameManager>
         {
             StartCoroutine(spawner.Spawn(currentWave));
             currentWaitTimer -= Time.deltaTime;
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
             WaitStateUpdate();
             yield return null;
         }
@@ -203,12 +226,18 @@ public class GameManager : Singleton<GameManager>
         state = State.BATTLE;
         SetGameSpeed(1);
 
+        foreach (var minion in minionsList)
+        {
+            minion.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+            minion.GetComponent<UnitStateMachine>().agent.enabled = true;
+        }
+
         //1. 스킬 타입 2. 이름 순 오름차순 정렬
         var tempList = minionsList.OrderBy(x => x.GetComponent<DefenceMinion>().skillType).ThenBy(x => x.GetComponent<DefenceMinion>().Unitname);
 
         minionsList = tempList.ToList();
 
-    //    minionsList
+        //    minionsList
 
         foreach (var e in enemiesList)
         {
@@ -269,11 +298,14 @@ public class GameManager : Singleton<GameManager>
                 minionsList[count].GetComponent<Unit>().UpdateHealthbar();
                 minionsList[count].GetComponent<Unit>().target = null;
                 count++;
+                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave-1, "Blue");   //현재 스테이지 로고 Blue로 변경
             }
             else
             {
+                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave-1, "Red");    //현재 스테이지 로고 Red로 변경
                 minionsList[count].GetComponent<Unit>().onTile.isOnUnit = false;
                 minionsList.RemoveAt(count);
+
             }
         }
 
@@ -306,7 +338,7 @@ public class GameManager : Singleton<GameManager>
                 if (!m.GetComponent<UnitStateMachine>().currentState.Equals(m.GetComponent<UnitStateMachine>().idleState) && m.activeSelf)
                     isAllMinionReturn = false;
             }
-
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
             if (isAllMinionReturn)
                 break;
 
@@ -314,6 +346,8 @@ public class GameManager : Singleton<GameManager>
         }
 
         cost += waveClearRewards[currentWave - 1];
+        WaveUI.GetComponent<Wave_UI_Script>().CostUpUI((waveClearRewards[currentWave - 1]),"temp");
+        //클리어 코스트 증가
         BattleUIManager.Instance.costText.text = cost.ToString();
 
         StartCoroutine(WaitState());
@@ -371,6 +405,12 @@ public class GameManager : Singleton<GameManager>
                     settingCharacter = null;
                     isChangePosition = false;
                     BattleUIManager.Instance.sellPanel.SetActive(false);
+
+                    foreach (var minion in minionsList)
+                    {
+                        SynergyManager.Instance.CheckClassSynergy(minion);
+                    }
+
                     deployState = DeployState.NONE;
                 }
             }
@@ -412,9 +452,12 @@ public class GameManager : Singleton<GameManager>
             minionsList.Add(settingCharacter);
             BattleUIManager.Instance.UseCost(settingCharacter.GetComponent<DefenceMinion>().cost);
         }
-
-        UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
-
+        if (settingCharacter.GetComponent<DefenceMinion>().OneTimeSummon == false)
+        {
+            settingCharacter.GetComponent<DefenceMinion>().OneTimeSummon = true;
+            UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
+        }
+        
         settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
         settingCharacter = null;
         isChangePosition = false;
@@ -425,7 +468,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var m in minionsList)
         {
-            SynergyManager.Instance.CheckClassSynergy(m);
+           // SynergyManager.Instance.CheckClassSynergy(m);
             m.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
             m.GetComponent<UnitStateMachine>().agent.enabled = true;
         }
@@ -485,6 +528,26 @@ public class GameManager : Singleton<GameManager>
         {
             m.GetComponent<Unit>().spineAnimation.skeletonAnimation.AnimationState.TimeScale = gameSpeed;
             m.GetComponent<UnitStateMachine>().agent.velocity = m.GetComponent<UnitStateMachine>().agent.velocity * speed;
+        }
+    }
+
+    public void StageVictoryEvent()
+    {
+        StageVictoryUI.SetActive(true);
+        for(int i = 0; i < 4; i++)
+        {
+           
+            Victory[i].GetComponent<Image>().DOFade(1,1f);
+        }
+
+    }
+
+    public void StageFailEvent()
+    {
+        StageFailUi.SetActive(true);
+        for (int i = 0; i < 4; i++)
+        {
+            Fail[i].GetComponent<Image>().DOFade(1, 1f);
         }
     }
 

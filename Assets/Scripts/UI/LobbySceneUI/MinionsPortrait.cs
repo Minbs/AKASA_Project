@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.IO;
 using System.Linq;
 using TMPro;
 using System;
@@ -114,12 +116,12 @@ public struct MinionsInfo
 
 
 
-public class MinionsPortrait : MonoBehaviour
+public class MinionsPortrait : MonoBehaviour, IPointerDownHandler
 {
     [System.Serializable]
     public class SerializeDic : PublicDictionary.MinionsData<string, ImageFile> { }
     [Header("스탠딩 일러스트 좌표")]
-    public MinionsPortrait pppp;
+    public MinionsPortrait obj_Standing;
 
     [Header("BackGround")] 
     [SerializeField]
@@ -249,7 +251,7 @@ public class MinionsPortrait : MonoBehaviour
                 throw new System.Exception("RankFrame Error");
         }
     }
-    
+
     void hideinit()
     {
         if (CampText != null)
@@ -316,16 +318,21 @@ public class MinionsPortrait : MonoBehaviour
             {
                 if (this.tag == "Minions_Inventory")
                 {
-                    pppp = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
-                    this.gameObject.GetComponent<Button>().onClick.AddListener(() => pppp.ShowStanding(this.m_info));      // 스탠딩에 정보를 보여주는 기능
-                                                                                                                           //LobbyUIManager.Instance.
+                    obj_Standing = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
+                    this.gameObject.GetComponent<Button>().onClick.AddListener(() => obj_Standing.ShowStanding(this.m_info));      // 스탠딩에 정보를 보여주는 기능
+                                                                                                                                   //LobbyUIManager.Instance.
 
                 }
-                else if (this.tag == "Minions_EditList")
-                    Debug.Log("EditList 기능 미구현");                                                      // 에딧 리스트의 portrait을 누를 시 적용되는 기능 
+                else if (this.tag == "Minions_EditList") // 에딧 리스트의 portrait을 누를 시 적용되는 기능 
+                {
+
+                    obj_Standing = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
+                    this.gameObject.GetComponent<Button>().onClick.AddListener(() => obj_Standing.ShowStanding(this.m_info));      // 스탠딩에 정보를 보여주는 기능
+
+                }
                 else if (this.tag == "Minions_Standing")
                 {
-                    Debug.Log("Standing 기능 미구현");                                             // 스탠딩을 누를 시 정보를 보여주는 기능
+                    //Debug.Log("Standing 기능 미구현");                                             // 스탠딩을 누를 시 정보를 보여주는 기능
                     //this.gameObject.GetComponent<Button>().onClick.AddListener(() => ShowInfo());
                     //this.gameObject.GetComponent<Button>().onClick.AddListener(
                     //    () => LobbyUIManager.Instance.ShowPanel());
@@ -341,6 +348,27 @@ public class MinionsPortrait : MonoBehaviour
             Debug.Log(e.Message);
         }
     }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        try
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                if (obj_Standing == null)
+                    obj_Standing = GameObject.Find("SelectedStanding").GetComponent<MinionsPortrait>();
+                obj_Standing.ShowStanding(this.m_info);
+            }
+            if (eventData.button == PointerEventData.InputButton.Right && this.tag == "Minions_EditList")
+            {
+                EditList.Instance.ListOut(this.m_info);
+            }
+        }
+        catch
+        {
+            Debug.Log("portrait One Click Error. if don't using standing Illust GameObject");
+        }
+    }
+
     public void addDictionary(string Key)
     {
         Debug.Log("Add Dictionary");
@@ -421,6 +449,5 @@ public class MinionsPortrait : MonoBehaviour
     {
         Debug.Log("유닛의 정보 보여주기");
     }
-
 
 }

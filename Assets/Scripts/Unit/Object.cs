@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Object : MonoBehaviour
 {
+    public float maxHpStat { get; set; }
     public float maxHp;
     public float currentHp;
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        maxHpStat = maxHp;
         currentHp = maxHp;
     }
 

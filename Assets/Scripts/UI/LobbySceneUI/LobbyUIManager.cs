@@ -26,6 +26,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     [Space(10f)]
     [Header("Popup Panel")]
+    public GameObject SettingPanel;
+    private bool SettingScreenOn;
     public GameObject PopupPanel;
     public GameObject InfoPanel;
     public TextMeshProUGUI Title_text;
@@ -63,7 +65,11 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
             EditPanel.SetActive(false);
         if (InfoPanel != null)
             InfoPanel.SetActive(false);
-
+        if (SettingPanel != null)
+        {
+            SettingScreenOn = false;
+            SettingPanel.SetActive(false);
+        }
         //btn.onClick.AddListener(SaveConfirm);     // 버튼 적용 법
     }
 
@@ -135,18 +141,8 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
 
     public void LoadScene(string SceneName)
     {
-        switch (SceneName)
-        {
-            case "MainScene":
-                //DontDestroyable.Instance.AudioPlay(1);
-                break;
-            case "StageSelectScene":
-                //DontDestroyable.Instance.AudioPlay(2);
-                break;
-            default:
-                break;
-        }
-        SceneLoad.LoadScene(SceneName);
+
+        SceneManager.LoadScene(SceneName);
         Debug.Log(SceneName + "씬으로 이동");
     }
 
@@ -155,14 +151,27 @@ public class LobbyUIManager : Singleton<LobbyUIManager>
         Debug.Log("뽑기 씬 출력");
     }
 
-    public void ShowSettingScene()
+    public void SettingScreen()
     {
+        if (SettingPanel != null)
+        {
+            if (SettingScreenOn == false)
+            {
+                SettingPanel.SetActive(true);
+                SettingScreenOn = true;
+            }
+            else
+            {
+                SettingPanel.SetActive(false);
+                SettingScreenOn = false;
+            }
+        }
         Debug.Log("설정 씬 보여주기");
     }
 
     public void LoadStageSelectScene()
     {
-        SceneLoad.LoadScene("StageSelectScene");
+        SceneManager.LoadScene("StageSelectScene_2");
         Debug.Log("스테이지 선택 씬 보여주기");
     }
 

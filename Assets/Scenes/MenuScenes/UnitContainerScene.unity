@@ -171,7 +171,6 @@ GameObject:
   - component: {fileID: 37486933}
   - component: {fileID: 37486932}
   - component: {fileID: 37486934}
-  - component: {fileID: 37486935}
   m_Layer: 5
   m_Name: Sort_Btn
   m_TagString: Untagged
@@ -281,184 +280,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &37486935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37486930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 00000001
-    buttonLick: 00000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
---- !u!1 &46468137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 46468140}
-  - component: {fileID: 46468139}
-  - component: {fileID: 46468138}
-  m_Layer: 0
-  m_Name: BackGroundAudio
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!82 &46468138
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46468137}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &46468139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46468137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8585eb2b74601e4dbcc8b6d88b3ad5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AudioList:
-  - {fileID: 8300000, guid: 97f7588bead35ae4085f0b2427fb89de, type: 3}
-  - {fileID: 8300000, guid: 4178799385fdd0c43b3e527abbc76f4d, type: 3}
-  - {fileID: 8300000, guid: cd5fdf19a7a4b6e4a9658e59cd3b7472, type: 3}
---- !u!4 &46468140
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46468137}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1049.9823, y: 541.3877, z: 270.81464}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49563479
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +557,7 @@ MonoBehaviour:
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 1082304821}
   m_HorizontalScrollbar: {fileID: 0}
-  m_VerticalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 673370544}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3
@@ -973,11 +794,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!1 &167793277 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 1306443520}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &207543852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,43 +1056,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
---- !u!1 &208660061
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 208660062}
-  m_Layer: 5
-  m_Name: Sliding Area
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &208660062
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 208660061}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 257261136}
-  m_Father: {fileID: 1591872742}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &244192628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,82 +1242,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253278072}
-  m_CullTransparentMesh: 1
---- !u!1 &257261135
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 257261136}
-  - component: {fileID: 257261138}
-  - component: {fileID: 257261137}
-  m_Layer: 5
-  m_Name: Handle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &257261136
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 257261135}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 208660062}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &257261137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 257261135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &257261138
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 257261135}
   m_CullTransparentMesh: 1
 --- !u!1 &353361712
 GameObject:
@@ -2876,7 +2579,6 @@ GameObject:
   - component: {fileID: 576514284}
   - component: {fileID: 576514283}
   - component: {fileID: 576514282}
-  - component: {fileID: 576514285}
   m_Layer: 5
   m_Name: Exit_Btn
   m_TagString: Untagged
@@ -2998,39 +2700,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576514280}
   m_CullTransparentMesh: 1
---- !u!114 &576514285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576514280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 000001
-    buttonLick: 000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &652139294
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,11 +2909,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
---- !u!1 &664914850 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 1079042171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &668866757
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,7 +2921,6 @@ GameObject:
   - component: {fileID: 668866761}
   - component: {fileID: 668866760}
   - component: {fileID: 668866759}
-  - component: {fileID: 668866762}
   m_Layer: 5
   m_Name: Save_Btn
   m_TagString: Untagged
@@ -3379,39 +3042,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668866757}
   m_CullTransparentMesh: 1
---- !u!114 &668866762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668866757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 000001
-    buttonLick: 000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &673370542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3430,7 +3060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &673370543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3496,7 +3126,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1081270397}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.6525
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3571,7 +3201,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1530113814}
-  - {fileID: 1591872742}
   - {fileID: 1675117943}
   m_Father: {fileID: 476890675}
   m_RootOrder: 4
@@ -3602,7 +3231,7 @@ MonoBehaviour:
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 1530113814}
-  m_HorizontalScrollbar: {fileID: 1591872743}
+  m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
@@ -3661,7 +3290,7 @@ GameObject:
   - component: {fileID: 711749465}
   - component: {fileID: 711749464}
   m_Layer: 5
-  m_Name: Skill_Text
+  m_Name: Skill_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3680,11 +3309,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1768031530}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1015, y: -200}
+  m_AnchoredPosition: {x: 1035, y: -196.3}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &711749464
@@ -4089,11 +3718,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
---- !u!1 &863733162 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 1644733522}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &880318832
 GameObject:
   m_ObjectHideFlags: 0
@@ -4105,7 +3729,6 @@ GameObject:
   - component: {fileID: 880318833}
   - component: {fileID: 880318835}
   - component: {fileID: 880318834}
-  - component: {fileID: 880318836}
   m_Layer: 5
   m_Name: Unit_List_UI
   m_TagString: Untagged
@@ -4171,82 +3794,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880318832}
   m_CullTransparentMesh: 1
---- !u!114 &880318836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880318832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 00000001
-    buttonLick: 00000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
---- !u!1 &902012506 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 845002210}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &923099803 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 1306443520}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &923099809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167793277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1001 &932154000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4381,39 +3933,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 1079042171}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &990449288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664914850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &991790448
 GameObject:
   m_ObjectHideFlags: 0
@@ -4810,39 +4329,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 1644733522}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1022529054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863733162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1001 &1031798200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4977,39 +4463,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 845002210}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1044933586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902012506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1001 &1079042171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5180,8 +4633,8 @@ RectTransform:
   m_Father: {fileID: 1252532616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.34750003}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5205,8 +4658,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 25dcafd7cfde22f4e99a31cb06c7933e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5259,9 +4712,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -17}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1082304822
 MonoBehaviour:
@@ -5314,16 +4767,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082304820}
   m_CullTransparentMesh: 1
---- !u!1 &1084283967 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 1031798200}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1086691485 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 932154000}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1095735672
 GameObject:
   m_ObjectHideFlags: 0
@@ -5675,11 +5118,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 655444765}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1238577925 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 496510604}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1252532615
 GameObject:
   m_ObjectHideFlags: 0
@@ -5878,39 +5316,82 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 932154000}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1287288987
+--- !u!1 &1296896046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1296896047}
+  - component: {fileID: 1296896049}
+  - component: {fileID: 1296896048}
+  m_Layer: 5
+  m_Name: Skill_Simbol
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1296896047
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296896046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1768031530}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 800, y: -241}
+  m_SizeDelta: {x: 120, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1296896048
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086691485}
+  m_GameObject: {fileID: 1296896046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 52f54eee29c8e0f4dbbc868e1aad83ff, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1296896049
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296896046}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1306443520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6178,7 +5659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1382564657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6338,9 +5819,10 @@ MonoBehaviour:
   ComentText: {fileID: 1597059207}
   StoryText: {fileID: 463954345}
   skillName: {fileID: 711749464}
+  skillText: {fileID: 1909453562}
   lineSpace: 40
   ClassSimbol: {fileID: 2039105036}
-  SkillSimbol: {fileID: 0}
+  SkillSimbol: {fileID: 1296896048}
   Infos:
     keys:
     - Variety
@@ -6378,6 +5860,7 @@ MonoBehaviour:
         \uC720\uC77C\uD55C \uAC83\uC778 \uBBF8\uB798\uB97C \uC9C0\uD0A4\uAE30 \uC704\uD574
         \uAD73\uC740 \uB2E4\uC9D0\uC744 \uD55C\uB2E4."
       skillname: "\uCC28\uC9D5 \uC0F7"
+      skillFlavorText: "\uD14C"
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Bonitatis
@@ -6404,6 +5887,7 @@ MonoBehaviour:
         \uBCF4\uC874\uACFC \uBC88\uC601\uC774 \uD544\uC694\uD558\uB2E4 \uB290\uAEF4
         \uADF8\uB4E4\uC744 \uC9C0\uD0A4\uACE0\uC790 \uD55C\uB2E4."
       skillname: "A.R.A \uCE58\uC720\uB4DC\uB860"
+      skillFlavorText: "\uD14C\uC2A4"
       ClassSimbol: {fileID: 21300000, guid: c7248e6f4bb688e46a8abb106492c64c, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Wraith
@@ -6429,6 +5913,7 @@ MonoBehaviour:
         \uAE30\uADFC \uBB38\uC81C\uB97C \uC9C0\uC6D0\uD558\uB294 \uC2A4\uCE74\uC774\uD638\uD06C\uC5D0
         \uB808\uC774\uC2A4\uB294 \uD798\uC774 \uB418\uC5B4\uC904 \uAC83\uC744 \uC57D\uC18D\uD588\uB2E4. "
       skillname: "\uB2EC\uBE5B \uAC00\uB974\uAE30"
+      skillFlavorText: "\uD14C\uC2A4\uD2B8"
       ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
       SkillSImbol: {fileID: 21300000, guid: 6bf03e4ace6b5544d93d51890c4c820c, type: 3}
     - Codename: Hwaseon
@@ -6454,6 +5939,7 @@ MonoBehaviour:
         \uBC18\uBCF5\uB418\uC9C0 \uC54A\uB3C4\uB85D \uD504\uB85C\uC81D\uD2B8 \uC544\uCE74\uC0AC\uC5D0
         \uCC38\uC5EC\uD588\uB2E4."
       skillname: "\uC815\uC2E0 \uCC28\uB9AC\uC138\uC6A7!"
+      skillFlavorText: "\uD14C\uC2A4\uD2B8\uC2A4"
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Underlock
@@ -6480,6 +5966,7 @@ MonoBehaviour:
         \uC774\uC0C1\uC758 \uC131\uACFC\uB97C \uAC70\uB46C\uC654\uAE30\uC5D0 \uC778\uC815\uBC1B\uACE0
         \uC788\uB2E4."
       skillname: "\uC9C0\uD3EC\uB77C\uC774\uD2B8\uB2DD"
+      skillFlavorText: "\uD14C\uC2A4\uD2B8\uC2A4\uD06C"
       ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: 'Glorify '
@@ -6504,6 +5991,7 @@ MonoBehaviour:
         \uC655\uC871\uC73C\uB85C\uC11C\uC758 \uCC45\uBB34\uB97C \uB2E4\uD558\uAE30
         \uC704\uD574 \uC804\uC7A5\uC5D0 \uC130\uB2E4. "
       skillname: "\uBC85\uC0F7"
+      skillFlavorText: "\uD14C\uC2A4\uD2B8\uC2A4\uD06C\uB9BD"
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Samurai
@@ -6530,6 +6018,7 @@ MonoBehaviour:
         \uAC10\uB3D9\uD55C \uCF54\uC6B0\uC5D4\uC740 \uD3C9\uC0DD \uADF8\uC758 \uACC1\uC744
         \uC9C0\uD0A4\uAE30\uB85C \uB2E4\uC9D0\uD55C\uB2E4. "
       skillname: "\uBC1C\uB3C4"
+      skillFlavorText: 
       ClassSimbol: {fileID: 21300000, guid: 8d00732b93ad7ab4592f6a9ed756876f, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: "\u0411\u043E\u0433"
@@ -6555,6 +6044,7 @@ MonoBehaviour:
         \uC783\uC790, \uC678\uD1A8\uC774\uAC00 \uB41C \uBCF4\uADF8\uB294 \uC0C8\uB85C\uC6B4
         \uCE5C\uAD6C\uB97C \uCC3E\uAE30 \uC704\uD574 \uC5EC\uC815\uC744 \uB5A0\uB09C\uB2E4."
       skillname: "\uC9C0\uBA74 \uBD84\uC1C4"
+      skillFlavorText: 
       ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Shut-in
@@ -6580,6 +6070,7 @@ MonoBehaviour:
         \uC5F0\uAD6C\uC5D0\uB9CC \uBAB0\uB450\uD55C \uB098\uBA38\uC9C0 \uAC74\uAC15\uC0C1\uD0DC\uAC00
         \uC545\uD654\uB418\uC5B4 \uB9C1\uAC70\uB300\uB97C \uB4E4\uACE0 \uB2E4\uB2CC\uB2E4."
       skillname: "\uD790\uB9C1 \uBC1C\uCE78"
+      skillFlavorText: 
       ClassSimbol: {fileID: 21300000, guid: c7248e6f4bb688e46a8abb106492c64c, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Pardosa
@@ -6605,6 +6096,7 @@ MonoBehaviour:
         \uC790\uC2E0\uC758 7\uBC88\uC9F8 \uB208\uC744 \uCC14\uB7EC \uC4F0\uB77C\uB9B0
         \uADF8\uB0A0\uC758 \uAE30\uC5B5\uC744 \uB418\uC0C8\uACBC\uB2E4."
       skillname: "\uD3EC\uC774\uC98C \uBBF8\uC2A4\uD2B8"
+      skillFlavorText: 
       ClassSimbol: {fileID: 21300000, guid: c3ab818a87a9471449c885be679c8ecb, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Caecus
@@ -6629,6 +6121,7 @@ MonoBehaviour:
         \uC704\uD55C \uC601\uAD11\uB41C \uC804\uD22C\uAC00 \uB420 \uAC83\uC774\uAE30\uC5D0
         \uB9DD\uC124\uC784 \uC5C6\uC774 \uCC38\uC5EC\uD588\uB2E4."
       skillname: "\uC218\uD638\uC758 \uBC29\uD328"
+      skillFlavorText: 
       ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
       SkillSImbol: {fileID: 0}
     - Codename: Surgeon
@@ -6654,6 +6147,7 @@ MonoBehaviour:
         \uC8FD\uC74C\uC744 \uAC16\uAC8C \uD558\uB294 \uAC83\uC774 \uC0DD\uBA85\uC5D0
         \uB300\uD55C \uC874\uC5C4\uC774\uB77C \uBBFF\uACE0 \uC788\uB2E4. "
       skillname: "\uC5F4\uC815\uD398\uC774"
+      skillFlavorText: 
       ClassSimbol: {fileID: 21300000, guid: b3d4f1ae35a0a6b4eb3f31c5479d667e, type: 3}
       SkillSImbol: {fileID: 0}
 --- !u!224 &1419002793 stripped
@@ -6987,49 +6481,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454090862}
   m_CullTransparentMesh: 1
---- !u!1 &1468923953 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 207801179}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1468923959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468923953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
---- !u!1 &1522951480 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 58158577}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1530113813
 GameObject:
   m_ObjectHideFlags: 0
@@ -7066,9 +6517,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1530113815
 MonoBehaviour:
@@ -7121,105 +6572,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530113813}
   m_CullTransparentMesh: 1
---- !u!1001 &1541962884
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4801347544777614314, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546152, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_Name
-      value: SoundManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801347545788546158, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8dd036df8827c9447a3fa79c8f7b5c3d, type: 3}
 --- !u!224 &1579041532 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 58158577}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1579041538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522951480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &1585283409
 GameObject:
   m_ObjectHideFlags: 0
@@ -7346,133 +6703,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585283409}
-  m_CullTransparentMesh: 1
---- !u!1 &1591872741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1591872742}
-  - component: {fileID: 1591872745}
-  - component: {fileID: 1591872744}
-  - component: {fileID: 1591872743}
-  m_Layer: 5
-  m_Name: Scrollbar Horizontal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1591872742
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591872741}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 208660062}
-  m_Father: {fileID: 681441057}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 20}
-  m_Pivot: {x: 0, y: 0}
---- !u!114 &1591872743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591872741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 257261137}
-  m_HandleRect: {fileID: 257261136}
-  m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9990888
-  m_NumberOfSteps: 0
-  m_OnValueChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1591872744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591872741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1591872745
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591872741}
   m_CullTransparentMesh: 1
 --- !u!1 &1597059205
 GameObject:
@@ -7609,44 +6839,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597059205}
   m_CullTransparentMesh: 1
---- !u!1 &1598115931 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 655444765}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1598115937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598115931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &1617728657
 GameObject:
   m_ObjectHideFlags: 0
@@ -7737,7 +6929,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myList: []
-  objList: []
   Contents: {fileID: 1617728657}
   EditMax: 12
   EditPanelPrefab: {fileID: 1270045404674901819, guid: 9e15178f0e15b954d9b8f9e3b72f50f1, type: 3}
@@ -8153,7 +7344,6 @@ GameObject:
   - component: {fileID: 1675117946}
   - component: {fileID: 1675117945}
   - component: {fileID: 1675117944}
-  - component: {fileID: 1675117947}
   m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
@@ -8175,7 +7365,7 @@ RectTransform:
   m_Children:
   - {fileID: 801090578}
   m_Father: {fileID: 681441057}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8269,39 +7459,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675117942}
   m_CullTransparentMesh: 1
---- !u!114 &1675117947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1675117942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 000000000001
-    buttonLick: 000000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &1685658502
 GameObject:
   m_ObjectHideFlags: 0
@@ -8568,7 +7725,6 @@ GameObject:
   - component: {fileID: 1742823049}
   - component: {fileID: 1742823048}
   - component: {fileID: 1742823047}
-  - component: {fileID: 1742823050}
   m_Layer: 5
   m_Name: Clear_Btn
   m_TagString: Untagged
@@ -8690,39 +7846,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742823045}
   m_CullTransparentMesh: 1
---- !u!114 &1742823050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1742823045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 000001
-    buttonLick: 000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &1768031529
 GameObject:
   m_ObjectHideFlags: 0
@@ -8762,7 +7885,9 @@ RectTransform:
   - {fileID: 1635112444}
   - {fileID: 1095735673}
   - {fileID: 463954344}
+  - {fileID: 1296896047}
   - {fileID: 711749463}
+  - {fileID: 1909453561}
   - {fileID: 1791034707}
   m_Father: {fileID: 1415285601}
   m_RootOrder: 1
@@ -8815,77 +7940,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 496510604}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1779134697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238577925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
---- !u!1 &1781281634 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 555968957}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1781281640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781281634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &1791034706
 GameObject:
   m_ObjectHideFlags: 0
@@ -8898,7 +7952,6 @@ GameObject:
   - component: {fileID: 1791034710}
   - component: {fileID: 1791034709}
   - component: {fileID: 1791034708}
-  - component: {fileID: 1791034711}
   m_Layer: 5
   m_Name: Exit_Btn
   m_TagString: Untagged
@@ -8919,7 +7972,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1768031530}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -9020,39 +8073,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791034706}
   m_CullTransparentMesh: 1
---- !u!114 &1791034711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791034706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 000001
-    buttonLick: 000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &1868967937
 GameObject:
   m_ObjectHideFlags: 0
@@ -9104,6 +8124,7 @@ MonoBehaviour:
   BG_Change_Time: 0
   AnimePanel: {fileID: 0}
   minions: {fileID: 0}
+  SettingPanel: {fileID: 0}
   PopupPanel: {fileID: 1382564656}
   InfoPanel: {fileID: 1415285600}
   Title_text: {fileID: 1650404990}
@@ -9114,49 +8135,146 @@ MonoBehaviour:
   StageName_Text: {fileID: 0}
   EditPanel: {fileID: 0}
   BestLvText: {fileID: 0}
---- !u!1 &1887317065 stripped
+--- !u!1 &1909453560
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692462, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 2028060987}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &1946711743 stripped
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1909453561}
+  - component: {fileID: 1909453563}
+  - component: {fileID: 1909453562}
+  m_Layer: 5
+  m_Name: SkillFlavorText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1909453561
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
-  m_PrefabInstance: {fileID: 1031798200}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1946711749
+  m_GameObject: {fileID: 1909453560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1768031530}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1055, y: -261}
+  m_SizeDelta: {x: 290, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1909453562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1084283967}
+  m_GameObject: {fileID: 1909453560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: New Text
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: ad3060a8d0e017740b7a49731088d5cf, type: 2}
+  m_sharedMaterial: {fileID: -2017501935918927776, guid: ad3060a8d0e017740b7a49731088d5cf, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 20
+  m_fontSizeBase: 20
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1909453563
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909453560}
+  m_CullTransparentMesh: 1
+--- !u!224 &1946711743 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
+  m_PrefabInstance: {fileID: 1031798200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1958549622
 GameObject:
   m_ObjectHideFlags: 0
@@ -9448,39 +8566,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6184573315990692457, guid: 3cc684b5df17cb1458a48fb75545928c, type: 3}
   m_PrefabInstance: {fileID: 2028060987}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2028060994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1887317065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 0000000001
-    buttonLick: 0000000001
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &2039105034
 GameObject:
   m_ObjectHideFlags: 0
@@ -9640,39 +8725,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b8f9d70c8e9ea42b790e043d664f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2079346240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079346233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b37c148e9d6e3e4e81ee744f6c25f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiClip: []
-  uiClipName: []
-  skillClip: []
-  skillClipName: []
-  titleScene:
-    buttonClick: 
-    buttonLick: 
-  mainScene:
-    buttonClick: 
-    buttonLick: 
-  stageSelectScene:
-    buttonClick: 
-    buttonLick: 
-  unitContainerScene:
-    buttonClick: 01
-    buttonLick: 01
-  defenceStageScene:
-    buttonClick: 
-    buttonLick: 
-  skill:
-    sound: 
 --- !u!1 &2092949720
 GameObject:
   m_ObjectHideFlags: 0

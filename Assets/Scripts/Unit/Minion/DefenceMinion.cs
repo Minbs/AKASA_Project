@@ -14,6 +14,7 @@ public enum AttackType
     Melee,
     MeleeRange,
     SingleHeal,
+    HealRange,
     HitScan,
     HitScanRange
 }
@@ -28,7 +29,6 @@ public enum SkillType
 public class DefenceMinion : Minion
 {
     [Header("MinionStat")]
-    public AttackType attackType;
 
     public float cost;
     public float sellCost;
@@ -103,6 +103,9 @@ public class DefenceMinion : Minion
                 case AttackType.HitScan:
                     HitScanAttack();
                     break;
+                case AttackType.HitScanRange:
+                    HitScanRangeAttack();
+                    break;
             }
         }
 
@@ -158,6 +161,7 @@ public class DefenceMinion : Minion
 
     public void MeleeRangeAttack()
     {
+        Debug.Log(attackRange2);
         Vector3 box = new Vector3(attackRangeDistance, 1, attackRange2);
         Vector3 center = transform.position;
         center.x = transform.position.x + attackRangeDistance / 2;

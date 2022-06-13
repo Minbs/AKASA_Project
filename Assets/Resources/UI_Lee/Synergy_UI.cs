@@ -36,7 +36,7 @@ public class Synergy_UI : MonoBehaviour
     {
 
         Backgrund.transform.DOMoveX(-300, 1f, false);
-        CloseButton.transform.DOMoveX(-300, 1f, false);
+        CloseButton.transform.DOMoveX(-100, 1f, false);
         text[0].transform.DOMoveX(-300, 1f, false);
         text[1].transform.DOMoveX(-300, 1f, false);
         text[2].transform.DOMoveX(-300, 1f, false);
@@ -48,7 +48,7 @@ public class Synergy_UI : MonoBehaviour
     public void OnSynergyInfo()
     {
         Backgrund.transform.DOMoveX(280, 1f, false);
-        CloseButton.transform.DOMoveX(280, 1f, false);
+        CloseButton.transform.DOMoveX(400, 1f, false);
         text[0].transform.DOMoveX(325, 1f, false);
         text[1].transform.DOMoveX(325, 1f, false);
         text[2].transform.DOMoveX(325, 1f, false);
