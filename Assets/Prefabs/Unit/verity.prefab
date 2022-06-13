@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 10
   currentHp: 0
+  CostUimanager: {fileID: 0}
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Verity
@@ -224,6 +225,8 @@ MonoBehaviour:
   UnitDisplay:
     m_PersistentCalls:
       m_Calls: []
+  OneTimeSummon: 0
+  attackType: 0
   atk: 2
   currentAtk: 0
   def: 0
@@ -236,11 +239,10 @@ MonoBehaviour:
   isNonDamage: 0
   healthBar: {fileID: 5756680591819409201}
   minionClass: 2
-  attackType: 0
   cost: 7
   sellCost: 5
   UImanager: {fileID: 0}
-  skillCoolTime: 75
+  skillCoolTime: 120
   bulletSprite: {fileID: 21300000, guid: 4cecd05cb0141044ea038fb559a0e799, type: 3}
   shootPivot: {fileID: 5882365898886981521}
   skillType: 0
