@@ -217,6 +217,9 @@ public class SkillManager : Singleton<SkillManager>
 
         if (skillAimType.Equals(SkillAimType.Single))
         {
+            skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+            skillUnit.GetComponent<Unit>().SetAimUnitColor(false);
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")))
             {
                 if (Input.GetMouseButtonDown(0)

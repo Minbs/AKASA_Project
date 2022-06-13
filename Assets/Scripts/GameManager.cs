@@ -106,7 +106,7 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T))
         {
             StageVictoryEvent();
 
@@ -149,7 +149,7 @@ public class GameManager : Singleton<GameManager>
         currentWaitTimer = waitTime;
         WaveUI.GetComponent<Wave_UI_Script>().StageText_Next();
         WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave, "Yellow");
-        WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
+        WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer, waitTime);
         currentWave++;
 
 
@@ -158,7 +158,7 @@ public class GameManager : Singleton<GameManager>
         {
             StartCoroutine(spawner.Spawn(currentWave));
             currentWaitTimer -= Time.deltaTime;
-            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer, waitTime);
             WaitStateUpdate();
             yield return null;
         }
@@ -185,27 +185,36 @@ public class GameManager : Singleton<GameManager>
         }
 
         BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+        BattleUIManager.Instance.circleAttackRangeUI.SetActive(false);
+        BattleUIManager.Instance.rectangleAttackRangeUI.SetActive(false);
+
         settingCharacter = null;
         StartCoroutine(BattleState());
     }
 
     void WaitStateUpdate()
     {
-        if(BattleUIManager.Instance.minionUpgradeUI.activeSelf)
+        if (BattleUIManager.Instance.minionUpgradeUI.activeSelf)
         {
-                if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")) )
-                {
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")))
+            {
                 if (!raycastHit.collider.transform.parent.GetComponent<Minion>()
                     && Input.GetMouseButtonUp(1))
+
                     BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
             }
-               else
+            else
             {
                 if (Input.GetMouseButtonUp(1))
                 {
                     BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
                 }
             }
+        }
+        else
+        {
+            BattleUIManager.Instance.circleAttackRangeUI.SetActive(false);
+            BattleUIManager.Instance.rectangleAttackRangeUI.SetActive(false);
         }
 
         switch (deployState)
@@ -262,7 +271,7 @@ public class GameManager : Singleton<GameManager>
 
     void BattleStateUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SkillManager.Instance.UseCharacterSkill(0);
         }
@@ -286,23 +295,25 @@ public class GameManager : Singleton<GameManager>
         state = State.WAVE_END;
         SetGameSpeed(1);
 
+        if(spawner.enemySpawnDatas.Count <= 0)
+            StageVictoryEvent();
+
         int count = 0;
 
-        while(count < minionsList.Count)
+        while (count < minionsList.Count)
         {
             if (minionsList[count].activeSelf
        && minionsList[count].GetComponent<Unit>().currentHp > 0)
             {
                 minionsList[count].GetComponent<UnitStateMachine>().ChangeState(minionsList[count].GetComponent<UnitStateMachine>().moveState);
                 minionsList[count].GetComponent<Unit>().currentHp = minionsList[count].GetComponent<Unit>().maxHp;
-                minionsList[count].GetComponent<Unit>().UpdateHealthbar();
                 minionsList[count].GetComponent<Unit>().target = null;
                 count++;
-                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave-1, "Blue");   //현재 스테이지 로고 Blue로 변경
+                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave - 1, "Blue");   //현재 스테이지 로고 Blue로 변경
             }
             else
             {
-                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave-1, "Red");    //현재 스테이지 로고 Red로 변경
+                WaveUI.GetComponent<Wave_UI_Script>().Wave_Logo_ColorChange(currentWave - 1, "Red");    //현재 스테이지 로고 Red로 변경
                 minionsList[count].GetComponent<Unit>().onTile.isOnUnit = false;
                 minionsList.RemoveAt(count);
 
@@ -311,7 +322,7 @@ public class GameManager : Singleton<GameManager>
 
         foreach (var m in minionsList)
         {
-   
+
 
         }
 
@@ -338,7 +349,7 @@ public class GameManager : Singleton<GameManager>
                 if (!m.GetComponent<UnitStateMachine>().currentState.Equals(m.GetComponent<UnitStateMachine>().idleState) && m.activeSelf)
                     isAllMinionReturn = false;
             }
-            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer,waitTime);
+            WaveUI.GetComponent<Wave_UI_Script>().TimerText(currentWaitTimer, waitTime);
             if (isAllMinionReturn)
                 break;
 
@@ -346,7 +357,7 @@ public class GameManager : Singleton<GameManager>
         }
 
         cost += waveClearRewards[currentWave - 1];
-        WaveUI.GetComponent<Wave_UI_Script>().CostUpUI((waveClearRewards[currentWave - 1]),"temp");
+        WaveUI.GetComponent<Wave_UI_Script>().CostUpUI((waveClearRewards[currentWave - 1]), "temp");
         //클리어 코스트 증가
         BattleUIManager.Instance.costText.text = cost.ToString();
 
@@ -363,6 +374,8 @@ public class GameManager : Singleton<GameManager>
     private void PositioningMinion()
     {
         BattleUIManager.Instance.minionUpgradeUI.SetActive(false);
+        BattleUIManager.Instance.circleAttackRangeUI.SetActive(false);
+        BattleUIManager.Instance.rectangleAttackRangeUI.SetActive(false);
 
         foreach (var minion in minionsList)
         {
@@ -372,8 +385,6 @@ public class GameManager : Singleton<GameManager>
             minion.GetComponent<UnitStateMachine>().agent.enabled = false;
 
 
-            minion.GetComponent<Unit>().onTile.SetTileClassImage(minion.GetComponent<Minion>().minionClass);
-            
         }
 
         if (settingCharacter)
@@ -387,7 +398,6 @@ public class GameManager : Singleton<GameManager>
         {
             if (raycastHit.collider.transform.tag == "Tile" && raycastHit.collider.GetComponent<Tile>().IsDeployableMinionTile())
             {
-                Debug.Log("dd");
 
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -401,7 +411,7 @@ public class GameManager : Singleton<GameManager>
             {
                 if (Input.GetMouseButtonUp(0))
                 {
-                    
+
                     cost += settingCharacter.GetComponent<DefenceMinion>().sellCost;
                     BattleUIManager.Instance.costText.text = cost.ToString();
                     minionsList.Remove(settingCharacter);
@@ -415,15 +425,21 @@ public class GameManager : Singleton<GameManager>
                     foreach (var minion in minionsList)
                     {
                         SynergyManager.Instance.CheckClassSynergy(minion);
+                        minion.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+                        minion.GetComponent<UnitStateMachine>().agent.enabled = true;
                     }
 
+                    foreach (var tile in BoardManager.Instance.minionDeployTilesList)
+                    {
+                        tile.ShowDeployableTile(false);
+                    }
                     deployState = DeployState.NONE;
                 }
             }
         }
         else
         {
-            
+
         }
     }
 
@@ -463,13 +479,13 @@ public class GameManager : Singleton<GameManager>
             settingCharacter.GetComponent<DefenceMinion>().OneTimeSummon = true;
             UImanager.GetComponent<Unit_Select_UI>().Hide_Unit_Button(settingCharacter.GetComponent<DefenceMinion>().Unitname);
         }
-        
+
         settingCharacter.GetComponent<UnitStateMachine>().isDeploying = false;
         settingCharacter = null;
         isChangePosition = false;
         BattleUIManager.Instance.sellPanel.SetActive(false);
 
-        
+
 
 
         foreach (var m in minionsList)
@@ -503,14 +519,13 @@ public class GameManager : Singleton<GameManager>
 
         isChangePosition = true;
         settingCharacter = minion;
-        settingCharacter.GetComponent<Unit>().healthBar.transform.parent.gameObject.SetActive(false);
         settingCharacter.GetComponent<Unit>().onTile.isOnUnit = false;
         settingCharacter.transform.GetChild(0).GetComponent<BoxCollider>().enabled = false;
         BattleUIManager.Instance.SetSellCostText(settingCharacter.GetComponent<DefenceMinion>().sellCost);
         BattleUIManager.Instance.sellPanel.SetActive(true);
         deployState = DeployState.POSITIONING;
 
-     
+
 
         foreach (var tile in BoardManager.Instance.minionDeployTilesList)
         {
@@ -542,10 +557,10 @@ public class GameManager : Singleton<GameManager>
     public void StageVictoryEvent()
     {
         StageVictoryUI.SetActive(true);
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-           
-            Victory[i].GetComponent<Image>().DOFade(1,1f);
+
+            Victory[i].GetComponent<Image>().DOFade(1, 1f);
         }
 
     }

@@ -28,7 +28,6 @@ public class Enemy : Unit
         skillTimer = 0;
         transform.GetChild(0).GetComponent<SkeletonAnimation>().state.Event += AnimationSatateOnEvent;
         Init();
-        UpdateHealthbar();
     }
 
     private void OnDestroy()

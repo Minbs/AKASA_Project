@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 20
   currentHp: 0
+  CostUimanager: {fileID: 0}
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: 
   Unitname: Pay
@@ -192,6 +193,8 @@ MonoBehaviour:
   UnitDisplay:
     m_PersistentCalls:
       m_Calls: []
+  OneTimeSummon: 0
+  attackType: 2
   atk: 2
   currentAtk: 0
   def: 1
@@ -202,9 +205,8 @@ MonoBehaviour:
   damageRedution: 0
   healTakeAmount: 0
   isNonDamage: 0
-  healthBar: {fileID: 5814845813638632022}
+  healthBar: {fileID: 2937791603296916208}
   minionClass: 1
-  attackType: 2
   cost: 15
   sellCost: 11
   UImanager: {fileID: 8147679647043039514, guid: 81700a6ef7b63ed42adcb94ea6471dc9, type: 3}
@@ -353,17 +355,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
---- !u!114 &5814845813638632022 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8195032804384938887, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
+--- !u!1 &2937791603296916208 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 706432351067167521, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}
   m_PrefabInstance: {fileID: 2380400476443150801}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &6717993523047367701 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8949771878873796036, guid: d3d6f73f9fb69c7408d1d2e27b0c80e5, type: 3}

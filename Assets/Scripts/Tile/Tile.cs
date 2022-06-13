@@ -45,6 +45,10 @@ public class Tile : MonoBehaviour
     /// <param name="minionClass"></param>
     public void ShowDeployableTile(bool isActive)
     {
+        if (IsDeployableMinionTile())
+            GetComponent<Image>().sprite = BattleUIManager.Instance.DeployableTileSprite;
+        else
+            GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
 
 
         gameObject.SetActive(isActive);
@@ -76,31 +80,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void SetTileClassImage(MinionClass minionClass)
-    {
-        Sprite tileSprite;
-
-        switch (minionClass)
-        {
-            case MinionClass.Buster:
-                tileSprite = BattleUIManager.Instance.busterTileSprite;
-                break;
-            case MinionClass.Guardian:
-                tileSprite = BattleUIManager.Instance.guardianTileSprite;
-                break;
-            case MinionClass.Chaser:
-                tileSprite = BattleUIManager.Instance.chaserTileSprite;
-                break;
-            case MinionClass.Rescue:
-                tileSprite = BattleUIManager.Instance.rescueTileSprite;
-                break;
-            default:
-                tileSprite = BattleUIManager.Instance.DeployableTileSprite;
-                break;
-        }
-
-        GetComponent<Image>().sprite = tileSprite;
-    }
+  
 
     public void on(bool b)
     {

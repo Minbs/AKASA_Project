@@ -77,6 +77,13 @@ public class DefenceMinion : Minion
             SkillManager.Instance.MinionSkillEvent(Unitname);
         }
 
+
+        if(e.Data.Name == "charge")
+        {
+            EffectManager.Instance.InstantiateAttackEffect("verity_charge", transform.position);
+        }
+
+
             if (target == null)
         {
             return;
