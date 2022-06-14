@@ -49,6 +49,8 @@ public class Minion : Unit
             if (Input.GetMouseButtonUp(1))
             {
                 BattleUIManager.Instance.SetMinionUpgradeUI(gameObject);
+
+            
             }
         }
     

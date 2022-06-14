@@ -36,7 +36,7 @@ public class Synergy_UI : MonoBehaviour
     {
 
         Backgrund.transform.DOMoveX(-300, 1f, false);
-        CloseButton.transform.DOMoveX(-100, 1f, false);
+        CloseButton.transform.DOMoveX(-200, 1f, false);
         text[0].transform.DOMoveX(-300, 1f, false);
         text[1].transform.DOMoveX(-300, 1f, false);
         text[2].transform.DOMoveX(-300, 1f, false);

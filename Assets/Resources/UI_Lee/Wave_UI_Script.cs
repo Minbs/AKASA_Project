@@ -25,7 +25,11 @@ public class Wave_UI_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            StageText_Next();
+        }
+       
     }
 
     public void CostUpUI(int cost, string textColor)
@@ -109,6 +113,12 @@ public class Wave_UI_Script : MonoBehaviour
         else if (StageText.text == "1-5")
         {
             StageText.text = "2-1";
+            for(int i = 0; i < 5; i++)
+            {
+                Logo[i].gameObject.SetActive(false);
+                Logo[i + 5].gameObject.SetActive(true);
+            }
+            
         }
 
         else if (StageText.text == "2-1")

@@ -110,7 +110,6 @@ public class UnitStateMachine : MonoBehaviour
     public void Initialize()
     {
         unit.currentHp = unit.maxHp;
-        unit.UpdateHealthbar();
         ChangeState(idleState);
     }
 

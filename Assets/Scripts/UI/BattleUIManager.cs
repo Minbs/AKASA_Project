@@ -25,9 +25,13 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public GameObject TurretAtkRedCircle;
 
     public GameObject DeployableTileImage;
-    public Sprite NotDeployableTileSprite;
+    // public Sprite NotDeployableTileSprite;
+    //public Sprite chaserTileSprite;
+    //public Sprite guardianTileSprite;
+    //public Sprite rescueTileSprite;
+    //public Sprite busterTileSprite;
     public Sprite DeployableTileSprite;
-    
+    public Sprite NotDeployableTileSprite;
 
     public SkeletonDataAsset skeletonDataAsset;
 
@@ -122,6 +126,9 @@ public class BattleUIManager : Singleton<BattleUIManager>
     public TextMeshProUGUI incomeText;
 
     public GameObject minionUpgradeUI;
+    public GameObject circleAttackRangeUI;
+    public GameObject rectangleAttackRangeUI;
+
     public GameObject ProgressBar;
     public GameObject WaveUI;
 
@@ -533,7 +540,6 @@ public class BattleUIManager : Singleton<BattleUIManager>
 
             msPan.SetActive(false);
             psPan.SetActive(true);
-            //mBG.SetActive(false);
         }
     }
 
@@ -621,6 +627,8 @@ public class BattleUIManager : Singleton<BattleUIManager>
         }
 
         incomeUpgradeButton.SetActive(active);
+
+     
     }
 
     public void IncomeUpgrade()
@@ -654,6 +662,28 @@ public class BattleUIManager : Singleton<BattleUIManager>
         minionUpgradeUI.SetActive(true);
         minionUpgradeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
         upgradeMinion = minion;
+
+        circleAttackRangeUI.SetActive(false);
+        rectangleAttackRangeUI.SetActive(false);
+
+        if (minion.GetComponent<Unit>().attackType.Equals(AttackType.MeleeRange))
+        {
+            rectangleAttackRangeUI.SetActive(true);
+
+            Vector3 pos = minion.transform.position;
+            pos.x += minion.GetComponent<Unit>().attackRangeDistance / 2;
+
+            rectangleAttackRangeUI.GetComponent<RectTransform>().anchoredPosition3D = pos;
+            rectangleAttackRangeUI.transform.localScale = new Vector3(minion.GetComponent<Unit>().attackRangeDistance, minion.GetComponent<Unit>().attackRange2, 1);
+
+        }
+        else
+        {
+            circleAttackRangeUI.SetActive(true);
+            circleAttackRangeUI.GetComponent<RectTransform>().anchoredPosition3D = minion.transform.position;
+            circleAttackRangeUI.transform.localScale = new Vector3(2, 2, 2) * minion.GetComponent<Unit>().attackRangeDistance;
+        }
+
 
         currentStat = CSV_Player_Status.Instance.Call_Stat_Array(minion.GetComponent<Unit>().Unitname, minion.GetComponent<Unit>().Level);
         nextLevelStat = CSV_Player_Status.Instance.Call_Stat_Array(minion.GetComponent<Unit>().Unitname, minion.GetComponent<Unit>().Level + 1);
