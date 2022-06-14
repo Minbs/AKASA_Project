@@ -44,6 +44,8 @@ public class SkillManager : Singleton<SkillManager>
 
     private List<GameObject> skillTargets = new List<GameObject>();
 
+    public GameObject skillCutScene;
+
     [Header("페이 스킬")]
     public float paySkillValue;
     public float paySkillDuration;
@@ -215,6 +217,9 @@ public class SkillManager : Singleton<SkillManager>
 
         if (skillAimType.Equals(SkillAimType.Single))
         {
+            skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = -1;
+            skillUnit.GetComponent<Unit>().SetAimUnitColor(false);
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Object")))
             {
                 if (Input.GetMouseButtonDown(0)
@@ -306,7 +311,22 @@ public class SkillManager : Singleton<SkillManager>
             GameManager.Instance.SetGameSpeed(0);
             skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
             skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
-            skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
+
+        GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+        skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
             yield return null;
             //Vector3 startPos = skillUnit.transform.position;
 
@@ -326,7 +346,22 @@ public class SkillManager : Singleton<SkillManager>
 
             GameManager.Instance.SetGameSpeed(0);
             skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
-            skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
+
+        GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
             skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
             yield return null;
             //Vector3 startPos = skillUnit.transform.position;
@@ -366,7 +401,22 @@ public class SkillManager : Singleton<SkillManager>
 
             GameManager.Instance.SetGameSpeed(0);
             skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
-            skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
+
+        GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
             skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
 
             Vector3 startPos = skillUnit.transform.position;
@@ -431,10 +481,27 @@ public class SkillManager : Singleton<SkillManager>
         }
 
         GameManager.Instance.SetGameSpeed(0);
+
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {           
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
+
+   
 
         while (skillUnit.GetComponent<Unit>().normalizedTime < 1)
         {
@@ -471,7 +538,22 @@ public class SkillManager : Singleton<SkillManager>
 
         GameManager.Instance.SetGameSpeed(0);
             skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
-            skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+
+
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
             skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
             yield return null;
 
@@ -517,6 +599,19 @@ public class SkillManager : Singleton<SkillManager>
 
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
@@ -564,6 +659,20 @@ public class SkillManager : Singleton<SkillManager>
 
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
@@ -605,6 +714,20 @@ public class SkillManager : Singleton<SkillManager>
 
         skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", wraithSkillRangeWidth, wraithSkillRangeHeight);
         GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
         //Vector3 startPos = skillUnit.transform.position;
@@ -625,11 +748,30 @@ public class SkillManager : Singleton<SkillManager>
 
         IEnumerator IsabellaSkill()
         {
+
+
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
+
+
+
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
+
 
         skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", isabellaSkillRange, 1);
         GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;
         //Vector3 startPos = skillUnit.transform.position;
@@ -656,10 +798,24 @@ public class SkillManager : Singleton<SkillManager>
         {
 
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
-
-        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", zippoSkillRangeWidth, zippoSkillRangeHeight);
         GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
+        skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", zippoSkillRangeWidth, zippoSkillRangeHeight);
+       
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         EffectManager.Instance.InstantiateAttackEffect("zippo_skill", skillUnit.transform.position);
 
@@ -683,10 +839,24 @@ public class SkillManager : Singleton<SkillManager>
     {
 
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
-        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
-
         skillTargets = AimSkillTargetsInRange(SkilRangeType.Rectangle, SkillAimType.Auto, "Enemy", kuenSkillRangeWidth, kuenSkillRangeHeight);
+        skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
         GameManager.Instance.SetGameSpeed(0);
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+
+        yield return null;
+        #endregion
+
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill1", false, 1);
 
 
@@ -694,7 +864,7 @@ public class SkillManager : Singleton<SkillManager>
         //Vector3 startPos = skillUnit.transform.position;
 
 
-
+        Debug.Log(GameManager.Instance.gameSpeed);
 
         while (skillUnit.GetComponent<Unit>().normalizedTime < 1)
         {
@@ -737,6 +907,20 @@ public class SkillManager : Singleton<SkillManager>
     {
         GameManager.Instance.SetGameSpeed(0);
         skillUnit.transform.GetChild(0).GetComponent<MeshRenderer>().sortingOrder = 1;
+
+        #region skillCutScene
+        skillCutScene.SetActive(true);
+        skillCutScene.GetComponent<Animator>().Play(skillUnit.GetComponent<Unit>().Unitname + "Skill", -1, 0f);
+        yield return null;
+        while (skillCutScene.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
+        {
+            yield return null;
+        }
+
+        skillCutScene.SetActive(false);
+        yield return null;
+        #endregion
+
         skillUnit.GetComponent<UnitStateMachine>().ChangeState(skillUnit.GetComponent<UnitStateMachine>().SkillPerformState);
         skillUnit.GetComponent<Unit>().spineAnimation.PlayAnimation(skillUnit.GetComponent<Unit>().skinName + "/skill", false, 1);
         yield return null;

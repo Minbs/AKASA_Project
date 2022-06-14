@@ -17,6 +17,8 @@ public class Turret : Object
     public float attackDistance; // 공격 가능 범위
     public float attackRange; // 폭발 범위
 
+    public float attackDamage;
+
     public Image HPBar;
     public Image BarrierBar;
 
@@ -37,6 +39,10 @@ public class Turret : Object
     // Update is called once per frame
     void Update()
     {
+        if(currentHp <= 0)
+         GameManager.Instance.StageFailEvent();
+
+
         attackTimer += Time.deltaTime;
         HPBar.GetComponent<Image>().fillAmount = currentHp / maxHp;
         BarrierBar.GetComponent<Image>().fillAmount = barrierHp / 48;
@@ -92,8 +98,8 @@ public class Turret : Object
         {
             if (e.tag != "Enemy")
                 continue;
-
-            e.transform.parent.GetComponent<Unit>().Deal(5);
+            
+            e.transform.parent.GetComponent<Unit>().Deal(attackDamage);
         }
 
         isAttacking = false;

@@ -59,7 +59,8 @@ public class Unit : Object
     public SkeletonAnimation skeletonAnimation { get; set; }
 
     public GameObject target { get; set; }
-    public Image healthBar;
+    public GameObject healthBar;
+    private float healthBarCount = 0;
 
     public SkeletonDataAsset skeletonData { get; set; }
 
@@ -139,10 +140,10 @@ public class Unit : Object
 
         attackSpeed = 1;
         damageRedution = 0;
-        healthBar.transform.parent.gameObject.SetActive(true);
+      //  healthBar.transform.parent.gameObject.SetActive(true);
         transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
         transform.GetComponent<NavMeshAgent>().enabled = true;
-        UpdateHealthbar();
+       // UpdateHealthbar();
     }
 
     protected virtual void Update()
@@ -185,14 +186,36 @@ public class Unit : Object
 
         currentHp -= (float)damageSum;
         currentHp = Mathf.Clamp(currentHp, 0, maxHp);
-
-        UpdateHealthbar();
+        healthBarCount = 0;
+        StartCoroutine( UpdateHealthbar());
     }
 
     /// <summary>
     /// 체력바 UI 이미지 갱신
     /// </summary>
-    public void UpdateHealthbar() => healthBar.fillAmount = (float)currentHp / maxHp;
+    /// 
+    public IEnumerator UpdateHealthbar()
+    {
+        healthBar.transform.GetChild(1).GetComponent<Image>().fillAmount = currentHp / maxHp;
+
+        if (healthBar.activeSelf)
+            yield break;
+
+        healthBar.SetActive(true);
+     
+
+        while (healthBarCount < 3)
+        {
+            healthBarCount += Time.deltaTime;
+            yield return null;
+        }
+
+
+        healthBar.SetActive(false);
+
+    }
+
+    //public void UpdateHealthbar() => healthBar.fillAmount = (float)currentHp / maxHp;
 
     public void SetDirection(Direction direction)
     {
@@ -246,8 +269,9 @@ public class Unit : Object
 
 
           currentHp -= damage;
+            healthBarCount = 0;
           StartCoroutine(ChangeUnitColor(new Color(1, 0, 1), 0.2f));
-          UpdateHealthbar();
+            StartCoroutine(UpdateHealthbar());
 
             Debug.Log(poisonTimer);
           yield return new WaitForSeconds(1);

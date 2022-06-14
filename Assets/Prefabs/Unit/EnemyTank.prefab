@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 10
   currentHp: 0
+  CostUimanager: {fileID: 0}
   GameDataManager: {fileID: 1629390581798776592, guid: 015962c9d81c07045a622c345139a2b0, type: 3}
   poolItemName: EnemyTank
   Unitname: EnemyTank
@@ -57,6 +58,8 @@ MonoBehaviour:
   UnitDisplay:
     m_PersistentCalls:
       m_Calls: []
+  OneTimeSummon: 0
+  attackType: 2
   atk: 1.2
   currentAtk: 0
   def: 1
@@ -67,8 +70,11 @@ MonoBehaviour:
   damageRedution: 0
   healTakeAmount: 0
   isNonDamage: 0
-  healthBar: {fileID: 6831602217341417594}
-  attackType: 2
+  healthBar: {fileID: 2790508374962059484}
+  skillCoolTime: 0
+  skillRangeWidth: 0
+  skillRangeHeight: 0
+  skillValue: 0
 --- !u!195 &201675959092706450
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -255,6 +261,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyHpBar
       objectReference: {fileID: 0}
+    - target: {fileID: 706432351067167521, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3356473088215446937, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -345,19 +355,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
+--- !u!1 &2790508374962059484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 706432351067167521, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
+  m_PrefabInstance: {fileID: 3419394231967310845}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6001005774067985977 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8949771878873796036, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
   m_PrefabInstance: {fileID: 3419394231967310845}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6831602217341417594 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8195032804384938887, guid: c19962b65297e1e4a9a1d40e884ae61f, type: 3}
-  m_PrefabInstance: {fileID: 3419394231967310845}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

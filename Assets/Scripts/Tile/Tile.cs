@@ -45,10 +45,11 @@ public class Tile : MonoBehaviour
     /// <param name="minionClass"></param>
     public void ShowDeployableTile(bool isActive)
     {
-        if (isOnUnit)
-            GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
-        else
+        if (IsDeployableMinionTile())
             GetComponent<Image>().sprite = BattleUIManager.Instance.DeployableTileSprite;
+        else
+            GetComponent<Image>().sprite = BattleUIManager.Instance.NotDeployableTileSprite;
+
 
         gameObject.SetActive(isActive);
     }
@@ -78,6 +79,8 @@ public class Tile : MonoBehaviour
 
         }
     }
+
+  
 
     public void on(bool b)
     {
